@@ -28,7 +28,7 @@ jobs:
       - name: "Lint"
         run: npm run lint
       - name: "test"
-        run: npm run test:ci
+        run: npm run test
       - name: "build"
         run: |
           if [ -f VERSION ]; then
