@@ -1,3 +1,10 @@
+# [1.0.0-next.2](https://github.com/gomeli/meli/compare/v1.0.0-next.1...v1.0.0-next.2) (2020-12-02)
+
+
+### Bug Fixes
+
+* docker image overrides ui in dockerhub ([2596103](https://github.com/gomeli/meli/commit/259610386db09ca88b913d512f332c95f2f4d919))
+
 # 1.0.0-beta.1 (2020-12-02)
 
 
