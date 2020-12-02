@@ -35,7 +35,7 @@ jobs:
             npm version --no-git-tag-version $(cat VERSION) --allow-same-version
           fi
           npm run build
-          docker build -f ./docker/Dockerfile -t $TMP_DOCKER_IMAGE .
+          docker build -t $TMP_DOCKER_IMAGE .
       - name: "release"
         if: ${{ env.IS_RELEASE_BRANCH == 'true' }}
         run: |
