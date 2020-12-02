@@ -1,0 +1,62 @@
+name: main
+on: [ push ]
+env:
+  GITHUB_REPOSITORY_SSH_URL: "git@github.com:${{ github.repository }}.git"
+  TMP_DOCKER_IMAGE: "gomeli/ui/${{ github.ref }}"
+  DOCKER_IMAGE: "gomeli/ui"
+  IS_RELEASE_BRANCH: "${{ github.ref == 'refs/heads/latest' || github.ref == 'refs/heads/next' || github.ref == 'refs/heads/beta' }}"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12'
+      - name: "install dependencies"
+        run: npm ci
+      - name: "create VERSION file"
+        if: ${{ env.IS_RELEASE_BRANCH == 'true' }}
+        run: |
+          source ./scripts/setup-git.sh "$RELEASE_DEPLOY_KEY"
+          echo $GITHUB_REPOSITORY_SSH_URL
+          npx semantic-release -r $GITHUB_REPOSITORY_SSH_URL -d
+          echo "Next release version is $(cat VERSION)"
+        env:
+          RELEASE_DEPLOY_KEY: ${{ secrets.RELEASE_DEPLOY_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+      - name: "Lint"
+        run: npm run lint
+      - name: "test"
+        run: npm run test:ci
+      - name: "build"
+        run: |
+          if [ -f VERSION ]; then
+            npm version --no-git-tag-version $(cat VERSION) --allow-same-version
+          fi
+          npm run build
+          docker build -f ./docker/Dockerfile -t $TMP_DOCKER_IMAGE .
+      - name: "release"
+        if: ${{ env.IS_RELEASE_BRANCH == 'true' }}
+        run: |
+          source ./scripts/setup-git.sh "$RELEASE_DEPLOY_KEY"
+          npx semantic-release -r $GITHUB_REPOSITORY_SSH_URL
+        env:
+          RELEASE_DEPLOY_KEY: ${{ secrets.RELEASE_DEPLOY_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+      - name: "publish dockerhub"
+        if: ${{ env.IS_RELEASE_BRANCH == 'true' }}
+        run: |
+          docker login -u $DOCKER_USER -p $DOCKER_TOKEN
+          npx docker-semver-tags --sourceImage $TMP_DOCKER_IMAGE --targetImage $DOCKER_IMAGE --versionTag $(cat VERSION)
+        env:
+          DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
+          DOCKER_USER: ${{ secrets.DOCKER_USER }}
+      - name: "realign next"
+        if: ${{ env.IS_RELEASE_BRANCH == 'true' }}
+        run: |
+          source ./scripts/setup-git.sh "$RELEASE_DEPLOY_KEY"
+          HEAD_BRANCH=`echo "${GITHUB_REF//refs\/heads\//}" | tr -d '\n'`
+          ./scripts/rebase-git-branch.sh "next" "$HEAD_BRANCH"
+        env:
+          RELEASE_DEPLOY_KEY: ${{ secrets.RELEASE_DEPLOY_KEY }}

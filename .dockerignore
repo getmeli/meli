@@ -1,0 +1,6 @@
+*
+!node_modules
+!migrate-mongo-config.js
+!migrations
+!build
+**/*.js.map

@@ -1,0 +1,31 @@
+version: "3"
+
+services:
+
+  mongo:
+    image: mongo:4.2-bionic
+    volumes:
+      - ./data/mongo:/data/db
+    ports:
+      - 127.0.0.1:27017:27017
+
+  #  redis:
+  #    image: redis
+  #    ports:
+  #      - 127.0.0.1:6379:6379
+
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - 127.0.0.1:8025:8025
+      - 127.0.0.1:1025:1025
+
+  caddy:
+    image: caddy
+    command: ['caddy', 'run', '--config', '/etc/caddy/config.json']
+    ports:
+      - 127.0.0.1:80:80
+      - 127.0.0.1:2019:2019
+    volumes:
+      - ./data/caddy:/sites
+      - ./caddy/config-dev.json:/etc/caddy/config.json:ro
