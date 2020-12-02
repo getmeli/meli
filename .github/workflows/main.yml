@@ -2,8 +2,8 @@ name: main
 on: [ push ]
 env:
   GITHUB_REPOSITORY_SSH_URL: "git@github.com:${{ github.repository }}.git"
-  TMP_DOCKER_IMAGE: "gomeli/ui/${{ github.ref }}"
-  DOCKER_IMAGE: "gomeli/ui"
+  TMP_DOCKER_IMAGE: "gomeli/backend/${{ github.ref }}"
+  DOCKER_IMAGE: "gomeli/backend"
   IS_RELEASE_BRANCH: "${{ github.ref == 'refs/heads/latest' || github.ref == 'refs/heads/next' || github.ref == 'refs/heads/beta' }}"
 jobs:
   build:
