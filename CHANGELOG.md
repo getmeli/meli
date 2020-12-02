@@ -1,3 +1,10 @@
+# 1.0.0-next.1 (2020-12-02)
+
+
+### Features
+
+* initial release ([391e883](https://github.com/gomeli/meli/commit/391e8839bd08ca7a99a8e4e29dd694a3c0e758c3))
+
 # [1.0.0-next.27](https://gitlab.charlie-bravo.be/meli/meli/compare/v1.0.0-next.26...v1.0.0-next.27) (2020-12-01)
 
 
