@@ -1,13 +1,9 @@
 import chalk from 'chalk';
 import { cidrSubnet } from 'ip';
-import {
-  array, boolean, number, string,
-} from 'joi';
+import { array, boolean, number, string } from 'joi';
 import { tmpdir } from 'os';
 import { EnvSpec, parseEnv } from './commons/env/parse-env';
-import {
-  commaSeparatedStringToArray, stringToBoolean, stringToInt,
-} from './commons/env/transformers';
+import { commaSeparatedStringToArray, stringToBoolean, stringToInt } from './commons/env/transformers';
 import { AppError } from './commons/errors/app-error';
 import { URL } from 'url';
 import { toUrl } from './commons/validators/to-url';
@@ -87,7 +83,7 @@ const envSpec: EnvSpec<Env> = {
     schema: string().required().custom(toUrl),
   },
   MELI_SITES_DOMAIN: {
-    schema: string().required().custom(toUrl),
+    schema: string().optional().default(process.env.MELI_HOST).custom(toUrl),
   },
   MELI_PUBLIC_HOST: {
     schema: string(),
