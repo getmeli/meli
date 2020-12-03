@@ -4,10 +4,9 @@ import axios, { AxiosInstance } from 'axios';
 import {
   array, number, object, string,
 } from 'joi';
-import { AuthProvider, AuthProviderUser } from '../auth-provider';
 import { GiteaUser } from './types/gitea-user';
-import { ensureStackTrace } from '../../../commons/axios/ensure-stack-trace';
-import { JOI_OPTIONS } from '../../../constants';
+import { ensureStackTrace } from '../../../../commons/axios/ensure-stack-trace';
+import { JOI_OPTIONS } from '../../../../constants';
 import { GiteaOrg } from './types/gitea-org';
 
 const $user = object({
@@ -20,7 +19,7 @@ const $orgs = array().required().items(object({
   username: string(),
 }));
 
-export class Gitea implements AuthProvider {
+export class Gitea {
   private axios: AxiosInstance;
 
   constructor(
@@ -36,8 +35,7 @@ export class Gitea implements AuthProvider {
     ensureStackTrace(this.axios);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async getUser(profile: any): Promise<AuthProviderUser> {
+  async getUser() {
     const [
       { data: user },
       { data: orgs },

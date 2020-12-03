@@ -1,13 +1,15 @@
 import { User, Users } from '../entities/users/user';
 import { Logger } from '../commons/logger/logger';
-import { AuthProviderType, AuthProviderUser } from './providers/auth-provider';
 import { uuid } from '../utils/uuid';
 import { Members } from '../entities/members/member';
 
 const logger = new Logger('meli.server:createOrUpdateUser');
 
-export interface PassportUser extends AuthProviderUser {
-  authProvider: AuthProviderType;
+export interface PassportUser {
+  authProvider: string;
+  id: any;
+  name: string;
+  email: string;
 }
 
 export async function createOrUpdateUser(passportUser: PassportUser): Promise<User> {

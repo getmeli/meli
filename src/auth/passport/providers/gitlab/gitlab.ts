@@ -4,10 +4,9 @@ import axios, { AxiosInstance } from 'axios';
 import {
   array, number, object, string,
 } from 'joi';
-import { AuthProvider, AuthProviderUser } from '../auth-provider';
 import { GitlabUser } from './types/gitlab-user';
-import { ensureStackTrace } from '../../../commons/axios/ensure-stack-trace';
-import { JOI_OPTIONS } from '../../../constants';
+import { ensureStackTrace } from '../../../../commons/axios/ensure-stack-trace';
+import { JOI_OPTIONS } from '../../../../constants';
 import { GitlabGroup } from './types/gitlab-group';
 
 const $user = object({
@@ -20,7 +19,7 @@ const $orgs = array().required().items(object({
   path: string(),
 }));
 
-export class Gitlab implements AuthProvider {
+export class Gitlab {
   private axios: AxiosInstance;
 
   constructor(
@@ -36,8 +35,7 @@ export class Gitlab implements AuthProvider {
     ensureStackTrace(this.axios);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async getUser(profile: any): Promise<AuthProviderUser> {
+  async getUser() {
     const [
       gitlabUser,
       { data: groups },

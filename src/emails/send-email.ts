@@ -32,14 +32,14 @@ export async function sendEmail(
   const compiledTemplate: TemplateDelegate = compile(template);
   const text = compiledTemplate(templateVariables);
 
-  const proms = to.map(async email => {
-    await emails.sendMail({
-      from: env.MELI_MAIL_FROM,
-      to: email,
-      subject: `${env.MELI_MAIL_SUBJECT_PREFIX} ${subject}`,
-      text,
-    });
-  });
-
-  await Promise.all(proms);
+  await Promise.all(
+    to.map(async email => {
+      await emails.sendMail({
+        from: env.MELI_MAIL_FROM,
+        to: email,
+        subject: `${env.MELI_MAIL_SUBJECT_PREFIX} ${subject}`,
+        text,
+      });
+    }),
+  );
 }

@@ -1,26 +1,19 @@
 import {
   NextFunction, Request, Response,
 } from 'express';
-import { createOrUpdateUser, PassportUser } from '../create-or-update-user';
-import { env } from '../../env';
-import { UnauthorizedError } from '../../commons/errors/unauthorized-error';
+import { createOrUpdateUser, PassportUser } from './create-or-update-user';
+import { env } from '../env';
 import {
   authCookieName, cookieOptions, JwtToken,
-} from '../auth';
+} from './auth';
 import jwt from 'jsonwebtoken';
-import { Logger } from '../../commons/logger/logger';
-import { wrapAsyncMiddleware } from '../../commons/utils/wrap-async-middleware';
+import { Logger } from '../commons/logger/logger';
+import { wrapAsyncMiddleware } from '../commons/utils/wrap-async-middleware';
 
 const logger = new Logger('meli.server:authenticate');
 
-const allowedOrgs = new Set(env.MELI_ORGS);
-
 async function handler(req: Request, res: Response, next: NextFunction) {
   const passportUser = req.user as PassportUser;
-  if (allowedOrgs.size !== 0 && passportUser.orgs && passportUser.orgs.every(org => !allowedOrgs.has(org))) {
-    logger.debug('user', passportUser, 'not allowed to login as none of their orgs are allowed', env.MELI_ORGS);
-    return next(new UnauthorizedError('Not an org member'));
-  }
 
   const user = await createOrUpdateUser(passportUser);
 

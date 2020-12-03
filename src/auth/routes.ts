@@ -1,19 +1,13 @@
 import { Router } from 'express';
-import {
-  gitea_callback,
-  gitea_redirect,
-  github_callback,
-  github_redirect,
-  gitlab_callback,
-  gitlab_redirect,
-  google_callback,
-  google_redirect,
-} from './passport';
 import passport from 'passport';
-import { authenticate } from './utils/authenticate';
+import { authenticate } from './authenticate';
 import { signOut } from './handlers/sign-out';
 import { apiEndpoint } from '../entities/api/api-endpoint';
 import { getAuthMethods } from './handlers/get-auth-methods';
+import { google_callback, google_redirect } from './passport/google';
+import { gitea_callback, gitea_redirect } from './passport/gitea';
+import { github_callback, github_redirect } from './passport/github';
+import { gitlab_callback, gitlab_redirect } from './passport/gitlab';
 
 const router = Router();
 

@@ -2,10 +2,9 @@ import axios, { AxiosInstance } from 'axios';
 import {
   array, boolean, number, object, string,
 } from 'joi';
-import { AuthProvider, AuthProviderUser } from '../auth-provider';
 import { GithubUser } from './types/github-user';
-import { ensureStackTrace } from '../../../commons/axios/ensure-stack-trace';
-import { JOI_OPTIONS } from '../../../constants';
+import { ensureStackTrace } from '../../../../commons/axios/ensure-stack-trace';
+import { JOI_OPTIONS } from '../../../../constants';
 import { GithubEmail } from './types/github-email';
 import { GithubOrg } from './types/github-org';
 
@@ -25,7 +24,7 @@ const $emails = array()
     primary: boolean().required(),
   }));
 
-export class Github implements AuthProvider {
+export class Github {
   private axios: AxiosInstance;
 
   constructor(
@@ -45,7 +44,7 @@ export class Github implements AuthProvider {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async getUser(profile: any): Promise<AuthProviderUser> {
+  async getUser() {
     const [
       { data: user },
       { data: orgs },
@@ -59,13 +58,14 @@ export class Github implements AuthProvider {
       this.axios.get<GithubEmail[]>('/user/emails'),
     ]);
     const giteaUser: GithubUser = await $user.validateAsync(user, JOI_OPTIONS);
-    const giteaOrgs: GithubOrg[] = await $orgs.validateAsync(orgs, JOI_OPTIONS);
+    const githubOrgs: GithubOrg[] = await $orgs.validateAsync(orgs, JOI_OPTIONS);
+    console.log(orgs, githubOrgs);
     const githubEmails: GithubEmail[] = await $emails.validateAsync(emails, JOI_OPTIONS);
     return {
       id: giteaUser.id,
       name: giteaUser.login,
       email: (githubEmails.find(({ primary }) => primary)?.email || githubEmails[0].email),
-      orgs: giteaOrgs.map(org => org.login),
+      orgs: githubOrgs.map(org => org.login),
     };
   }
 }

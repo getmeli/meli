@@ -1,12 +1,11 @@
 import { AppDb } from '../../db/db';
-import { AuthProviderType } from '../../auth/providers/auth-provider';
 import { ApiToken } from '../api/api-token';
 
 export interface User {
   _id: string;
   createdAt: Date;
   updatedAt: Date;
-  authProvider: AuthProviderType;
+  authProvider: string;
   externalUserId: any;
   name: string;
   email: string;

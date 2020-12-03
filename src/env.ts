@@ -24,16 +24,18 @@ export interface Env {
   MELI_GITLAB_URL: string;
   MELI_GITLAB_CLIENT_ID: string;
   MELI_GITLAB_CLIENT_SECRET: string;
+  MELI_GITLAB_GROUPS: string[];
   MELI_GITEA_URL: string;
   MELI_GITEA_CLIENT_ID: string;
   MELI_GITEA_CLIENT_SECRET: string;
+  MELI_GITEA_ORGS: string[];
   MELI_GITHUB_URL: string;
   MELI_GITHUB_CLIENT_ID: string;
   MELI_GITHUB_CLIENT_SECRET: string;
+  MELI_GITHUB_ORGS: string[];
   MELI_GOOGLE_CLIENT_ID: string;
   MELI_GOOGLE_CLIENT_SECRET: string;
   MELI_MIGRATE_ROLLBACK: boolean;
-  MELI_ORGS: string[];
   MELI_SSL_KEY: string;
   MELI_SSL_CERT: string;
   MELI_COOKIE_SAMESITE: boolean;
@@ -136,7 +138,21 @@ const envSpec: EnvSpec<Env> = {
     transform: stringToBoolean(),
     schema: boolean().default(false),
   },
-  MELI_ORGS: {
+  MELI_GITHUB_ORGS: {
+    transform: commaSeparatedStringToArray(),
+    schema: array().optional().default([]).min(0)
+      .items(
+        string().trim().required(),
+      ),
+  },
+  MELI_GITEA_ORGS: {
+    transform: commaSeparatedStringToArray(),
+    schema: array().optional().default([]).min(0)
+      .items(
+        string().trim().required(),
+      ),
+  },
+  MELI_GITLAB_GROUPS: {
     transform: commaSeparatedStringToArray(),
     schema: array().optional().default([]).min(0)
       .items(
