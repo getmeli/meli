@@ -87,7 +87,7 @@ async function main(): Promise<any> {
   app.use(compression());
   app.use(helmet());
   app.use(cors({
-    origin: env.MELI_UI_URL,
+    origin: env.MELI_UI_HOST.host,
     credentials: true,
   }));
 

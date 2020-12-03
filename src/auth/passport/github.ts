@@ -19,7 +19,7 @@ if (
   && env.MELI_GITHUB_CLIENT_ID
   && env.MELI_GITHUB_CLIENT_SECRET
 ) {
-  const oauthCallbackUrl = `${env.MELI_HOST}${github_callback}`;
+  const oauthCallbackUrl = `${env.MELI_HOST.host}${github_callback}`;
   logger.debug('Enabling github auth', oauthCallbackUrl);
 
   passport.use('github', new OAuth2Strategy(

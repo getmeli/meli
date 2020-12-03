@@ -14,6 +14,7 @@ import { getBranchFilesDir, getBranchStaticDir } from '../entities/sites/get-sit
 import { RedirectType, ReverseProxyRedirectConfig } from '../entities/sites/redirect';
 import { getReverseProxyDial } from './utils/get-reverse-proxy-dial';
 import { URL } from 'url';
+import { appServer } from './config/app-server';
 
 const logger = new Logger('meli.server:caddy');
 
@@ -66,6 +67,7 @@ async function generateConfig(): Promise<any> {
     apps: {
       http: {
         servers: {
+          app: appServer,
           sites: {
             listen: [':80'],
             routes: [

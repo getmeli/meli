@@ -15,7 +15,7 @@ if (
   env.MELI_GOOGLE_CLIENT_ID
   && env.MELI_GOOGLE_CLIENT_SECRET
 ) {
-  const oauthCallbackUrl = `${env.MELI_HOST}${google_callback}`;
+  const oauthCallbackUrl = `${env.MELI_HOST.host}${google_callback}`;
   logger.debug('Enabling google auth', oauthCallbackUrl);
 
   // TODO could we use the OAuth2 strategy ?

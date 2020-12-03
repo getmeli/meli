@@ -19,7 +19,7 @@ if (
   && env.MELI_GITEA_CLIENT_ID
   && env.MELI_GITEA_CLIENT_SECRET
 ) {
-  const oauthCallbackUrl = `${env.MELI_HOST}${gitea_callback}`;
+  const oauthCallbackUrl = `${env.MELI_HOST.host}${gitea_callback}`;
   logger.debug('Enabling gitea auth', oauthCallbackUrl);
 
   passport.use('gitea', new OAuth2Strategy(

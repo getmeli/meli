@@ -20,7 +20,7 @@ if (
   && env.MELI_GITLAB_CLIENT_ID
   && env.MELI_GITLAB_CLIENT_SECRET
 ) {
-  const oauthCallbackUrl = `${env.MELI_HOST}${gitlab_callback}`;
+  const oauthCallbackUrl = `${env.MELI_HOST.host}${gitlab_callback}`;
   logger.debug('Enabling gitlab auth', oauthCallbackUrl);
 
   passport.use('gitlab', new OAuth2Strategy(

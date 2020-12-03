@@ -10,16 +10,17 @@ import {
 } from './commons/env/transformers';
 import { AppError } from './commons/errors/app-error';
 import { URL } from 'url';
+import { toUrl } from './commons/validators/to-url';
 
 export interface Env {
   DEBUG: string;
   MELI_PORT: number;
-  MELI_HOST: string;
+  MELI_HOST: URL;
   MELI_SITES_DOMAIN: URL;
   MELI_PUBLIC_HOST: string;
   MELI_JWT_SECRET: string;
   MELI_JWT_TOKEN_EXPIRATION: number;
-  MELI_UI_URL: string;
+  MELI_UI_HOST: URL;
   MELI_MONGO_URI: string;
   MELI_GITLAB_URL: string;
   MELI_GITLAB_CLIENT_ID: string;
@@ -68,7 +69,8 @@ export interface Env {
   MELI_STATIC_DIR: string;
   MELI_CADDY_MELI_SERVER_HOST: string;
   MELI_BCRYPT_SALTROUNDS: number;
-  MELI_CADDY_REDIRECT_PREFIX: string;
+  MELI_CADDY_UI_HOST: URL;
+  MELI_CADDY_API_HOST: URL;
 }
 
 const envSpec: EnvSpec<Env> = {
@@ -80,10 +82,10 @@ const envSpec: EnvSpec<Env> = {
     schema: number().default(3000),
   },
   MELI_HOST: {
-    schema: string().required(),
+    schema: string().required().custom(toUrl),
   },
   MELI_SITES_DOMAIN: {
-    schema: string().required().custom(url => new URL(url)),
+    schema: string().required().custom(toUrl),
   },
   MELI_PUBLIC_HOST: {
     schema: string(),
@@ -95,8 +97,8 @@ const envSpec: EnvSpec<Env> = {
     transform: stringToInt(),
     schema: number().min(3600).default(86400 * 30),
   },
-  MELI_UI_URL: {
-    schema: string().required(),
+  MELI_UI_HOST: {
+    schema: string().required().custom(toUrl),
   },
   MELI_GITLAB_URL: {
     schema: string().default('https://gitlab.com'),
@@ -286,9 +288,11 @@ const envSpec: EnvSpec<Env> = {
     transform: stringToInt(),
     schema: number().optional().default(10),
   },
-  MELI_CADDY_REDIRECT_PREFIX: {
-    // TODO included slash might be confusing
-    schema: string().optional().default('/env/').pattern(/^\/[\w_-]+$/),
+  MELI_CADDY_UI_HOST: {
+    schema: string().optional().custom(toUrl),
+  },
+  MELI_CADDY_API_HOST: {
+    schema: string().optional().custom(toUrl),
   },
 };
 

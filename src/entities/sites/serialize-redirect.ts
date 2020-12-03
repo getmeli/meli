@@ -1,5 +1,4 @@
 import { Branch } from './branch';
-import { env } from '../../env';
 import { Site } from './site';
 import { getSiteUrl } from './get-site-url';
 import { getBranchUrl } from './get-branch-url';
@@ -13,6 +12,6 @@ export function serializeRedirect(site: Site, branch: Branch, redirect: Redirect
     type: redirect.type,
     path: redirect.path,
     config: redirect.config,
-    url: `${url}${env.MELI_CADDY_REDIRECT_PREFIX}${formatRedirectPath(redirect.path)}`,
+    url: `${url}${formatRedirectPath(redirect.path)}`,
   };
 }
