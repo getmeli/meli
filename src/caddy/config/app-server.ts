@@ -1,7 +1,7 @@
 import { env } from '../../env';
 
-const apiHost = env.MELI_CADDY_MELI_API_HOST?.host || env.MELI_HOST.host;
-const uiHost = env.MELI_CADDY_MELI_UI_HOST?.host || env.MELI_UI_HOST.host;
+const apiHost = env.MELI_CADDY_MELI_API_HOST.host;
+const uiHost = env.MELI_CADDY_MELI_UI_HOST.host;
 
 export const appServer = {
   listen: [':8080'],

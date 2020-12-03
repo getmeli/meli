@@ -100,7 +100,7 @@ const envSpec: EnvSpec<Env> = {
     schema: number().min(3600).default(86400 * 30),
   },
   MELI_UI_HOST: {
-    schema: string().required().custom(toUrl),
+    schema: string().optional().default(process.env.MELI_HOST).custom(toUrl),
   },
   MELI_GITLAB_URL: {
     schema: string().default('https://gitlab.com'),
@@ -288,10 +288,10 @@ const envSpec: EnvSpec<Env> = {
     schema: number().optional().default(10),
   },
   MELI_CADDY_MELI_UI_HOST: {
-    schema: string().optional().custom(toUrl),
+    schema: string().optional().default(process.env.MELI_UI_HOST || process.env.MELI_HOST).custom(toUrl),
   },
   MELI_CADDY_MELI_API_HOST: {
-    schema: string().optional().custom(toUrl),
+    schema: string().optional().default(process.env.MELI_HOST).custom(toUrl),
   },
   MELI_ACME_SERVER: {
     schema: string().optional().custom(isUrl),

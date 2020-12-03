@@ -27,7 +27,7 @@ export const errors = {
         {
           handler: 'reverse_proxy',
           upstreams: [{
-            dial: getReverseProxyDial(env.MELI_CADDY_MELI_API_HOST?.host || env.MELI_HOST.host),
+            dial: getReverseProxyDial(env.MELI_CADDY_MELI_API_HOST.host),
           }],
           handle_response: [{
             status_code: '{http.error.status_code}',
