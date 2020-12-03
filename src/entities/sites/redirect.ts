@@ -36,7 +36,7 @@ export interface Redirect<T = any> {
 
 export const $redirect = object({
   type: string().required().valid(...enumToArray(RedirectType)),
-  path: string().required().trim(),
+  path: string().required().trim().regex(/^\//),
   config: object()
     .when('type', {
       is: RedirectType.file,
