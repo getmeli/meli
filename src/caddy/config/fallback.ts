@@ -17,7 +17,7 @@ export const fallback = {
     {
       handler: 'reverse_proxy',
       upstreams: [{
-        dial: env.MELI_CADDY_MELI_SERVER_HOST,
+        dial: env.MELI_CADDY_MELI_API_HOST?.host || env.MELI_HOST,
       }],
       handle_response: [{
         status_code: '404',

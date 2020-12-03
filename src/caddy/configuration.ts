@@ -3,7 +3,7 @@ import { relative, resolve } from 'path';
 import { Logger } from '../commons/logger/logger';
 import { env } from '../env';
 import {
-  AcmeSslConfiguration, Site, SiteDomain, Sites,
+  AcmeSslConfiguration, ManualSslConfiguration, Site, SiteDomain, Sites,
 } from '../entities/sites/site';
 import { unique } from '../utils/arrays-utils';
 import { errors } from './config/errors';
@@ -69,14 +69,30 @@ async function generateConfig(): Promise<any> {
         servers: {
           app: appServer,
           sites: {
-            listen: [':80'],
+            listen: [':80', ':443'],
             routes: [
               ...sites.flatMap(generateSiteRoutes),
               fallback,
             ],
             errors,
+            ...generateServerTlsConfig(sites),
           },
         },
+      },
+      tls: {
+        automation: {
+          policies: [
+            ...(!env.MELI_ACME_SERVER ? [] : [{
+              issuer: {
+                module: 'acme',
+                ca: env.MELI_ACME_SERVER,
+                trusted_roots_pem_files: env.MELI_ACME_CADDY_CA_PATH ? [env.MELI_ACME_CADDY_CA_PATH] : undefined,
+              },
+              on_demand: true,
+            }]),
+          ],
+        },
+        certificates: generateManualCertificatesConfig(sites),
       },
     },
   };
@@ -185,6 +201,43 @@ function getAuthHandle(password: BranchPassword) {
           salt: base64Encode(password.salt),
         }],
       },
+    },
+  };
+}
+
+function generateManualCertificatesConfig(sites: Site[]) {
+  const domains = sites
+    .flatMap(site => site.domains)
+    .filter(domain => domain?.sslConfiguration?.type === 'manual');
+
+  return {
+    load_pem: domains.map(domain => ({
+      certificate: (domain.sslConfiguration as ManualSslConfiguration).fullchain,
+      key: (domain.sslConfiguration as ManualSslConfiguration).privateKey,
+      tags: [domain.name], // TODO id?
+    })),
+  };
+}
+
+function generateServerTlsConfig(sites: Site[]) {
+  const domains = [
+    ...sites.flatMap(site => site.domains),
+    // TODO default domains
+  ];
+  return {
+    tls_connection_policies: domains.map(domain => ({
+      match: {
+        sni: [domain.name],
+      },
+      certificate_selection: {
+        all_tags: [/* TODO */],
+      },
+    })),
+    automatic_https: {
+      skip: domains
+        .filter(domain => domain.sslConfiguration?.type !== 'acme')
+        .map(domain => domain.name),
+      // TODO disable and test if it still works
     },
   };
 }

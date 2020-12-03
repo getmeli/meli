@@ -25,7 +25,9 @@ services:
     command: [ 'caddy', 'run', '--config', '/etc/caddy/config.json' ]
     ports:
       - 127.0.0.1:80:80
+      - 127.0.0.1:443:443
       - 127.0.0.1:8080:8080
+      - 127.0.0.1:8043:8043
       - 127.0.0.1:2019:2019
     volumes:
       - ./data/caddy:/sites

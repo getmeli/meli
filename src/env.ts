@@ -11,6 +11,7 @@ import {
 import { AppError } from './commons/errors/app-error';
 import { URL } from 'url';
 import { toUrl } from './commons/validators/to-url';
+import { isUrl } from './commons/validators/is-url';
 
 export interface Env {
   DEBUG: string;
@@ -67,10 +68,11 @@ export interface Env {
   MELI_SITES_DIR: string;
   MELI_INVITE_EXPIRATION_TIME: number;
   MELI_STATIC_DIR: string;
-  MELI_CADDY_MELI_SERVER_HOST: string;
   MELI_BCRYPT_SALTROUNDS: number;
-  MELI_CADDY_UI_HOST: URL;
-  MELI_CADDY_API_HOST: URL;
+  MELI_CADDY_MELI_UI_HOST: URL;
+  MELI_CADDY_MELI_API_HOST: URL;
+  MELI_ACME_SERVER: string;
+  MELI_ACME_CADDY_CA_PATH: string;
 }
 
 const envSpec: EnvSpec<Env> = {
@@ -263,7 +265,7 @@ const envSpec: EnvSpec<Env> = {
     schema: boolean().default(true),
   },
   MELI_CADDY_DIR: {
-    schema: string().required(),
+    schema: string().optional().default('/sites'),
   },
   MELI_CADDY_ADMIN_API_URL: {
     schema: string().default('http://localhost:2019'),
@@ -281,18 +283,21 @@ const envSpec: EnvSpec<Env> = {
     transform: stringToInt(),
     schema: number().optional().default(86400000),
   },
-  MELI_CADDY_MELI_SERVER_HOST: {
-    schema: string().required(),
-  },
   MELI_BCRYPT_SALTROUNDS: {
     transform: stringToInt(),
     schema: number().optional().default(10),
   },
-  MELI_CADDY_UI_HOST: {
+  MELI_CADDY_MELI_UI_HOST: {
     schema: string().optional().custom(toUrl),
   },
-  MELI_CADDY_API_HOST: {
+  MELI_CADDY_MELI_API_HOST: {
     schema: string().optional().custom(toUrl),
+  },
+  MELI_ACME_SERVER: {
+    schema: string().optional().custom(isUrl),
+  },
+  MELI_ACME_CADDY_CA_PATH: {
+    schema: string().optional(),
   },
 };
 
