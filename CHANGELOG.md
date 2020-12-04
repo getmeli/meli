@@ -1,3 +1,10 @@
+# [1.0.0-next.5](https://github.com/getmeli/meli/compare/v1.0.0-next.4...v1.0.0-next.5) (2020-12-04)
+
+
+### Bug Fixes
+
+* disable ssl for sites temporarily ([4477259](https://github.com/getmeli/meli/commit/44772595634660b315cc4d456d47b5b8556fc2a2))
+
 # [1.0.0-next.4](https://github.com/getmeli/meli/compare/v1.0.0-next.3...v1.0.0-next.4) (2020-12-04)
 
 
