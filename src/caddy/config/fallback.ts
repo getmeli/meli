@@ -8,10 +8,10 @@ export const fallback = {
   group: 'fallback',
   match: [{
     host: [
-      sitesUrl,
-      `*.${sitesUrl}`,
+      sitesUrl.host,
+      `*.${sitesUrl.host}`,
       // TODO workaround we find how to make a generic fallback
-      `*.*.${sitesUrl}`,
+      `*.*.${sitesUrl.host}`,
     ],
   }],
   handle: [
