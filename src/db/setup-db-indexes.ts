@@ -149,14 +149,6 @@ export async function setupDbIndexes() {
           name: 'text',
         },
       },
-      {
-        fieldOrSpec: {
-          hooks: 1,
-        },
-        options: {
-          unique: true,
-        },
-      },
     ],
     [Members().collectionName]: [
       {
