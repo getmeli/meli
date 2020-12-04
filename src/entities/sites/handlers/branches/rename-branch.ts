@@ -11,6 +11,7 @@ import { branchExistsGuard } from '../../guards/branch-exists-guard';
 import { params } from '../../../../commons/express-joi/params';
 import { $id } from '../../../../utils/id';
 import { $channelName } from '../../branch';
+import { configureSiteInCaddy } from '../../../../caddy/configuration';
 
 const validators = [
   params(object({
@@ -38,12 +39,12 @@ async function handler(req: Request, res: Response): Promise<void> {
     },
   );
 
-  // TODO reconfigure caddy + storage
-
   const site = await Sites().findOne({
     _id: siteId,
   });
   const branch = site.branches.find(brch => brch._id === branchId);
+
+  await configureSiteInCaddy(site);
 
   emitEvent(EventType.site_branch_updated, {
     site,

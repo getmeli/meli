@@ -20,6 +20,7 @@ import { STRING_MAX_LENGTH } from '../../../../constants';
 import { body } from '../../../../commons/express-joi/body';
 import slugify from 'slugify';
 import { getBranchUrl } from '../../get-branch-url';
+import { configureSiteInCaddy } from '../../../../caddy/configuration';
 
 async function createOrGetBranch(site: Site, branchName: string): Promise<Branch> {
   let branch: Branch = site.branches.find(c => c.name === branchName);
@@ -103,6 +104,8 @@ async function handler(req: Request, res: Response): Promise<void> {
       await linkBranchToRelease(site, branch, release);
     }),
   );
+
+  await configureSiteInCaddy(site);
 
   emitEvent(EventType.site_release_created, {
     site,
