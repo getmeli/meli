@@ -1,3 +1,10 @@
+# [1.0.0-next.7](https://github.com/getmeli/meli/compare/v1.0.0-next.6...v1.0.0-next.7) (2020-12-04)
+
+
+### Bug Fixes
+
+* remove index on team.hooks ([d39c93d](https://github.com/getmeli/meli/commit/d39c93da5af2c7cc97c21c3eb340fa8362378dc4))
+
 # [1.0.0-next.6](https://github.com/getmeli/meli/compare/v1.0.0-next.5...v1.0.0-next.6) (2020-12-04)
 
 
