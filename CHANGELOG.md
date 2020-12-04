@@ -1,3 +1,11 @@
+# [1.0.0-next.10](https://github.com/getmeli/meli/compare/v1.0.0-next.9...v1.0.0-next.10) (2020-12-04)
+
+
+### Bug Fixes
+
+* only use host part of sites url ([ca2f07a](https://github.com/getmeli/meli/commit/ca2f07a85f1bec89bff313bd196a5ff018282e4f))
+* reconfigure site in caddy on release upload ([d374427](https://github.com/getmeli/meli/commit/d374427f45bce08cbe2869f8e85ad8464fc3a242))
+
 # [1.0.0-next.9](https://github.com/getmeli/meli/compare/v1.0.0-next.8...v1.0.0-next.9) (2020-12-04)
 
 
