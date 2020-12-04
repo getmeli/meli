@@ -40,81 +40,35 @@ Docs: https://docs.meli.sh
 - [ ] Extend integrations
 - [ ] Accessibility
 
-## API
-
-> API docs coming soon
-
-1. Get your API token via the UI
-1. When making a request, send your token in the `token` query param or `X-Token` header
-
-## Webhooks
-
-Webhooks are delivered with a `X-Webhook-Signature` header computed as an HMAC using `sha256`.
-
-To verify the integrity of a webhook:
-1. compute the signature of the request **raw body** using an HMAC with `sha256` and the webhook secret
-1. verify that the computed signature equals the `X-Webhook-Signature` header content
-
-Reference NodeJS TypeScript implementation:
-```ts
-import { createHmac } from 'crypto';
-
-async function verifyWebhookSignature(req: Request, secret: string): Promise<boolean> {
-  const signature = req.header('X-Webhook-Signature');
-  const { rawBody } = req as any;
-  if (!signature || !rawBody || !Buffer.isBuffer(rawBody)) {
-    return false;
-  }
-  const hmac = createHmac('sha256', secret)
-    .update(rawBody)
-    .digest()
-    .toString('hex');
-  return hmac === signature;
-}
-```
-
-In ExpressJS, the raw body of a request can be obtained as follows:
-```js
-app.use(json({
-    verify: (req: any, res, buf) => {
-      // for performance, only do this when needed
-      if (Buffer.isBuffer(buf) && req.header('X-Webhook-Signature')) {
-        // store raw body for signature verification
-        req.rawBody = buf;
-      }
-      return true;
-    },
-}));
-```
-
 ## Development
 
 ### DNS config
 
 You need to configure your machine to allow wildcard domains for development. We've got a few ways to do this.
 
-#### Use dev.meli.sh
+#### Use loopback.sh
 
-We've configured dev.meli.sh to point to 127.0.0.1, so you can develop with it. Update your `.env`.
+We've configured loopback.sh to point to 127.0.0.1, so you can develop with it. Update your `.env`.
 
 ```
-MELI_SITES_HOST=dev.meli.sh
+MELI_SITES_HOST=loopback.sh
 ```
 
-Your sites will be served at `*.dev.meli.sh`.
+Your sites will be served at `*.loopback.sh`.
 
 Pros: simple, no config required
 Cons: you need to be connected to the internet
 
 #### Using /etc/hosts
 
-Unfortunately, /etc/hosts doesn't support wildcard domains, so you'll need to edit /etc/hosts for every site added to meli:
+Unfortunately, /etc/hosts doesn't support wildcard domains, so you'll need to edit /etc/hosts for every site added to Meli:
 
 ```
 127.0.0.1 my-site.test
+127.0.0.1 my-channel.my-site.test
 ```
 
-Pros: simple
+Pros: simple, can develop without internet
 Cons: have to reconfigure every time you add a site
 
 #### Using dnsmasq
@@ -139,10 +93,10 @@ ping hello.test
 
 Your sites will be served at `*.test`.
 
-Pros: you don't need to be connected to the internet
+Pros: you don't need to be connected to the internet, no need to reconfigure /etc/hosts
 Cons: a bit complex, config required
 
-## Ready to dev
+### Ready to dev
 
 1. Run `docker-compose -f ./docker-compose-dev.yml up -d`
 1. Configure your `.env` (copy `.env.example` to start with)
