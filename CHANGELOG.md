@@ -1,3 +1,10 @@
+# [1.0.0-next.9](https://github.com/getmeli/meli/compare/v1.0.0-next.8...v1.0.0-next.9) (2020-12-04)
+
+
+### Bug Fixes
+
+* default email template dir doesn't match docker setup ([a07c630](https://github.com/getmeli/meli/commit/a07c630a53fec2d01e4f405a221f6b3398f2a2fc))
+
 # [1.0.0-next.8](https://github.com/getmeli/meli/compare/v1.0.0-next.7...v1.0.0-next.8) (2020-12-04)
 
 
