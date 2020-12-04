@@ -7,6 +7,7 @@ import { Teams } from '../entities/teams/team';
 import { Members } from '../entities/members/member';
 import { ApiTokens } from '../entities/api/api-token';
 import { HookDeliveries } from '../hooks/hook-delivery';
+import { Hooks } from '../hooks/hook';
 
 export async function setupDbIndexes() {
   await configureIndexes(AppDb.client, {
@@ -23,14 +24,6 @@ export async function setupDbIndexes() {
       {
         fieldOrSpec: {
           invalidateTokensAt: 1,
-        },
-      },
-      {
-        fieldOrSpec: {
-          hooks: 1,
-        },
-        options: {
-          unique: true,
         },
       },
     ],
@@ -103,14 +96,6 @@ export async function setupDbIndexes() {
       {
         fieldOrSpec: {
           name: 'text',
-        },
-        options: {
-          unique: true,
-        },
-      },
-      {
-        fieldOrSpec: {
-          hooks: 1,
         },
         options: {
           unique: true,
@@ -192,6 +177,7 @@ export async function setupDbIndexes() {
         },
       },
     ],
+    [Hooks().collectionName]: [],
     [HookDeliveries().collectionName]: [
       {
         fieldOrSpec: {
