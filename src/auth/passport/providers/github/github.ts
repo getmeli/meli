@@ -59,7 +59,6 @@ export class Github {
     ]);
     const giteaUser: GithubUser = await $user.validateAsync(user, JOI_OPTIONS);
     const githubOrgs: GithubOrg[] = await $orgs.validateAsync(orgs, JOI_OPTIONS);
-    console.log(orgs, githubOrgs);
     const githubEmails: GithubEmail[] = await $emails.validateAsync(emails, JOI_OPTIONS);
     return {
       id: giteaUser.id,

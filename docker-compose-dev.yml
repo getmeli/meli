@@ -9,11 +9,6 @@ services:
     ports:
       - 127.0.0.1:27017:27017
 
-  #  redis:
-  #    image: redis
-  #    ports:
-  #      - 127.0.0.1:6379:6379
-
   mailhog:
     image: mailhog/mailhog
     ports:
@@ -26,9 +21,7 @@ services:
     ports:
       - 127.0.0.1:80:80
       - 127.0.0.1:443:443
-      - 127.0.0.1:8080:8080
-      - 127.0.0.1:8043:8043
       - 127.0.0.1:2019:2019
     volumes:
       - ./data/caddy:/sites
-      - ./caddy/config-dev.json:/etc/caddy/config.json:ro
+      - ./caddy/config.json:/etc/caddy/config.json:ro

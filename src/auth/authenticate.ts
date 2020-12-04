@@ -26,10 +26,10 @@ async function handler(req: Request, res: Response, next: NextFunction) {
     if (err) {
       return next(err);
     }
-    logger.debug(`Redirecting to ${env.MELI_UI_HOST.host} with cookie ${authCookieName} ${JSON.stringify(cookieOptions(), null, 2)}`);
+    logger.debug(`Redirecting to ${env.MELI_UI_HOST} with cookie ${authCookieName} ${JSON.stringify(cookieOptions(), null, 2)}`);
     res
       .cookie(authCookieName, token, cookieOptions())
-      .redirect(env.MELI_UI_HOST.host);
+      .redirect(env.MELI_UI_HOST);
   });
 }
 

@@ -11,7 +11,7 @@ apiEndpoint({
   method: 'get',
   path: '/api/v1/user',
   handler: getUserRoute,
-  auth: true,
+  auth: false,
   apiScope: ApiScope.user_read,
   router,
 });

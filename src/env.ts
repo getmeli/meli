@@ -1,23 +1,27 @@
 import chalk from 'chalk';
 import { cidrSubnet } from 'ip';
-import { array, boolean, number, string } from 'joi';
+import {
+  array, boolean, number, string,
+} from 'joi';
 import { tmpdir } from 'os';
 import { EnvSpec, parseEnv } from './commons/env/parse-env';
-import { commaSeparatedStringToArray, stringToBoolean, stringToInt } from './commons/env/transformers';
+import {
+  commaSeparatedStringToArray, stringToBoolean, stringToInt,
+} from './commons/env/transformers';
 import { AppError } from './commons/errors/app-error';
-import { URL } from 'url';
-import { toUrl } from './commons/validators/to-url';
 import { isUrl } from './commons/validators/is-url';
 
 export interface Env {
   DEBUG: string;
   MELI_PORT: number;
-  MELI_HOST: URL;
-  MELI_SITES_DOMAIN: URL;
-  MELI_PUBLIC_HOST: string;
+  MELI_HOST: string;
+  MELI_HOST_INTERNAL: string;
+  MELI_UI_HOST: string;
+  MELI_UI_HOST_INTERNAL: string;
+  MELI_UI_DIR: string;
+  MELI_SITES_HOST: string;
   MELI_JWT_SECRET: string;
   MELI_JWT_TOKEN_EXPIRATION: number;
-  MELI_UI_HOST: URL;
   MELI_MONGO_URI: string;
   MELI_GITLAB_URL: string;
   MELI_GITLAB_CLIENT_ID: string;
@@ -65,10 +69,8 @@ export interface Env {
   MELI_INVITE_EXPIRATION_TIME: number;
   MELI_STATIC_DIR: string;
   MELI_BCRYPT_SALTROUNDS: number;
-  MELI_CADDY_MELI_UI_HOST: URL;
-  MELI_CADDY_MELI_API_HOST: URL;
   MELI_ACME_SERVER: string;
-  MELI_ACME_CADDY_CA_PATH: string;
+  MELI_ACME_CA_PATH: string;
 }
 
 const envSpec: EnvSpec<Env> = {
@@ -77,16 +79,25 @@ const envSpec: EnvSpec<Env> = {
   },
   MELI_PORT: {
     transform: stringToInt(),
-    schema: number().default(3000),
+    schema: number().default(3001),
   },
   MELI_HOST: {
-    schema: string().required().custom(toUrl),
+    schema: string().required(),
   },
-  MELI_SITES_DOMAIN: {
-    schema: string().optional().default(process.env.MELI_HOST).custom(toUrl),
+  MELI_HOST_INTERNAL: {
+    schema: string().optional().custom(isUrl).default(process.env.MELI_HOST),
   },
-  MELI_PUBLIC_HOST: {
-    schema: string(),
+  MELI_UI_HOST: {
+    schema: string().optional().custom(isUrl).default(process.env.MELI_HOST),
+  },
+  MELI_UI_HOST_INTERNAL: {
+    schema: string().optional().custom(isUrl).default(process.env.MELI_HOST),
+  },
+  MELI_UI_DIR: {
+    schema: string().optional(),
+  },
+  MELI_SITES_HOST: {
+    schema: string().optional().custom(isUrl).default(process.env.MELI_HOST),
   },
   MELI_JWT_SECRET: {
     schema: string(),
@@ -94,9 +105,6 @@ const envSpec: EnvSpec<Env> = {
   MELI_JWT_TOKEN_EXPIRATION: {
     transform: stringToInt(),
     schema: number().min(3600).default(86400 * 30),
-  },
-  MELI_UI_HOST: {
-    schema: string().optional().default(process.env.MELI_HOST).custom(toUrl),
   },
   MELI_GITLAB_URL: {
     schema: string().default('https://gitlab.com'),
@@ -140,21 +148,21 @@ const envSpec: EnvSpec<Env> = {
   },
   MELI_GITHUB_ORGS: {
     transform: commaSeparatedStringToArray(),
-    schema: array().optional().default([]).min(0)
+    schema: array().optional().min(0)
       .items(
         string().trim().required(),
       ),
   },
   MELI_GITEA_ORGS: {
     transform: commaSeparatedStringToArray(),
-    schema: array().optional().default([]).min(0)
+    schema: array().optional().min(0)
       .items(
         string().trim().required(),
       ),
   },
   MELI_GITLAB_GROUPS: {
     transform: commaSeparatedStringToArray(),
-    schema: array().optional().default([]).min(0)
+    schema: array().optional().min(0)
       .items(
         string().trim().required(),
       ),
@@ -283,16 +291,10 @@ const envSpec: EnvSpec<Env> = {
     transform: stringToInt(),
     schema: number().optional().default(10),
   },
-  MELI_CADDY_MELI_UI_HOST: {
-    schema: string().optional().default(process.env.MELI_UI_HOST || process.env.MELI_HOST).custom(toUrl),
-  },
-  MELI_CADDY_MELI_API_HOST: {
-    schema: string().optional().default(process.env.MELI_HOST).custom(toUrl),
-  },
   MELI_ACME_SERVER: {
     schema: string().optional().custom(isUrl),
   },
-  MELI_ACME_CADDY_CA_PATH: {
+  MELI_ACME_CA_PATH: {
     schema: string().optional(),
   },
 };

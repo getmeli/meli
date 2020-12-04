@@ -12,14 +12,13 @@ const logger = new Logger('meli.server.passport:github');
 export const github_redirect = '/auth/github';
 export const github_callback = '/auth/github/callback';
 
-const allowedOrgs = new Set(env.MELI_GITHUB_ORGS);
-
 if (
   env.MELI_GITHUB_URL
   && env.MELI_GITHUB_CLIENT_ID
   && env.MELI_GITHUB_CLIENT_SECRET
 ) {
-  const oauthCallbackUrl = `${env.MELI_HOST.host}${github_callback}`;
+  const allowedOrgs = env.MELI_GITHUB_ORGS ? new Set(env.MELI_GITHUB_ORGS) : undefined;
+  const oauthCallbackUrl = `${env.MELI_HOST.toString()}${github_callback}`;
   logger.debug('Enabling github auth', oauthCallbackUrl);
 
   passport.use('github', new OAuth2Strategy(
@@ -37,13 +36,13 @@ if (
       github
         .getUser()
         .then(githubUser => {
-          if (githubUser.orgs.some(org => allowedOrgs.has(org))) {
+          if (!allowedOrgs || githubUser.orgs.some(org => allowedOrgs.has(org))) {
             cb(undefined, <PassportUser>{
               ...githubUser,
               authProvider: 'github',
             });
           } else {
-            logger.warn(`User ${githubUser.name} tried to login but is not a member of orgs ${allowedOrgs}`);
+            logger.warn(`User ${githubUser.name} tried to login but is not a member of restricted orgs`);
             cb();
           }
         })

@@ -13,14 +13,13 @@ const logger = new Logger('meli.server.passport:gitlab');
 export const gitlab_redirect = '/auth/gitlab';
 export const gitlab_callback = '/auth/gitlab/callback';
 
-const allowedGroups = new Set(env.MELI_GITLAB_GROUPS);
-
 if (
   env.MELI_GITLAB_URL
   && env.MELI_GITLAB_CLIENT_ID
   && env.MELI_GITLAB_CLIENT_SECRET
 ) {
-  const oauthCallbackUrl = `${env.MELI_HOST.host}${gitlab_callback}`;
+  const allowedGroups = env.MELI_GITLAB_GROUPS ? new Set(env.MELI_GITLAB_GROUPS) : undefined;
+  const oauthCallbackUrl = `${env.MELI_HOST.toString()}${gitlab_callback}`;
   logger.debug('Enabling gitlab auth', oauthCallbackUrl);
 
   passport.use('gitlab', new OAuth2Strategy(
@@ -38,13 +37,13 @@ if (
       gitlab
         .getUser()
         .then(gitlabUser => {
-          if (gitlabUser.orgs.some(org => allowedGroups.has(org))) {
+          if (!allowedGroups || gitlabUser.orgs.some(org => allowedGroups.has(org))) {
             cb(undefined, <PassportUser>{
               ...gitlabUser,
               authProvider: 'gitlab',
             });
           } else {
-            logger.warn(`User ${gitlabUser.name} tried to login but is not a member of groups ${allowedGroups}`);
+            logger.warn(`User ${gitlabUser.name} tried to login but is not a member of restricted groups`);
             cb();
           }
         })

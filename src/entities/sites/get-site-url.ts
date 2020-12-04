@@ -1,6 +1,9 @@
 import { Site } from './site';
 import { env } from '../../env';
+import { URL } from 'url';
+
+const url = new URL(env.MELI_SITES_HOST);
 
 export function getSiteUrl(site: Site) {
-  return `${env.MELI_SITES_DOMAIN.protocol}//${site.name}.${env.MELI_SITES_DOMAIN.host}`;
+  return `${url.protocol}//${site.name}.${url}`;
 }

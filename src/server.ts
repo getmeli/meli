@@ -4,15 +4,12 @@ import chalk from 'chalk';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-import 'dotenv/config';
 import express from 'express';
 import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
 import { createServer } from 'http';
 import morgan from 'morgan';
 import passport from 'passport';
-import 'source-map-support/register';
-import './commons/force-chalk-colors';
 import { Logger } from './commons/logger/logger';
 import { handleError } from './commons/utils/handle-error';
 import { STRIPE_SIGNATURE_HEADER } from './constants';
@@ -23,10 +20,10 @@ import { env } from './env';
 import { setupPrometheus } from './prometheus/setup-prometheus';
 import routes from './routes';
 import { io } from './socket/io';
-import './socket/socket-rooms';
 import { configureCaddy } from './caddy/configuration';
 import { authorizeReq } from './auth/handlers/authorize-req';
 import { authorizeApiReq } from './auth/handlers/authorize-api-req';
+import './socket/socket-rooms';
 
 const logger = new Logger('meli.server:server');
 
@@ -49,7 +46,7 @@ if (env.MELI_SENTRY_ENABLED && SENTRY_DSN && SENTRY_RELEASE) {
   logger.info(`Sentry is ${chalk.red('disabled')}`);
 }
 
-async function main(): Promise<any> {
+export async function server(): Promise<any> {
   await AppDb.init();
   await migrate(AppDb.client, AppDb.db);
   await setupDbIndexes();
@@ -87,7 +84,7 @@ async function main(): Promise<any> {
   app.use(compression());
   app.use(helmet());
   app.use(cors({
-    origin: env.MELI_UI_HOST.host,
+    origin: env.MELI_UI_HOST,
     credentials: true,
   }));
 
@@ -108,9 +105,9 @@ async function main(): Promise<any> {
     logger.error('Missing either SSL key or certificate (they must be both present for HTTPS or both absent for HTTP)');
   }
 
-  const server = createServer(app);
+  const httpServer = createServer(app);
 
-  server.listen(env.MELI_PORT, () => {
+  httpServer.listen(env.MELI_PORT, () => {
     logger.info(`Listening on port ${chalk.bold.green(env.MELI_PORT)}`);
   });
 
@@ -118,7 +115,5 @@ async function main(): Promise<any> {
     await setupPrometheus(app, env.MELI_PROMETHEUS_HOST, env.MELI_PROMETHEUS_PORT);
   }
 
-  io.listen(server);
+  io.listen(httpServer);
 }
-
-main().catch(err => logger.error(err));

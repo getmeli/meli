@@ -29,7 +29,7 @@ module.exports = {
   node: {
     __dirname: false,
   },
-  entry: './src/server.ts',
+  entry: './src/index.ts',
   output: {
     path: path.resolve(__dirname, 'build'),
     filename: 'index.js',

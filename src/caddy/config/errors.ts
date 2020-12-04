@@ -11,13 +11,11 @@ export const errors = {
       }],
     },
     {
-      match: [
-        {
-          vars: {
-            status_code: '404',
-          },
+      match: [{
+        vars: {
+          status_code: '404',
         },
-      ],
+      }],
       handle: [
         {
           handler: 'rewrite',
@@ -27,7 +25,7 @@ export const errors = {
         {
           handler: 'reverse_proxy',
           upstreams: [{
-            dial: getReverseProxyDial(env.MELI_CADDY_MELI_API_HOST.host),
+            dial: getReverseProxyDial(env.MELI_HOST_INTERNAL.toString()),
           }],
           handle_response: [{
             status_code: '{http.error.status_code}',

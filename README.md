@@ -8,6 +8,8 @@
 
 > Found a security issue ? Please [let us know !](https://github.com/gomeli/meli/security/advisories/new)
 
+Docs: https://docs.meli.sh
+
 ## How it works
 
 1. Sign-in and create your organization
@@ -37,10 +39,6 @@
 - [ ] Translations
 - [ ] Extend integrations
 - [ ] Accessibility
-
-## Deployment
-
-TODO
 
 ## API
 
@@ -100,7 +98,7 @@ You need to configure your machine to allow wildcard domains for development. We
 We've configured dev.meli.sh to point to 127.0.0.1, so you can develop with it. Update your `.env`.
 
 ```
-MELI_SITES_DOMAIN=dev.meli.sh
+MELI_SITES_HOST=dev.meli.sh
 ```
 
 Your sites will be served at `*.dev.meli.sh`.
@@ -149,6 +147,13 @@ Cons: a bit complex, config required
 1. Run `docker-compose -f ./docker-compose-dev.yml up -d`
 1. Configure your `.env` (copy `.env.example` to start with)
 1. Run `npm start`
+
+If you develop with the UI, you'll need to clone the [UI repo](https://github.com/getmeli/meli-ui), then start it.
+
+You can now browse at `http://localhost:80`:
+- `http://localhost:80/` => UI
+- `http://localhost:80/api`, `http://localhost:80/auth` and `http://localhost:80/socket.io` => API
+- `http://loopback.sh` => your sites will be served here
 
 ### SSL
 

@@ -12,14 +12,13 @@ const logger = new Logger('meli.server.passport:gitea');
 export const gitea_redirect = '/auth/gitea';
 export const gitea_callback = '/auth/gitea/callback';
 
-const allowedOrgs = new Set(env.MELI_GITEA_ORGS);
-
 if (
   env.MELI_GITEA_URL
   && env.MELI_GITEA_CLIENT_ID
   && env.MELI_GITEA_CLIENT_SECRET
 ) {
-  const oauthCallbackUrl = `${env.MELI_HOST.host}${gitea_callback}`;
+  const allowedOrgs = env.MELI_GITEA_ORGS ? new Set(env.MELI_GITEA_ORGS) : undefined;
+  const oauthCallbackUrl = `${env.MELI_HOST.toString()}${gitea_callback}`;
   logger.debug('Enabling gitea auth', oauthCallbackUrl);
 
   passport.use('gitea', new OAuth2Strategy(
@@ -36,13 +35,13 @@ if (
       gitea
         .getUser()
         .then(giteaUser => {
-          if (giteaUser.orgs.some(org => allowedOrgs.has(org))) {
+          if (!allowedOrgs || giteaUser.orgs.some(org => allowedOrgs.has(org))) {
             cb(undefined, <PassportUser>{
               ...giteaUser,
               authProvider: 'gitea',
             });
           } else {
-            logger.warn(`User ${giteaUser.name} tried to login but is not a member of orgs ${allowedOrgs}`);
+            logger.warn(`User ${giteaUser.name} tried to login but is not a member of restricted orgs`);
             cb();
           }
         })

@@ -1,7 +1,10 @@
 import { Branch } from './branch';
 import { env } from '../../env';
 import { Site } from './site';
+import { URL } from 'url';
+
+const url = new URL(env.MELI_SITES_HOST);
 
 export function getBranchUrl(site: Site, branch: Branch) {
-  return `${env.MELI_SITES_DOMAIN.protocol}//${branch.name}.${site.name}.${env.MELI_SITES_DOMAIN.host}`;
+  return `${url.protocol}//${branch.name}.${site.name}.${url}`;
 }

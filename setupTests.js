@@ -11,7 +11,6 @@ process.env['FORCE_COLOR'] = '1';
 
 // env
 process.env.MELI_HOST = 'http://localhost:3001';
-process.env.MELI_UI_HOST = 'http://localhost:3000';
 process.env.MELI_MAIL_HOST = 'localhost';
 process.env.MELI_MAIL_PORT = '1025';
 process.env.MELI_BILLING_PRICE_ID = 'price_123';
