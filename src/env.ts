@@ -271,14 +271,14 @@ const envSpec: EnvSpec<Env> = {
   MELI_CADDY_DIR: {
     schema: string().optional().default('/sites'),
   },
+  MELI_SITES_DIR: {
+    schema: string().required().default('/sites'),
+  },
   MELI_CADDY_ADMIN_API_URL: {
     schema: string().default('http://localhost:2019'),
   },
   MELI_TMP_DIRECTORY: {
     schema: string().optional().default(tmpdir()),
-  },
-  MELI_SITES_DIR: {
-    schema: string().required(),
   },
   MELI_STATIC_DIR: {
     schema: string().optional().default('./public'),
