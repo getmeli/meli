@@ -1,6 +1,6 @@
 FROM node:12-alpine
 
-COPY ./build/ /app/build/
+COPY ./build/ /app/
 COPY ./node_modules /app/node_modules
 COPY ./migrate-mongo-config.js /app/
 
@@ -14,4 +14,4 @@ ENV MELI_PORT=80
 
 EXPOSE 80
 
-CMD ["node", "build/index.js"]
+CMD ["node", "index.js"]
