@@ -1,3 +1,10 @@
+# [1.0.0-next.12](https://github.com/getmeli/meli/compare/v1.0.0-next.11...v1.0.0-next.12) (2020-12-04)
+
+
+### Bug Fixes
+
+* email template dir incorrect ([13fd39c](https://github.com/getmeli/meli/commit/13fd39c33b814009e72a4a01f71a1454b659cd21))
+
 # [1.0.0-next.11](https://github.com/getmeli/meli/compare/v1.0.0-next.10...v1.0.0-next.11) (2020-12-04)
 
 
