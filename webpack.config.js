@@ -98,7 +98,7 @@ module.exports = {
       patterns: [
         {
           from: './src/emails/templates',
-          to: 'email/templates',
+          to: 'emails/templates',
         },
         {
           from: './src/public',
