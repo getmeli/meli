@@ -42,6 +42,25 @@ Docs: https://docs.meli.sh
 
 ## Development
 
+### Start UI
+
+1. Clone the [UI repo](https://github.com/getmeli/meli-ui).
+1. `npm i && npm start`
+1. The app is accessible from http://localhost:3001, but we develop from http://localhost:80 (see below)
+
+### Start Caddy and the API
+
+1. Run `docker-compose -f ./docker-compose-dev.yml up -d`
+1. Configure your `.env` (copy `.env.example` to start with)
+1. Run `npm start`
+
+If you develop with the UI, you'll need to clone the [UI repo](https://github.com/getmeli/meli-ui), then start it.
+
+You can now browse at `http://localhost:80`:
+- `http://localhost:80/` => UI
+- `http://localhost:80/api`, `http://localhost:80/auth` and `http://localhost:80/socket.io` => API
+- `http://loopback.sh` => your sites will be served here
+
 ### DNS config
 
 You need to configure your machine to allow wildcard domains for development. We've got a few ways to do this.
@@ -96,19 +115,6 @@ Your sites will be served at `*.test`.
 Pros: you don't need to be connected to the internet, no need to reconfigure /etc/hosts
 Cons: a bit complex, config required
 
-### Ready to dev
-
-1. Run `docker-compose -f ./docker-compose-dev.yml up -d`
-1. Configure your `.env` (copy `.env.example` to start with)
-1. Run `npm start`
-
-If you develop with the UI, you'll need to clone the [UI repo](https://github.com/getmeli/meli-ui), then start it.
-
-You can now browse at `http://localhost:80`:
-- `http://localhost:80/` => UI
-- `http://localhost:80/api`, `http://localhost:80/auth` and `http://localhost:80/socket.io` => API
-- `http://loopback.sh` => your sites will be served here
-
 ### SSL
 
 Use [`mkcert`](https://github.com/FiloSottile/mkcert) to generate a certificate and key:
@@ -116,7 +122,7 @@ Use [`mkcert`](https://github.com/FiloSottile/mkcert) to generate a certificate 
 ```shell script
 brew install mkcert nss
 mkcert -install
-mkcert localhost
+mkcert loopback.sh
 ```
 
 then update your `.env` with:
@@ -126,4 +132,4 @@ MELI_SSL_KEY=localhost-key.pem
 MELI_SSL_CERT=localhost.pem
 ```
 
-For runners to register properly, you need to set `NODE_EXTRA_CA_CERTS` to the path of `mkcert`'s root CA (which should be in the directory printed in your console when running `mkcert -install` - you can always re-run this command). Make sure `NODE_EXTRA_CA_CERTS` is set prior to running `npm start`, otherwise it won't work.
+TODO see how to configure Caddy to use these files
