@@ -1,3 +1,10 @@
+# [1.0.0-next.6](https://github.com/getmeli/meli/compare/v1.0.0-next.5...v1.0.0-next.6) (2020-12-04)
+
+
+### Bug Fixes
+
+* try to fix SSL ([f8acc33](https://github.com/getmeli/meli/commit/f8acc33c9d67d4cfe56a1ff1a508093d05cd2ebc))
+
 # [1.0.0-next.5](https://github.com/getmeli/meli/compare/v1.0.0-next.4...v1.0.0-next.5) (2020-12-04)
 
 
