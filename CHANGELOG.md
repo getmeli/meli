@@ -1,3 +1,11 @@
+# [1.0.0-next.8](https://github.com/getmeli/meli/compare/v1.0.0-next.7...v1.0.0-next.8) (2020-12-04)
+
+
+### Bug Fixes
+
+* missing default value error when sites dir not set ([82a1336](https://github.com/getmeli/meli/commit/82a1336859813661faf8a89e018346b7653c7a88))
+* remove all hook indexes ([4e3dd95](https://github.com/getmeli/meli/commit/4e3dd95cb0ed329389572183ead08ea5b861a83b))
+
 # [1.0.0-next.7](https://github.com/getmeli/meli/compare/v1.0.0-next.6...v1.0.0-next.7) (2020-12-04)
 
 
