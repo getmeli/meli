@@ -93,11 +93,11 @@ const envSpec: EnvSpec<Env> = {
   MELI_UI_HOST_INTERNAL: {
     schema: string().optional().custom(isUrl).default(process.env.MELI_HOST),
   },
-  MELI_UI_DIR: {
-    schema: string().optional(),
-  },
   MELI_SITES_HOST: {
     schema: string().optional().custom(isUrl).default(process.env.MELI_HOST),
+  },
+  MELI_UI_DIR: {
+    schema: string().optional(),
   },
   MELI_JWT_SECRET: {
     schema: string(),

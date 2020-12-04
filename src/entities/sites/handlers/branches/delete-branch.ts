@@ -10,6 +10,7 @@ import { promises } from 'fs';
 import { canAdminSiteGuard } from '../../guards/can-admin-site-guard';
 import { EventType } from '../../../../events/app-event';
 import { branchExistsGuard } from '../../guards/branch-exists-guard';
+import { removeSiteBranchFromCaddy } from '../../../../caddy/configuration';
 
 const validators = [
   params(object({
@@ -59,6 +60,8 @@ async function handler(req: Request, res: Response): Promise<void> {
       },
     },
   });
+
+  await removeSiteBranchFromCaddy(site, branch);
 
   emitEvent(EventType.site_branch_deleted, {
     site,

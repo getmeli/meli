@@ -10,6 +10,8 @@ export const fallback = {
     host: [
       sitesUrl,
       `*.${sitesUrl}`,
+      // TODO workaround we find how to make a generic fallback
+      `*.*.${sitesUrl}`,
     ],
   }],
   handle: [

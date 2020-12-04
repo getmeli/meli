@@ -13,6 +13,7 @@ import { EventType } from '../../../../events/app-event';
 import { $channelName, Branch } from '../../branch';
 import { uuid } from '../../../../utils/uuid';
 import slugify from 'slugify';
+import { configureSiteBranchInCaddy } from '../../../../caddy/configuration';
 
 const validators = [
   body(object({
@@ -69,6 +70,8 @@ async function handler(req: Request, res: Response): Promise<void> {
   const site = await Sites().findOne({
     _id: siteId,
   });
+
+  await configureSiteBranchInCaddy(site, branch);
 
   emitEvent(EventType.site_branch_added, {
     site,

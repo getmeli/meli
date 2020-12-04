@@ -32,8 +32,8 @@ export async function configureSiteBranchInCaddy(site: Site, branch: Branch): Pr
   await configureCaddy();
 }
 
-export async function removeSiteBranchFromCaddy(siteId: string, channelName: string): Promise<void> {
-  logger.debug(`Reconfigured site branch ${siteId}:${channelName} from Caddy`);
+export async function removeSiteBranchFromCaddy(site: Site, branch: Branch): Promise<void> {
+  logger.debug(`Reconfigured site branch ${site.name}:${branch.name} from Caddy`);
   // TODO reconfigure branch only (or use another system so we don't have to reconfigure anything on publish)
   await configureCaddy();
 }

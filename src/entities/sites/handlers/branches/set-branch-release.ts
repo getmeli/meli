@@ -13,6 +13,7 @@ import { branchExistsGuard } from '../../guards/branch-exists-guard';
 import { params } from '../../../../commons/express-joi/params';
 import { serializeBranch } from '../../serialize-branch';
 import { linkBranchToRelease } from '../../link-branch-to-release';
+import { configureSiteBranchInCaddy } from '../../../../caddy/configuration';
 
 const validators = [
   params(object({
@@ -60,6 +61,8 @@ async function handler(req: Request, res: Response): Promise<void> {
   });
 
   await linkBranchToRelease(site, branch, release);
+
+  await configureSiteBranchInCaddy(site, branch);
 
   emitEvent(EventType.site_branch_release_set, {
     site,

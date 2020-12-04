@@ -20,7 +20,7 @@ export function generateSiteRoutes(site: Site): any[] {
   const domains: SiteDomain[] = [
     ...(site.domains || []),
     {
-      name: `${site.name}.${sitesUrl}`,
+      name: `${site.name}.${sitesUrl.host}`,
       sslConfiguration: {
         type: 'acme',
       } as AcmeSslConfiguration,
@@ -78,7 +78,7 @@ export function generateSiteRoutes(site: Site): any[] {
             headers: {
               request: {
                 add: {
-                  host: [new URL((redirect.config as ReverseProxyRedirectConfig).url)],
+                  host: [new URL((redirect.config as ReverseProxyRedirectConfig).url).host],
                   'X-Proxied-By': ['Meli/Caddy'],
                 },
               },
