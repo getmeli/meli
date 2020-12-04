@@ -1,3 +1,10 @@
+# [1.0.0-next.13](https://github.com/getmeli/meli/compare/v1.0.0-next.12...v1.0.0-next.13) (2020-12-04)
+
+
+### Bug Fixes
+
+* fallback host should use host, not url ([48dd216](https://github.com/getmeli/meli/commit/48dd2166dda6de8f24c49a13fde7b62d1ef797c8))
+
 # [1.0.0-next.12](https://github.com/getmeli/meli/compare/v1.0.0-next.11...v1.0.0-next.12) (2020-12-04)
 
 
