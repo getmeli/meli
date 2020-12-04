@@ -2,7 +2,7 @@ import { Sites } from '../entities/sites/site';
 import { env } from '../env';
 import { generateSiteRoutes } from './config/generate-site-routes';
 import { errors } from './config/errors';
-import { generateManualCertificatesConfig, generateServerTlsConfig } from './config/ssl';
+import { generateManualCertificatesConfig } from './config/ssl';
 import { uiRoute } from './config/ui-route';
 import { apiRoute } from './config/api-route';
 import { URL } from 'url';
@@ -40,7 +40,7 @@ export async function generateConfig(): Promise<any> {
               // fallback,
             ],
             errors,
-            ...(sslDisabled ? [] : generateServerTlsConfig(sites)),
+            // ...(sslDisabled ? [] : generateServerTlsConfig(sites)),
           },
         },
       },
