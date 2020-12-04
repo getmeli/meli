@@ -1,3 +1,16 @@
+# [1.0.0-next.4](https://github.com/getmeli/meli/compare/v1.0.0-next.3...v1.0.0-next.4) (2020-12-04)
+
+
+### Features
+
+* basic ssl configuration ([d2ce463](https://github.com/getmeli/meli/commit/d2ce463fe600b3ee3d7c319226a0d16d59c4d693))
+* configure caddy to server api and ui ([5a3566a](https://github.com/getmeli/meli/commit/5a3566a5af74db602bf06be4086245b2fd6bbc2a))
+* default sites domain to main host ([c2ff7a2](https://github.com/getmeli/meli/commit/c2ff7a29c6696c05650479c0a97dba9f90f8012f))
+* force redirect path to start with slash ([b3f29e5](https://github.com/getmeli/meli/commit/b3f29e5ef35b69ee241b784b8b92e3e9e5d8ebbe))
+* simplify deployment ([c53702c](https://github.com/getmeli/meli/commit/c53702c5380c1c03ca2a194f727988006bded84b))
+* simplify env configuration ([a6ff61f](https://github.com/getmeli/meli/commit/a6ff61fbfb2bba8bea1b57c887b61fba2b11c8fd))
+* split authentication methods and org access check ([8877034](https://github.com/getmeli/meli/commit/887703419a22bf9c9d680458cdb8e7d29a976957))
+
 # [1.0.0-next.3](https://github.com/getmeli/meli/compare/v1.0.0-next.2...v1.0.0-next.3) (2020-12-02)
 
 
