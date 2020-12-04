@@ -1,3 +1,10 @@
+# [1.0.0-next.11](https://github.com/getmeli/meli/compare/v1.0.0-next.10...v1.0.0-next.11) (2020-12-04)
+
+
+### Bug Fixes
+
+* caddy config uses site url instead of host ([7649c3b](https://github.com/getmeli/meli/commit/7649c3b5ad6df9ec9e38e7cb384903142fc465b0))
+
 # [1.0.0-next.10](https://github.com/getmeli/meli/compare/v1.0.0-next.9...v1.0.0-next.10) (2020-12-04)
 
 
