@@ -13,12 +13,14 @@ import { getReverseProxyDial } from '../utils/get-reverse-proxy-dial';
 import { BranchPassword } from '../../entities/sites/branch';
 import { base64Encode } from '../../commons/utils/base64';
 
+const sitesUrl = new URL(env.MELI_SITES_HOST);
+
 export function generateSiteRoutes(site: Site): any[] {
   const group = `site_${site._id}`;
   const domains: SiteDomain[] = [
     ...(site.domains || []),
     {
-      name: `${site.name}.${env.MELI_SITES_HOST}`,
+      name: `${site.name}.${sitesUrl}`,
       sslConfiguration: {
         type: 'acme',
       } as AcmeSslConfiguration,

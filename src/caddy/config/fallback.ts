@@ -1,12 +1,15 @@
 import { env } from '../../env';
 import { getReverseProxyDial } from '../utils/get-reverse-proxy-dial';
+import { URL } from 'url';
+
+const sitesUrl = new URL(env.MELI_SITES_HOST);
 
 export const fallback = {
   group: 'fallback',
   match: [{
     host: [
-      env.MELI_SITES_HOST,
-      `*.${env.MELI_SITES_HOST}`,
+      sitesUrl,
+      `*.${sitesUrl}`,
     ],
   }],
   handle: [

@@ -7,12 +7,12 @@ import { uiRoute } from './config/ui-route';
 import { apiRoute } from './config/api-route';
 import { URL } from 'url';
 
-const sitesUrl = new URL(env.MELI_SITES_HOST);
+const meliUrl = new URL(env.MELI_HOST);
 
 export async function generateConfig(): Promise<any> {
   const sites = await Sites().find().toArray();
 
-  const sslDisabled = sitesUrl.protocol === 'http:';
+  const sslDisabled = meliUrl.protocol === 'http:';
   return {
     logging: {
       logs: {
