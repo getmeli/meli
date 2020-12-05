@@ -1,3 +1,11 @@
+# [1.0.0-next.17](https://github.com/getmeli/meli/compare/v1.0.0-next.16...v1.0.0-next.17) (2020-12-05)
+
+
+### Features
+
+* rename debug scope ([4e5848a](https://github.com/getmeli/meli/commit/4e5848ac6cf1945c42b441e87c4cc71ca81ac8f2))
+* rename env vars that require a url ([786534a](https://github.com/getmeli/meli/commit/786534a5da0864a07ad27159db95e0f1b8fffd4e))
+
 # [1.0.0-next.16](https://github.com/getmeli/meli/compare/v1.0.0-next.15...v1.0.0-next.16) (2020-12-05)
 
 
