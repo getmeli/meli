@@ -10,6 +10,7 @@ import {
 } from './commons/env/transformers';
 import { AppError } from './commons/errors/app-error';
 import { isUrl } from './commons/validators/is-url';
+import { Logger } from './commons/logger/logger';
 
 export interface Env {
   DEBUG: string;
@@ -218,11 +219,11 @@ const envSpec: EnvSpec<Env> = {
     schema: number().min(1000).default(5000),
   },
   MELI_MAIL_HOST: {
-    schema: string().required(),
+    schema: string().optional(),
   },
   MELI_MAIL_PORT: {
     transform: stringToInt(),
-    schema: number().required(),
+    schema: number().optional(),
   },
   MELI_MAIL_USERNAME: {
     schema: string().optional(),
@@ -305,3 +306,6 @@ const envSpec: EnvSpec<Env> = {
 };
 
 export const env: Env = parseEnv(envSpec);
+
+const logger = new Logger('meli.server:env');
+logger.debug('loaded env', env);
