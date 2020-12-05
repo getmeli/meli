@@ -2,7 +2,7 @@ import { object, Schema } from 'joi';
 import { JOI_OPTIONS } from '../../constants';
 import { Logger } from '../logger/logger';
 
-const logger = new Logger('meli.server:env.parse');
+const logger = new Logger('meli.api:env.parse');
 
 export interface EnvVarSpec {
   transform?: (val: any) => any;

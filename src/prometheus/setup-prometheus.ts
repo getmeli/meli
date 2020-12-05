@@ -8,7 +8,7 @@ import { Application } from 'express';
 import { up } from './metrics/up';
 import { userCount } from './metrics/user-count';
 
-const logger = new Logger('meli.server:prometheus');
+const logger = new Logger('meli.api:prometheus');
 
 function registerCustomMetrics() {
   const updateMetrics = () => {

@@ -3,7 +3,7 @@ import { hookEventHandler } from '../hooks/hook-event-handler';
 import { socketEventHandler } from '../socket/socket-event-handler';
 import { AppEventData } from './app-event-data';
 
-const logger = new Logger('meli.server:emitEvent');
+const logger = new Logger('meli.api:emitEvent');
 
 export function emitEvent<T extends keyof AppEventData>(type: T, data: AppEventData[T]): void {
   logger.debug(type, data);

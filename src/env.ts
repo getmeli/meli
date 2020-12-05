@@ -1,13 +1,9 @@
 import chalk from 'chalk';
 import { cidrSubnet } from 'ip';
-import {
-  array, boolean, number, string,
-} from 'joi';
+import { array, boolean, number, string } from 'joi';
 import { tmpdir } from 'os';
 import { EnvSpec, parseEnv } from './commons/env/parse-env';
-import {
-  commaSeparatedStringToArray, stringToBoolean, stringToInt,
-} from './commons/env/transformers';
+import { commaSeparatedStringToArray, stringToBoolean, stringToInt } from './commons/env/transformers';
 import { AppError } from './commons/errors/app-error';
 import { isUrl } from './commons/validators/is-url';
 import { Logger } from './commons/logger/logger';
@@ -307,5 +303,5 @@ const envSpec: EnvSpec<Env> = {
 
 export const env: Env = parseEnv(envSpec);
 
-const logger = new Logger('meli.server:env');
+const logger = new Logger('meli.api:env');
 logger.debug('loaded env', env);

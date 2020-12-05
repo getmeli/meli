@@ -4,7 +4,7 @@ import Mail from 'nodemailer/lib/mailer';
 import { Logger } from '../commons/logger/logger';
 import chalk from 'chalk';
 
-const logger = new Logger('meli.server:emails');
+const logger = new Logger('meli.api:emails');
 
 let transporter: {
   sendMail(mailOptions: Mail.Options): Promise<SentMessageInfo>;

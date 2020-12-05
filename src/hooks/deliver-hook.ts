@@ -5,7 +5,7 @@ import { HookDeliveries, HookDelivery } from './hook-delivery';
 import { Hook } from './hook';
 import { AppEventData } from '../events/app-event-data';
 
-const logger = new Logger('meli.server:notify');
+const logger = new Logger('meli.api:notify');
 
 export async function deliverHook<EventType extends keyof AppEventData>(
   hook: Hook,

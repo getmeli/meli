@@ -4,7 +4,7 @@ import { Logger } from './logger/logger';
 import { promises } from 'dns';
 import { cidrSubnet } from 'ip';
 
-const logger = new Logger('meli.server:allowedHosts');
+const logger = new Logger('meli.api:allowedHosts');
 
 function ipMatch(ip: string, ranges: string[]) {
   return ranges

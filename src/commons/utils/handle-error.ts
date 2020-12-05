@@ -1,13 +1,11 @@
-import {
-  NextFunction, Request, Response,
-} from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { AxiosError } from 'axios';
 import { Logger } from '../logger/logger';
 import { HttpError } from '../errors/http-error';
 import { ValidationError } from 'joi';
 import { AppError } from '../errors/app-error';
 
-const logger = new Logger('meli.server:handleError');
+const logger = new Logger('meli.api:handleError');
 
 export function handleError(err: any, req: Request, res: Response, next: NextFunction): void {
   logger.debug(err);

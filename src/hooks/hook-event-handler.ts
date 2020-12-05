@@ -4,7 +4,7 @@ import { Logger } from '../commons/logger/logger';
 import { AppEventData } from '../events/app-event-data';
 import { getHooksForEvent } from './get-hooks-for-event';
 
-const logger = new Logger('meli.server:hookEventHandler');
+const logger = new Logger('meli.api:hookEventHandler');
 
 function deliverHooks<T extends keyof AppEventData>(hooks: Hook[], eventType: T, data: AppEventData[T]): void {
   hooks.forEach(hook => {

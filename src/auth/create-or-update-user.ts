@@ -3,7 +3,7 @@ import { Logger } from '../commons/logger/logger';
 import { uuid } from '../utils/uuid';
 import { Members } from '../entities/members/member';
 
-const logger = new Logger('meli.server:createOrUpdateUser');
+const logger = new Logger('meli.api:createOrUpdateUser');
 
 export interface PassportUser {
   authProvider: string;

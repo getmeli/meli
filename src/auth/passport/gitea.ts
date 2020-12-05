@@ -7,7 +7,7 @@ import OAuth2Strategy from 'passport-oauth2';
 import { Logger } from '../../commons/logger/logger';
 import { authMethods } from './auth-methods';
 
-const logger = new Logger('meli.server.passport:gitea');
+const logger = new Logger('meli.api.passport:gitea');
 
 export const gitea_redirect = '/auth/gitea';
 export const gitea_callback = '/auth/gitea/callback';

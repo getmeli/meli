@@ -3,7 +3,7 @@ import chalk from 'chalk';
 import { up } from 'migrate-mongo';
 import { Logger } from '../../commons/logger/logger';
 
-const logger = new Logger('meli.server:migrate.rollForward');
+const logger = new Logger('meli.api:migrate.rollForward');
 
 export async function rollForward(db: Db, client: MongoClient): Promise<void> {
   logger.debug('Rolling forward');

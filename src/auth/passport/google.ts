@@ -6,7 +6,7 @@ import GoogleStrategy from 'passport-google-oauth20';
 import { Logger } from '../../commons/logger/logger';
 import { authMethods } from './auth-methods';
 
-const logger = new Logger('meli.server.passport:google');
+const logger = new Logger('meli.api.passport:google');
 
 export const google_redirect = '/auth/google';
 export const google_callback = '/auth/google/callback';

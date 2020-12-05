@@ -37,7 +37,7 @@ function signBody(payload: string, secret: string): string {
     .toString('hex');
 }
 
-const logger = new Logger('meli.server:deliverWebHook');
+const logger = new Logger('meli.api:deliverWebHook');
 
 export async function deliverWebHook(
   config: WebhookConfig,

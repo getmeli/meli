@@ -13,7 +13,7 @@ import { orgSocketRoom } from '../entities/orgs/org';
 import { isOrgMember } from '../entities/orgs/guards/is-org-member';
 import { canAdminSite } from '../entities/sites/guards/can-admin-site';
 
-const logger = new Logger('meli.server:rooms');
+const logger = new Logger('meli.api:rooms');
 
 function joinRoom(
   socket: Socket,

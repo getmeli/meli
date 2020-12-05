@@ -25,7 +25,7 @@ import { authorizeReq } from './auth/handlers/authorize-req';
 import { authorizeApiReq } from './auth/handlers/authorize-api-req';
 import './socket/socket-rooms';
 
-const logger = new Logger('meli.server:server');
+const logger = new Logger('meli.api:server');
 
 logger.info(`Meli Server ${
   chalk.blue(BUILD_INFO.version)

@@ -18,7 +18,7 @@ const validators = [
   })),
 ];
 
-const logger = new Logger('meli.server:deleteRelease');
+const logger = new Logger('meli.api:deleteRelease');
 
 async function handler(req: Request, res: Response): Promise<void> {
   const { releaseId } = req.params;

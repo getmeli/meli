@@ -1,12 +1,10 @@
-import {
-  Collection, IndexSpecification, MongoError,
-} from 'mongodb';
+import { Collection, IndexSpecification, MongoError } from 'mongodb';
 import chalk from 'chalk';
 import { FieldOrSpec, MongoIndexSpec } from './configure-indexes';
 import { MongoErrorCode } from './mongo-error-code';
 import { Logger } from '../../commons/logger/logger';
 
-const logger = new Logger('meli.server:db.indexes.configure');
+const logger = new Logger('meli.api:db.indexes.configure');
 
 function findIndexWithSameKey(existingIndexes: IndexSpecification[], fieldOrSpec: FieldOrSpec) {
   const fields = typeof fieldOrSpec === 'string' ? [fieldOrSpec] : Object.keys(fieldOrSpec);

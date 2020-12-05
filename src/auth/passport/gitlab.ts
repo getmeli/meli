@@ -8,7 +8,7 @@ import { Logger } from '../../commons/logger/logger';
 import OAuth2Strategy from 'passport-oauth2';
 import { authMethods } from './auth-methods';
 
-const logger = new Logger('meli.server.passport:gitlab');
+const logger = new Logger('meli.api.passport:gitlab');
 
 export const gitlab_redirect = '/auth/gitlab';
 export const gitlab_callback = '/auth/gitlab/callback';

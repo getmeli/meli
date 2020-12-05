@@ -1,13 +1,11 @@
-import {
-  NextFunction, Request, Response,
-} from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { authCookieName, cookieOptions } from '../auth';
 import { Logger } from '../../commons/logger/logger';
 import { verifyToken } from '../utils/verify-token';
 import { wrapAsyncMiddleware } from '../../commons/utils/wrap-async-middleware';
 import { User } from '../../entities/users/user';
 
-const logger = new Logger('meli.server:authorizeReq');
+const logger = new Logger('meli.api:authorizeReq');
 
 async function handler(req: Request, res: Response, next: NextFunction) {
   const token = req.cookies[authCookieName];

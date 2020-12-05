@@ -5,7 +5,7 @@ import { Site } from '../entities/sites/site';
 import { Branch } from '../entities/sites/branch';
 import { generateConfig } from './generate-config';
 
-const logger = new Logger('meli.server:caddy');
+const logger = new Logger('meli.api:caddy');
 
 export async function configureCaddy(): Promise<void> {
   logger.debug('Configuring Caddy...');

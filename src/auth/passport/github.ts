@@ -7,7 +7,7 @@ import OAuth2Strategy from 'passport-oauth2';
 import { Logger } from '../../commons/logger/logger';
 import { authMethods } from './auth-methods';
 
-const logger = new Logger('meli.server.passport:github');
+const logger = new Logger('meli.api.passport:github');
 
 export const github_redirect = '/auth/github';
 export const github_callback = '/auth/github/callback';

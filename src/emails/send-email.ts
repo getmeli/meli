@@ -6,7 +6,7 @@ import { compile, TemplateDelegate } from 'handlebars';
 import { env } from '../env';
 import { Logger } from '../commons/logger/logger';
 
-const logger = new Logger('meli.server:sendEmailTemplate');
+const logger = new Logger('meli.api:sendEmailTemplate');
 
 export async function sendEmail(
   to: string[],
