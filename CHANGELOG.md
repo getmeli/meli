@@ -1,3 +1,10 @@
+# [1.0.0-next.16](https://github.com/getmeli/meli/compare/v1.0.0-next.15...v1.0.0-next.16) (2020-12-05)
+
+
+### Bug Fixes
+
+* wildcard fallback causes tls errors ([6a612cb](https://github.com/getmeli/meli/commit/6a612cb32ecff1f71ef30bb35b606be70b91a4bc))
+
 # [1.0.0-next.15](https://github.com/getmeli/meli/compare/v1.0.0-next.14...v1.0.0-next.15) (2020-12-05)
 
 
