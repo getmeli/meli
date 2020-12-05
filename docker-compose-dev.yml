@@ -17,11 +17,13 @@ services:
 
   caddy:
     image: caddy
-    command: [ 'caddy', 'run', '--config', '/etc/caddy/config.json' ]
+    command: [ 'caddy', 'run', '--config', '/etc/caddy/config.json', '--resume' ]
     ports:
       - 127.0.0.1:80:80
       - 127.0.0.1:443:443
       - 127.0.0.1:2019:2019
     volumes:
-      - ./data/caddy:/sites
-      - ./caddy/config.json:/etc/caddy/config.json:ro
+      - ./data/sites:/sites
+      - ./caddy/config.json:/etc/caddy/config.json
+      - ./data/caddy/data:/data
+      - ./data/caddy/config:/config

@@ -71,6 +71,7 @@ export interface Env {
   MELI_BCRYPT_SALTROUNDS: number;
   MELI_ACME_SERVER: string;
   MELI_ACME_CA_PATH: string;
+  MELI_AXIOS_TIMEOUT: number;
 }
 
 const envSpec: EnvSpec<Env> = {
@@ -296,6 +297,10 @@ const envSpec: EnvSpec<Env> = {
   },
   MELI_ACME_CA_PATH: {
     schema: string().optional(),
+  },
+  MELI_AXIOS_TIMEOUT: {
+    transform: stringToInt(),
+    schema: number().optional().default(10000),
   },
 };
 

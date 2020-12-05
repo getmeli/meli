@@ -22,7 +22,7 @@ export function handleError(err: any, req: Request, res: Response, next: NextFun
     if (err.isAxiosError) {
       logger.debug(JSON.stringify(err.toJSON(), null, 2));
       const axiosError: AxiosError = err as AxiosError;
-      logger.debug('response', JSON.stringify(axiosError.response.data, null, 2));
+      logger.debug('response', JSON.stringify(axiosError.response?.data, null, 2));
     }
   }
 

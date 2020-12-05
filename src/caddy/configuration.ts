@@ -10,8 +10,12 @@ const logger = new Logger('meli.server:caddy');
 export async function configureCaddy(): Promise<void> {
   logger.debug('Configuring Caddy...');
   const config = await generateConfig();
-  logger.debug(JSON.stringify(config, null, 2));
-  await axios.post(`${env.MELI_CADDY_ADMIN_API_URL}/load`, config);
+  const url = `${env.MELI_CADDY_ADMIN_API_URL}/load`;
+  logger.debug(url, JSON.stringify(config, null, 2));
+  await axios.post(url, config, {
+    timeout: env.MELI_AXIOS_TIMEOUT,
+  });
+  logger.debug('done updating caddy config');
 }
 
 export async function configureSiteInCaddy(site: Site) {
