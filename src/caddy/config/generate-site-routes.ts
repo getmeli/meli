@@ -13,7 +13,7 @@ import { getReverseProxyDial } from '../utils/get-reverse-proxy-dial';
 import { BranchPassword } from '../../entities/sites/branch';
 import { base64Encode } from '../../commons/utils/base64';
 
-const sitesUrl = new URL(env.MELI_SITES_HOST);
+const sitesUrl = new URL(env.MELI_SITES_URL);
 
 export function generateSiteRoutes(site: Site): any[] {
   const group = `site_${site._id}`;

@@ -25,7 +25,7 @@ export const errors = {
         {
           handler: 'reverse_proxy',
           upstreams: [{
-            dial: getReverseProxyDial(env.MELI_HOST_INTERNAL.toString()),
+            dial: getReverseProxyDial(env.MELI_URL_INTERNAL.toString()),
           }],
           handle_response: [{
             status_code: '{http.error.status_code}',

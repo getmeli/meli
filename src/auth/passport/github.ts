@@ -18,7 +18,7 @@ if (
   && env.MELI_GITHUB_CLIENT_SECRET
 ) {
   const allowedOrgs = env.MELI_GITHUB_ORGS ? new Set(env.MELI_GITHUB_ORGS) : undefined;
-  const oauthCallbackUrl = `${env.MELI_HOST.toString()}${github_callback}`;
+  const oauthCallbackUrl = `${env.MELI_URL.toString()}${github_callback}`;
   logger.debug('Enabling github auth', oauthCallbackUrl);
 
   passport.use('github', new OAuth2Strategy(

@@ -1,9 +1,13 @@
 import chalk from 'chalk';
 import { cidrSubnet } from 'ip';
-import { array, boolean, number, string } from 'joi';
+import {
+  array, boolean, number, string,
+} from 'joi';
 import { tmpdir } from 'os';
 import { EnvSpec, parseEnv } from './commons/env/parse-env';
-import { commaSeparatedStringToArray, stringToBoolean, stringToInt } from './commons/env/transformers';
+import {
+  commaSeparatedStringToArray, stringToBoolean, stringToInt,
+} from './commons/env/transformers';
 import { AppError } from './commons/errors/app-error';
 import { isUrl } from './commons/validators/is-url';
 import { Logger } from './commons/logger/logger';
@@ -11,12 +15,12 @@ import { Logger } from './commons/logger/logger';
 export interface Env {
   DEBUG: string;
   MELI_PORT: number;
-  MELI_HOST: string;
-  MELI_HOST_INTERNAL: string;
-  MELI_UI_HOST: string;
-  MELI_UI_HOST_INTERNAL: string;
+  MELI_URL: string;
+  MELI_URL_INTERNAL: string;
+  MELI_UI_URL: string;
+  MELI_UI_URL_INTERNAL: string;
+  MELI_SITES_URL: string;
   MELI_UI_DIR: string;
-  MELI_SITES_HOST: string;
   MELI_JWT_SECRET: string;
   MELI_JWT_TOKEN_EXPIRATION: number;
   MELI_MONGO_URI: string;
@@ -79,20 +83,20 @@ const envSpec: EnvSpec<Env> = {
     transform: stringToInt(),
     schema: number().default(3001),
   },
-  MELI_HOST: {
+  MELI_URL: {
     schema: string().required(),
   },
-  MELI_HOST_INTERNAL: {
-    schema: string().optional().custom(isUrl).default(process.env.MELI_HOST),
+  MELI_URL_INTERNAL: {
+    schema: string().optional().custom(isUrl).default(process.env.MELI_URL),
   },
-  MELI_UI_HOST: {
-    schema: string().optional().custom(isUrl).default(process.env.MELI_HOST),
+  MELI_UI_URL: {
+    schema: string().optional().custom(isUrl).default(process.env.MELI_URL),
   },
-  MELI_UI_HOST_INTERNAL: {
-    schema: string().optional().custom(isUrl).default(process.env.MELI_HOST),
+  MELI_UI_URL_INTERNAL: {
+    schema: string().optional().custom(isUrl).default(process.env.MELI_URL),
   },
-  MELI_SITES_HOST: {
-    schema: string().optional().custom(isUrl).default(process.env.MELI_HOST),
+  MELI_SITES_URL: {
+    schema: string().optional().custom(isUrl).default(process.env.MELI_URL),
   },
   MELI_UI_DIR: {
     schema: string().optional(),

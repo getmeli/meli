@@ -19,7 +19,7 @@ if (
   && env.MELI_GITLAB_CLIENT_SECRET
 ) {
   const allowedGroups = env.MELI_GITLAB_GROUPS ? new Set(env.MELI_GITLAB_GROUPS) : undefined;
-  const oauthCallbackUrl = `${env.MELI_HOST.toString()}${gitlab_callback}`;
+  const oauthCallbackUrl = `${env.MELI_URL.toString()}${gitlab_callback}`;
   logger.debug('Enabling gitlab auth', oauthCallbackUrl);
 
   passport.use('gitlab', new OAuth2Strategy(

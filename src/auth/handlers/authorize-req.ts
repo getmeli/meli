@@ -1,4 +1,6 @@
-import { NextFunction, Request, Response } from 'express';
+import {
+  NextFunction, Request, Response,
+} from 'express';
 import { authCookieName, cookieOptions } from '../auth';
 import { Logger } from '../../commons/logger/logger';
 import { verifyToken } from '../utils/verify-token';

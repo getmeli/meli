@@ -2,7 +2,7 @@ import { env } from '../../env';
 import { getReverseProxyDial } from '../utils/get-reverse-proxy-dial';
 import { URL } from 'url';
 
-const meliuihost = new URL(env.MELI_UI_HOST);
+const meliuihost = new URL(env.MELI_UI_URL);
 
 export const uiRoute = {
   group: 'ui',
@@ -18,7 +18,7 @@ export const uiRoute = {
     } : {
       handler: 'reverse_proxy',
       upstreams: [{
-        dial: getReverseProxyDial(env.MELI_UI_HOST_INTERNAL.toString()),
+        dial: getReverseProxyDial(env.MELI_UI_URL_INTERNAL.toString()),
       }],
     },
   ],

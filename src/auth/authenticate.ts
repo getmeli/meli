@@ -1,7 +1,11 @@
-import { NextFunction, Request, Response } from 'express';
+import {
+  NextFunction, Request, Response,
+} from 'express';
 import { createOrUpdateUser, PassportUser } from './create-or-update-user';
 import { env } from '../env';
-import { authCookieName, cookieOptions, JwtToken } from './auth';
+import {
+  authCookieName, cookieOptions, JwtToken,
+} from './auth';
 import jwt from 'jsonwebtoken';
 import { Logger } from '../commons/logger/logger';
 import { wrapAsyncMiddleware } from '../commons/utils/wrap-async-middleware';
@@ -22,10 +26,10 @@ async function handler(req: Request, res: Response, next: NextFunction) {
     if (err) {
       return next(err);
     }
-    logger.debug(`Redirecting to ${env.MELI_UI_HOST} with cookie ${authCookieName} ${JSON.stringify(cookieOptions(), null, 2)}`);
+    logger.debug(`Redirecting to ${env.MELI_UI_URL} with cookie ${authCookieName} ${JSON.stringify(cookieOptions(), null, 2)}`);
     res
       .cookie(authCookieName, token, cookieOptions())
-      .redirect(env.MELI_UI_HOST);
+      .redirect(env.MELI_UI_URL);
   });
 }
 

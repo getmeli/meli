@@ -1,4 +1,6 @@
-import { NextFunction, Request, Response } from 'express';
+import {
+  NextFunction, Request, Response,
+} from 'express';
 import { AxiosError } from 'axios';
 import { Logger } from '../logger/logger';
 import { HttpError } from '../errors/http-error';

@@ -7,7 +7,7 @@ import { uiRoute } from './config/ui-route';
 import { apiRoute } from './config/api-route';
 import { URL } from 'url';
 
-const meliUrl = new URL(env.MELI_HOST);
+const meliUrl = new URL(env.MELI_URL);
 
 export async function generateConfig(): Promise<any> {
   const sites = await Sites().find().toArray();

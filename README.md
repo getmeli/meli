@@ -70,7 +70,7 @@ You need to configure your machine to allow wildcard domains for development. We
 We've configured loopback.sh to point to 127.0.0.1, so you can develop with it. Update your `.env`.
 
 ```
-MELI_SITES_HOST=loopback.sh
+MELI_SITES_URL=loopback.sh
 ```
 
 Your sites will be served at `*.loopback.sh`.

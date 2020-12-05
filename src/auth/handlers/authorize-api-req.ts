@@ -1,4 +1,6 @@
-import { NextFunction, Request, Response } from 'express';
+import {
+  NextFunction, Request, Response,
+} from 'express';
 import { Logger } from '../../commons/logger/logger';
 import { wrapAsyncMiddleware } from '../../commons/utils/wrap-async-middleware';
 import { Users } from '../../entities/users/user';

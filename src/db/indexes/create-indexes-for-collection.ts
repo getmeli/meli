@@ -1,4 +1,6 @@
-import { Collection, IndexSpecification, MongoError } from 'mongodb';
+import {
+  Collection, IndexSpecification, MongoError,
+} from 'mongodb';
 import chalk from 'chalk';
 import { FieldOrSpec, MongoIndexSpec } from './configure-indexes';
 import { MongoErrorCode } from './mongo-error-code';

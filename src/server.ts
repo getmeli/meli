@@ -84,7 +84,7 @@ export async function server(): Promise<any> {
   app.use(compression());
   app.use(helmet());
   app.use(cors({
-    origin: env.MELI_UI_HOST,
+    origin: env.MELI_UI_URL,
     credentials: true,
   }));
 
