@@ -1,3 +1,10 @@
+# [1.0.0-next.14](https://github.com/getmeli/meli/compare/v1.0.0-next.13...v1.0.0-next.14) (2020-12-05)
+
+
+### Bug Fixes
+
+* persist caddy config and resume it on restart ([d8f01f3](https://github.com/getmeli/meli/commit/d8f01f371ee840e80dd9373ccefbbf0bc671be9a))
+
 # [1.0.0-next.13](https://github.com/getmeli/meli/compare/v1.0.0-next.12...v1.0.0-next.13) (2020-12-04)
 
 
