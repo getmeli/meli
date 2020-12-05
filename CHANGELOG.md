@@ -1,3 +1,11 @@
+# [1.0.0-next.15](https://github.com/getmeli/meli/compare/v1.0.0-next.14...v1.0.0-next.15) (2020-12-05)
+
+
+### Features
+
+* debug log env ([58153d9](https://github.com/getmeli/meli/commit/58153d9c0eb6ad551724a0c3e1a2b1376633073a))
+* make email config optional ([a5194f2](https://github.com/getmeli/meli/commit/a5194f2b392859218117e8a92696e79b234bd3de))
+
 # [1.0.0-next.14](https://github.com/getmeli/meli/compare/v1.0.0-next.13...v1.0.0-next.14) (2020-12-05)
 
 
