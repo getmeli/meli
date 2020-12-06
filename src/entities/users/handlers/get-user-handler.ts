@@ -8,6 +8,6 @@ async function handler(req: Request, res: Response) {
   res.json(user ? await serializeUser(user) : null);
 }
 
-export const getUserRoute = [
+export const getUserHandler = [
   wrapAsyncMiddleware(handler),
 ];

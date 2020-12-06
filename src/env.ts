@@ -73,6 +73,8 @@ export interface Env {
   MELI_ACME_SERVER: string;
   MELI_ACME_CA_PATH: string;
   MELI_AXIOS_TIMEOUT: number;
+  MELI_USER: string;
+  MELI_PASSWORD: string;
 }
 
 const envSpec: EnvSpec<Env> = {
@@ -302,6 +304,12 @@ const envSpec: EnvSpec<Env> = {
   MELI_AXIOS_TIMEOUT: {
     transform: stringToInt(),
     schema: number().optional().default(10000),
+  },
+  MELI_USER: {
+    schema: string().optional(),
+  },
+  MELI_PASSWORD: {
+    schema: string().optional(),
   },
 };
 

@@ -24,6 +24,7 @@ import { configureCaddy } from './caddy/configuration';
 import { authorizeReq } from './auth/handlers/authorize-req';
 import { authorizeApiReq } from './auth/handlers/authorize-api-req';
 import './socket/socket-rooms';
+import './auth/passport';
 
 const logger = new Logger('meli.api:server');
 

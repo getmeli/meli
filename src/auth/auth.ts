@@ -2,7 +2,7 @@ import { env } from '../env';
 
 export const authCookieName = 'auth';
 
-export function cookieOptions(maxAge = env.MELI_JWT_TOKEN_EXPIRATION * 1000) {
+export function getCookieOptions(maxAge = env.MELI_JWT_TOKEN_EXPIRATION * 1000) {
   return {
     httpOnly: true,
     path: '/',

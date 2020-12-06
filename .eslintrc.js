@@ -45,14 +45,7 @@ module.exports = {
     'no-underscore-dangle': ['error', { allow: ['_id'] }],
     'arrow-parens': ['error', 'as-needed'],
     'import/prefer-default-export': 'off',
-    'object-curly-newline': ['error', {
-      // assignments, params, any js object
-      "ObjectExpression": { "multiline": true, "minProperties": 1 },
-      // destructure
-      "ObjectPattern": { "multiline": true, "minProperties": 3 },
-      "ImportDeclaration": { "multiline": true, "minProperties": 3 },
-      "ExportDeclaration": { "multiline": true, "minProperties": 3 },
-    }],
+    'object-curly-newline': 'off',
     'object-property-newline': ['error', { allowAllPropertiesOnSameLine: false }],
     'no-param-reassign': 'off',
     'security/detect-non-literal-fs-filename': 'off',

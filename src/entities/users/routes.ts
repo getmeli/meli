@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getUserRoute } from './handlers/get-user-route';
+import { getUserHandler } from './handlers/get-user-handler';
 import { apiEndpoint } from '../api/api-endpoint';
 import { ApiScope } from '../api/api-scope';
 import { invalidateTokens } from './handlers/invalidate-tokens';
@@ -10,7 +10,7 @@ apiEndpoint({
   name: 'get user route',
   method: 'get',
   path: '/api/v1/user',
-  handler: getUserRoute,
+  handler: getUserHandler,
   auth: false,
   apiScope: ApiScope.user_read,
   router,

@@ -1,7 +1,7 @@
 import {
   NextFunction, Request, Response,
 } from 'express';
-import { authCookieName, cookieOptions } from '../auth';
+import { authCookieName, getCookieOptions } from '../auth';
 import { Logger } from '../../commons/logger/logger';
 import { verifyToken } from '../utils/verify-token';
 import { wrapAsyncMiddleware } from '../../commons/utils/wrap-async-middleware';
@@ -25,7 +25,7 @@ async function handler(req: Request, res: Response, next: NextFunction) {
     user = await verifyToken(token);
   } catch (e) {
     // TODO better way to handle this ?
-    res.cookie(authCookieName, '', cookieOptions(0));
+    res.cookie(authCookieName, '', getCookieOptions(0));
     throw e;
   }
 
