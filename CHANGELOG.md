@@ -1,3 +1,10 @@
+# [1.0.0-next.18](https://github.com/getmeli/meli/compare/v1.0.0-next.17...v1.0.0-next.18) (2020-12-06)
+
+
+### Features
+
+* in-memory login with user and password ([36c7cd5](https://github.com/getmeli/meli/commit/36c7cd51a1388c3aeb6d7ebd4f38c0cf931c3d1f))
+
 # [1.0.0-next.17](https://github.com/getmeli/meli/compare/v1.0.0-next.16...v1.0.0-next.17) (2020-12-05)
 
 
