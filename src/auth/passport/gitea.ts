@@ -18,7 +18,7 @@ if (
   && env.MELI_GITEA_CLIENT_SECRET
 ) {
   const allowedOrgs = env.MELI_GITEA_ORGS ? new Set(env.MELI_GITEA_ORGS) : undefined;
-  const oauthCallbackUrl = `${env.MELI_URL.toString()}${gitea_callback}`;
+  const oauthCallbackUrl = `${env.MELI_URL}${gitea_callback}`;
   logger.debug('Enabling gitea auth', oauthCallbackUrl);
 
   passport.use('gitea', new OAuth2Strategy(

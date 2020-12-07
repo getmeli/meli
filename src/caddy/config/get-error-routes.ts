@@ -30,9 +30,10 @@ export function getErrorRoutes(sites: Site[]) {
           {
             handler: 'reverse_proxy',
             upstreams: [{
-              dial: getReverseProxyDial(env.MELI_URL_INTERNAL.toString()),
+              dial: getReverseProxyDial(env.MELI_URL_INTERNAL),
             }],
             handle_response: [{
+              // express replies with 200 OK, so override with initial caddy status code
               status_code: '{http.error.status_code}',
             }],
           },

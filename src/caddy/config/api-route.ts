@@ -19,7 +19,7 @@ export const apiRoute = {
     {
       handler: 'reverse_proxy',
       upstreams: [{
-        dial: getReverseProxyDial(env.MELI_URL_INTERNAL.toString()),
+        dial: getReverseProxyDial(env.MELI_URL_INTERNAL),
       }],
     },
   ],
