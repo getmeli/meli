@@ -8,6 +8,7 @@ import { object } from 'joi';
 import { serializeMember } from '../../../members/serialize-member';
 import { Members } from '../../../members/member';
 import { orgExistsGuard } from '../../guards/org-exists-guard';
+import { isOrgMemberGuard } from '../../guards/is-org-member-guard';
 
 const validators = [
   params(object({
@@ -32,6 +33,7 @@ async function handler(req: Request, res: Response): Promise<void> {
 
 export const getCurrentOrgMember = [
   ...orgExistsGuard,
+  ...isOrgMemberGuard,
   ...validators,
   wrapAsyncMiddleware(handler),
 ];
