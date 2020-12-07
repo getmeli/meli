@@ -6,6 +6,7 @@ import { generateManualCertificatesConfig, generateServerTlsConfig } from './con
 import { uiRoute } from './config/ui-route';
 import { apiRoute } from './config/api-route';
 import { URL } from 'url';
+import { fallback } from './config/fallback';
 
 const meliUrl = new URL(env.MELI_URL);
 
@@ -34,6 +35,7 @@ export async function generateConfig(): Promise<any> {
               apiRoute,
               uiRoute,
               ...sites.flatMap(generateSiteRoutes),
+              fallback,
             ],
             errors: getErrorRoutes(sites),
             ...(sslDisabled ? [] : generateServerTlsConfig(sites)),
