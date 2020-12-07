@@ -1,3 +1,10 @@
+# [1.0.0-next.20](https://github.com/getmeli/meli/compare/v1.0.0-next.19...v1.0.0-next.20) (2020-12-07)
+
+
+### Features
+
+* allow limiting max orgs ([e9720e9](https://github.com/getmeli/meli/commit/e9720e923173a9e0e3b3c3e64151b6d9395d2180))
+
 # [1.0.0-next.19](https://github.com/getmeli/meli/compare/v1.0.0-next.18...v1.0.0-next.19) (2020-12-07)
 
 
