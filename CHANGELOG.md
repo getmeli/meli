@@ -1,3 +1,10 @@
+# [1.0.0-next.21](https://github.com/getmeli/meli/compare/v1.0.0-next.20...v1.0.0-next.21) (2020-12-07)
+
+
+### Features
+
+* add hook payloads ([e209fbd](https://github.com/getmeli/meli/commit/e209fbd842ffc2a256104b53ef96025b6f4e9d58))
+
 # [1.0.0-next.20](https://github.com/getmeli/meli/compare/v1.0.0-next.19...v1.0.0-next.20) (2020-12-07)
 
 
