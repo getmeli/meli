@@ -11,6 +11,7 @@ import { object, string } from 'joi';
 import { uuid } from '../../../utils/uuid';
 import { serializeUserOrg } from '../serialize-user-org';
 import { EventType } from '../../../events/app-event';
+import { maxOrgsGuard } from '../guards/max-org-guard';
 
 const validators = [
   body(object({
@@ -77,5 +78,6 @@ async function handler(req: Request, res: Response): Promise<void> {
 
 export const createOrg = [
   ...validators,
+  maxOrgsGuard,
   wrapAsyncMiddleware(handler),
 ];

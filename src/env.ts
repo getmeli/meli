@@ -1,13 +1,9 @@
 import chalk from 'chalk';
 import { cidrSubnet } from 'ip';
-import {
-  array, boolean, number, string,
-} from 'joi';
+import { array, boolean, number, string } from 'joi';
 import { tmpdir } from 'os';
 import { EnvSpec, parseEnv } from './commons/env/parse-env';
-import {
-  commaSeparatedStringToArray, stringToBoolean, stringToInt,
-} from './commons/env/transformers';
+import { commaSeparatedStringToArray, stringToBoolean, stringToInt } from './commons/env/transformers';
 import { AppError } from './commons/errors/app-error';
 import { isUrl } from './commons/validators/is-url';
 import { Logger } from './commons/logger/logger';
@@ -75,6 +71,7 @@ export interface Env {
   MELI_AXIOS_TIMEOUT: number;
   MELI_USER: string;
   MELI_PASSWORD: string;
+  MELI_MAX_ORGS: number;
 }
 
 const envSpec: EnvSpec<Env> = {
@@ -310,6 +307,10 @@ const envSpec: EnvSpec<Env> = {
   },
   MELI_PASSWORD: {
     schema: string().optional(),
+  },
+  MELI_MAX_ORGS: {
+    transform: stringToInt(),
+    schema: number().optional().default(1),
   },
 };
 
