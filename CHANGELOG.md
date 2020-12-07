@@ -1,3 +1,15 @@
+# [1.0.0-next.19](https://github.com/getmeli/meli/compare/v1.0.0-next.18...v1.0.0-next.19) (2020-12-07)
+
+
+### Bug Fixes
+
+* missing guard on current org member endpoint ([5f4945b](https://github.com/getmeli/meli/commit/5f4945b4efcdd5d8e0b054b74c9b61797e641420))
+
+
+### Features
+
+* redirect 404 to each site /404.html ([050268f](https://github.com/getmeli/meli/commit/050268f73866a402638ed308749b6f5b9ca08c0e))
+
 # [1.0.0-next.18](https://github.com/getmeli/meli/compare/v1.0.0-next.17...v1.0.0-next.18) (2020-12-06)
 
 
