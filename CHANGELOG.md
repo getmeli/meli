@@ -1,3 +1,10 @@
+# [1.0.0-next.22](https://github.com/getmeli/meli/compare/v1.0.0-next.21...v1.0.0-next.22) (2020-12-07)
+
+
+### Features
+
+* add fallback for unknown hosts ([9e0df52](https://github.com/getmeli/meli/commit/9e0df52e025f215c7258bf741c6bc28db18fe1bb))
+
 # [1.0.0-next.21](https://github.com/getmeli/meli/compare/v1.0.0-next.20...v1.0.0-next.21) (2020-12-07)
 
 
