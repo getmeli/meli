@@ -1,3 +1,10 @@
+# [1.0.0-next.23](https://github.com/getmeli/meli/compare/v1.0.0-next.22...v1.0.0-next.23) (2020-12-07)
+
+
+### Bug Fixes
+
+* deadlock during caddy config reload ([ac8ba64](https://github.com/getmeli/meli/commit/ac8ba64225a6964361af6ad9e15756a10255c560))
+
 # [1.0.0-next.22](https://github.com/getmeli/meli/compare/v1.0.0-next.21...v1.0.0-next.22) (2020-12-07)
 
 
