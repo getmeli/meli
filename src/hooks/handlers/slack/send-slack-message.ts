@@ -1,6 +1,6 @@
 import { object, string } from 'joi';
 import { env } from '../../../env';
-import { EventType } from '../../../events/app-event';
+import { EventType } from '../../../events/event-type';
 import axios from 'axios';
 import { HookDeliveryResult } from '../get-hook-handler';
 

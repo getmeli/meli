@@ -1,5 +1,5 @@
 import { Hook, HookType } from '../hook';
-import { AppEventData } from '../../events/app-event-data';
+import { EventData } from '../../events/event-data';
 import { handleEmailHook } from './email/handle-email-hook';
 import { handleMattermostHook } from './mattermost/handle-mattermost-hook';
 import { handleSlackHook } from './slack/handle-slack-hook';
@@ -12,10 +12,10 @@ export interface HookDeliveryResult<T = any> {
   data?: T;
 }
 
-export type GetHookHandler<K extends keyof AppEventData = any, Config = any> = (
+export type GetHookHandler<K extends keyof EventData = any, Config = any> = (
   hook: Hook<Config>,
   event: K,
-  data: AppEventData[K],
+  data: EventData[K],
 ) => Promise<HookDeliveryResult>;
 
 export function getHookHandler(type: HookType): GetHookHandler {

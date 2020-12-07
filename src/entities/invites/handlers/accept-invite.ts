@@ -10,7 +10,7 @@ import { Member, Members } from '../../members/member';
 import { serializeUserOrg } from '../../orgs/serialize-user-org';
 import { getUser } from '../../../auth/utils/get-user';
 import { uuid } from '../../../utils/uuid';
-import { EventType } from '../../../events/app-event';
+import { EventType } from '../../../events/event-type';
 
 const validators = [
   params(object({

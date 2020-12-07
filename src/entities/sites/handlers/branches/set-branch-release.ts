@@ -8,7 +8,7 @@ import { Releases } from '../../../releases/release';
 import { AppError } from '../../../../commons/errors/app-error';
 import { canAdminSiteGuard } from '../../guards/can-admin-site-guard';
 import { $id } from '../../../../utils/id';
-import { EventType } from '../../../../events/app-event';
+import { EventType } from '../../../../events/event-type';
 import { branchExistsGuard } from '../../guards/branch-exists-guard';
 import { params } from '../../../../commons/express-joi/params';
 import { serializeBranch } from '../../serialize-branch';

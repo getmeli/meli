@@ -4,7 +4,7 @@ import { wrapAsyncMiddleware } from '../../../../commons/utils/wrap-async-middle
 import { params } from '../../../../commons/express-joi/params';
 import { body } from '../../../../commons/express-joi/body';
 import { uuid } from '../../../../utils/uuid';
-import { EventType } from '../../../../events/app-event';
+import { EventType } from '../../../../events/event-type';
 import { Hook, Hooks } from '../../../../hooks/hook';
 import { object } from 'joi';
 import { $id } from '../../../../utils/id';

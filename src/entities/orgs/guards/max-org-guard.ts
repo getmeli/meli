@@ -3,7 +3,7 @@ import { Orgs } from '../org';
 import { env } from '../../../env';
 
 export const maxOrgsGuard = guard(
-  async req => {
+  async () => {
     if (env.MELI_MAX_ORGS === 0) {
       return true;
     }

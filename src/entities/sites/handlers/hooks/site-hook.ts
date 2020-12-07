@@ -1,7 +1,5 @@
-import { EventType } from '../../../../events/app-event';
-import {
-  $hook, $hookEvent, $hookEvents,
-} from '../../../../hooks/hook';
+import { EventType } from '../../../../events/event-type';
+import { $hook, $hookEvent, $hookEvents } from '../../../../hooks/hook';
 
 export const siteEvents = [
   EventType.site_updated,
@@ -15,7 +13,6 @@ export const siteEvents = [
   EventType.site_branch_updated,
   EventType.site_branch_deleted,
   EventType.site_branch_release_set,
-  EventType.site_branch_release_updated,
   EventType.site_branch_password_set,
   EventType.site_branch_password_removed,
 ];

@@ -12,7 +12,7 @@ import { $id } from '../../../../utils/id';
 import { orgExistsGuard } from '../../guards/org-exists-guard';
 import { uuid } from '../../../../utils/uuid';
 import { isAdminOrOwnerGuard } from '../../../../auth/guards/is-admin-or-owner-guard';
-import { EventType } from '../../../../events/app-event';
+import { EventType } from '../../../../events/event-type';
 import { Orgs } from '../../org';
 
 const validators = [

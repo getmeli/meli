@@ -3,14 +3,14 @@ import { getHookHandler } from './handlers/get-hook-handler';
 import { uuid } from '../utils/uuid';
 import { HookDeliveries, HookDelivery } from './hook-delivery';
 import { Hook } from './hook';
-import { AppEventData } from '../events/app-event-data';
+import { EventData } from '../events/event-data';
 
 const logger = new Logger('meli.api:notify');
 
-export async function deliverHook<EventType extends keyof AppEventData>(
+export async function deliverHook<EventType extends keyof EventData>(
   hook: Hook,
   eventType: EventType,
-  eventData: AppEventData[EventType],
+  eventData: EventData[EventType],
 ): Promise<HookDelivery> {
   const delivery: HookDelivery = {
     _id: uuid(),

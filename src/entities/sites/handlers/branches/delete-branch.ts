@@ -8,7 +8,7 @@ import { getBranchDir } from '../../get-site-dir';
 import { $id } from '../../../../utils/id';
 import { promises } from 'fs';
 import { canAdminSiteGuard } from '../../guards/can-admin-site-guard';
-import { EventType } from '../../../../events/app-event';
+import { EventType } from '../../../../events/event-type';
 import { branchExistsGuard } from '../../guards/branch-exists-guard';
 import { removeSiteBranchFromCaddy } from '../../../../caddy/configuration';
 

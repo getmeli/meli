@@ -1,9 +1,7 @@
 import { Request, Response } from 'express';
 import { wrapAsyncMiddleware } from '../../../../commons/utils/wrap-async-middleware';
 import { params } from '../../../../commons/express-joi/params';
-import {
-  boolean, object, string,
-} from 'joi';
+import { boolean, object, string } from 'joi';
 import { $id } from '../../../../utils/id';
 import { orgExistsGuard } from '../../guards/org-exists-guard';
 import { body } from '../../../../commons/express-joi/body';
@@ -15,7 +13,7 @@ import { emitEvent } from '../../../../events/emit-event';
 import { Invite } from '../../invite';
 import { uuid } from '../../../../utils/uuid';
 import { isAdminOrOwnerGuard } from '../../../../auth/guards/is-admin-or-owner-guard';
-import { EventType } from '../../../../events/app-event';
+import { EventType } from '../../../../events/event-type';
 
 const validators = [
   params(object({

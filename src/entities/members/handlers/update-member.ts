@@ -13,7 +13,7 @@ import { BadRequestError } from '../../../commons/errors/bad-request-error';
 import { Members } from '../member';
 import { isOwner } from '../../users/guards/is-owner';
 import { isAdminOrOwnerGuard } from '../../../auth/guards/is-admin-or-owner-guard';
-import { EventType } from '../../../events/app-event';
+import { EventType } from '../../../events/event-type';
 
 const validators = [
   params(object({

@@ -2,9 +2,7 @@ import { Request, Response } from 'express';
 import { configureSiteInCaddy } from '../../../../caddy/configuration';
 import { body } from '../../../../commons/express-joi/body';
 import { wrapAsyncMiddleware } from '../../../../commons/utils/wrap-async-middleware';
-import {
-  $siteName, Site, Sites,
-} from '../../../sites/site';
+import { $siteName, Site, Sites } from '../../../sites/site';
 import { serializeSite } from '../../../sites/serialize-site';
 import { emitEvent } from '../../../../events/emit-event';
 import { object } from 'joi';
@@ -14,7 +12,7 @@ import { $id } from '../../../../utils/id';
 import { uuid } from '../../../../utils/uuid';
 import { canAdminTeamGuard } from '../../guards/can-admin-team-guard';
 import { teamExistsGuard } from '../../guards/team-exists-guard';
-import { EventType } from '../../../../events/app-event';
+import { EventType } from '../../../../events/event-type';
 import { Teams } from '../../team';
 import { generateTokenValue } from '../../../../utils/generate-token-value';
 

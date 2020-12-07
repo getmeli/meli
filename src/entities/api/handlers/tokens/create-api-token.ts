@@ -5,10 +5,8 @@ import { serializeSiteToken } from '../../../sites/serialize-site-token';
 import { emitEvent } from '../../../../events/emit-event';
 import { wrapAsyncMiddleware } from '../../../../commons/utils/wrap-async-middleware';
 import { getUser } from '../../../../auth/utils/get-user';
-import {
-  $apiToken, ApiToken, ApiTokens,
-} from '../../api-token';
-import { EventType } from '../../../../events/app-event';
+import { $apiToken, ApiToken, ApiTokens } from '../../api-token';
+import { EventType } from '../../../../events/event-type';
 import { generateTokenValue } from '../../../../utils/generate-token-value';
 
 const validators = [

@@ -6,7 +6,7 @@ import { body } from '../../../commons/express-joi/body';
 import { siteExistsGuard } from '../guards/site-exists-guard';
 import { emitEvent } from '../../../events/emit-event';
 import { canAdminSiteGuard } from '../guards/can-admin-site-guard';
-import { EventType } from '../../../events/app-event';
+import { EventType } from '../../../events/event-type';
 import { BadRequestError } from '../../../commons/errors/bad-request-error';
 import { configureSiteInCaddy } from '../../../caddy/configuration';
 

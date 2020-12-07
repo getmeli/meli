@@ -8,7 +8,10 @@ import { emitEvent } from '../../../../events/emit-event';
 import { params } from '../../../../commons/express-joi/params';
 import { BadRequestError } from '../../../../commons/errors/bad-request-error';
 import { canAdminTeamGuard } from '../../guards/can-admin-team-guard';
-import { EventType } from '../../../../events/app-event';
+import { EventType } from '../../../../events/event-type';
+import { Members } from '../../../members/member';
+import { Orgs } from '../../../orgs/org';
+import { NotFoundError } from '../../../../commons/errors/not-found-error';
 
 const validators = [
   params(object({
@@ -19,6 +22,15 @@ const validators = [
 
 async function handler(req: Request, res: Response): Promise<void> {
   const { teamId, memberId } = req.params;
+
+  const team = await Teams().findOne({ _id: teamId });
+  const org = await Orgs().findOne({ _id: team.orgId });
+  const member = await Members().findOne({ _id: memberId,
+    orgId: org._id });
+
+  if (!member) {
+    throw new NotFoundError('No such member');
+  }
 
   const { matchedCount } = await Teams().updateOne({
     _id: teamId,
@@ -33,10 +45,9 @@ async function handler(req: Request, res: Response): Promise<void> {
   }
 
   emitEvent(EventType.team_member_deleted, {
-    team: await Teams().findOne({
-      _id: teamId,
-    }),
-    member: memberId,
+    org,
+    team,
+    member,
   });
   res.status(204).send();
 }

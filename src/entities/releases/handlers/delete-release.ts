@@ -9,7 +9,7 @@ import { $id } from '../../../utils/id';
 import { getReleaseDir } from '../../sites/get-site-dir';
 import { promises as fs } from 'fs';
 import { canAdminReleaseGuard } from '../guards/can-admin-release-guard';
-import { EventType } from '../../../events/app-event';
+import { EventType } from '../../../events/event-type';
 import { Logger } from '../../../commons/logger/logger';
 
 const validators = [

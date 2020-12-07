@@ -3,11 +3,9 @@ import { Sites } from '../../site';
 import { emitEvent } from '../../../../events/emit-event';
 import { wrapAsyncMiddleware } from '../../../../commons/utils/wrap-async-middleware';
 import { body } from '../../../../commons/express-joi/body';
-import {
-  array, object, string,
-} from 'joi';
+import { array, object, string } from 'joi';
 import { canAdminSiteGuard } from '../../guards/can-admin-site-guard';
-import { EventType } from '../../../../events/app-event';
+import { EventType } from '../../../../events/event-type';
 import { branchExistsGuard } from '../../guards/branch-exists-guard';
 import { params } from '../../../../commons/express-joi/params';
 import { $id } from '../../../../utils/id';
@@ -17,9 +15,7 @@ import { promises } from 'fs';
 import { getBranchFilePath, getBranchFilesDir } from '../../get-site-dir';
 import { Branch } from '../../branch';
 import { serializeRedirect } from '../../serialize-redirect';
-import {
-  $redirect, FileRedirectConfig, Redirect, RedirectType,
-} from '../../redirect';
+import { $redirect, FileRedirectConfig, Redirect, RedirectType } from '../../redirect';
 
 async function storeBranchFilesToFs(siteId: string, branch: Branch, redirects: Redirect<FileRedirectConfig>[]) {
   const dir = getBranchFilesDir(siteId, branch);

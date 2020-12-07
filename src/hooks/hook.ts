@@ -1,14 +1,12 @@
-import { EventType } from '../events/app-event';
-import {
-  array, object, string,
-} from 'joi';
+import { EventType } from '../events/event-type';
+import { array, object, string } from 'joi';
 import { enumToArray } from '../commons/enum-to-array';
-import { $emailHookConfig } from './handlers/email/handle-email-hook';
 import { $mattermostHookConfig } from './handlers/mattermost/send-mattermost-message';
 import { $slackHookConfig } from './handlers/slack/send-slack-message';
 import { AppDb } from '../db/db';
 import { STRING_MAX_LENGTH } from '../constants';
 import { $webhookConfig } from './handlers/web/deliver-web-hook';
+import { $emailHookConfig } from './handlers/email/send-email-hook';
 
 export enum HookType {
   email = 'email',

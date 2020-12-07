@@ -9,7 +9,7 @@ import { serializeBranch } from '../../serialize-branch';
 import { Releases } from '../../../releases/release';
 import { AppError } from '../../../../commons/errors/app-error';
 import { canAdminSiteGuard } from '../../guards/can-admin-site-guard';
-import { EventType } from '../../../../events/app-event';
+import { EventType } from '../../../../events/event-type';
 import { $channelName, Branch } from '../../branch';
 import { uuid } from '../../../../utils/uuid';
 import slugify from 'slugify';

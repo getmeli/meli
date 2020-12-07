@@ -10,7 +10,7 @@ import { canUploadReleaseGuard } from '../../guards/can-upload-release-guard';
 import { emitEvent } from '../../../../events/emit-event';
 import { serializeRelease } from '../../../releases/serialize-release';
 import { uuid } from '../../../../utils/uuid';
-import { EventType } from '../../../../events/app-event';
+import { EventType } from '../../../../events/event-type';
 import { Branch } from '../../branch';
 import { ensureEmptyDirectory } from '../../../../commons/utils/ensure-empty-directory';
 import { linkBranchToRelease } from '../../link-branch-to-release';

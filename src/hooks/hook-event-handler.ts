@@ -1,12 +1,12 @@
 import { Hook, Hooks } from './hook';
 import { deliverHook } from './deliver-hook';
 import { Logger } from '../commons/logger/logger';
-import { AppEventData } from '../events/app-event-data';
+import { EventData } from '../events/event-data';
 import { getHooksForEvent } from './get-hooks-for-event';
 
 const logger = new Logger('meli.api:hookEventHandler');
 
-function deliverHooks<T extends keyof AppEventData>(hooks: Hook[], eventType: T, data: AppEventData[T]): void {
+function deliverHooks<T extends keyof EventData>(hooks: Hook[], eventType: T, data: EventData[T]): void {
   hooks.forEach(hook => {
     deliverHook(hook, eventType, data)
       .then(() => {
@@ -18,7 +18,7 @@ function deliverHooks<T extends keyof AppEventData>(hooks: Hook[], eventType: T,
   });
 }
 
-export function hookEventHandler<T extends keyof AppEventData>(type: T, data: AppEventData[T]): void {
+export function hookEventHandler<T extends keyof EventData>(type: T, data: EventData[T]): void {
   getHooksForEvent(type, data)
     .then(hookIds => (
       Hooks()

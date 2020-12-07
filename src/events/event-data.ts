@@ -1,5 +1,5 @@
 import { Org } from '../entities/orgs/org';
-import { EventType } from './app-event';
+import { EventType } from './event-type';
 import { User } from '../entities/users/user';
 import { Team } from '../entities/teams/team';
 import { Site, SiteToken } from '../entities/sites/site';
@@ -95,11 +95,15 @@ export type TeamUpdatedEventData = TeamEventData
 export type TeamDeletedEventData = TeamEventData
 
 export interface TeamMemberAddedEventData extends TeamEventData {
-  member: string;
+  org: Org;
+  team: Team;
+  member: Member;
 }
 
 export interface TeamMemberDeletedEventData extends TeamEventData {
-  member: string;
+  org: Org;
+  team: Team;
+  member: Member;
 }
 
 export interface TeamHookCreatedEventData extends TeamEventData {
@@ -173,11 +177,6 @@ export interface SiteBranchReleaseSetEventData extends SiteEventData {
   release: Release;
 }
 
-export interface SiteBranchReleaseUpdatedEventData extends SiteEventData {
-  branch: Branch;
-  release: Release;
-}
-
 export interface SiteBranchPasswordSetEventData extends SiteEventData {
   branch: Branch;
 }
@@ -186,11 +185,11 @@ export interface SiteBranchPasswordRemovedEventData extends SiteEventData {
   branch: Branch;
 }
 
-export interface SiteBranchFilesSetEventData extends SiteEventData {
+export interface SiteBranchRedirectsSetEventData extends SiteEventData {
   branch: Branch;
 }
 
-export interface AppEventData {
+export interface EventData {
   [EventType.user_api_token_created]: UserApiTokenCreatedEventData,
   [EventType.user_api_token_updated]: UserApiTokenUpdatedEventData,
   [EventType.user_api_token_deleted]: UserApiTokenDeletedEventData,
@@ -229,8 +228,7 @@ export interface AppEventData {
   [EventType.site_branch_updated]: SiteBranchUpdatedEventData,
   [EventType.site_branch_deleted]: SiteBranchDeletedEventData,
   [EventType.site_branch_release_set]: SiteBranchReleaseSetEventData,
-  [EventType.site_branch_release_updated]: SiteBranchReleaseUpdatedEventData,
   [EventType.site_branch_password_set]: SiteBranchPasswordSetEventData,
   [EventType.site_branch_password_removed]: SiteBranchPasswordRemovedEventData,
-  [EventType.site_branch_redirects_set]: SiteBranchFilesSetEventData,
+  [EventType.site_branch_redirects_set]: SiteBranchRedirectsSetEventData,
 }

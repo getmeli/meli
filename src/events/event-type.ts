@@ -37,7 +37,6 @@ export enum EventType {
   site_branch_updated = 'site_branch_updated',
   site_branch_deleted = 'site_branch_deleted',
   site_branch_release_set = 'site_branch_release_set',
-  site_branch_release_updated = 'site_branch_release_updated',
   site_branch_password_set = 'site_branch_password_set',
   site_branch_password_removed = 'site_branch_password_removed',
   site_branch_redirects_set = 'site_branch_redirects_set',

@@ -8,7 +8,7 @@ import { siteExistsGuard } from '../guards/site-exists-guard';
 import { emitEvent } from '../../../events/emit-event';
 import { canAdminSiteGuard } from '../guards/can-admin-site-guard';
 import { $id } from '../../../utils/id';
-import { EventType } from '../../../events/app-event';
+import { EventType } from '../../../events/event-type';
 
 const validators = [
   params(object({

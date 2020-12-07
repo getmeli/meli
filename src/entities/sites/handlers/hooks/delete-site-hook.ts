@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { EventType } from '../../../../events/app-event';
+import { EventType } from '../../../../events/event-type';
 import { emitEvent } from '../../../../events/emit-event';
 import { wrapAsyncMiddleware } from '../../../../commons/utils/wrap-async-middleware';
 import { params } from '../../../../commons/express-joi/params';

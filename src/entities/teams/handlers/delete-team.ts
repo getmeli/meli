@@ -9,7 +9,7 @@ import { $id } from '../../../utils/id';
 import { Sites } from '../../sites/site';
 import { Releases } from '../../releases/release';
 import { canAdminTeamGuard } from '../guards/can-admin-team-guard';
-import { EventType } from '../../../events/app-event';
+import { EventType } from '../../../events/event-type';
 
 const validators = [
   params(object({

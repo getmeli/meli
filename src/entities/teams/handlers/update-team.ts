@@ -8,7 +8,7 @@ import { teamExistsGuard } from '../guards/team-exists-guard';
 import { serializeTeam } from '../serialize-team';
 import { Teams } from '../team';
 import { canAdminTeamGuard } from '../guards/can-admin-team-guard';
-import { EventType } from '../../../events/app-event';
+import { EventType } from '../../../events/event-type';
 
 const validators = [
   body(object({

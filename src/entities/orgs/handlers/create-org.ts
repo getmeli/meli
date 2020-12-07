@@ -10,7 +10,7 @@ import { body } from '../../../commons/express-joi/body';
 import { object, string } from 'joi';
 import { uuid } from '../../../utils/uuid';
 import { serializeUserOrg } from '../serialize-user-org';
-import { EventType } from '../../../events/app-event';
+import { EventType } from '../../../events/event-type';
 import { maxOrgsGuard } from '../guards/max-org-guard';
 
 const validators = [

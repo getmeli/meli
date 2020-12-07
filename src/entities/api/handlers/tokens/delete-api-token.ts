@@ -7,7 +7,7 @@ import { getUser } from '../../../../auth/utils/get-user';
 import { ApiTokens } from '../../api-token';
 import { apiTokenExistsGuard } from '../../guards/api-token-exists-guard';
 import { canAdminApiToken } from '../../guards/can-admin-api-token';
-import { EventType } from '../../../../events/app-event';
+import { EventType } from '../../../../events/event-type';
 
 const validators = [
   params(object({

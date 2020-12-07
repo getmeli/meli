@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { env } from '../../../env';
 import { object, string } from 'joi';
-import { EventType } from '../../../events/app-event';
+import { EventType } from '../../../events/event-type';
 
 interface MattermostHookConfig {
   // https://docs.mattermost.com/developer/webhooks-incoming.html#simple-incoming-webhook

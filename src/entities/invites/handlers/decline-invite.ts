@@ -6,7 +6,7 @@ import { Orgs } from '../../orgs/org';
 import { emitEvent } from '../../../events/emit-event';
 import { NotFoundError } from '../../../commons/errors/not-found-error';
 import { body } from '../../../commons/express-joi/body';
-import { EventType } from '../../../events/app-event';
+import { EventType } from '../../../events/event-type';
 
 const validators = [
   params(object({

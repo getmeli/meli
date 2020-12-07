@@ -5,7 +5,7 @@ import { wrapAsyncMiddleware } from '../../../../commons/utils/wrap-async-middle
 import { body } from '../../../../commons/express-joi/body';
 import { object, string } from 'joi';
 import { canAdminSiteGuard } from '../../guards/can-admin-site-guard';
-import { EventType } from '../../../../events/app-event';
+import { EventType } from '../../../../events/event-type';
 import { branchExistsGuard } from '../../guards/branch-exists-guard';
 import { params } from '../../../../commons/express-joi/params';
 import { $id } from '../../../../utils/id';

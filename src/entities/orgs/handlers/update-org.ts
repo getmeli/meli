@@ -8,7 +8,7 @@ import { Orgs } from '../org';
 import { serializeOrg } from '../serialize-org';
 import { canWriteOrgGuard } from '../guards/can-write-org-guard';
 import { orgExistsGuard } from '../guards/org-exists-guard';
-import { EventType } from '../../../events/app-event';
+import { EventType } from '../../../events/event-type';
 import { params } from '../../../commons/express-joi/params';
 import { $id } from '../../../utils/id';
 

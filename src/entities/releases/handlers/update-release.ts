@@ -6,7 +6,7 @@ import { object, string } from 'joi';
 import { Releases } from '../release';
 import { serializeRelease } from '../serialize-release';
 import { canAdminReleaseGuard } from '../guards/can-admin-release-guard';
-import { EventType } from '../../../events/app-event';
+import { EventType } from '../../../events/event-type';
 import { Sites } from '../../sites/site';
 
 const validators = [

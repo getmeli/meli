@@ -1,7 +1,5 @@
-import {
-  AppEventData, OrgEventData, SiteEventData, TeamEventData, UserEventData,
-} from '../events/app-event-data';
-import { EventType } from '../events/app-event';
+import { EventData, OrgEventData, SiteEventData, TeamEventData, UserEventData } from '../events/event-data';
+import { EventType } from '../events/event-type';
 import { Org, Orgs } from '../entities/orgs/org';
 import { Team, Teams } from '../entities/teams/team';
 import { User, Users } from '../entities/users/user';
@@ -18,7 +16,7 @@ import { Site } from '../entities/sites/site';
  *    team hook => org + team + site + data
  *    site hook => org + team + site + data
  */
-export async function getHooksForEvent<T extends keyof AppEventData>(eventType: T, data: AppEventData[T]): Promise<string[]> {
+export async function getHooksForEvent<T extends keyof EventData>(eventType: T, data: EventData[T]): Promise<string[]> {
   let org: Org;
   let team: Team;
   let site: Site;
@@ -83,7 +81,6 @@ export async function getHooksForEvent<T extends keyof AppEventData>(eventType: 
     case EventType.site_branch_updated:
     case EventType.site_branch_deleted:
     case EventType.site_branch_release_set:
-    case EventType.site_branch_release_updated:
       site = (data as SiteEventData).site;
       team = await Teams().findOne({
         _id: site.teamId,

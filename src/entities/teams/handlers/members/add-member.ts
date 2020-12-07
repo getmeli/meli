@@ -11,7 +11,8 @@ import { NotFoundError } from '../../../../commons/errors/not-found-error';
 import { params } from '../../../../commons/express-joi/params';
 import { Members } from '../../../members/member';
 import { canAdminTeamGuard } from '../../guards/can-admin-team-guard';
-import { EventType } from '../../../../events/app-event';
+import { EventType } from '../../../../events/event-type';
+import { Orgs } from '../../../orgs/org';
 
 const validators = [
   params(object({
@@ -23,14 +24,10 @@ const validators = [
 async function handler(req: Request, res: Response): Promise<void> {
   const { teamId, memberId } = req.params;
 
-  const { orgId } = await Teams().findOne({
-    _id: teamId,
-  });
-
-  const member = await Members().findOne({
-    _id: memberId,
-    orgId,
-  });
+  const team = await Teams().findOne({ _id: teamId });
+  const org = await Orgs().findOne({ _id: team.orgId });
+  const member = await Members().findOne({ _id: memberId,
+    orgId: org._id });
 
   if (!member) {
     throw new NotFoundError('Org member not found');
@@ -52,10 +49,9 @@ async function handler(req: Request, res: Response): Promise<void> {
   }
 
   emitEvent(EventType.team_member_added, {
-    team: await Teams().findOne({
-      _id: teamId,
-    }),
-    member: memberId,
+    org,
+    team,
+    member,
   });
   res.json(await serializeTeamMember(memberId));
 }

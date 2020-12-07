@@ -11,7 +11,7 @@ import { canAdminSiteGuard } from '../../guards/can-admin-site-guard';
 import { uuid } from '../../../../utils/uuid';
 import { params } from '../../../../commons/express-joi/params';
 import { $id } from '../../../../utils/id';
-import { EventType } from '../../../../events/app-event';
+import { EventType } from '../../../../events/event-type';
 import { generateTokenValue } from '../../../../utils/generate-token-value';
 
 const validators = [

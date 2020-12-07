@@ -7,6 +7,10 @@ import chalk from 'chalk';
 const logger = new Logger('meli.api:emails');
 
 let transporter: {
+  /**
+   * https://nodemailer.com/message/
+   * @param mailOptions
+   */
   sendMail(mailOptions: Mail.Options): Promise<SentMessageInfo>;
 };
 

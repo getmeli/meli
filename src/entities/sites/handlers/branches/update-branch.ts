@@ -3,7 +3,7 @@ import { branchExistsGuard } from '../../guards/branch-exists-guard';
 import { object, string } from 'joi';
 import { STRING_MAX_LENGTH } from '../../../../constants';
 import { emitEvent } from '../../../../events/emit-event';
-import { EventType } from '../../../../events/app-event';
+import { EventType } from '../../../../events/event-type';
 import { wrapAsyncMiddleware } from '../../../../commons/utils/wrap-async-middleware';
 import { body } from '../../../../commons/express-joi/body';
 import { BadRequestError } from '../../../../commons/errors/bad-request-error';

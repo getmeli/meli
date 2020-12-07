@@ -10,7 +10,7 @@ import { inviteExistsGuard } from '../../guards/invite-exists-guard';
 import { isAdminOrOwnerGuard } from '../../../../auth/guards/is-admin-or-owner-guard';
 import { apiGuard } from '../../../../auth/guards/api-guard';
 import { ApiScope } from '../../../api/api-scope';
-import { EventType } from '../../../../events/app-event';
+import { EventType } from '../../../../events/event-type';
 
 const validators = [
   params(object({

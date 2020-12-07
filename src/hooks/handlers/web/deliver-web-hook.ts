@@ -1,6 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import { createHmac } from 'crypto';
-import { EventType } from '../../../events/app-event';
+import { EventType } from '../../../events/event-type';
 import { object, string } from 'joi';
 import { Logger } from '../../../commons/logger/logger';
 import { HookDeliveryResult } from '../get-hook-handler';
