@@ -12,6 +12,7 @@ import { params } from '../../../../commons/express-joi/params';
 import { $id } from '../../../../utils/id';
 import { $channelName } from '../../branch';
 import { configureSiteInCaddy } from '../../../../caddy/configuration';
+import { Logger } from '../../../../commons/logger/logger';
 
 const validators = [
   params(object({
@@ -22,6 +23,8 @@ const validators = [
     name: $channelName,
   })),
 ];
+
+const logger = new Logger('meli.api:removeBranch');
 
 async function handler(req: Request, res: Response): Promise<void> {
   const { siteId, branchId } = req.params;
@@ -44,7 +47,9 @@ async function handler(req: Request, res: Response): Promise<void> {
   });
   const branch = site.branches.find(brch => brch._id === branchId);
 
-  await configureSiteInCaddy(site);
+  configureSiteInCaddy(site).catch(err => {
+    logger.error(err);
+  });
 
   emitEvent(EventType.site_branch_updated, {
     site,

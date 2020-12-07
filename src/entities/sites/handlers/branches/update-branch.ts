@@ -11,6 +11,7 @@ import { canAdminSiteGuard } from '../../guards/can-admin-site-guard';
 import { Sites } from '../../site';
 import { serializeBranch } from '../../serialize-branch';
 import { configureSiteBranchInCaddy } from '../../../../caddy/configuration';
+import { Logger } from '../../../../commons/logger/logger';
 
 async function releaseExists(siteId: string, branchId: string): Promise<boolean> {
   const count = await Sites().countDocuments({
@@ -27,6 +28,8 @@ const validators = [
     release: string().optional().max(STRING_MAX_LENGTH),
   })),
 ];
+
+const logger = new Logger('meli.api:updateBranch');
 
 async function handler(req: Request, res: Response): Promise<void> {
   const { siteId, branchId } = req.params;
@@ -50,7 +53,9 @@ async function handler(req: Request, res: Response): Promise<void> {
   });
   const branch = site.branches.find(brch => brch._id === branchId);
 
-  await configureSiteBranchInCaddy(site, branch);
+  configureSiteBranchInCaddy(site, branch).catch(err => {
+    logger.error(err);
+  });
 
   emitEvent(EventType.site_updated, {
     site,

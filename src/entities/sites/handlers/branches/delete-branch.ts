@@ -11,6 +11,7 @@ import { canAdminSiteGuard } from '../../guards/can-admin-site-guard';
 import { EventType } from '../../../../events/event-type';
 import { branchExistsGuard } from '../../guards/branch-exists-guard';
 import { removeSiteBranchFromCaddy } from '../../../../caddy/configuration';
+import { Logger } from '../../../../commons/logger/logger';
 
 const validators = [
   params(object({
@@ -18,6 +19,8 @@ const validators = [
     branchId: string().required(),
   })),
 ];
+
+const logger = new Logger('meli.api:deleteBranch');
 
 async function handler(req: Request, res: Response): Promise<void> {
   const { siteId, branchId } = req.params;
@@ -61,7 +64,9 @@ async function handler(req: Request, res: Response): Promise<void> {
     },
   });
 
-  await removeSiteBranchFromCaddy(site, branch);
+  removeSiteBranchFromCaddy(site, branch).catch(err => {
+    logger.error(err);
+  });
 
   emitEvent(EventType.site_branch_deleted, {
     site,

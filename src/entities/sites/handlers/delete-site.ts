@@ -9,12 +9,15 @@ import { emitEvent } from '../../../events/emit-event';
 import { canAdminSiteGuard } from '../guards/can-admin-site-guard';
 import { $id } from '../../../utils/id';
 import { EventType } from '../../../events/event-type';
+import { Logger } from '../../../commons/logger/logger';
 
 const validators = [
   params(object({
     siteId: $id,
   })),
 ];
+
+const logger = new Logger('meli.api:deleteSite');
 
 async function handler(req: Request, res: Response): Promise<void> {
   const { siteId } = req.params;
@@ -27,7 +30,9 @@ async function handler(req: Request, res: Response): Promise<void> {
     _id: siteId,
   });
 
-  await removeSiteFromCaddy(siteId);
+  removeSiteFromCaddy(siteId).catch(err => {
+    logger.error(err);
+  });
 
   emitEvent(EventType.site_deleted, {
     site,

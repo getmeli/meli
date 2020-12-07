@@ -16,6 +16,7 @@ import { getBranchFilePath, getBranchFilesDir } from '../../get-site-dir';
 import { Branch } from '../../branch';
 import { serializeRedirect } from '../../serialize-redirect';
 import { $redirect, FileRedirectConfig, Redirect, RedirectType } from '../../redirect';
+import { Logger } from '../../../../commons/logger/logger';
 
 async function storeBranchFilesToFs(siteId: string, branch: Branch, redirects: Redirect<FileRedirectConfig>[]) {
   const dir = getBranchFilesDir(siteId, branch);
@@ -52,6 +53,8 @@ const validators = [
       .unique((a: Redirect, b: Redirect) => a.path === b.path),
   })),
 ];
+
+const logger = new Logger('meli.api:setBranchRedirects');
 
 async function handler(req: Request, res: Response): Promise<void> {
   const { siteId, branchId } = req.params;
@@ -91,7 +94,9 @@ async function handler(req: Request, res: Response): Promise<void> {
   // do this in memory to avoid querying db again
   branch.redirects = redirects;
 
-  await configureSiteBranchInCaddy(site, branch);
+  configureSiteBranchInCaddy(site, branch).catch(err => {
+    logger.error(err);
+  });
 
   emitEvent(EventType.site_branch_redirects_set, {
     site,

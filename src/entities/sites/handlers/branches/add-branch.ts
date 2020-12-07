@@ -14,6 +14,7 @@ import { $channelName, Branch } from '../../branch';
 import { uuid } from '../../../../utils/uuid';
 import slugify from 'slugify';
 import { configureSiteBranchInCaddy } from '../../../../caddy/configuration';
+import { Logger } from '../../../../commons/logger/logger';
 
 const validators = [
   body(object({
@@ -21,6 +22,8 @@ const validators = [
     releaseId: string().optional(),
   })),
 ];
+
+const logger = new Logger('meli.api:addBranch');
 
 async function handler(req: Request, res: Response): Promise<void> {
   const { siteId } = req.params;
@@ -71,7 +74,9 @@ async function handler(req: Request, res: Response): Promise<void> {
     _id: siteId,
   });
 
-  await configureSiteBranchInCaddy(site, branch);
+  configureSiteBranchInCaddy(site, branch).catch(err => {
+    logger.error(err);
+  });
 
   emitEvent(EventType.site_branch_added, {
     site,

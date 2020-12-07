@@ -15,6 +15,7 @@ import { teamExistsGuard } from '../../guards/team-exists-guard';
 import { EventType } from '../../../../events/event-type';
 import { Teams } from '../../team';
 import { generateTokenValue } from '../../../../utils/generate-token-value';
+import { Logger } from '../../../../commons/logger/logger';
 
 const validators = [
   params(object({
@@ -24,6 +25,8 @@ const validators = [
     name: $siteName,
   })),
 ];
+
+const logger = new Logger('meli.api:addSite');
 
 async function handler(req: Request, res: Response): Promise<void> {
   const { teamId } = req.params;
@@ -47,7 +50,9 @@ async function handler(req: Request, res: Response): Promise<void> {
   };
 
   await Sites().insertOne(site);
-  await configureSiteInCaddy(site);
+  configureSiteInCaddy(site).catch(err => {
+    logger.error(err);
+  });
 
   emitEvent(EventType.team_site_added, {
     team: await Teams().findOne({

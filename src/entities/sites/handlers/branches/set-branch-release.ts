@@ -14,6 +14,7 @@ import { params } from '../../../../commons/express-joi/params';
 import { serializeBranch } from '../../serialize-branch';
 import { linkBranchToRelease } from '../../link-branch-to-release';
 import { configureSiteBranchInCaddy } from '../../../../caddy/configuration';
+import { Logger } from '../../../../commons/logger/logger';
 
 const validators = [
   params(object({
@@ -24,6 +25,8 @@ const validators = [
     release: $id,
   })),
 ];
+
+const logger = new Logger('meli.api:setBranchRelease');
 
 async function handler(req: Request, res: Response): Promise<void> {
   const { siteId, branchId } = req.params;
@@ -62,7 +65,9 @@ async function handler(req: Request, res: Response): Promise<void> {
 
   await linkBranchToRelease(site, branch, release);
 
-  await configureSiteBranchInCaddy(site, branch);
+  configureSiteBranchInCaddy(site, branch).catch(err => {
+    logger.error(err);
+  });
 
   emitEvent(EventType.site_branch_release_set, {
     site,

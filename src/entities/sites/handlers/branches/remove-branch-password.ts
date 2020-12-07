@@ -10,6 +10,7 @@ import { params } from '../../../../commons/express-joi/params';
 import { $id } from '../../../../utils/id';
 import { serializeBranch } from '../../serialize-branch';
 import { configureSiteBranchInCaddy } from '../../../../caddy/configuration';
+import { Logger } from '../../../../commons/logger/logger';
 
 const validators = [
   params(object({
@@ -17,6 +18,8 @@ const validators = [
     branchId: string().required(),
   })),
 ];
+
+const logger = new Logger('meli.api:removeBranchPassword');
 
 async function handler(req: Request, res: Response): Promise<void> {
   const { siteId, branchId } = req.params;
@@ -38,7 +41,9 @@ async function handler(req: Request, res: Response): Promise<void> {
   });
   const branch = site.branches.find(brch => brch._id === branchId);
 
-  await configureSiteBranchInCaddy(site, branch);
+  configureSiteBranchInCaddy(site, branch).catch(err => {
+    logger.error(err);
+  });
 
   emitEvent(EventType.site_branch_password_removed, {
     site,

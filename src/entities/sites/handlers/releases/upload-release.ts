@@ -21,6 +21,7 @@ import { body } from '../../../../commons/express-joi/body';
 import slugify from 'slugify';
 import { getBranchUrl } from '../../get-branch-url';
 import { configureSiteInCaddy } from '../../../../caddy/configuration';
+import { Logger } from '../../../../commons/logger/logger';
 
 async function createOrGetBranch(site: Site, branchName: string): Promise<Branch> {
   let branch: Branch = site.branches.find(c => c.name === branchName);
@@ -72,6 +73,8 @@ async function setBranchRelease(site: Site, branch: Branch, release: Release): P
   });
 }
 
+const logger = new Logger('meli.api:uploadRelease');
+
 async function handler(req: Request, res: Response): Promise<void> {
   const { file } = req;
   const { siteId } = req.params;
@@ -105,7 +108,9 @@ async function handler(req: Request, res: Response): Promise<void> {
     }),
   );
 
-  await configureSiteInCaddy(site);
+  configureSiteInCaddy(site).catch(err => {
+    logger.error(err);
+  });
 
   emitEvent(EventType.site_release_created, {
     site,

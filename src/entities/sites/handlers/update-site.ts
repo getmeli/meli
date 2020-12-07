@@ -9,6 +9,7 @@ import { canAdminSiteGuard } from '../guards/can-admin-site-guard';
 import { EventType } from '../../../events/event-type';
 import { BadRequestError } from '../../../commons/errors/bad-request-error';
 import { configureSiteInCaddy } from '../../../caddy/configuration';
+import { Logger } from '../../../commons/logger/logger';
 
 async function branchExists(siteId: string, branchId: string): Promise<boolean> {
   const count = await Sites().countDocuments({
@@ -23,6 +24,8 @@ async function branchExists(siteId: string, branchId: string): Promise<boolean> 
 const validators = [
   body($site),
 ];
+
+const logger = new Logger('meli.api:updateSite');
 
 async function handler(req: Request, res: Response): Promise<void> {
   const { siteId } = req.params;
@@ -52,7 +55,9 @@ async function handler(req: Request, res: Response): Promise<void> {
     _id: siteId,
   });
 
-  await configureSiteInCaddy(site);
+  configureSiteInCaddy(site).catch(err => {
+    logger.error(err);
+  });
 
   emitEvent(EventType.site_updated, {
     site,
