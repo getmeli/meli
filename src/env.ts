@@ -7,6 +7,7 @@ import { commaSeparatedStringToArray, stringToBoolean, stringToInt } from './com
 import { AppError } from './commons/errors/app-error';
 import { isUrl } from './commons/validators/is-url';
 import { Logger } from './commons/logger/logger';
+import { join } from 'path';
 
 export interface Env {
   DEBUG: string;
@@ -237,7 +238,7 @@ const envSpec: EnvSpec<Env> = {
     schema: string().optional().default('Meli |'),
   },
   MELI_MAIL_TEMPLATE_DIR: {
-    schema: string().optional().default('./emails/templates'),
+    schema: string().optional().default(join(__dirname, './emails/templates')),
   },
   MELI_SENTRY_ENABLED: {
     transform: stringToBoolean(),
@@ -282,7 +283,7 @@ const envSpec: EnvSpec<Env> = {
     schema: string().optional().default(tmpdir()),
   },
   MELI_STATIC_DIR: {
-    schema: string().optional().default('./public'),
+    schema: string().optional().default(join(__dirname, './public')),
   },
   MELI_INVITE_EXPIRATION_TIME: {
     transform: stringToInt(),
