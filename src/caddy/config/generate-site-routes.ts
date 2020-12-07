@@ -1,17 +1,14 @@
-import {
-  AcmeSslConfiguration, Site, SiteDomain,
-} from '../../entities/sites/site';
+import { AcmeSslConfiguration, Site, SiteDomain } from '../../entities/sites/site';
 import { env } from '../../env';
 import { unique } from '../../utils/arrays-utils';
 import { RedirectType, ReverseProxyRedirectConfig } from '../../entities/sites/redirect';
 import { relative, resolve } from 'path';
-import {
-  getBranchFilesDir, getBranchStaticDir, getFileRedirectFileName,
-} from '../../entities/sites/get-site-dir';
+import { getBranchFilesDir, getFileRedirectFileName } from '../../entities/sites/get-site-dir';
 import { URL } from 'url';
 import { getReverseProxyDial } from '../utils/get-reverse-proxy-dial';
 import { BranchPassword } from '../../entities/sites/branch';
 import { base64Encode } from '../../commons/utils/base64';
+import { getBranchDirInCaddy } from '../utils/get-branch-dir-in-caddy';
 
 const sitesUrl = new URL(env.MELI_SITES_URL);
 
@@ -94,7 +91,7 @@ export function generateSiteRoutes(site: Site): any[] {
         }],
         handle: [{
           handler: 'file_server',
-          root: resolve(env.MELI_CADDY_DIR, relative(env.MELI_SITES_DIR, getBranchStaticDir(site._id, branch))),
+          root: getBranchDirInCaddy(site._id, branch),
         }],
         terminal: true,
       },

@@ -1,7 +1,7 @@
 import { Sites } from '../entities/sites/site';
 import { env } from '../env';
 import { generateSiteRoutes } from './config/generate-site-routes';
-import { errors } from './config/errors';
+import { getErrorRoutes } from './config/get-error-routes';
 import { generateManualCertificatesConfig, generateServerTlsConfig } from './config/ssl';
 import { uiRoute } from './config/ui-route';
 import { apiRoute } from './config/api-route';
@@ -35,7 +35,7 @@ export async function generateConfig(): Promise<any> {
               uiRoute,
               ...sites.flatMap(generateSiteRoutes),
             ],
-            errors,
+            errors: getErrorRoutes(sites),
             ...(sslDisabled ? [] : generateServerTlsConfig(sites)),
           },
         },
