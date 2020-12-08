@@ -17,6 +17,7 @@ export interface Env {
   MELI_UI_URL: string;
   MELI_UI_URL_INTERNAL: string;
   MELI_SITES_URL: string;
+  MELI_STANDALONE: boolean;
   MELI_UI_DIR: string;
   MELI_JWT_SECRET: string;
   MELI_JWT_TOKEN_EXPIRATION: number;
@@ -97,6 +98,10 @@ const envSpec: EnvSpec<Env> = {
   },
   MELI_SITES_URL: {
     schema: string().optional().custom(isUrl).default(process.env.MELI_URL || null),
+  },
+  MELI_STANDALONE: {
+    transform: stringToBoolean(),
+    schema: boolean().optional().default(false),
   },
   MELI_UI_DIR: {
     schema: string().optional(),

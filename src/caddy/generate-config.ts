@@ -32,8 +32,10 @@ export async function generateConfig(): Promise<any> {
           sites: {
             listen: sslDisabled ? [':80'] : [':443'],
             routes: [
-              apiRoute,
-              uiRoute,
+              ...(env.MELI_STANDALONE ? [] : [
+                apiRoute,
+                uiRoute,
+              ]),
               ...sites.flatMap(generateSiteRoutes),
               fallback,
             ],
