@@ -4,6 +4,8 @@ env:
   GITHUB_REPOSITORY_SSH_URL: "git@github.com:${{ github.repository }}.git"
   TMP_DOCKER_IMAGE: "getmeli/api/${{ github.ref }}"
   DOCKER_IMAGE: "getmeli/api"
+  TMP_DOCKER_IMAGE_UNIFIED: "getmeli/meli/${{ github.ref }}"
+  DOCKER_IMAGE_UNIFIED: "getmeli/meli"
   IS_RELEASE_BRANCH: "${{ github.ref == 'refs/heads/latest' || github.ref == 'refs/heads/next' || github.ref == 'refs/heads/beta' }}"
 jobs:
   build:
@@ -35,7 +37,11 @@ jobs:
             npm version --no-git-tag-version $(cat VERSION) --allow-same-version
           fi
           npm run build
-          docker build -t $TMP_DOCKER_IMAGE .
+      - name: "docker build"
+        run: |
+          docker build -t $TMP_DOCKER_IMAGE -f ./docker/Dockerfile .
+          # TODO UI_VERSION=get channel from semantic-release
+          docker build -t $TMP_DOCKER_IMAGE_UNIFIED -f ./docker/unified.Dockerfile --build-arg=UI_VERSION=TODO .
       - name: "release"
         if: ${{ env.IS_RELEASE_BRANCH == 'true' }}
         run: |
@@ -48,7 +54,9 @@ jobs:
         if: ${{ env.IS_RELEASE_BRANCH == 'true' }}
         run: |
           docker login -u $DOCKER_USER -p $DOCKER_TOKEN
+          HEAD_BRANCH=`echo "${GITHUB_REF//refs\/heads\//}" | tr -d '\n'`
           npx docker-semver-tags --sourceImage $TMP_DOCKER_IMAGE --targetImage $DOCKER_IMAGE --versionTag $(cat VERSION)
+          npx docker-semver-tags --sourceImage $TMP_DOCKER_IMAGE_UNIFIED --targetImage $DOCKER_IMAGE_UNIFIED --versionTag $(cat VERSION) --build-arg="$HEAD_BRANCH"
         env:
           DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
           DOCKER_USER: ${{ secrets.DOCKER_USER }}

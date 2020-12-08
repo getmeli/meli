@@ -1,0 +1,6 @@
+{
+  "admin": {
+    "disabled": false,
+    "listen": "0.0.0.0:2019"
+  }
+}

@@ -1,9 +1,18 @@
 module.exports = {
   branches: [
     { name: 'latest' },
-    { name: 'beta', prerelease: true },
-    { name: 'next', prerelease: true },
-    { name: 'tmp', prerelease: true },
+    {
+      name: 'beta',
+      prerelease: true,
+    },
+    {
+      name: 'next',
+      prerelease: true,
+    },
+    {
+      name: 'tmp',
+      prerelease: true,
+    },
   ],
   plugins: [
     '@semantic-release/commit-analyzer',

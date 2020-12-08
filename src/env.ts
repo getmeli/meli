@@ -87,22 +87,22 @@ const envSpec: EnvSpec<Env> = {
     schema: string().required(),
   },
   MELI_URL_INTERNAL: {
-    schema: string().optional().custom(isUrl).default(process.env.MELI_URL),
+    schema: string().optional().custom(isUrl).default(process.env.MELI_URL || null),
   },
   MELI_UI_URL: {
-    schema: string().optional().custom(isUrl).default(process.env.MELI_URL),
+    schema: string().optional().custom(isUrl).default(process.env.MELI_URL || null),
   },
   MELI_UI_URL_INTERNAL: {
-    schema: string().optional().custom(isUrl).default(process.env.MELI_URL),
+    schema: string().optional().custom(isUrl).default(process.env.MELI_URL || null),
   },
   MELI_SITES_URL: {
-    schema: string().optional().custom(isUrl).default(process.env.MELI_URL),
+    schema: string().optional().custom(isUrl).default(process.env.MELI_URL || null),
   },
   MELI_UI_DIR: {
     schema: string().optional(),
   },
   MELI_JWT_SECRET: {
-    schema: string(),
+    schema: string().required(),
   },
   MELI_JWT_TOKEN_EXPIRATION: {
     transform: stringToInt(),
@@ -142,7 +142,7 @@ const envSpec: EnvSpec<Env> = {
     schema: string().optional(),
   },
   MELI_MONGO_URI: {
-    schema: string(),
+    schema: string().required(),
   },
   MELI_MIGRATE_ROLLBACK: {
     transform: stringToBoolean(),
@@ -274,7 +274,7 @@ const envSpec: EnvSpec<Env> = {
     schema: string().optional().default('/sites'),
   },
   MELI_SITES_DIR: {
-    schema: string().required().default('/sites'),
+    schema: string().optional().default('/sites'),
   },
   MELI_CADDY_ADMIN_API_URL: {
     schema: string().default('http://localhost:2019'),

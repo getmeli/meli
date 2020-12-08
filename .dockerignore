@@ -3,4 +3,4 @@
 !migrate-mongo-config.js
 !migrations
 !build
-**/*.js.map
+!docker/files
