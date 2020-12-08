@@ -1,3 +1,10 @@
+# [1.0.0-next.26](https://github.com/getmeli/meli/compare/v1.0.0-next.25...v1.0.0-next.26) (2020-12-08)
+
+
+### Features
+
+* add system info route ([daac2b3](https://github.com/getmeli/meli/commit/daac2b30deabedcd5a952eccb7ac45b6adf05aa7))
+
 # [1.0.0-next.25](https://github.com/getmeli/meli/compare/v1.0.0-next.24...v1.0.0-next.25) (2020-12-08)
 
 
