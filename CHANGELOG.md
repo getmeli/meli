@@ -1,3 +1,10 @@
+# [1.0.0-next.25](https://github.com/getmeli/meli/compare/v1.0.0-next.24...v1.0.0-next.25) (2020-12-08)
+
+
+### Features
+
+* option to disable caddy config for ui/api ([3629cbb](https://github.com/getmeli/meli/commit/3629cbb87d3ebde433cc6a2b6beeea4c18148921))
+
 # [1.0.0-next.24](https://github.com/getmeli/meli/compare/v1.0.0-next.23...v1.0.0-next.24) (2020-12-08)
 
 
