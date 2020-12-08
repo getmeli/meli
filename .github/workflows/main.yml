@@ -12,6 +12,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: "set variables"
+        run: |
+          echo -n `echo -n "${GITHUB_REF//refs\/heads\//}" | tr -d '\n'` > HEAD_BRANCH
       - uses: actions/setup-node@v1
         with:
           node-version: '12'
@@ -40,8 +43,10 @@ jobs:
       - name: "docker build"
         run: |
           docker build -t $TMP_DOCKER_IMAGE -f ./docker/Dockerfile .
-          # TODO UI_VERSION=get channel from semantic-release
-          docker build -t $TMP_DOCKER_IMAGE_UNIFIED -f ./docker/unified.Dockerfile --build-arg=UI_VERSION=TODO .
+      - name: "docker build unified"
+        if: ${{ env.IS_RELEASE_BRANCH == 'true' }}
+        run: |
+          docker build -t $TMP_DOCKER_IMAGE_UNIFIED -f ./docker/unified.Dockerfile --build-arg "UI_VERSION=$(cat HEAD_BRANCH)" .
       - name: "release"
         if: ${{ env.IS_RELEASE_BRANCH == 'true' }}
         run: |
@@ -54,9 +59,8 @@ jobs:
         if: ${{ env.IS_RELEASE_BRANCH == 'true' }}
         run: |
           docker login -u $DOCKER_USER -p $DOCKER_TOKEN
-          HEAD_BRANCH=`echo "${GITHUB_REF//refs\/heads\//}" | tr -d '\n'`
           npx docker-semver-tags --sourceImage $TMP_DOCKER_IMAGE --targetImage $DOCKER_IMAGE --versionTag $(cat VERSION)
-          npx docker-semver-tags --sourceImage $TMP_DOCKER_IMAGE_UNIFIED --targetImage $DOCKER_IMAGE_UNIFIED --versionTag $(cat VERSION) --build-arg="$HEAD_BRANCH"
+          npx docker-semver-tags --sourceImage $TMP_DOCKER_IMAGE_UNIFIED --targetImage $DOCKER_IMAGE_UNIFIED --versionTag $(cat VERSION)
         env:
           DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
           DOCKER_USER: ${{ secrets.DOCKER_USER }}
@@ -64,7 +68,6 @@ jobs:
         if: ${{ env.IS_RELEASE_BRANCH == 'true' }}
         run: |
           source ./scripts/setup-git.sh "$RELEASE_DEPLOY_KEY"
-          HEAD_BRANCH=`echo "${GITHUB_REF//refs\/heads\//}" | tr -d '\n'`
-          ./scripts/rebase-git-branch.sh "next" "$HEAD_BRANCH"
+          ./scripts/rebase-git-branch.sh "next" "$(cat HEAD_BRANCH)"
         env:
           RELEASE_DEPLOY_KEY: ${{ secrets.RELEASE_DEPLOY_KEY }}
