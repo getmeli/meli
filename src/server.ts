@@ -96,7 +96,6 @@ export async function server(): Promise<any> {
 
   // routes
   app.use(routes);
-  app.use('/static', express.static(env.MELI_STATIC_DIR));
 
   // error handlers
   app.use(Sentry.Handlers.errorHandler());

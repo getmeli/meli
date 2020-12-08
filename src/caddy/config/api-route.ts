@@ -11,6 +11,7 @@ export const apiRoute = {
     path: [
       '/api/*',
       '/auth/*',
+      '/system/*',
       '/socket.io/*',
     ],
   }],
