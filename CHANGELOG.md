@@ -1,3 +1,10 @@
+# [1.0.0-next.24](https://github.com/getmeli/meli/compare/v1.0.0-next.23...v1.0.0-next.24) (2020-12-08)
+
+
+### Features
+
+* unified docker image ([7e19fe5](https://github.com/getmeli/meli/commit/7e19fe547f3ea343a9930e65f15af31d7310fc25))
+
 # [1.0.0-next.23](https://github.com/getmeli/meli/compare/v1.0.0-next.22...v1.0.0-next.23) (2020-12-07)
 
 
