@@ -16,7 +16,7 @@ import { STRIPE_SIGNATURE_HEADER } from './constants';
 import { AppDb } from './db/db';
 import { migrate } from './db/migrate/migrate';
 import { setupDbIndexes } from './db/setup-db-indexes';
-import { env } from './env';
+import { env } from './env/env';
 import { setupPrometheus } from './prometheus/setup-prometheus';
 import routes from './routes';
 import { io } from './socket/io';

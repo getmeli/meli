@@ -1,6 +1,6 @@
 import { Site } from '../../entities/sites/site';
 import { URL } from 'url';
-import { env } from '../../env';
+import { env } from '../../env/env';
 import { getBranchDirInCaddy } from '../utils/get-branch-dir-in-caddy';
 
 const sitesUrl = new URL(env.MELI_SITES_URL);

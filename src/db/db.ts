@@ -1,5 +1,5 @@
 import { Db, MongoClient } from 'mongodb';
-import { env } from '../env';
+import { env } from '../env/env';
 
 const client = new MongoClient(env.MELI_MONGO_URI, {
   useNewUrlParser: true,

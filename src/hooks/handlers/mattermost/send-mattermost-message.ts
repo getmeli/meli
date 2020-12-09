@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { env } from '../../../env';
+import { env } from '../../../env/env';
 import { object, string } from 'joi';
 import { EventType } from '../../../events/event-type';
 

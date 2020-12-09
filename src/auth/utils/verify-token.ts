@@ -1,5 +1,5 @@
 import { User, Users } from '../../entities/users/user';
-import { env } from '../../env';
+import { env } from '../../env/env';
 import { JwtToken } from '../auth';
 import jwt from 'jsonwebtoken';
 import { promisify } from 'util';

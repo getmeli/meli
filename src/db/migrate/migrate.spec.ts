@@ -2,7 +2,7 @@ import { Db, MongoClient } from 'mongodb';
 import { migrate } from './migrate';
 import * as _rollback from './roll-backwards';
 import * as _rollup from './roll-forward';
-import { env } from '../../env';
+import { env } from '../../env/env';
 
 jest.mock('../../env', () => ({ env: {} }));
 import SpyInstance = jest.SpyInstance;

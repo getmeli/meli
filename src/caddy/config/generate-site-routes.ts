@@ -1,5 +1,5 @@
 import { AcmeSslConfiguration, Site, SiteDomain } from '../../entities/sites/site';
-import { env } from '../../env';
+import { env } from '../../env/env';
 import { unique } from '../../utils/arrays-utils';
 import { RedirectType, ReverseProxyRedirectConfig } from '../../entities/sites/redirect';
 import { relative, resolve } from 'path';

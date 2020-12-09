@@ -1,4 +1,4 @@
-import { env } from '../../env';
+import { env } from '../../env/env';
 import passport from 'passport';
 import { Logger } from '../../commons/logger/logger';
 import { authMethods } from './auth-methods';

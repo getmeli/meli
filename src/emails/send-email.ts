@@ -3,7 +3,7 @@ import { promises } from 'fs';
 import { AppError } from '../commons/errors/app-error';
 import { emails } from './emails';
 import { compile, TemplateDelegate } from 'handlebars';
-import { env } from '../env';
+import { env } from '../env/env';
 import { Logger } from '../commons/logger/logger';
 
 const logger = new Logger('meli.api:sendEmailTemplate');

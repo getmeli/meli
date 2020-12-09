@@ -1,6 +1,6 @@
 import { guard } from '../../../commons/express/guard';
 import { Orgs } from '../org';
-import { env } from '../../../env';
+import { env } from '../../../env/env';
 
 export const maxOrgsGuard = guard(
   async () => {

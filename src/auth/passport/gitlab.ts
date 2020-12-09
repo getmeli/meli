@@ -1,4 +1,4 @@
-import { env } from '../../env';
+import { env } from '../../env/env';
 import passport from 'passport';
 import { IncomingMessage } from 'http';
 import { Gitlab } from './providers/gitlab/gitlab';

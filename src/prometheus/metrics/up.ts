@@ -1,5 +1,5 @@
 import { Prometheus } from '@promster/express';
-import { env } from '../../env';
+import { env } from '../../env/env';
 
 const gauge = new Prometheus.Gauge({
   name: `${env.MELI_PROMETHEUS_METRICS_PREFIX}up`,

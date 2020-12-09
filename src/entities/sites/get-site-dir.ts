@@ -1,5 +1,5 @@
 import { join } from 'path';
-import { env } from '../../env';
+import { env } from '../../env/env';
 import { Branch } from './branch';
 import { Release } from '../releases/release';
 import { Redirect } from './redirect';

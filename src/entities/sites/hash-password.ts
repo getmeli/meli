@@ -1,5 +1,5 @@
 import { genSalt, hash } from 'bcrypt';
-import { env } from '../../env';
+import { env } from '../../env/env';
 import { BranchPassword } from './branch';
 
 export async function hashPassword(plain: string): Promise<BranchPassword> {

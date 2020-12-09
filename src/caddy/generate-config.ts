@@ -1,5 +1,5 @@
 import { Sites } from '../entities/sites/site';
-import { env } from '../env';
+import { env } from '../env/env';
 import { generateSiteRoutes } from './config/generate-site-routes';
 import { getErrorRoutes } from './config/get-error-routes';
 import { generateManualCertificatesConfig, generateServerTlsConfig } from './config/ssl';

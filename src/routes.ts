@@ -8,7 +8,7 @@ import userRoutes from './entities/users/routes';
 import inviteRoutes from './entities/invites/routes';
 import apiRoutes from './entities/api/routes';
 import systemRoutes from './system/routes';
-import { env } from './env';
+import { env } from './env/env';
 
 const router = Router();
 

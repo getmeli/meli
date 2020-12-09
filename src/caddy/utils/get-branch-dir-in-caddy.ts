@@ -1,5 +1,5 @@
 import { relative, resolve } from 'path';
-import { env } from '../../env';
+import { env } from '../../env/env';
 import { getBranchStaticDir } from '../../entities/sites/get-site-dir';
 import { Branch } from '../../entities/sites/branch';
 

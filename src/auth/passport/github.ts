@@ -1,4 +1,4 @@
-import { env } from '../../env';
+import { env } from '../../env/env';
 import passport from 'passport';
 import { Github } from './providers/github/github';
 import { PassportUser } from '../create-or-update-user';

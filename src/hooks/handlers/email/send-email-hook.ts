@@ -1,4 +1,4 @@
-import { env } from '../../../env';
+import { env } from '../../../env/env';
 import { emails } from '../../../emails/emails';
 import { HookDeliveryResult } from '../get-hook-handler';
 import { object, string } from 'joi';

@@ -1,6 +1,6 @@
 import socketIo, { Server } from 'socket.io';
 import redisAdapter from 'socket.io-redis';
-import { env } from '../env';
+import { env } from '../env/env';
 
 export const io: Server = socketIo({
   /*

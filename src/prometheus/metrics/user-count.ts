@@ -1,5 +1,5 @@
 import { Prometheus } from '@promster/express';
-import { env } from '../../env';
+import { env } from '../../env/env';
 import { Users } from '../../entities/users/user';
 
 const counter = new Prometheus.Gauge({

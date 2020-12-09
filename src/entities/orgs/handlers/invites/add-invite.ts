@@ -6,7 +6,7 @@ import { $id } from '../../../../utils/id';
 import { orgExistsGuard } from '../../guards/org-exists-guard';
 import { body } from '../../../../commons/express-joi/body';
 import { Orgs } from '../../org';
-import { env } from '../../../../env';
+import { env } from '../../../../env/env';
 import { sendInvite } from '../../../../emails/methods/send-invite';
 import { serializeInvite } from '../../serialize-invite';
 import { emitEvent } from '../../../../events/emit-event';

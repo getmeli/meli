@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { createOrUpdateUser, PassportUser } from './create-or-update-user';
-import { env } from '../env';
+import { env } from '../env/env';
 import { authCookieName, getCookieOptions, JwtToken } from './auth';
 import jwt from 'jsonwebtoken';
 import { wrapAsyncMiddleware } from '../commons/utils/wrap-async-middleware';

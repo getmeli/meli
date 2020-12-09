@@ -1,4 +1,4 @@
-import { env } from '../../env';
+import { env } from '../../env/env';
 import passport from 'passport';
 import { Gitea } from './providers/gitea/gitea';
 import { PassportUser } from '../create-or-update-user';

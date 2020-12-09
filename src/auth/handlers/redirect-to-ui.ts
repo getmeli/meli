@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { env } from '../../env';
+import { env } from '../../env/env';
 import { Logger } from '../../commons/logger/logger';
 
 const logger = new Logger('meli.api:redirectToUi');

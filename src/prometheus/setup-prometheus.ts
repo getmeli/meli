@@ -3,7 +3,7 @@ import client from 'prom-client';
 import { Logger } from '../commons/logger/logger';
 import { createServer } from 'http';
 import chalk from 'chalk';
-import { env } from '../env';
+import { env } from '../env/env';
 import { Application } from 'express';
 import { up } from './metrics/up';
 import { userCount } from './metrics/user-count';

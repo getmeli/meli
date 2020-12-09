@@ -2,7 +2,7 @@ import { Db, MongoClient } from 'mongodb';
 import { rollBackwards } from './roll-backwards';
 import { rollForward } from './roll-forward';
 import { Logger } from '../../commons/logger/logger';
-import { env } from '../../env';
+import { env } from '../../env/env';
 
 const logger = new Logger('meli.api:migrate.migrate');
 

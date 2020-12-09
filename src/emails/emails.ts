@@ -1,5 +1,5 @@
 import nodemailer, { SentMessageInfo, TransportOptions } from 'nodemailer';
-import { env } from '../env';
+import { env } from '../env/env';
 import Mail from 'nodemailer/lib/mailer';
 import { Logger } from '../commons/logger/logger';
 import chalk from 'chalk';

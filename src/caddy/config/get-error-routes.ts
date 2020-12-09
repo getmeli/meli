@@ -1,4 +1,4 @@
-import { env } from '../../env';
+import { env } from '../../env/env';
 import { getReverseProxyDial } from '../utils/get-reverse-proxy-dial';
 import { Site } from '../../entities/sites/site';
 import { getSiteErrorRoutes } from './get-site-error-routes';

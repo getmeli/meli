@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { Logger } from '../commons/logger/logger';
-import { env } from '../env';
+import { env } from '../env/env';
 import { Site } from '../entities/sites/site';
 import { Branch } from '../entities/sites/branch';
 import { generateConfig } from './generate-config';

@@ -1,84 +1,17 @@
-import chalk from 'chalk';
-import { cidrSubnet } from 'ip';
+import { EnvSpec } from '../commons/env/parse-env';
 import { array, boolean, number, string } from 'joi';
-import { tmpdir } from 'os';
-import { EnvSpec, parseEnv } from './commons/env/parse-env';
-import { commaSeparatedStringToArray, stringToBoolean, stringToInt } from './commons/env/transformers';
-import { AppError } from './commons/errors/app-error';
-import { isUrl } from './commons/validators/is-url';
-import { Logger } from './commons/logger/logger';
+import { commaSeparatedStringToArray, stringToBoolean, stringToInt } from '../commons/env/transformers';
+import { isUrl } from '../commons/validators/is-url';
+import { AppError } from '../commons/errors/app-error';
+import chalk from 'chalk';
 import { join } from 'path';
+import { cidrSubnet } from 'ip';
+import { tmpdir } from 'os';
+import { Env } from './env';
 
-export interface Env {
-  DEBUG: string;
-  MELI_PORT: number;
-  MELI_URL: string;
-  MELI_URL_INTERNAL: string;
-  MELI_UI_URL: string;
-  MELI_UI_URL_INTERNAL: string;
-  MELI_SITES_URL: string;
-  MELI_STANDALONE: boolean;
-  MELI_UI_DIR: string;
-  MELI_JWT_SECRET: string;
-  MELI_JWT_TOKEN_EXPIRATION: number;
-  MELI_MONGO_URI: string;
-  MELI_GITLAB_URL: string;
-  MELI_GITLAB_CLIENT_ID: string;
-  MELI_GITLAB_CLIENT_SECRET: string;
-  MELI_GITLAB_GROUPS: string[];
-  MELI_GITEA_URL: string;
-  MELI_GITEA_CLIENT_ID: string;
-  MELI_GITEA_CLIENT_SECRET: string;
-  MELI_GITEA_ORGS: string[];
-  MELI_GITHUB_URL: string;
-  MELI_GITHUB_CLIENT_ID: string;
-  MELI_GITHUB_CLIENT_SECRET: string;
-  MELI_GITHUB_ORGS: string[];
-  MELI_GOOGLE_CLIENT_ID: string;
-  MELI_GOOGLE_CLIENT_SECRET: string;
-  MELI_MIGRATE_ROLLBACK: boolean;
-  MELI_SSL_KEY: string;
-  MELI_SSL_CERT: string;
-  MELI_COOKIE_SAMESITE: boolean;
-  MELI_COOKIE_SECURE: boolean;
-  MELI_RATE_LIMIT_WINDOW: number;
-  MELI_RATE_LIMIT_MAX_PER_WINDOW: number;
-  MELI_PROMETHEUS_HOST: string;
-  MELI_PROMETHEUS_PORT: number;
-  MELI_PROMETHEUS_REFRESH_RATE: number;
-  MELI_PROMETHEUS_METRICS_PREFIX: string;
-  MELI_REDIS_URL: string;
-  MELI_HOOK_TIMEOUT: number;
-  MELI_MAIL_HOST: string;
-  MELI_MAIL_PORT: number;
-  MELI_MAIL_USERNAME: number;
-  MELI_MAIL_PASSWORD: number;
-  MELI_MAIL_FROM: string;
-  MELI_MAIL_TEMPLATE_DIR: string;
-  MELI_MAIL_SUBJECT_PREFIX: string;
-  MELI_SENTRY_ENABLED: boolean;
-  MELI_RESTRICTED_IPS: string[];
-  MELI_RESTRICTED_DOMAINS: string[];
-  MELI_CADDY_DOCKER: boolean;
-  MELI_CADDY_ADMIN_API_URL: string;
-  // Caddy content path
-  MELI_CADDY_DIR: string;
-  MELI_TMP_DIRECTORY: string;
-  MELI_SITES_DIR: string;
-  MELI_INVITE_EXPIRATION_TIME: number;
-  MELI_STATIC_DIR: string;
-  MELI_BCRYPT_SALTROUNDS: number;
-  MELI_ACME_SERVER: string;
-  MELI_ACME_CA_PATH: string;
-  MELI_AXIOS_TIMEOUT: number;
-  MELI_USER: string;
-  MELI_PASSWORD: string;
-  MELI_MAX_ORGS: number;
-}
-
-const envSpec: EnvSpec<Env> = {
+export const envSpec: EnvSpec<Env> = {
   DEBUG: {
-    schema: string(),
+    schema: string().optional(),
   },
   MELI_PORT: {
     transform: stringToInt(),
@@ -319,8 +252,3 @@ const envSpec: EnvSpec<Env> = {
     schema: number().optional().default(1),
   },
 };
-
-export const env: Env = parseEnv(envSpec);
-
-const logger = new Logger('meli.api:env');
-logger.debug('loaded env', env);

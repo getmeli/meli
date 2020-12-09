@@ -1,5 +1,5 @@
 import { getReverseProxyDial } from '../utils/get-reverse-proxy-dial';
-import { env } from '../../env';
+import { env } from '../../env/env';
 
 export const fallback = {
   /*
