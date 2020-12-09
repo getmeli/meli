@@ -47,7 +47,7 @@ jobs:
       - name: "docker build unified"
         if: ${{ env.IS_RELEASE_BRANCH == 'true' }}
         run: |
-          docker build -t $TMP_DOCKER_IMAGE_UNIFIED -f ./docker/unified.Dockerfile --build-arg "UI_VERSION=$(cat RELEASE_CHANNEL)" .
+          docker build -t $TMP_DOCKER_IMAGE_UNIFIED -f ./docker/unified.Dockerfile --build-arg "UI_VERSION=$(cat HEAD_BRANCH)" .
       - name: "release"
         if: ${{ env.IS_RELEASE_BRANCH == 'true' }}
         run: |
