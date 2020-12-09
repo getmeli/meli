@@ -107,12 +107,6 @@ export const envSpec: EnvSpec<Env> = {
         string().trim().required(),
       ),
   },
-  MELI_SSL_KEY: {
-    schema: string(),
-  },
-  MELI_SSL_CERT: {
-    schema: string(),
-  },
   MELI_COOKIE_SAMESITE: {
     schema: string().default(null),
   },

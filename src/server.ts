@@ -101,10 +101,6 @@ export async function server(): Promise<any> {
   app.use(Sentry.Handlers.errorHandler());
   app.use(handleError);
 
-  if (!!env.MELI_SSL_KEY !== !!env.MELI_SSL_CERT) {
-    logger.error('Missing either SSL key or certificate (they must be both present for HTTPS or both absent for HTTP)');
-  }
-
   const httpServer = createServer(app);
 
   httpServer.listen(env.MELI_PORT, () => {

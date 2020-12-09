@@ -30,8 +30,6 @@ export interface Env {
   MELI_GOOGLE_CLIENT_ID: string;
   MELI_GOOGLE_CLIENT_SECRET: string;
   MELI_MIGRATE_ROLLBACK: boolean;
-  MELI_SSL_KEY: string;
-  MELI_SSL_CERT: string;
   MELI_COOKIE_SAMESITE: boolean;
   MELI_COOKIE_SECURE: boolean;
   MELI_RATE_LIMIT_WINDOW: number;
