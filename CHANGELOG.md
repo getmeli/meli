@@ -1,3 +1,12 @@
+# [1.0.0-next.27](https://github.com/getmeli/meli/compare/v1.0.0-next.26...v1.0.0-next.27) (2020-12-09)
+
+
+### Features
+
+* remove ssl env vars ([4ffceb0](https://github.com/getmeli/meli/commit/4ffceb0f44eb411bda9b345d1ea6389df4eeb71a))
+* specify jwt token expiration as ms ([4477640](https://github.com/getmeli/meli/commit/4477640da05e589af940411cdeaebd66f702d9e9))
+* split env and env spec ([7be1864](https://github.com/getmeli/meli/commit/7be18649d257f67b882fa42a7d49884f6e760831))
+
 # [1.0.0-next.26](https://github.com/getmeli/meli/compare/v1.0.0-next.25...v1.0.0-next.26) (2020-12-08)
 
 
