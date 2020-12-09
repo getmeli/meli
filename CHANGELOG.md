@@ -1,3 +1,10 @@
+# [1.0.0-next.28](https://github.com/getmeli/meli/compare/v1.0.0-next.27...v1.0.0-next.28) (2020-12-09)
+
+
+### Features
+
+* update unified image ([4762554](https://github.com/getmeli/meli/commit/4762554f1eef669b389762f416799d6dcbf74d8a))
+
 # [1.0.0-next.27](https://github.com/getmeli/meli/compare/v1.0.0-next.26...v1.0.0-next.27) (2020-12-09)
 
 
