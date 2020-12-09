@@ -44,7 +44,7 @@ export const envSpec: EnvSpec<Env> = {
   },
   MELI_JWT_TOKEN_EXPIRATION: {
     transform: stringToInt(),
-    schema: number().min(3600).default(86400 * 30),
+    schema: number().min(3600).default(86400 * 30 * 1000),
   },
   MELI_GITLAB_URL: {
     schema: string().default('https://gitlab.com'),
