@@ -4,7 +4,7 @@ import * as _rollback from './roll-backwards';
 import * as _rollup from './roll-forward';
 import { env } from '../../env/env';
 
-jest.mock('../../env', () => ({ env: {} }));
+jest.mock('../../env/env', () => ({ env: {} }));
 import SpyInstance = jest.SpyInstance;
 
 jest.mock('migrate-mongo');
