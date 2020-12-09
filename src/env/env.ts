@@ -50,7 +50,6 @@ export interface Env {
   MELI_SENTRY_ENABLED: boolean;
   MELI_RESTRICTED_IPS: string[];
   MELI_RESTRICTED_DOMAINS: string[];
-  MELI_CADDY_DOCKER: boolean;
   MELI_CADDY_ADMIN_API_URL: string;
   // Caddy content path
   MELI_CADDY_DIR: string;

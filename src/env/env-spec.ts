@@ -197,11 +197,6 @@ export const envSpec: EnvSpec<Env> = {
         string().required(),
       ),
   },
-  // whether Caddy is running in an external Docker container
-  MELI_CADDY_DOCKER: {
-    transform: stringToBoolean(),
-    schema: boolean().default(true),
-  },
   MELI_CADDY_DIR: {
     schema: string().optional().default('/sites'),
   },

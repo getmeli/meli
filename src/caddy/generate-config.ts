@@ -24,7 +24,7 @@ export async function generateConfig(): Promise<any> {
     },
     admin: {
       disabled: false,
-      listen: env.MELI_CADDY_DOCKER ? '0.0.0.0:2019' : '127.0.0.1:2019',
+      listen: '0.0.0.0:2019',
     },
     apps: {
       http: {
