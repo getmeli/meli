@@ -231,7 +231,7 @@ export const envSpec: EnvSpec<Env> = {
   MELI_ACME_CA_PATH: {
     schema: string().optional(),
   },
-  MELI_AXIOS_TIMEOUT: {
+  MELI_HTTP_TIMEOUT: {
     transform: stringToInt(),
     schema: number().optional().default(10000),
   },

@@ -16,7 +16,7 @@ export async function configureCaddy(): Promise<void> {
   logger.debug(url, JSON.stringify(config, null, 2));
 
   await axios.post(url, config, {
-    timeout: env.MELI_AXIOS_TIMEOUT,
+    timeout: env.MELI_HTTP_TIMEOUT,
   });
 
   logger.debug('done updating caddy config');

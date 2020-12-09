@@ -61,7 +61,7 @@ export interface Env {
   MELI_BCRYPT_SALTROUNDS: number;
   MELI_ACME_SERVER: string;
   MELI_ACME_CA_PATH: string;
-  MELI_AXIOS_TIMEOUT: number;
+  MELI_HTTP_TIMEOUT: number;
   MELI_USER: string;
   MELI_PASSWORD: string;
   MELI_MAX_ORGS: number;
