@@ -20,13 +20,14 @@ jobs:
           node-version: '12'
       - name: "install dependencies"
         run: npm ci
-      - name: "create VERSION file"
+      - name: "create VERSION and RELEASE_CHANNEL file"
         if: ${{ env.IS_RELEASE_BRANCH == 'true' }}
         run: |
           source ./scripts/setup-git.sh "$RELEASE_DEPLOY_KEY"
           echo $GITHUB_REPOSITORY_SSH_URL
           npx semantic-release -r $GITHUB_REPOSITORY_SSH_URL -d
           echo "Next release version is $(cat VERSION)"
+          echo "Next release channel is $(cat RELEASE_CHANNEL)"
         env:
           RELEASE_DEPLOY_KEY: ${{ secrets.RELEASE_DEPLOY_KEY }}
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
@@ -46,7 +47,7 @@ jobs:
       - name: "docker build unified"
         if: ${{ env.IS_RELEASE_BRANCH == 'true' }}
         run: |
-          docker build -t $TMP_DOCKER_IMAGE_UNIFIED -f ./docker/unified.Dockerfile --build-arg "UI_VERSION=$(cat HEAD_BRANCH)" .
+          docker build -t $TMP_DOCKER_IMAGE_UNIFIED -f ./docker/unified.Dockerfile --build-arg "UI_VERSION=$(cat RELEASE_CHANNEL)" .
       - name: "release"
         if: ${{ env.IS_RELEASE_BRANCH == 'true' }}
         run: |

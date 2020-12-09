@@ -26,7 +26,7 @@ module.exports = {
     ],
     [
       '@semantic-release/exec',
-      { generateNotesCmd: 'echo -n ${nextRelease.version} > VERSION' },
+      { generateNotesCmd: 'echo -n "${nextRelease.version}" > VERSION && echo -n "${nextRelease.channel}" > RELEASE_CHANNEL' },
     ],
   ],
 };
