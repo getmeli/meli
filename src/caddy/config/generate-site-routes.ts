@@ -104,6 +104,7 @@ function getAuthHandle(password: BranchPassword) {
     // https://caddyserver.com/docs/json/apps/http/servers/routes/handle/authentication/
     handler: 'authentication',
     providers: {
+      // https://caddyserver.com/docs/json/apps/http/servers/routes/handle/authentication/providers/http_basic/
       http_basic: {
         hash: {
           algorithm: 'bcrypt',
