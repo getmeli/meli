@@ -1,3 +1,10 @@
+# [1.0.0-next.39](https://github.com/getmeli/meli/compare/v1.0.0-next.38...v1.0.0-next.39) (2020-12-10)
+
+
+### Bug Fixes
+
+* missing migrations dir in unified docker image ([919e12c](https://github.com/getmeli/meli/commit/919e12c2178b3e7ed8594b852b2b81c952f58854))
+
 # [1.0.0-next.38](https://github.com/getmeli/meli/compare/v1.0.0-next.37...v1.0.0-next.38) (2020-12-10)
 
 
