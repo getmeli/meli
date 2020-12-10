@@ -1,3 +1,10 @@
+# [1.0.0-next.44](https://github.com/getmeli/meli/compare/v1.0.0-next.43...v1.0.0-next.44) (2020-12-10)
+
+
+### Bug Fixes
+
+* **standalone:** update entrypoint ([1ef2b4b](https://github.com/getmeli/meli/commit/1ef2b4b11ee69b94ffb37b68dd5deca70dd8a292))
+
 # [1.0.0-next.43](https://github.com/getmeli/meli/compare/v1.0.0-next.42...v1.0.0-next.43) (2020-12-10)
 
 
