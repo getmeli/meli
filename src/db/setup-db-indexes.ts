@@ -92,7 +92,7 @@ export async function setupDbIndexes() {
       },
       {
         fieldOrSpec: {
-          name: 'text',
+          name: 1,
         },
         options: {
           unique: true,
