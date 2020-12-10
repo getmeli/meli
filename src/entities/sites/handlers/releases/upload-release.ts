@@ -108,6 +108,21 @@ async function handler(req: Request, res: Response): Promise<void> {
     }),
   );
 
+  if (!site.mainBranch) {
+    const mainBranch = branches[0]._id;
+
+    await Sites().updateOne({
+      _id: siteId,
+      mainBranch: null,
+    }, {
+      $set: {
+        mainBranch,
+      },
+    });
+
+    site.mainBranch = mainBranch;
+  }
+
   configureSiteInCaddy(site).catch(err => {
     logger.error(err);
   });
@@ -129,7 +144,8 @@ export const uploadRelease = [
   upload.single('file'),
   body(object({
     release: string().optional().max(STRING_MAX_LENGTH),
-    branches: string().trim().required().max(STRING_MAX_LENGTH)
+    branches: string().trim().required().min(1)
+      .max(STRING_MAX_LENGTH)
       .custom(str => (
         str.split(',')
       )),
