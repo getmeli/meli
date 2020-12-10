@@ -30,8 +30,8 @@ const logger = new Logger('meli.api:updateSite');
 async function handler(req: Request, res: Response): Promise<void> {
   const { siteId } = req.params;
 
-  const siteBranchExists = await branchExists(siteId, req.body.mainBranch);
-  if (!siteBranchExists) {
+  const { mainBranch } = req.body;
+  if (mainBranch && !(await branchExists(siteId, mainBranch))) {
     throw new BadRequestError('Branch not found');
   }
 
@@ -44,7 +44,7 @@ async function handler(req: Request, res: Response): Promise<void> {
         updatedAt: new Date(),
         name: req.body.name,
         color: req.body.color,
-        mainBranch: req.body.mainBranch,
+        mainBranch,
         notificationConfigs: req.body.notificationConfigs,
         domains: req.body.domains,
       },
