@@ -1,3 +1,11 @@
+# [1.0.0-next.35](https://github.com/getmeli/meli/compare/v1.0.0-next.34...v1.0.0-next.35) (2020-12-10)
+
+
+### Bug Fixes
+
+* missing sparse index option ([1e65d14](https://github.com/getmeli/meli/commit/1e65d141fd482d1e064def5a7aaac8d2b342e017))
+* use sparse index for array fields ([0f037f9](https://github.com/getmeli/meli/commit/0f037f99cb27f46f9748817d23c7d27b2a7a6e51))
+
 # [1.0.0-next.34](https://github.com/getmeli/meli/compare/v1.0.0-next.33...v1.0.0-next.34) (2020-12-10)
 
 
