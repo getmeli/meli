@@ -43,7 +43,7 @@ export async function setupDbIndexes() {
       },
       {
         fieldOrSpec: {
-          siteId: 1,
+          _id: 1,
           'branches.name': 1,
         },
         options: {
@@ -52,7 +52,7 @@ export async function setupDbIndexes() {
       },
       {
         fieldOrSpec: {
-          siteId: 1,
+          _id: 1,
           'branches.slug': 1,
         },
         options: {
