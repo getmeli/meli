@@ -1,3 +1,10 @@
+# [1.0.0-next.42](https://github.com/getmeli/meli/compare/v1.0.0-next.41...v1.0.0-next.42) (2020-12-10)
+
+
+### Bug Fixes
+
+* **standalone:** ui env not generated ([6224964](https://github.com/getmeli/meli/commit/622496423c7c5cbe4dc1217e7321413bc5e305c2))
+
 # [1.0.0-next.41](https://github.com/getmeli/meli/compare/v1.0.0-next.40...v1.0.0-next.41) (2020-12-10)
 
 
