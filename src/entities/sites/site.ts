@@ -1,9 +1,5 @@
-import {
-  alternatives, array, object, string,
-} from 'joi';
-import {
-  ARRAY_MAX, COLOR_PATTERN, STRING_MAX_LENGTH, SUBDOMAIN_PATTERN,
-} from '../../constants';
+import { alternatives, array, object, string } from 'joi';
+import { ARRAY_MAX, COLOR_PATTERN, STRING_MAX_LENGTH, SUBDOMAIN_PATTERN } from '../../constants';
 import { AppDb } from '../../db/db';
 import { Branch } from './branch';
 
@@ -75,7 +71,7 @@ export const $siteDomain = object({
 export const $site = object({
   name: $siteName,
   color: string().required().regex(COLOR_PATTERN),
-  mainBranch: string().required().max(STRING_MAX_LENGTH),
+  mainBranch: string().optional().max(STRING_MAX_LENGTH),
   domains: array().min(0).max(ARRAY_MAX).optional()
     .default([])
     .items($siteDomain),
