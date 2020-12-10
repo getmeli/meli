@@ -1,3 +1,11 @@
+# [1.0.0-next.31](https://github.com/getmeli/meli/compare/v1.0.0-next.30...v1.0.0-next.31) (2020-12-10)
+
+
+### Bug Fixes
+
+* cannot update site when no main branch selected ([eb34433](https://github.com/getmeli/meli/commit/eb3443319d86dc00c1328c318b69525a456d6e3c))
+* more indexes causing issues ([2b091d6](https://github.com/getmeli/meli/commit/2b091d61f3fcc9a7c30c882abd0cc85ca5030b54))
+
 # [1.0.0-next.30](https://github.com/getmeli/meli/compare/v1.0.0-next.29...v1.0.0-next.30) (2020-12-10)
 
 
