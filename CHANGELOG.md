@@ -1,3 +1,10 @@
+# [1.0.0-next.34](https://github.com/getmeli/meli/compare/v1.0.0-next.33...v1.0.0-next.34) (2020-12-10)
+
+
+### Features
+
+* update site main branch when none is defined ([9377e81](https://github.com/getmeli/meli/commit/9377e818dff4377ae0116aebf13dedc7b00a2cbd))
+
 # [1.0.0-next.33](https://github.com/getmeli/meli/compare/v1.0.0-next.32...v1.0.0-next.33) (2020-12-10)
 
 
