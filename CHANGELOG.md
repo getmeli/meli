@@ -1,3 +1,10 @@
+# [1.0.0-next.32](https://github.com/getmeli/meli/compare/v1.0.0-next.31...v1.0.0-next.32) (2020-12-10)
+
+
+### Bug Fixes
+
+* more indexes causing issues ([aade94c](https://github.com/getmeli/meli/commit/aade94caf1a832a718625ce6f87f4825ce38a6f9))
+
 # [1.0.0-next.31](https://github.com/getmeli/meli/compare/v1.0.0-next.30...v1.0.0-next.31) (2020-12-10)
 
 
