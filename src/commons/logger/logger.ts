@@ -30,11 +30,17 @@ export class Logger {
     });
   }
 
-  error(message: any, ...args: any[]): void {
-    Logger.winstonLogger.error(message?.stack ? message.stack : message, {
+  error(error: any, ...args: any[]): void {
+    Logger.winstonLogger.error(error, {
       context: this.context,
       meta: {
-        args,
+        args: [
+          ...args,
+          ...(error.stack ? [error.stack] : []),
+          ...args
+            .filter(arg => !!arg.stack)
+            .map(arg => arg.stack),
+        ],
       },
     });
   }

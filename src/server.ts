@@ -50,10 +50,7 @@ if (env.MELI_SENTRY_ENABLED && SENTRY_DSN && SENTRY_RELEASE) {
 export async function server(): Promise<any> {
   await AppDb.init();
   await migrate(AppDb.client, AppDb.db);
-  setupDbIndexes().catch(err => {
-    logger.error('Could not setup indexes indexes');
-    logger.error(err);
-  });
+  setupDbIndexes().catch(err => logger.error('Could not setup indexes indexes', err));
   await configureCaddy();
 
   const app = express();
