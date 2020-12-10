@@ -1,6 +1,6 @@
 {
   "name": "@skipper/core",
-  "version": "1.0.0-next.40",
+  "version": "1.0.0-next.41",
   "private": true,
   "description": "",
   "main": "src/index.js",

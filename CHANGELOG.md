@@ -1,3 +1,10 @@
+# [1.0.0-next.41](https://github.com/getmeli/meli/compare/v1.0.0-next.40...v1.0.0-next.41) (2020-12-10)
+
+
+### Bug Fixes
+
+* ui responds only to / ([eb09f41](https://github.com/getmeli/meli/commit/eb09f411e9713fe3a53fcfff5ee18d740add0c95))
+
 # [1.0.0-next.40](https://github.com/getmeli/meli/compare/v1.0.0-next.39...v1.0.0-next.40) (2020-12-10)
 
 
