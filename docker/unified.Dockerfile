@@ -10,13 +10,12 @@ COPY ./docker/files/entrypoint.sh /entrypoint.sh
 COPY ./docker/files/caddy-config.json /etc/caddy/config.json
 # ui
 COPY --from=ui /www /app/ui
-COPY --from=ui /env.sh /
 # api
 COPY ./build /app/api
 COPY ./node_modules /app/api/node_modules
 COPY ./migrate-mongo-config.js /app/api
 
-RUN chmod +x /entrypoint.sh /env.sh \
+RUN chmod +x /entrypoint.sh \
   && apk add --no-cache \
        bash \
        nodejs \
