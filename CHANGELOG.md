@@ -1,3 +1,16 @@
+# [1.0.0-next.37](https://github.com/getmeli/meli/compare/v1.0.0-next.36...v1.0.0-next.37) (2020-12-10)
+
+
+### Bug Fixes
+
+* unique options causes issues on name text index ([729bcd0](https://github.com/getmeli/meli/commit/729bcd0f6ce6828b3693ce72cb96a8fac17e2e3b))
+
+
+### Features
+
+* enhance error logging ([a039fee](https://github.com/getmeli/meli/commit/a039fee21fa94967eed5bab188124c5e0e3a019e))
+* make index creation non-blocking ([1ee2b7b](https://github.com/getmeli/meli/commit/1ee2b7bee40d51c0124f0c313d35f926f81ee1d5))
+
 # [1.0.0-next.36](https://github.com/getmeli/meli/compare/v1.0.0-next.35...v1.0.0-next.36) (2020-12-10)
 
 
