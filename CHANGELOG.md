@@ -1,3 +1,10 @@
+# [1.0.0-next.38](https://github.com/getmeli/meli/compare/v1.0.0-next.37...v1.0.0-next.38) (2020-12-10)
+
+
+### Bug Fixes
+
+* site name index should be 1, not text ([33d2948](https://github.com/getmeli/meli/commit/33d294898d1d7a1e07fc37287174bca84a98718e))
+
 # [1.0.0-next.37](https://github.com/getmeli/meli/compare/v1.0.0-next.36...v1.0.0-next.37) (2020-12-10)
 
 
