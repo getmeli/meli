@@ -1,3 +1,10 @@
+# [1.0.0-next.36](https://github.com/getmeli/meli/compare/v1.0.0-next.35...v1.0.0-next.36) (2020-12-10)
+
+
+### Features
+
+* do not use promise all when creating indexes ([2c7ebed](https://github.com/getmeli/meli/commit/2c7ebed571f7eef9e06e9cb1a99c7b4e129ba874))
+
 # [1.0.0-next.35](https://github.com/getmeli/meli/compare/v1.0.0-next.34...v1.0.0-next.35) (2020-12-10)
 
 
