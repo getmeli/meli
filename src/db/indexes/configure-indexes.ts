@@ -1,6 +1,4 @@
-import {
-  Collection, Db, IndexOptions, MongoClient,
-} from 'mongodb';
+import { Collection, Db, IndexOptions, MongoClient } from 'mongodb';
 import { configureIndexesForCollection } from './create-indexes-for-collection';
 
 export type FieldOrSpec =
@@ -20,12 +18,13 @@ async function createCollectionIfNotExists(name: string, db: Db): Promise<Collec
 
 export async function configureIndexes(client: MongoClient, collectionIndexes: { [collectionName: string]: MongoIndexSpec[] }) {
   const db = client.db();
-  await Promise.all(
-    Object.keys(collectionIndexes)
-      .map(async collectionName => {
-        const collection = await createCollectionIfNotExists(collectionName, db);
-        const indexes = collectionIndexes[collectionName];
-        await configureIndexesForCollection(collection, indexes);
-      }),
-  );
+
+  // eslint-disable-next-line no-restricted-syntax
+  for (const collectionName of Object.keys(collectionIndexes)) {
+    // eslint-disable-next-line no-await-in-loop
+    const collection = await createCollectionIfNotExists(collectionName, db);
+    const indexes = collectionIndexes[collectionName];
+    // eslint-disable-next-line no-await-in-loop
+    await configureIndexesForCollection(collection, indexes);
+  }
 }

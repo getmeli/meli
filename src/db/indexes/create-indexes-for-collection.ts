@@ -1,6 +1,4 @@
-import {
-  Collection, IndexSpecification, MongoError,
-} from 'mongodb';
+import { Collection, IndexSpecification, MongoError } from 'mongodb';
 import chalk from 'chalk';
 import { FieldOrSpec, MongoIndexSpec } from './configure-indexes';
 import { MongoErrorCode } from './mongo-error-code';
@@ -52,18 +50,18 @@ async function createIndexIfNotExists(spec: MongoIndexSpec, collection: Collecti
       const indexWithSameName = existingIndexes.find(value => value.name === spec.options.name);
       if (indexWithSameName) {
         await collection.dropIndex(indexName);
-      }
-
-      const indexWithSameKey = findIndexWithSameKey(existingIndexes, spec.fieldOrSpec);
-      if (indexWithSameKey) {
-        await collection.dropIndex(indexWithSameKey.name);
-      }
-
-      const isTextIndex = Object.entries(spec.fieldOrSpec).some(([, value]) => value === 'text');
-      if (isTextIndex) {
-        const textIndex = existingIndexes.find(val => val.textIndexVersion !== undefined);
-        if (textIndex) {
-          await collection.dropIndex(textIndex.name);
+      } else {
+        const indexWithSameKey = findIndexWithSameKey(existingIndexes, spec.fieldOrSpec);
+        if (indexWithSameKey) {
+          await collection.dropIndex(indexWithSameKey.name);
+        } else {
+          const isTextIndex = Object.entries(spec.fieldOrSpec).some(([, value]) => value === 'text');
+          if (isTextIndex) {
+            const textIndex = existingIndexes.find(val => val.textIndexVersion !== undefined);
+            if (textIndex) {
+              await collection.dropIndex(textIndex.name);
+            }
+          }
         }
       }
 
@@ -101,10 +99,10 @@ export async function configureIndexesForCollection(collection: Collection, spec
     .filter(index => index.name !== '_id_')
     .filter(index => specs.every(spec => spec.options.name !== index.name));
 
-  await Promise.all(
-    indexesToDrop.map(({ name }) => {
-      logger.info(`Dropping index ${chalk.bold(name)}`);
-      return collection.dropIndex(name);
-    }),
-  );
+  // eslint-disable-next-line no-restricted-syntax
+  for (const { name } of indexesToDrop) {
+    logger.info(`Dropping index ${chalk.bold(name)}`);
+    // eslint-disable-next-line no-await-in-loop
+    await collection.dropIndex(name);
+  }
 }
