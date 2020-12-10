@@ -1,3 +1,10 @@
+# [1.0.0-next.29](https://github.com/getmeli/meli/compare/v1.0.0-next.28...v1.0.0-next.29) (2020-12-10)
+
+
+### Bug Fixes
+
+* duplicate index key error team.member undefined ([10341f2](https://github.com/getmeli/meli/commit/10341f245c10f00214c43f2f1a797270d89cbfb5))
+
 # [1.0.0-next.28](https://github.com/getmeli/meli/compare/v1.0.0-next.27...v1.0.0-next.28) (2020-12-09)
 
 
