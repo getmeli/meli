@@ -89,7 +89,7 @@
     "ip": "^1.1.5",
     "joi": "^17.3.0",
     "jsonwebtoken": "^8.5.1",
-    "migrate-mongo": "^8.1.1",
+    "migrate-mongo": "^8.1.4",
     "moment-timezone": "^0.5.31",
     "mongodb": "^3.6.3",
     "morgan": "^1.10.0",

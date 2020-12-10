@@ -21,7 +21,7 @@ RUN chmod +x /entrypoint.sh \
        nodejs \
   && mkdir -p /app/api/migrations
 
-WORKDIR /app
+WORKDIR /app/api
 
 LABEL maintainer="meli.sh"
 
@@ -32,4 +32,4 @@ EXPOSE 80
 EXPOSE 443
 
 ENTRYPOINT ["/entrypoint.sh"]
-CMD ["node", "api/index.js"]
+CMD ["node", "index.js"]
