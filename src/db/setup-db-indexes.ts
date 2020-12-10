@@ -30,12 +30,11 @@ export async function setupDbIndexes() {
     [Sites().collectionName]: [
       {
         fieldOrSpec: {
-          team: 1,
+          teamId: 1,
         },
       },
       {
         fieldOrSpec: {
-          siteId: 1,
           'branches._id': 1,
         },
         options: {
