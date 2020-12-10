@@ -1,3 +1,11 @@
+# [1.0.0-next.43](https://github.com/getmeli/meli/compare/v1.0.0-next.42...v1.0.0-next.43) (2020-12-10)
+
+
+### Bug Fixes
+
+* **auth:** catch verify token error ([01dbcc7](https://github.com/getmeli/meli/commit/01dbcc7dcfb71441b735b9c1130c621c87fe44b3))
+* **standalone:** write ui env file in entrypoint ([e73626e](https://github.com/getmeli/meli/commit/e73626e51a0a251a078450abb189a465e569950e))
+
 # [1.0.0-next.42](https://github.com/getmeli/meli/compare/v1.0.0-next.41...v1.0.0-next.42) (2020-12-10)
 
 
