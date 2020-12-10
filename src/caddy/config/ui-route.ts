@@ -7,7 +7,7 @@ const meliuihost = new URL(env.MELI_UI_URL);
 export const uiRoute = {
   group: 'ui',
   match: [{
-    host: [meliuihost.host],
+    host: [meliuihost.hostname],
     path: ['/*'],
   }],
   handle: [

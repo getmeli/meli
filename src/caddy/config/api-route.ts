@@ -7,7 +7,7 @@ const melihost = new URL(env.MELI_URL);
 export const apiRoute = {
   group: 'api',
   match: [{
-    host: [melihost.host],
+    host: [melihost.hostname],
     path: [
       '/api/*',
       '/auth/*',

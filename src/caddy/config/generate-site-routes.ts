@@ -17,7 +17,7 @@ export function generateSiteRoutes(site: Site): any[] {
   const domains: SiteDomain[] = [
     ...(site.domains || []),
     {
-      name: `${site.name}.${sitesUrl.host}`,
+      name: `${site.name}.${sitesUrl.hostname}`,
       sslConfiguration: {
         type: 'acme',
       } as AcmeSslConfiguration,
