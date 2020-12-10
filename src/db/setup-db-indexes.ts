@@ -39,6 +39,7 @@ export async function setupDbIndexes() {
         },
         options: {
           unique: true,
+          sparse: true,
         },
       },
       {
@@ -48,6 +49,7 @@ export async function setupDbIndexes() {
         },
         options: {
           unique: true,
+          sparse: true,
         },
       },
       {
@@ -57,6 +59,7 @@ export async function setupDbIndexes() {
         },
         options: {
           unique: true,
+          sparse: true,
         },
       },
       {
@@ -66,6 +69,7 @@ export async function setupDbIndexes() {
         },
         options: {
           unique: true,
+          sparse: true,
         },
       },
       {
@@ -74,6 +78,7 @@ export async function setupDbIndexes() {
         },
         options: {
           unique: true,
+          sparse: true,
         },
       },
       {
@@ -82,6 +87,7 @@ export async function setupDbIndexes() {
         },
         options: {
           unique: true,
+          sparse: true,
         },
       },
       {
