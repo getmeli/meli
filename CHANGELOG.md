@@ -1,3 +1,11 @@
+# [1.0.0-next.30](https://github.com/getmeli/meli/compare/v1.0.0-next.29...v1.0.0-next.30) (2020-12-10)
+
+
+### Bug Fixes
+
+* mongo index error on site ([190fb00](https://github.com/getmeli/meli/commit/190fb00ab543cecfd79380a0ce1cdf428440e9cb))
+* site main branch is required ([2420ad4](https://github.com/getmeli/meli/commit/2420ad44241d39681c550b61d383a818a46eb3fa))
+
 # [1.0.0-next.29](https://github.com/getmeli/meli/compare/v1.0.0-next.28...v1.0.0-next.29) (2020-12-10)
 
 
