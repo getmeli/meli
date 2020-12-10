@@ -35,7 +35,6 @@ export async function setupDbIndexes() {
       },
       {
         fieldOrSpec: {
-          _id: 1,
           'branches._id': 1,
         },
         options: {
@@ -55,14 +54,6 @@ export async function setupDbIndexes() {
         fieldOrSpec: {
           _id: 1,
           'branches.slug': 1,
-        },
-        options: {
-          unique: true,
-        },
-      },
-      {
-        fieldOrSpec: {
-          'branches._id': 1,
         },
         options: {
           unique: true,
