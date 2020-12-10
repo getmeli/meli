@@ -88,9 +88,11 @@ export async function configureIndexesForCollection(collection: Collection, spec
 
   // create indexes that don't already exist, or modify them
 
-  await Promise.all(
-    specs.map(spec => createIndexIfNotExists(spec, collection)),
-  );
+  for (let i = 0; i < specs.length; i++) {
+    const spec = specs[i];
+    // eslint-disable-next-line no-await-in-loop
+    await createIndexIfNotExists(spec, collection);
+  }
 
   // drop indexes that do not exist anymore
 
@@ -99,8 +101,8 @@ export async function configureIndexesForCollection(collection: Collection, spec
     .filter(index => index.name !== '_id_')
     .filter(index => specs.every(spec => spec.options.name !== index.name));
 
-  // eslint-disable-next-line no-restricted-syntax
-  for (const { name } of indexesToDrop) {
+  for (let i = 0; i < indexesToDrop.length; i++) {
+    const { name } = indexesToDrop[i];
     logger.info(`Dropping index ${chalk.bold(name)}`);
     // eslint-disable-next-line no-await-in-loop
     await collection.dropIndex(name);
