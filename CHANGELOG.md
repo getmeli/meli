@@ -1,3 +1,11 @@
+# [1.0.0-next.40](https://github.com/getmeli/meli/compare/v1.0.0-next.39...v1.0.0-next.40) (2020-12-10)
+
+
+### Bug Fixes
+
+* **caddy:** match host without port ([eeeaefe](https://github.com/getmeli/meli/commit/eeeaefe7906fb48b89fed0fd66b5f104bb1e4fa1))
+* typo in 523 page ([eb00f57](https://github.com/getmeli/meli/commit/eb00f57c2433566026216c7a1c4d480f998d71f1))
+
 # [1.0.0-next.39](https://github.com/getmeli/meli/compare/v1.0.0-next.38...v1.0.0-next.39) (2020-12-10)
 
 
