@@ -98,6 +98,14 @@ export async function setupDbIndexes() {
           unique: true,
         },
       },
+      {
+        fieldOrSpec: {
+          name: 'text',
+        },
+        options: {
+          name: 'text',
+        },
+      },
     ],
     [Releases().collectionName]: [
       {
