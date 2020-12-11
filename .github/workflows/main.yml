@@ -43,11 +43,11 @@ jobs:
           npm run build
       - name: "docker build"
         run: |
-          docker build -t $TMP_DOCKER_IMAGE -f ./docker/Dockerfile .
+          docker build --pull -t $TMP_DOCKER_IMAGE -f ./docker/Dockerfile .
       - name: "docker build unified"
         if: ${{ env.IS_RELEASE_BRANCH == 'true' }}
         run: |
-          docker build -t $TMP_DOCKER_IMAGE_UNIFIED -f ./docker/unified.Dockerfile --build-arg "UI_VERSION=$(cat HEAD_BRANCH)" .
+          docker build --pull -t $TMP_DOCKER_IMAGE_UNIFIED -f ./docker/unified.Dockerfile --build-arg "UI_VERSION=$(cat HEAD_BRANCH)" .
       - name: "release"
         if: ${{ env.IS_RELEASE_BRANCH == 'true' }}
         run: |
