@@ -9,13 +9,14 @@ export const apiRoute = {
   match: [{
     host: [melihost.hostname],
     path: [
-      '/api/*',
-      '/auth/*',
-      '/system/*',
-      '/socket.io/*',
+      `${env.MELI_API_PATH}*`,
     ],
   }],
   handle: [
+    {
+      handler: 'rewrite',
+      strip_path_prefix: env.MELI_API_PATH,
+    },
     // https://caddyserver.com/docs/json/apps/http/servers/routes/handle/reverse_proxy/
     {
       handler: 'reverse_proxy',
