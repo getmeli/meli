@@ -100,10 +100,6 @@ module.exports = {
           from: './src/emails/templates',
           to: 'emails/templates',
         },
-        {
-          from: './src/public',
-          to: 'public',
-        },
       ],
     }),
   ],

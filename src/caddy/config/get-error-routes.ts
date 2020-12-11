@@ -1,5 +1,3 @@
-import { env } from '../../env/env';
-import { getReverseProxyDial } from '../utils/get-reverse-proxy-dial';
 import { Site } from '../../entities/sites/site';
 import { getSiteErrorRoutes } from './get-site-error-routes';
 
@@ -23,19 +21,9 @@ export function getErrorRoutes(sites: Site[]) {
         }],
         handle: [
           {
-            handler: 'rewrite',
-            uri: '/static/404.html',
-          },
-          // https://caddyserver.com/docs/json/apps/http/servers/routes/handle/reverse_proxy/
-          {
-            handler: 'reverse_proxy',
-            upstreams: [{
-              dial: getReverseProxyDial(env.MELI_URL_INTERNAL),
-            }],
-            handle_response: [{
-              // express replies with 200 OK, so override with initial caddy status code
-              status_code: '{http.error.status_code}',
-            }],
+            handler: 'static_response',
+            status_code: '404',
+            body: 'Not found',
           },
         ],
         terminal: true,

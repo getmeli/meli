@@ -209,9 +209,6 @@ export const envSpec: EnvSpec<Env> = {
   MELI_TMP_DIRECTORY: {
     schema: string().optional().default(tmpdir()),
   },
-  MELI_STATIC_DIR: {
-    schema: string().optional().default(join(__dirname, './public')),
-  },
   MELI_INVITE_EXPIRATION_TIME: {
     transform: stringToInt(),
     schema: number().optional().default(86400000),
