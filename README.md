@@ -5,10 +5,9 @@
 </p>
 <h1 align="center">meli</h1>
 <p align="center">Open source platform for deploying static sites and frontend applications.</p>
-
-> Found a security issue ? Please [let us know !](https://github.com/gomeli/meli/security/advisories/new)
-
-Docs: https://docs.meli.sh (proudly hosted on Meli !)
+<p align="center">
+    <a href="https://docs.meli.sh">Docs</a> (proudly hosted on Meli !) - <a href="https://twitter.com/getmeli">Twitter</a>
+</p>
 
 ![Meli demo screenshot](https://raw.githubusercontent.com/getmeli/meli-brand/latest/screens/meli-site-branch.png)
 
