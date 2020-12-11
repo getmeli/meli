@@ -49,7 +49,7 @@ jobs:
         run: |
           docker build --pull -t $TMP_DOCKER_IMAGE_UNIFIED -f ./docker/unified.Dockerfile --build-arg "UI_VERSION=$(cat HEAD_BRANCH)" .
       - name: "release"
-        if: ${{ env.IS_RELEASE_BRANCH == 'true' }}
+        if: ${{ github.ref == 'refs/heads/latest' || github.ref == 'refs/heads/beta' }}
         run: |
           source ./scripts/setup-git.sh "$RELEASE_DEPLOY_KEY"
           npx semantic-release -r $GITHUB_REPOSITORY_SSH_URL
