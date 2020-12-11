@@ -14,7 +14,7 @@ RUN apk add --no-cache \
 
 # caddy
 COPY ./docker/files/entrypoint.sh /entrypoint.sh
-RUN mkdir -p /app/api/migrations
+RUN chmod +x /entrypoint.sh
 COPY ./docker/files/caddy-config.json /etc/caddy/config.json
 # ui
 COPY --from=ui /www /app/ui
