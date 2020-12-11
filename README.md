@@ -8,14 +8,16 @@
 
 > Found a security issue ? Please [let us know !](https://github.com/gomeli/meli/security/advisories/new)
 
-Docs: https://docs.meli.sh
+Docs: https://docs.meli.sh (proudly hosted on Meli !)
+
+![Meli demo screenshot](https://raw.githubusercontent.com/getmeli/meli-brand/latest/screens/meli-site-branch.png)
 
 ## How it works
 
 1. Sign-in and create your organization
 1. Create a site in your dashboard, say `my-site`
-1. Upload a release with the `meli` CLI
-1. Setup `my-domain.com` to point to `my-site.meli.sh`
+1. Upload a release with the `@getmeli/meli` CLI
+1. Setup `my-domain.com` to point to your Meli server at `my-site.mymeli.com`
 
 ## Features
 
