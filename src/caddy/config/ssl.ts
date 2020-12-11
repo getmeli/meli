@@ -25,18 +25,22 @@ export function generateManualCertificatesConfig(sites: Site[]) {
 }
 
 export function generateServerTlsConfig(sites: Site[]) {
-  const appHostnames = [
+  const sitesDomains = sites.flatMap(site => site.domains);
+  const acmeDomains = [
     meliUrl.hostname,
     meliUiUrl.hostname,
+    ...sitesDomains
+      .filter(domain => domain.sslConfiguration?.type === 'acme')
+      .map(domain => domain.name),
   ].filter(unique);
-  const manualCertificatesDomains = sites
-    .flatMap(site => site.domains)
+  const manualCertificatesDomains = sitesDomains
     .filter(domain => domain.sslConfiguration?.type !== 'acme');
+
   return {
     tls_connection_policies: [
       {
         match: {
-          sni: appHostnames,
+          sni: acmeDomains,
         },
         // TODO if manual certificate was given for meli, use it (leave as is for acme)
       },
