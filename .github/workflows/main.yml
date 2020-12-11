@@ -60,8 +60,9 @@ jobs:
         if: ${{ env.IS_RELEASE_BRANCH == 'true' }}
         run: |
           docker login -u $DOCKER_USER -p $DOCKER_TOKEN
-          npx docker-semver-tags --sourceImage $TMP_DOCKER_IMAGE --targetImage $DOCKER_IMAGE --versionTag $(cat VERSION)
-          npx docker-semver-tags --sourceImage $TMP_DOCKER_IMAGE_UNIFIED --targetImage $DOCKER_IMAGE_UNIFIED --versionTag $(cat VERSION)
+          IS_NEXT=${{ github.ref == 'refs/heads/latest' }}
+          npx docker-semver-tags --sourceImage $TMP_DOCKER_IMAGE --targetImage $DOCKER_IMAGE --versionTag $(cat VERSION) --channelOnly $IS_NEXT
+          npx docker-semver-tags --sourceImage $TMP_DOCKER_IMAGE_UNIFIED --targetImage $DOCKER_IMAGE_UNIFIED --versionTag $(cat VERSION) --channelOnly $IS_NEXT
         env:
           DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
           DOCKER_USER: ${{ secrets.DOCKER_USER }}
