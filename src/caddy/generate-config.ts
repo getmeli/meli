@@ -8,12 +8,12 @@ import { apiRoute } from './config/api-route';
 import { URL } from 'url';
 import { fallback } from './config/fallback';
 
-const meliUrl = new URL(env.MELI_URL);
+const sitesUrl = new URL(env.MELI_SITES_URL);
 
 export async function generateConfig(): Promise<any> {
   const sites = await Sites().find().toArray();
 
-  const sslDisabled = meliUrl.protocol === 'http:';
+  const sslDisabled = sitesUrl.protocol === 'http:';
   return {
     logging: {
       logs: {
@@ -40,7 +40,7 @@ export async function generateConfig(): Promise<any> {
               fallback,
             ],
             errors: getErrorRoutes(sites),
-            ...(sslDisabled ? [] : generateServerTlsConfig(sites)),
+            ...(sslDisabled ? {} : generateServerTlsConfig(sites)),
           },
         },
       },

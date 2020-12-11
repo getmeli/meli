@@ -1,4 +1,6 @@
 import { alternatives, array, object, string } from 'joi';
+import { isCertificate } from '../../commons/validators/is-certificate';
+import { isRsaPrivateKey } from '../../commons/validators/is-rsa-private-key';
 import { ARRAY_MAX, COLOR_PATTERN, STRING_MAX_LENGTH, SUBDOMAIN_PATTERN } from '../../constants';
 import { AppDb } from '../../db/db';
 import { Branch } from './branch';
@@ -54,10 +56,11 @@ export const $siteName = string().required().max(STRING_MAX_LENGTH).regex(SUBDOM
 export const $acmeSslConfiguration = object<AcmeSslConfiguration>({
   type: string().equal('acme').required(),
 });
+
 export const $manualSslConfiguration = object<ManualSslConfiguration>({
   type: string().equal('manual').required(),
-  fullchain: string().min(1).required(),
-  privateKey: string().min(1).required(),
+  fullchain: string().custom(isCertificate).min(1).required(),
+  privateKey: string().custom(isRsaPrivateKey).min(1).required(),
 });
 
 export const $siteDomain = object({
@@ -71,7 +74,9 @@ export const $siteDomain = object({
 export const $site = object({
   name: $siteName,
   color: string().required().regex(COLOR_PATTERN),
-  mainBranch: string().optional().max(STRING_MAX_LENGTH),
+  mainBranch: string()
+    .optional().empty('').empty(null)
+    .max(STRING_MAX_LENGTH),
   domains: array().min(0).max(ARRAY_MAX).optional()
     .default([])
     .items($siteDomain),
