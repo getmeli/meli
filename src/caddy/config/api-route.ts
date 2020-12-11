@@ -4,7 +4,7 @@ import { URL } from 'url';
 
 const melihost = new URL(env.MELI_URL);
 
-export const apiRoute = {
+export const apiRoute: Caddy.HttpRoute = {
   group: 'api',
   match: [{
     host: [melihost.hostname],
