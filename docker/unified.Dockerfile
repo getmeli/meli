@@ -5,8 +5,16 @@ FROM getmeli/ui:${UI_VERSION} AS ui
 
 FROM caddy:2
 
+LABEL maintainer="meli.sh"
+
+RUN apk add --no-cache \
+       bash \
+       nodejs \
+  && mkdir -p /app/api/migrations
+
 # caddy
 COPY ./docker/files/entrypoint.sh /entrypoint.sh
+RUN mkdir -p /app/api/migrations
 COPY ./docker/files/caddy-config.json /etc/caddy/config.json
 # ui
 COPY --from=ui /www /app/ui
@@ -15,15 +23,7 @@ COPY ./build /app/api
 COPY ./node_modules /app/api/node_modules
 COPY ./migrate-mongo-config.js /app/api
 
-RUN chmod +x /entrypoint.sh \
-  && apk add --no-cache \
-       bash \
-       nodejs \
-  && mkdir -p /app/api/migrations
-
 WORKDIR /app/api
-
-LABEL maintainer="meli.sh"
 
 ENV MELI_URL_INTERNAL=http://localhost:3001
 ENV MELI_UI_DIR=/app/ui
