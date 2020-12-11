@@ -114,22 +114,3 @@ Your sites will be served at `*.test`.
 
 Pros: you don't need to be connected to the internet, no need to reconfigure /etc/hosts
 Cons: a bit complex, config required
-
-### SSL
-
-Use [`mkcert`](https://github.com/FiloSottile/mkcert) to generate a certificate and key:
-
-```shell script
-brew install mkcert nss
-mkcert -install
-mkcert loopback.sh
-```
-
-then update your `.env` with:
-
-```
-MELI_SSL_KEY=localhost-key.pem
-MELI_SSL_CERT=localhost.pem
-```
-
-TODO see how to configure Caddy to use these files
