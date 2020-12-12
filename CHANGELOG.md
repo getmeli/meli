@@ -1,3 +1,11 @@
+# [1.0.0-beta.4](https://github.com/getmeli/meli/compare/v1.0.0-beta.3...v1.0.0-beta.4) (2020-12-12)
+
+
+### Bug Fixes
+
+* incorrect license change date ([55ca88a](https://github.com/getmeli/meli/commit/55ca88a0dbcb45485f025a9ec8fe310a2cfab38c))
+* incorrect license change date ([516bed7](https://github.com/getmeli/meli/commit/516bed74d69ef5a61a5552431781c400a85dc5cd))
+
 # [1.0.0-beta.3](https://github.com/getmeli/meli/compare/v1.0.0-beta.2...v1.0.0-beta.3) (2020-12-12)
 
 

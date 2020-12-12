@@ -1,6 +1,6 @@
 {
   "name": "@skipper/core",
-  "version": "1.0.0-beta.3",
+  "version": "1.0.0-beta.4",
   "private": true,
   "description": "",
   "main": "src/index.js",
@@ -53,7 +53,7 @@
     "nock": "^13.0.4",
     "rimraf": "^3.0.2",
     "semantic-release": "^17.2.2",
-    "semantic-release-license": "^1.0.0",
+    "semantic-release-license": "^1.0.2",
     "terser-webpack-plugin": "^3.0.8",
     "ts-jest": "^26.1.4",
     "ts-loader": "^8.0.1",
