@@ -53,7 +53,7 @@
 
 1. Run `docker-compose -f ./docker-compose-dev.yml up -d`
 1. Configure your `.env` (copy `.env.example` to start with)
-1. Run `npm start`
+1. Run `npm i && npm start`
 
 If you develop with the UI, you'll need to clone the [UI repo](https://github.com/getmeli/meli-ui), then start it.
 
