@@ -65,3 +65,10 @@ jobs:
         env:
           DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
           DOCKER_USER: ${{ secrets.DOCKER_USER }}
+      - name: "realign next"
+        if: ${{ env.IS_RELEASE_BRANCH == 'true' }}
+        run: |
+          source ./scripts/setup-git.sh "$RELEASE_DEPLOY_KEY"
+          ./scripts/rebase-git-branch.sh "next" "$(cat HEAD_BRANCH)"
+        env:
+          RELEASE_DEPLOY_KEY: ${{ secrets.RELEASE_DEPLOY_KEY }}
