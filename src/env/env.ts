@@ -6,7 +6,6 @@ export interface Env {
   DEBUG: string;
   MELI_PORT: number;
   MELI_URL: string;
-  MELI_API_PATH: string;
   MELI_URL_INTERNAL: string;
   MELI_UI_URL: string;
   MELI_UI_URL_INTERNAL: string;
