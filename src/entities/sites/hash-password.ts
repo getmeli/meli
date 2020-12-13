@@ -1,23 +1,29 @@
-import { genSalt, hash } from 'bcrypt';
-import { env } from '../../env/env';
 import { BranchPassword } from './branch';
+import { randomBytes, scrypt } from 'crypto';
+
+export const scryptOptions = {
+  saltLength: 16,
+  keyLength: 64,
+  N: 16384,
+  r: 8,
+  p: 1,
+};
 
 export async function hashPassword(plain: string): Promise<BranchPassword> {
   return new Promise((resolve, reject) => {
-    genSalt(env.MELI_BCRYPT_SALTROUNDS, (saltError, salt) => {
-      if (saltError) {
-        reject(saltError);
-        return;
+    const salt = randomBytes(scryptOptions.saltLength).toString('hex');
+
+    scrypt(plain, salt, scryptOptions.keyLength, {
+      N: scryptOptions.N,
+      r: scryptOptions.r,
+      p: scryptOptions.p,
+    }, (err, derivedKey) => {
+      if (err) {
+        reject(err);
       }
-      hash(plain, salt, (hashError, hashed) => {
-        if (hashError) {
-          reject(hashError);
-        } else {
-          resolve({
-            hash: hashed,
-            salt,
-          });
-        }
+      resolve({
+        hash: derivedKey.toString('hex'),
+        salt,
       });
     });
   });

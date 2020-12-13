@@ -9,6 +9,7 @@ import { getReverseProxyDial } from '../utils/get-reverse-proxy-dial';
 import { BranchPassword } from '../../entities/sites/branch';
 import { base64Encode } from '../../commons/utils/base64';
 import { getBranchDirInCaddy } from '../utils/get-branch-dir-in-caddy';
+import { scryptOptions } from '../../entities/sites/hash-password';
 
 const sitesUrl = new URL(env.MELI_SITES_URL);
 
@@ -36,7 +37,7 @@ export function generateSiteRoutes(site: Site): any[] {
           host: hosts,
         }],
         handle: [
-          getAuthHandle(branch.password),
+          getAuthHandler(branch.password),
         ],
       }]),
       ...(!branch.redirects ? [] : branch.redirects.map(redirect => ({
@@ -99,19 +100,24 @@ export function generateSiteRoutes(site: Site): any[] {
   });
 }
 
-function getAuthHandle(password: BranchPassword) {
+function getAuthHandler(password: BranchPassword) {
   return {
     // https://caddyserver.com/docs/json/apps/http/servers/routes/handle/authentication/
     handler: 'authentication',
     providers: {
       // https://caddyserver.com/docs/json/apps/http/servers/routes/handle/authentication/providers/http_basic/
       http_basic: {
+        // https://caddyserver.com/docs/json/apps/http/servers/routes/handle/authentication/providers/http_basic/hash/scrypt/
         hash: {
-          algorithm: 'bcrypt',
+          algorithm: 'scrypt',
+          N: scryptOptions.N,
+          r: scryptOptions.r,
+          p: scryptOptions.p,
+          key_length: scryptOptions.keyLength,
         },
         accounts: [{
-          username: 'root',
-          password: base64Encode(password.hash),
+          username: 'user',
+          password: Buffer.from(password.hash, 'hex').toString('base64'),
           salt: base64Encode(password.salt),
         }],
       },
