@@ -1,5 +1,5 @@
 import { Site } from '../../entities/sites/site';
-import { getSiteErrorRoutes } from './get-site-error-routes';
+import { getSiteErrorRoutes } from './sites/get-site-error-routes';
 
 export function getErrorRoutes(sites: Site[]) {
   return {

@@ -33,6 +33,12 @@ export function generateSiteRoutes(site: Site): any[] {
         }],
         handle: [{
           handler: 'subroute',
+          /*
+           * Per Caddy's docs (https://caddyserver.com/docs/modules/http.handlers.subroute),
+           * we could handle errors here for this site, but when I try it, it breaks
+           * password protection. I'm assuming there's a clash between 401 handling, the
+           * auth route and the error handler defined in errors.
+           */
           routes: [
             ...(!branch.password ? [] : [{
               handle: [
