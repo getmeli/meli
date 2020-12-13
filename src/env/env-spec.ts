@@ -79,6 +79,15 @@ export const envSpec: EnvSpec<Env> = {
   MELI_GOOGLE_CLIENT_SECRET: {
     schema: string().optional(),
   },
+  MELI_OIDC_DISCOVERY_URL: {
+    schema: string().optional(),
+  },
+  MELI_OIDC_CLIENT_ID: {
+    schema: string().optional(),
+  },
+  MELI_OIDC_CLIENT_SECRET: {
+    schema: string().optional(),
+  },
   MELI_MONGO_URI: {
     schema: string().required(),
   },

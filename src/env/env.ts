@@ -29,6 +29,9 @@ export interface Env {
   MELI_GITHUB_ORGS: string[];
   MELI_GOOGLE_CLIENT_ID: string;
   MELI_GOOGLE_CLIENT_SECRET: string;
+  MELI_OIDC_DISCOVERY_URL: string;
+  MELI_OIDC_CLIENT_ID: string;
+  MELI_OIDC_CLIENT_SECRET: string;
   MELI_MIGRATE_ROLLBACK: boolean;
   MELI_COOKIE_SAMESITE: boolean;
   MELI_COOKIE_SECURE: boolean;
