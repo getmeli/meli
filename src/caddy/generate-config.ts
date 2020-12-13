@@ -1,6 +1,6 @@
 import { Sites } from '../entities/sites/site';
 import { env } from '../env/env';
-import { generateSiteRoutes } from './config/generate-site-routes';
+import { generateSiteRoutes } from './config/sites/generate-site-routes';
 import { getErrorRoutes } from './config/get-error-routes';
 import { generateManualCertificatesConfig, generateServerTlsConfig } from './config/ssl';
 import { uiRoute } from './config/ui-route';
