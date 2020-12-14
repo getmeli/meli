@@ -12,9 +12,9 @@ import { canAdminSiteGuard } from '../../guards/can-admin-site-guard';
 import { EventType } from '../../../../events/event-type';
 import { $channelName, Branch } from '../../branch';
 import { uuid } from '../../../../utils/uuid';
-import slugify from 'slugify';
 import { configureSiteBranchInCaddy } from '../../../../caddy/configuration';
 import { Logger } from '../../../../commons/logger/logger';
+import { slugify } from '../../../../utils/slugify';
 
 const validators = [
   body(object({

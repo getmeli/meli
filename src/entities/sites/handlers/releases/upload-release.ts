@@ -18,10 +18,10 @@ import { promises } from 'fs';
 import { object, string } from 'joi';
 import { STRING_MAX_LENGTH } from '../../../../constants';
 import { body } from '../../../../commons/express-joi/body';
-import slugify from 'slugify';
 import { getBranchUrl } from '../../get-branch-url';
 import { configureSiteInCaddy } from '../../../../caddy/configuration';
 import { Logger } from '../../../../commons/logger/logger';
+import { slugify } from '../../../../utils/slugify';
 
 async function createOrGetBranch(site: Site, branchName: string): Promise<Branch> {
   let branch: Branch = site.branches.find(c => c.name === branchName);
