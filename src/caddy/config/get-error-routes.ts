@@ -1,23 +1,9 @@
-import { Site } from '../../entities/sites/site';
-import { getSiteErrorRoutes } from './sites/get-site-error-routes';
-
-export function getErrorRoutes(sites: Site[]) {
+export function getErrorRoutes() {
   return {
     routes: [
-      // https://caddy.community/t/v2-need-help-with-the-json-configuration-for-custom-404-and-redirects/7059/13
-      {
-        handle: [{
-          handler: 'vars',
-          status_code: '{http.error.status_code}',
-        }],
-      },
-      ...sites.flatMap(getSiteErrorRoutes),
-      // fallback
       {
         match: [{
-          vars: {
-            status_code: '404',
-          },
+          expression: '{http.error.status_code} == 404',
         }],
         handle: [
           {

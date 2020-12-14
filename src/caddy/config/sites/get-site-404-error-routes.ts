@@ -5,7 +5,7 @@ import { getBranchDirInCaddy } from '../../../entities/sites/get-site-dir';
 
 const sitesUrl = new URL(env.MELI_SITES_URL);
 
-export function getSiteErrorRoutes(site: Site) {
+export function getSite404ErrorRoutes(site: Site) {
   return site.branches.map(branch => {
     const hosts = [
       `${branch.slug}.${site.name}.${sitesUrl.hostname}`,
@@ -23,10 +23,7 @@ export function getSiteErrorRoutes(site: Site) {
 function getErrorRoute(hosts: string[], rootDir: string) {
   return {
     match: [{
-      vars: {
-        status_code: '404',
-      },
-      host: hosts,
+      expression: '{http.error.status_code} == 404',
     }],
     handle: [
       {
@@ -39,6 +36,5 @@ function getErrorRoute(hosts: string[], rootDir: string) {
         root: rootDir,
       },
     ],
-    terminal: true,
   };
 }

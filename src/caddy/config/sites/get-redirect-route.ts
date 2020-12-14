@@ -12,7 +12,6 @@ export function getRedirectRoute(site: Site, branch: Branch, redirect: Redirect)
       path: [redirect.path],
     }],
     handle: getRedirectHandler(site, branch, redirect),
-    terminal: true,
   };
 }
 

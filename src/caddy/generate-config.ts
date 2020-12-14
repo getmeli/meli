@@ -39,7 +39,7 @@ export async function generateConfig(): Promise<any> {
               ...sites.flatMap(generateSiteRoutes),
               fallback,
             ],
-            errors: getErrorRoutes(sites),
+            errors: getErrorRoutes(),
             ...(sslDisabled ? {} : generateServerTlsConfig(sites)),
           },
         },

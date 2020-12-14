@@ -6,6 +6,7 @@ import { getAuthHandler } from './get-auth-handler';
 import { getRedirectRoute } from './get-redirect-route';
 import { getBranchDirInCaddy } from '../../../entities/sites/get-site-dir';
 import { Branch } from '../../../entities/sites/branch';
+import { getSite404ErrorRoutes } from './get-site-404-error-routes';
 
 const sitesUrl = new URL(env.MELI_SITES_URL);
 
@@ -51,10 +52,29 @@ export function generateSiteRoutes(site: Site): any[] {
             ))),
             getPrimaryRoute(site, branch),
           ],
+          errors: {
+            routes: [
+              get401Handler(),
+              ...getSite404ErrorRoutes(site),
+            ],
+          },
         }],
       },
     ];
   });
+}
+
+function get401Handler() {
+  return {
+    match: [{
+      expression: '{http.error.status_code} == 401',
+    }],
+    handle: [{
+      handler: 'static_response',
+      body: 'not authenticated',
+      status_code: '{http.error.status_code}',
+    }],
+  };
 }
 
 function getPrimaryRoute(site: Site, branch: Branch) {
