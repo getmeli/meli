@@ -13,5 +13,6 @@ export function serializeSite(site: Site) {
     domains: site.domains || [],
     branches: site.branches || [],
     url: getSiteUrl(site),
+    spa: site.spa,
   };
 }

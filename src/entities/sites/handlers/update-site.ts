@@ -47,6 +47,7 @@ async function handler(req: Request, res: Response): Promise<void> {
         mainBranch,
         notificationConfigs: req.body.notificationConfigs,
         domains: req.body.domains,
+        spa: req.body.spa,
       },
     },
   );

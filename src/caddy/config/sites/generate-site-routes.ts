@@ -5,6 +5,7 @@ import { URL } from 'url';
 import { getAuthHandler } from './get-auth-handler';
 import { getRedirectRoute } from './get-redirect-route';
 import { getBranchDirInCaddy } from '../../../entities/sites/get-site-dir';
+import { Branch } from '../../../entities/sites/branch';
 
 const sitesUrl = new URL(env.MELI_SITES_URL);
 
@@ -48,16 +49,43 @@ export function generateSiteRoutes(site: Site): any[] {
             ...(!branch.redirects ? [] : branch.redirects.map(redirect => (
               getRedirectRoute(site, branch, redirect)
             ))),
-            {
-              handle: [{
-                handler: 'file_server',
-                root: getBranchDirInCaddy(site._id, branch),
-              }],
-            },
+            getPrimaryRoute(site, branch),
           ],
         }],
-        terminal: true,
       },
     ];
   });
+}
+
+function getPrimaryRoute(site: Site, branch: Branch) {
+  const branchDirInCaddy = getBranchDirInCaddy(site._id, branch);
+  if (site.spa) {
+    return {
+      match: [{
+        file: {
+          root: branchDirInCaddy,
+          try_files: [
+            '{http.request.uri.path}',
+            '/index.html',
+          ],
+        },
+      }],
+      handle: [
+        {
+          handler: 'rewrite',
+          uri: '{http.matchers.file.relative}',
+        },
+        {
+          handler: 'file_server',
+          root: branchDirInCaddy,
+        },
+      ],
+    };
+  }
+  return {
+    handle: [{
+      handler: 'file_server',
+      root: branchDirInCaddy,
+    }],
+  };
 }

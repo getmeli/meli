@@ -1,4 +1,4 @@
-import { alternatives, array, object, string } from 'joi';
+import { alternatives, array, boolean, object, string } from 'joi';
 import { isCertificate } from '../../commons/validators/is-certificate';
 import { isRsaPrivateKey } from '../../commons/validators/is-rsa-private-key';
 import { ARRAY_MAX, COLOR_PATTERN, STRING_MAX_LENGTH, SUBDOMAIN_PATTERN } from '../../constants';
@@ -43,6 +43,7 @@ export interface Site {
   branches: Branch[];
   tokens: SiteToken[];
   hooks: string[];
+  spa?: boolean;
 }
 
 export const Sites = () => AppDb.db.collection<Site>('sites');
@@ -80,4 +81,5 @@ export const $site = object({
   domains: array().min(0).max(ARRAY_MAX).optional()
     .default([])
     .items($siteDomain),
+  spa: boolean().optional().default(false),
 });
