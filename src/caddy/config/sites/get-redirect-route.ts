@@ -1,9 +1,7 @@
 import { Site } from '../../../entities/sites/site';
 import { Branch } from '../../../entities/sites/branch';
-import { Redirect, RedirectType, ReverseProxyRedirectConfig } from '../../../entities/sites/redirect';
-import { getBranchFilesDir, getFileRedirectFileName } from '../../../entities/sites/get-site-dir';
-import { relative, resolve } from 'path';
-import { env } from '../../../env/env';
+import { FileRedirectConfig, Redirect, RedirectType, ReverseProxyRedirectConfig } from '../../../entities/sites/redirect';
+import { getBranchDirInCaddy, getBranchFileRedirectDirInCaddy, getFileRedirectFileName } from '../../../entities/sites/get-site-dir';
 import { URL } from 'url';
 import { getReverseProxyDial } from '../../utils/get-reverse-proxy-dial';
 
@@ -13,42 +11,64 @@ export function getRedirectRoute(site: Site, branch: Branch, redirect: Redirect)
       // https://caddyserver.com/docs/json/apps/http/servers/routes/match/path/
       path: [redirect.path],
     }],
-    handle: redirect.type === RedirectType.file ? [
-      {
-        // https://caddyserver.com/docs/json/apps/http/servers/routes/handle/rewrite/
-        handler: 'rewrite',
-        uri: getFileRedirectFileName(redirect),
-      },
-      {
+    handle: getRedirectHandler(site, branch, redirect),
+    terminal: true,
+  };
+}
+
+function getRedirectHandler(site: Site, branch: Branch, redirect: Redirect) {
+  switch (redirect.type) {
+    case RedirectType.file:
+      return getFileRedirectHandler(site, branch, redirect);
+    case RedirectType.reverse_proxy:
+      return getReverseProxyRedirectPath(site, branch, redirect);
+    default:
+      return {
         handler: 'file_server',
-        root: resolve(env.MELI_CADDY_DIR, relative(env.MELI_SITES_DIR, getBranchFilesDir(site._id, branch))),
+        root: getBranchDirInCaddy(site._id, branch),
+      };
+  }
+}
+
+function getFileRedirectHandler(site: Site, branch: Branch, redirect: Redirect<FileRedirectConfig>) {
+  return [
+    {
+      // https://caddyserver.com/docs/json/apps/http/servers/routes/handle/rewrite/
+      handler: 'rewrite',
+      uri: getFileRedirectFileName(redirect),
+    },
+    {
+      handler: 'file_server',
+      root: getBranchFileRedirectDirInCaddy(site._id, branch),
+    },
+  ];
+}
+
+function getReverseProxyRedirectPath(site: Site, branch: Branch, redirect: Redirect<ReverseProxyRedirectConfig>) {
+  return [
+    ...(!redirect.config.stripPathPrefix ? [] : [{
+      // https://caddyserver.com/docs/json/apps/http/servers/routes/handle/rewrite/
+      handler: 'rewrite',
+      strip_path_prefix: redirect.config.stripPathPrefix,
+    }]),
+    {
+      // https://caddyserver.com/docs/json/apps/http/servers/routes/handle/reverse_proxy/
+      handler: 'reverse_proxy',
+      transport: {
+        protocol: 'http',
+        tls: new URL(redirect.config.url).protocol === 'https:' ? {} : undefined,
       },
-    ] : [
-      ...(!(redirect.config as ReverseProxyRedirectConfig).stripPathPrefix ? [] : [{
-        // https://caddyserver.com/docs/json/apps/http/servers/routes/handle/rewrite/
-        handler: 'rewrite',
-        strip_path_prefix: (redirect.config as ReverseProxyRedirectConfig).stripPathPrefix,
-      }]),
-      {
-        // https://caddyserver.com/docs/json/apps/http/servers/routes/handle/reverse_proxy/
-        handler: 'reverse_proxy',
-        transport: {
-          protocol: 'http',
-          tls: new URL((redirect.config as ReverseProxyRedirectConfig).url).protocol === 'https:' ? {} : undefined,
-        },
-        upstreams: [{
-          dial: getReverseProxyDial((redirect.config as ReverseProxyRedirectConfig).url),
-        }],
-        headers: {
-          request: {
-            add: {
-              host: [new URL((redirect.config as ReverseProxyRedirectConfig).url).host],
-              'X-Proxied-By': ['Meli/Caddy'],
-            },
+      upstreams: [{
+        dial: getReverseProxyDial(redirect.config.url),
+      }],
+      headers: {
+        request: {
+          add: {
+            host: [new URL(redirect.config.url).host],
+            'X-Proxied-By': ['Meli/Caddy'],
           },
         },
       },
-    ],
-    terminal: true,
-  };
+    },
+  ];
 }

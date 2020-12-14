@@ -1,4 +1,4 @@
-import { join } from 'path';
+import { join, relative, resolve } from 'path';
 import { env } from '../../env/env';
 import { Branch } from './branch';
 import { Release } from '../releases/release';
@@ -43,4 +43,16 @@ export function getFileRedirectFileName(redirect: Redirect) {
 
 export function getBranchFilePath(siteId: string, branch: Branch, redirect: Redirect): string {
   return join(getBranchFilesDir(siteId, branch), getFileRedirectFileName(redirect));
+}
+
+// inside caddy
+
+export function getBranchDirInCaddy(siteId: string, branch: Branch) {
+  const branchStaticDir = getBranchStaticDir(siteId, branch);
+  return resolve(env.MELI_CADDY_DIR, relative(env.MELI_SITES_DIR, branchStaticDir));
+}
+
+export function getBranchFileRedirectDirInCaddy(siteId: string, branch: Branch) {
+  const branchFilesDir = getBranchFilesDir(siteId, branch);
+  return resolve(env.MELI_CADDY_DIR, relative(env.MELI_SITES_DIR, branchFilesDir));
 }

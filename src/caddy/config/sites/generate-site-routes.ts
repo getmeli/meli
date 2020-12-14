@@ -2,9 +2,9 @@ import { AcmeSslConfiguration, Site, SiteDomain } from '../../../entities/sites/
 import { env } from '../../../env/env';
 import { unique } from '../../../utils/arrays-utils';
 import { URL } from 'url';
-import { getBranchDirInCaddy } from '../../utils/get-branch-dir-in-caddy';
 import { getAuthHandler } from './get-auth-handler';
 import { getRedirectRoute } from './get-redirect-route';
+import { getBranchDirInCaddy } from '../../../entities/sites/get-site-dir';
 
 const sitesUrl = new URL(env.MELI_SITES_URL);
 
