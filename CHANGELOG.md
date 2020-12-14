@@ -1,3 +1,41 @@
+# [1.0.0-beta.5](https://github.com/getmeli/meli/compare/v1.0.0-beta.4...v1.0.0-beta.5) (2020-12-14)
+
+
+### Bug Fixes
+
+* improve ssl support ([8e8778e](https://github.com/getmeli/meli/commit/8e8778ea70719cc50477cd6df27aa70a03c0b325))
+* migrations directory is reuqired ([#4](https://github.com/getmeli/meli/issues/4)) ([b6c0778](https://github.com/getmeli/meli/commit/b6c0778dd107bfffd7cb1c7dc788b28daf5795fc))
+* password protection conflicts with route matching ([3cc960f](https://github.com/getmeli/meli/commit/3cc960f6078a2e226942addd4d11fd7cc059df5a))
+* setting branch password crashes meli ([#6](https://github.com/getmeli/meli/issues/6)) ([513c7df](https://github.com/getmeli/meli/commit/513c7df36b407a4a6b3f9fd3d17404af1e09e7eb))
+* site 404 not matched ([249fbd5](https://github.com/getmeli/meli/commit/249fbd505a308e873417263dc78103bb15a6530e))
+* ssl support for auto domains ([12cf89f](https://github.com/getmeli/meli/commit/12cf89f5e93a638e026e511935ccceb3c403d213))
+* **unified:** entrypoint not executable ([1196e5a](https://github.com/getmeli/meli/commit/1196e5ab9ae7eb0978ca7fadc525d2f81c6d8d9c))
+* uniffied docker image extends outdated UI image ([0532af2](https://github.com/getmeli/meli/commit/0532af26629c3daf2e70fa15afeb218183d0df04))
+
+
+### chore
+
+* remove MELI_BCRYPT_SALTROUNDS env var ([04eaec0](https://github.com/getmeli/meli/commit/04eaec0268a4437652a08fcad3f6fbcf67f1461b))
+
+
+### Features
+
+* add var for api path ([fdb8eed](https://github.com/getmeli/meli/commit/fdb8eed843a0599954af7ce29d8d42e6b7a20e9e))
+* handle static response for 404 and 523 in caddy ([abd1272](https://github.com/getmeli/meli/commit/abd12728f62907c126fb20290d72aa1396b8e6b1))
+* rollback adding api path ([61aab54](https://github.com/getmeli/meli/commit/61aab54ee8455f017e834559617e3f8c272e1183))
+* site wide password ([#7](https://github.com/getmeli/meli/issues/7)) ([b08fdac](https://github.com/getmeli/meli/commit/b08fdac613577eb5edb767559ca31afda3b9d0c9))
+* spa mode ([#5](https://github.com/getmeli/meli/issues/5)) ([79c2cce](https://github.com/getmeli/meli/commit/79c2cce092708772d31f7723e1bd9280bffd7b04))
+
+
+### Performance Improvements
+
+* enhance dockerfile caching ([34a3fd2](https://github.com/getmeli/meli/commit/34a3fd2a4cd931823f5134d950a61a227e2126eb))
+
+
+### BREAKING CHANGES
+
+* MELI_BCRYPT_SALTROUNDS was removed
+
 # [1.0.0-beta.4](https://github.com/getmeli/meli/compare/v1.0.0-beta.3...v1.0.0-beta.4) (2020-12-12)
 
 
