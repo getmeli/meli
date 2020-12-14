@@ -56,7 +56,6 @@ export interface Env {
   MELI_TMP_DIRECTORY: string;
   MELI_SITES_DIR: string;
   MELI_INVITE_EXPIRATION_TIME: number;
-  MELI_BCRYPT_SALTROUNDS: number;
   MELI_ACME_SERVER: string;
   MELI_ACME_CA_PATH: string;
   MELI_HTTP_TIMEOUT: number;

@@ -213,10 +213,6 @@ export const envSpec: EnvSpec<Env> = {
     transform: stringToInt(),
     schema: number().optional().default(86400000),
   },
-  MELI_BCRYPT_SALTROUNDS: {
-    transform: stringToInt(),
-    schema: number().optional().default(10),
-  },
   MELI_ACME_SERVER: {
     schema: string().optional().custom(isUrl),
   },
