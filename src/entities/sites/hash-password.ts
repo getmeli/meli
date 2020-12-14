@@ -1,5 +1,5 @@
-import { BranchPassword } from './branch';
 import { randomBytes, scrypt } from 'crypto';
+import { Password } from './password';
 
 export const scryptOptions = {
   saltLength: 16,
@@ -9,7 +9,7 @@ export const scryptOptions = {
   p: 1,
 };
 
-export async function hashPassword(plain: string): Promise<BranchPassword> {
+export async function hashPassword(plain: string): Promise<Password> {
   return new Promise((resolve, reject) => {
     const salt = randomBytes(scryptOptions.saltLength).toString('hex');
 

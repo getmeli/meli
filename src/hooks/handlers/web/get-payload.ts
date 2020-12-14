@@ -263,6 +263,12 @@ export const getPayload: { [eventType in keyof EventData.EventData]: (data: any)
     site: serializeSite(site),
     token: serializeSiteToken(token),
   }),
+  [EventType.site_password_set]: ({ site }: EventData.SitePasswordSetEventData) => ({
+    site: serializeSite(site),
+  }),
+  [EventType.site_password_removed]: ({ site }: EventData.SitePasswordRemovedEventData) => ({
+    site: serializeSite(site),
+  }),
   [EventType.site_release_created]: ({ site, release }: EventData.SiteReleaseCreatedEventData) => ({
     site: serializeSite(site),
     release: serializeRelease(release),

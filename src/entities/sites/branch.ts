@@ -1,18 +1,14 @@
 import { string } from 'joi';
 import { STRING_MAX_LENGTH, SUBDOMAIN_PATTERN } from '../../constants';
 import { Redirect } from './redirect';
-
-export interface BranchPassword {
-  hash: string;
-  salt: string;
-}
+import { Password } from './password';
 
 export interface Branch {
   _id: string;
   name: string;
   slug: string;
   release?: string;
-  password?: BranchPassword;
+  password?: Password;
   redirects?: Redirect[];
 }
 

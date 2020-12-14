@@ -192,6 +192,18 @@ export const getMessageForEvent: { [eventType in keyof EventData.EventData]: (da
       `Token **${token.name}** was removed from site **${site.name}**.`,
     )
   ),
+  [EventType.site_password_set]: ({ site }: EventData.SitePasswordSetEventData) => (
+    getSlackMessage(
+      'Site password set',
+      `Password protection is now **enabled** for site **${site.name}**.`,
+    )
+  ),
+  [EventType.site_password_removed]: ({ site }: EventData.SitePasswordRemovedEventData) => (
+    getSlackMessage(
+      'Site password removed',
+      `Password protection was **disabled** for site **${site.name}**.`,
+    )
+  ),
   [EventType.site_release_created]: ({ site, release }: EventData.SiteReleaseCreatedEventData) => (
     getSlackMessage(
       'Site release created',

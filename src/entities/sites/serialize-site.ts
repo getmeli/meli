@@ -14,5 +14,6 @@ export function serializeSite(site: Site) {
     branches: site.branches || [],
     url: getSiteUrl(site),
     spa: site.spa,
+    hasPassword: !!site.password,
   };
 }

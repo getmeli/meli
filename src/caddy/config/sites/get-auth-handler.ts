@@ -1,8 +1,8 @@
-import { BranchPassword } from '../../../entities/sites/branch';
 import { scryptOptions } from '../../../entities/sites/hash-password';
 import { base64Encode } from '../../../commons/utils/base64';
+import { Password } from '../../../entities/sites/password';
 
-export function getAuthHandler(password: BranchPassword) {
+export function getAuthHandler(password: Password) {
   return {
     // https://caddyserver.com/docs/json/apps/http/servers/routes/handle/authentication/
     handler: 'authentication',

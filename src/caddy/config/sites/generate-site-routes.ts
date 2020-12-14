@@ -42,11 +42,11 @@ export function generateSiteRoutes(site: Site): any[] {
            * auth route and the error handler defined in errors.
            */
           routes: [
-            ...(!branch.password ? [] : [{
+            ...(branch.password || site.password ? [{
               handle: [
-                getAuthHandler(branch.password),
+                getAuthHandler(branch.password || site.password),
               ],
-            }]),
+            }] : []),
             ...(!branch.redirects ? [] : branch.redirects.map(redirect => (
               getRedirectRoute(site, branch, redirect)
             ))),

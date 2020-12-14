@@ -45,7 +45,6 @@ async function handler(req: Request, res: Response): Promise<void> {
         name: req.body.name,
         color: req.body.color,
         mainBranch,
-        notificationConfigs: req.body.notificationConfigs,
         domains: req.body.domains,
         spa: req.body.spa,
       },

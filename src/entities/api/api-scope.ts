@@ -43,6 +43,8 @@ export enum ApiScope {
   site_delete = 'site.delete',
   site_read = 'site.read',
   site_update = 'site.update',
+  site_password_set = 'site.password.set',
+  site_password_remove = 'site.password.remove',
   site_name_validate = 'site.name.validate',
   site_branch_add = 'branch.add',
   site_branch_read = 'site.branch.read',

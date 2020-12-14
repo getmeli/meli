@@ -4,6 +4,7 @@ import { isRsaPrivateKey } from '../../commons/validators/is-rsa-private-key';
 import { ARRAY_MAX, COLOR_PATTERN, STRING_MAX_LENGTH, SUBDOMAIN_PATTERN } from '../../constants';
 import { AppDb } from '../../db/db';
 import { Branch } from './branch';
+import { Password } from './password';
 
 export interface SiteToken {
   _id: string;
@@ -44,6 +45,7 @@ export interface Site {
   tokens: SiteToken[];
   hooks: string[];
   spa?: boolean;
+  password?: Password;
 }
 
 export const Sites = () => AppDb.db.collection<Site>('sites');

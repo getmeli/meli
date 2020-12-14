@@ -25,6 +25,8 @@ export enum EventType {
   team_site_added = 'team_site_added',
   site_updated = 'site_updated',
   site_deleted = 'site_deleted',
+  site_password_set = 'site_password_set',
+  site_password_removed = 'site_password_removed',
   site_hook_created = 'site_hook_created',
   site_hook_updated = 'site_hook_updated',
   site_hook_deleted = 'site_hook_deleted',

@@ -126,6 +126,14 @@ export interface SiteUpdatedEventData extends SiteEventData {
   site: Site;
 }
 
+export interface SitePasswordSetEventData extends SiteEventData {
+  site: Site;
+}
+
+export interface SitePasswordRemovedEventData extends SiteEventData {
+  site: Site;
+}
+
 export type SiteDeletedEventData = SiteEventData
 
 export interface SiteHookCreatedEventData extends SiteEventData {
@@ -216,6 +224,8 @@ export interface EventData {
   [EventType.team_site_added]: TeamSiteAddedEventData,
   [EventType.site_updated]: SiteUpdatedEventData,
   [EventType.site_deleted]: SiteDeletedEventData,
+  [EventType.site_password_set]: SitePasswordSetEventData,
+  [EventType.site_password_removed]: SitePasswordRemovedEventData,
   [EventType.site_hook_created]: SiteHookCreatedEventData,
   [EventType.site_hook_updated]: SiteHookUpdatedEventData,
   [EventType.site_hook_deleted]: SiteHookDeletedEventData,

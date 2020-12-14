@@ -101,6 +101,12 @@ Site **${site.name}** was updated. View it live [here](${getSiteUrl(site)}). `)
   [EventType.site_token_deleted]: ({ site, token }: EventData.SiteTokenDeletedEventData) => (
     getMattermostMessage(`Token **${token.name}** was removed from site **${site.name}**.`)
   ),
+  [EventType.site_password_set]: ({ site }: EventData.SitePasswordSetEventData) => (
+    getMattermostMessage(`Password protection is now **enabled** for site **${site.name}**.`)
+  ),
+  [EventType.site_password_removed]: ({ site }: EventData.SitePasswordRemovedEventData) => (
+    getMattermostMessage(`Password protection was **disabled** for site **${site.name}**.`)
+  ),
   [EventType.site_release_created]: ({ site, release }: EventData.SiteReleaseCreatedEventData) => (
     getMattermostMessage(
       `Release **${release.name}** was added to site **${site.name}**. View it live here:

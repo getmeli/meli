@@ -130,6 +130,14 @@ export const getMessageForEvent: { [eventType in keyof EventData.EventData]: (da
     subject: 'Site token deleted',
     text: `Token ${token.name} was removed from site ${site.name}.`,
   }),
+  [EventType.site_password_set]: ({ site }: EventData.SitePasswordSetEventData) => ({
+    subject: 'Site password set',
+    text: `As password was set for site ${site.name}.`,
+  }),
+  [EventType.site_password_removed]: ({ site }: EventData.SitePasswordRemovedEventData) => ({
+    subject: 'Site password removed',
+    text: `Password protection was removed from site ${site.name}.`,
+  }),
   [EventType.site_release_created]: ({ site, release }: EventData.SiteReleaseCreatedEventData) => ({
     text: 'Site release created',
     subject: `Release ${release.name} was added to site ${site.name}. View it live here:

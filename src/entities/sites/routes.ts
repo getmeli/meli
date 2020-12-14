@@ -28,6 +28,8 @@ import { removeBranchPassword } from './handlers/branches/remove-branch-password
 import { listBranchRedirects } from './handlers/branches/list-branch-redirects';
 import { setBranchRedirects } from './handlers/branches/set-branch-redirects';
 import { getBranch } from './handlers/branches/get-branch';
+import { setSitePassword } from './handlers/set-site-password';
+import { removeSitePassword } from './handlers/remove-site-password';
 
 const router = Router();
 
@@ -67,6 +69,26 @@ apiEndpoint({
   handler: deleteSite,
   auth: true,
   apiScope: ApiScope.site_delete,
+  router,
+});
+
+// password
+apiEndpoint({
+  name: 'set site password',
+  method: 'put',
+  path: '/api/v1/sites/:siteId/password',
+  handler: setSitePassword,
+  auth: true,
+  apiScope: ApiScope.site_update,
+  router,
+});
+apiEndpoint({
+  name: 'remove password',
+  method: 'delete',
+  path: '/api/v1/sites/:siteId/password',
+  handler: removeSitePassword,
+  auth: true,
+  apiScope: ApiScope.site_update,
   router,
 });
 
