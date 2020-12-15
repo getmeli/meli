@@ -1,3 +1,10 @@
+# [1.0.0-beta.6](https://github.com/getmeli/meli/compare/v1.0.0-beta.5...v1.0.0-beta.6) (2020-12-15)
+
+
+### Bug Fixes
+
+* **ssl:** default domains missing in acme domains ([719fef8](https://github.com/getmeli/meli/commit/719fef8c5cb9bf136f5639af21e726a856d6a621))
+
 # [1.0.0-beta.5](https://github.com/getmeli/meli/compare/v1.0.0-beta.4...v1.0.0-beta.5) (2020-12-14)
 
 
