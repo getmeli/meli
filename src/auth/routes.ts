@@ -19,10 +19,16 @@ const passportOptions = {
 };
 
 // TODO could this be moved to the "new GoogleStrategy(...)" ?
-const oidOptions = {
+const googleOptions = {
   scope: [
     'userinfo.profile',
     'userinfo.email',
+  ],
+};
+
+const oidOptions = {
+  scope: [
+    'email',
   ],
 };
 
@@ -31,7 +37,7 @@ router.get(gitlab_redirect, passport.authenticate('gitlab'));
 router.get(gitlab_callback, passport.authenticate('gitlab', passportOptions), authenticate, redirectToUi);
 router.get(gitea_redirect, passport.authenticate('gitea'));
 router.get(gitea_callback, passport.authenticate('gitea', passportOptions), authenticate, redirectToUi);
-router.get(google_redirect, passport.authenticate('google', oidOptions)); // google is a special case of oidc
+router.get(google_redirect, passport.authenticate('google', googleOptions));
 router.get(google_callback, passport.authenticate('google', passportOptions), authenticate, redirectToUi);
 router.get(oidc_redirect, passport.authenticate('oidc', oidOptions));
 router.get(oidc_callback, passport.authenticate('oidc', passportOptions), authenticate, redirectToUi);

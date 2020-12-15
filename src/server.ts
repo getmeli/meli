@@ -90,7 +90,11 @@ export async function server(): Promise<any> {
   }));
 
   // auth
+  const session = require('express-session');
+  // After you declare "app"
+  app.use(session({ secret: 'TODO_generate_random_string' }));
   app.use(passport.initialize());
+  app.use(passport.session());
   app.use(authorizeReq);
   app.use(authorizeApiReq);
 
