@@ -1,4 +1,6 @@
 import { URL } from 'url';
+import { getBranchDomain } from '../../entities/sites/get-branch-domain';
+import { getSiteDomain } from '../../entities/sites/get-site-domain';
 import { ManualSslConfiguration, Site } from '../../entities/sites/site';
 import { env } from '../../env/env';
 import { unique } from '../../utils/arrays-utils';
@@ -25,24 +27,30 @@ export function generateManualCertificatesConfig(sites: Site[]) {
 }
 
 export function generateServerTlsConfig(sites: Site[]) {
-  const sitesDomains = sites.flatMap(site => site.domains);
-  const acmeDomains = [
+  const sitesCustomDomains = sites.flatMap(site => site.domains);
+  const sitesMainDomainNames = sites
+    .map(site => getSiteDomain(site));
+  const sitesBranchesDomainNames = sites
+    .flatMap(site => site.branches
+      .map(branch => getBranchDomain(site, branch)));
+  const acmeDomainNames = [
     meliUrl.hostname,
     meliUiUrl.hostname,
-    ...sitesDomains
+    ...sitesCustomDomains
       .filter(domain => domain.sslConfiguration?.type === 'acme')
       .map(domain => domain.name),
+    ...sitesMainDomainNames,
+    ...sitesBranchesDomainNames,
   ].filter(unique);
-  const manualCertificatesDomains = sitesDomains
+  const manualCertificatesDomains = sitesCustomDomains
     .filter(domain => domain.sslConfiguration?.type !== 'acme');
 
   return {
     tls_connection_policies: [
       {
         match: {
-          sni: acmeDomains,
+          sni: acmeDomainNames,
         },
-        // TODO if manual certificate was given for meli, use it (leave as is for acme)
       },
       ...manualCertificatesDomains.map(domain => ({
         match: {
