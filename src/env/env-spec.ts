@@ -32,6 +32,10 @@ export const envSpec: EnvSpec<Env> = {
   MELI_SITES_URL: {
     schema: string().optional().custom(isUrl).default(process.env.MELI_URL || null),
   },
+  MELI_HTTPS_AUTO: {
+    transform: stringToBoolean(),
+    schema: boolean().optional().default(true),
+  },
   MELI_STANDALONE: {
     transform: stringToBoolean(),
     schema: boolean().optional().default(false),

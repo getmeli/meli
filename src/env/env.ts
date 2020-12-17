@@ -10,6 +10,7 @@ export interface Env {
   MELI_UI_URL: string;
   MELI_UI_URL_INTERNAL: string;
   MELI_SITES_URL: string;
+  MELI_HTTPS_AUTO: string;
   MELI_STANDALONE: boolean;
   MELI_UI_DIR: string;
   MELI_JWT_SECRET: string;

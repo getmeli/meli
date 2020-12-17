@@ -13,7 +13,7 @@ const sitesUrl = new URL(env.MELI_SITES_URL);
 export async function generateConfig(): Promise<any> {
   const sites = await Sites().find().toArray();
 
-  const sslDisabled = sitesUrl.protocol === 'http:';
+  const sslDisabled = sitesUrl.protocol === 'http:' && env.MELI_HTTPS_AUTO;
   return {
     logging: {
       logs: {
