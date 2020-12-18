@@ -78,7 +78,7 @@ function get401Handler() {
 }
 
 function getPrimaryRoute(site: Site, branch: Branch) {
-  const branchDirInCaddy = getBranchDirInCaddy(site._id, branch);
+  const branchDirInCaddy = getBranchDirInCaddy(site._id, branch._id);
   if (site.spa) {
     return {
       match: [{

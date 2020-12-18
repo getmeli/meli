@@ -10,15 +10,16 @@ import { Releases } from '../../../releases/release';
 import { AppError } from '../../../../commons/errors/app-error';
 import { canAdminSiteGuard } from '../../guards/can-admin-site-guard';
 import { EventType } from '../../../../events/event-type';
-import { $channelName, Branch } from '../../branch';
+import { $branchName, Branch } from '../../branch';
 import { uuid } from '../../../../utils/uuid';
 import { configureSiteBranchInCaddy } from '../../../../caddy/configuration';
 import { Logger } from '../../../../commons/logger/logger';
 import { slugify } from '../../../../utils/slugify';
+import { linkBranchToRelease } from '../../link-branch-to-release';
 
 const validators = [
   body(object({
-    name: $channelName,
+    name: $branchName,
     releaseId: string().optional(),
   })),
 ];
@@ -27,7 +28,6 @@ const logger = new Logger('meli.api:addBranch');
 
 async function handler(req: Request, res: Response): Promise<void> {
   const { siteId } = req.params;
-
   const { releaseId } = req.body;
 
   if (releaseId) {
@@ -50,7 +50,7 @@ async function handler(req: Request, res: Response): Promise<void> {
     slug: slugify(req.body.name),
   };
 
-  const { matchedCount } = await Sites().updateOne({
+  await Sites().updateOne({
     _id: siteId,
   }, {
     $addToSet: {
@@ -58,8 +58,9 @@ async function handler(req: Request, res: Response): Promise<void> {
     },
   });
 
-  if (matchedCount === 0) {
-    throw new Error('Branch already exists');
+  if (releaseId) {
+    const release = await Releases().findOne({ _id: releaseId });
+    await linkBranchToRelease(siteId, branch._id, release);
   }
 
   await Releases().updateOne({

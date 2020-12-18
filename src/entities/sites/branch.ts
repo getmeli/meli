@@ -1,5 +1,5 @@
 import { string } from 'joi';
-import { STRING_MAX_LENGTH, SUBDOMAIN_PATTERN } from '../../constants';
+import { STRING_MAX_LENGTH } from '../../constants';
 import { Redirect } from './redirect';
 import { Password } from './password';
 
@@ -12,4 +12,4 @@ export interface Branch {
   redirects?: Redirect[];
 }
 
-export const $channelName = string().required().regex(SUBDOMAIN_PATTERN).max(STRING_MAX_LENGTH);
+export const $branchName = string().required().max(STRING_MAX_LENGTH);

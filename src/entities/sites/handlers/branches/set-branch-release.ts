@@ -63,7 +63,7 @@ async function handler(req: Request, res: Response): Promise<void> {
     _id: releaseId,
   });
 
-  await linkBranchToRelease(site, branch, release);
+  await linkBranchToRelease(site._id, branch._id, release);
 
   configureSiteBranchInCaddy(site, branch).catch(err => {
     logger.error(err);

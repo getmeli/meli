@@ -8,6 +8,7 @@ import { siteExistsGuard } from '../../guards/site-exists-guard';
 import { params } from '../../../../commons/express-joi/params';
 import { $id } from '../../../../utils/id';
 import { canAdminSiteGuard } from '../../guards/can-admin-site-guard';
+import { slugify } from '../../../../utils/slugify';
 
 const validators = [
   params(object({
@@ -21,12 +22,15 @@ const validators = [
 async function handler(req: Request, res: Response): Promise<void> {
   const { siteId } = req.params;
   const { name } = req.body;
+  const slug = slugify(name);
+
   const count = await Sites().countDocuments({
     _id: siteId,
-    'branches.name': name,
+    'branches.slug': slug,
   }, {
     limit: 1,
   });
+
   res.json(count !== 0 ? 'Branch name already exists' : undefined);
 }
 

@@ -10,7 +10,7 @@ import { EventType } from '../../../../events/event-type';
 import { branchExistsGuard } from '../../guards/branch-exists-guard';
 import { params } from '../../../../commons/express-joi/params';
 import { $id } from '../../../../utils/id';
-import { $channelName } from '../../branch';
+import { $branchName } from '../../branch';
 import { configureSiteInCaddy } from '../../../../caddy/configuration';
 import { Logger } from '../../../../commons/logger/logger';
 
@@ -20,7 +20,7 @@ const validators = [
     branchId: string().required(),
   })),
   body(object({
-    name: $channelName,
+    name: $branchName,
   })),
 ];
 

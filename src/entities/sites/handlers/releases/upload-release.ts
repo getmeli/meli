@@ -44,7 +44,7 @@ async function createOrGetBranch(site: Site, branchName: string): Promise<Branch
     });
 
     // create dir
-    const branchDir = getBranchDir(site._id, branch);
+    const branchDir = getBranchDir(site._id, branch._id);
     await promises.mkdir(branchDir, {
       recursive: true,
     });
@@ -104,7 +104,7 @@ async function handler(req: Request, res: Response): Promise<void> {
   await Promise.all(
     branches.map(async branch => {
       await setBranchRelease(site, branch, release);
-      await linkBranchToRelease(site, branch, release);
+      await linkBranchToRelease(site._id, branch._id, release);
     }),
   );
 

@@ -24,7 +24,7 @@ function getRedirectHandler(site: Site, branch: Branch, redirect: Redirect) {
     default:
       return {
         handler: 'file_server',
-        root: getBranchDirInCaddy(site._id, branch),
+        root: getBranchDirInCaddy(site._id, branch._id),
       };
   }
 }
@@ -38,7 +38,7 @@ function getFileRedirectHandler(site: Site, branch: Branch, redirect: Redirect<F
     },
     {
       handler: 'file_server',
-      root: getBranchFileRedirectDirInCaddy(site._id, branch),
+      root: getBranchFileRedirectDirInCaddy(site._id, branch._id),
     },
   ];
 }

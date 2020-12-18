@@ -19,19 +19,19 @@ import { $redirect, FileRedirectConfig, Redirect, RedirectType } from '../../red
 import { Logger } from '../../../../commons/logger/logger';
 
 async function storeBranchFilesToFs(siteId: string, branch: Branch, redirects: Redirect<FileRedirectConfig>[]) {
-  const dir = getBranchFilesDir(siteId, branch);
+  const dir = getBranchFilesDir(siteId, branch._id);
   await promises.mkdir(dir, {
     recursive: true,
   });
   await Promise.all(redirects.map(async redirect => {
-    const path = getBranchFilePath(siteId, branch, redirect);
+    const path = getBranchFilePath(siteId, branch._id, redirect);
     await promises.writeFile(path, redirect.config.content);
   }));
 }
 
 function removeBranchFilesFromFs(siteId: string, branch: Branch, redirects: Redirect<FileRedirectConfig>[]) {
   return Promise.all(redirects.map(async redirect => {
-    const path = getBranchFilePath(siteId, branch, redirect);
+    const path = getBranchFilePath(siteId, branch._id, redirect);
     try {
       await promises.unlink(path);
     } catch (e) {

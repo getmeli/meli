@@ -15,7 +15,7 @@ export function getSite404ErrorRoutes(site: Site) {
       hosts.push(`${site.name}.${sitesUrl.hostname}`);
       hosts.push(...site.domains.map(domain => domain.name));
     }
-    const branchDir = getBranchDirInCaddy(site._id, branch);
+    const branchDir = getBranchDirInCaddy(site._id, branch._id);
     return getErrorRoute(hosts, branchDir);
   });
 }

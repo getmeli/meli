@@ -32,7 +32,7 @@ async function handler(req: Request, res: Response): Promise<void> {
   const branch = site.branches.find(brch => brch._id === branchId);
 
   // delete from storage
-  const channelPath = getBranchDir(siteId, branch);
+  const channelPath = getBranchDir(siteId, branch._id);
   try {
     await promises.rmdir(channelPath, {
       recursive: true,
