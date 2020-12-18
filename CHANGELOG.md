@@ -1,3 +1,19 @@
+# [1.0.0-beta.7](https://github.com/getmeli/meli/compare/v1.0.0-beta.6...v1.0.0-beta.7) (2020-12-18)
+
+
+### Bug Fixes
+
+* branch url not using branch slug ([254f3c6](https://github.com/getmeli/meli/commit/254f3c6d68f064aa41f4756aa3944834f5312503))
+* creating branch from release doesn't create symlinks ([4768b63](https://github.com/getmeli/meli/commit/4768b63f9b74e72115d0c480fdbee01ef479f3a6))
+* org member api not found ([bbf5cdc](https://github.com/getmeli/meli/commit/bbf5cdcf014ad58c88ac07355c396abcc110c022))
+* redirect url missing slash ([e4e6739](https://github.com/getmeli/meli/commit/e4e67398304e9e6d2e50e85fe28472ae42dcf9d0))
+
+
+### Features
+
+* add link to public community channel ([#166](https://github.com/getmeli/meli/issues/166)) ([b36db40](https://github.com/getmeli/meli/commit/b36db40041b5faf36b221b772ad4f9c7c82cc3a9))
+* disable auto https for reverse proxy ([#162](https://github.com/getmeli/meli/issues/162)) ([449faa8](https://github.com/getmeli/meli/commit/449faa8febf375e825aff9b0e5b559d2ada3efd2))
+
 # [1.0.0-beta.6](https://github.com/getmeli/meli/compare/v1.0.0-beta.5...v1.0.0-beta.6) (2020-12-15)
 
 
