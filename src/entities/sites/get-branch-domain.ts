@@ -6,5 +6,5 @@ import { Site } from './site';
 const sitesUrl = new URL(env.MELI_SITES_URL);
 
 export function getBranchDomain(site: Site, branch: Branch) {
-  return `${branch.name}.${site.name}.${sitesUrl.host}`;
+  return `${branch.slug}.${site.name}.${sitesUrl.host}`;
 }
