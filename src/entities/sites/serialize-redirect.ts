@@ -2,7 +2,7 @@ import { Branch } from './branch';
 import { Site } from './site';
 import { getSiteUrl } from './get-site-url';
 import { getBranchUrl } from './get-branch-url';
-import { formatRedirectPath, Redirect } from './redirect';
+import { Redirect } from './redirect';
 
 export function serializeRedirect(site: Site, branch: Branch, redirect: Redirect) {
   const isMainBranch = site.mainBranch === branch._id;
@@ -12,6 +12,6 @@ export function serializeRedirect(site: Site, branch: Branch, redirect: Redirect
     type: redirect.type,
     path: redirect.path,
     config: redirect.config,
-    url: `${url}${formatRedirectPath(redirect.path)}`,
+    url: `${url}${redirect.path}`,
   };
 }
