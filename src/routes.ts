@@ -7,6 +7,7 @@ import orgRoutes from './entities/orgs/routes';
 import userRoutes from './entities/users/routes';
 import inviteRoutes from './entities/invites/routes';
 import apiRoutes from './entities/api/routes';
+import memberRoutes from './entities/members/routes';
 import systemRoutes from './system/routes';
 
 const router = Router();
@@ -19,6 +20,7 @@ router.use(orgRoutes);
 router.use(userRoutes);
 router.use(inviteRoutes);
 router.use(apiRoutes);
+router.use(memberRoutes);
 router.use(systemRoutes);
 
 export default router;

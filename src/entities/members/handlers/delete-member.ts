@@ -9,9 +9,9 @@ import { Teams } from '../../teams/team';
 import { isOwner } from '../../users/guards/is-owner';
 import { ForbiddenError } from '../../../commons/errors/forbidden-error';
 import { Members } from '../member';
-import { isAdminOrOwnerGuard } from '../../../auth/guards/is-admin-or-owner-guard';
 import { EventType } from '../../../events/event-type';
 import { Orgs } from '../../orgs/org';
+import { canAdminMemberGuard } from '../guards/can-admin-guard';
 
 const validators = [
   params(object({
@@ -58,7 +58,7 @@ async function handler(req: Request, res: Response): Promise<void> {
 
 export const deleteMember = [
   ...memberExistsGuard,
-  ...isAdminOrOwnerGuard,
+  ...canAdminMemberGuard,
   ...validators,
   wrapAsyncMiddleware(handler),
 ];
