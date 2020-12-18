@@ -8,6 +8,9 @@
 <p align="center">
     <a href="https://docs.meli.sh">Docs</a> (proudly hosted on Meli !) - <a href="https://twitter.com/getmeli">Twitter</a>
 </p>
+<p align="center">
+<img alt="Discord" src="https://img.shields.io/discord/789462736320856075?label=community">
+</p>
 
 ![Meli demo screenshot](https://raw.githubusercontent.com/getmeli/meli-brand/latest/screens/meli-site-branch.png)
 
