@@ -26,12 +26,6 @@ const googleOptions = {
   ],
 };
 
-const oidOptions = {
-  scope: [
-    'email',
-  ],
-};
-
 // passport
 router.get(gitlab_redirect, passport.authenticate('gitlab'));
 router.get(gitlab_callback, passport.authenticate('gitlab', passportOptions), authenticate, redirectToUi);
