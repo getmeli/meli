@@ -3,7 +3,7 @@ import './passport/github';
 import './passport/gitlab';
 import './passport/gitea';
 import './passport/google';
-import './passport/oidc';
+import './passport/saml';
 import './passport/in-memory';
 
 if (authMethods.length === 0) {
