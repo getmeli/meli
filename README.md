@@ -126,3 +126,17 @@ Your sites will be served at `*.test`.
 
 Pros: you don't need to be connected to the internet, no need to reconfigure /etc/hosts
 Cons: a bit complex, config required
+
+## License
+
+The words "Open Source" in our README refer to the definition given by many well-recognized dictionaries of various languages, which is "used to describe software for which the original source code is made available to anyone".
+
+The words "Open Source" in our license, introduced and written by MariaDB, refer to the definition given by the Open Source Foundation. Though we adopted this license to make it easier for users to recognize it, we disagree with this sentence being part of it and are working on this matter.
+
+The BSL license allows you to modify, share, redistribute and use this software for free with the only condition that you do not run a competing SAAS service based on this project, which would both be unfair and jeopardize the options of making this tool sustainable.
+
+We chose the BSL license because we believe it is fair for both users and maintainers. It allows us to secure a monetization path while providing proper support in the long run. Also, our license converts automatically within 4 years of each release to a license officially recognized by the Open Source Foundation, which secures a way for the community to see the sole restriction removed.
+
+We are aware of the debate around the BSL conflicting with rule number 9 of the definition given by the Open Source Foundation. We do believe that, in specific cases, this rule should be relaxed as it prevents platform maintainers to secure a path to sustaining the development of their tool and support of their community while preventing large players from running unfair competition by leveraging their infrastructure and name. There is sufficient material on this matter available on the internet for users to make up their mind.
+
+As a side note, rule number 9 conflicts similarly with the BSL than with the GPL3.0, which does restrict the creation of other software in its own way, while still being officially recognized by the Open Source Foundation.
