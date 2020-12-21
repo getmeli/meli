@@ -31,6 +31,8 @@ export interface Env {
   MELI_GOOGLE_CLIENT_SECRET: string;
   MELI_SAML_ENDPOINT: string;
   MELI_SAML_ISSUER: string;
+  MELI_SAML_IDP_CRT: string;
+  MELI_SAML_PRIVATE_CRT: string;
   MELI_MIGRATE_ROLLBACK: boolean;
   MELI_COOKIE_SAMESITE: boolean;
   MELI_COOKIE_SECURE: boolean;

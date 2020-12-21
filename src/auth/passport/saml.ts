@@ -18,12 +18,27 @@ if (
   const samlCallbackUrl = `${env.MELI_URL}${saml_callback}`;
   logger.debug('Enabling saml auth', samlCallbackUrl);
 
+  const stratOpts = {
+    path: saml_callback,
+    entryPoint: env.MELI_SAML_ENDPOINT,
+    issuer: env.MELI_SAML_ISSUER,
+    cert: null,
+    privateCert: null,
+  };
+
+  if (
+    env.MELI_SAML_IDP_CRT
+    && env.MELI_SAML_PRIVATE_CRT
+  ) {
+    stratOpts.cert = env.MELI_SAML_IDP_CRT;
+    stratOpts.privateCert = env.MELI_SAML_PRIVATE_CRT;
+  } else {
+    logger.warn(`You have not configured Meli to sign or validate requests. THIS IS INSECURE!
+    For more information, see https://docs.meli.sh/authentication/saml`);
+  }
+
   passport.use(new Strategy(
-    {
-      path: saml_callback,
-      entryPoint: env.MELI_SAML_ENDPOINT,
-      issuer: env.MELI_SAML_ISSUER,
-    },
+    stratOpts,
     (profile, cb) => {
       cb(undefined, <PassportUser>{
         authProvider: 'saml',
