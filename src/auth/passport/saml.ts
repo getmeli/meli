@@ -24,6 +24,7 @@ if (
     issuer: env.MELI_SAML_ISSUER,
     cert: null,
     privateCert: null,
+    signatureAlgorithm: null,
   };
 
   if (
@@ -32,6 +33,7 @@ if (
   ) {
     stratOpts.cert = env.MELI_SAML_IDP_CRT;
     stratOpts.privateCert = env.MELI_SAML_PRIVATE_CRT;
+    stratOpts.signatureAlgorithm = 'sha256';
   } else {
     logger.warn(`You have not configured Meli to sign or validate requests. THIS IS INSECURE!
     For more information, see https://docs.meli.sh/authentication/saml`);
