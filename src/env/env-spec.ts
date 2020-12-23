@@ -1,6 +1,6 @@
 import { EnvSpec } from '../commons/env/parse-env';
-import { array, boolean, number, string } from 'joi';
-import { commaSeparatedStringToArray, stringToBoolean, stringToInt } from '../commons/env/transformers';
+import { array, boolean, number, object, string } from 'joi';
+import { commaSeparatedStringToArray, stringToBoolean, stringToInt, stringToJson } from '../commons/env/transformers';
 import { isUrl } from '../commons/validators/is-url';
 import { AppError } from '../commons/errors/app-error';
 import chalk from 'chalk';
@@ -8,6 +8,7 @@ import { join } from 'path';
 import { cidrSubnet } from 'ip';
 import { tmpdir } from 'os';
 import { Env } from './env';
+import { MulterLimitOptions } from '../commons/multer/types';
 
 export const envSpec: EnvSpec<Env> = {
   DEBUG: {
@@ -236,5 +237,11 @@ export const envSpec: EnvSpec<Env> = {
   MELI_MAX_ORGS: {
     transform: stringToInt(),
     schema: number().optional().default(1),
+  },
+  MELI_MULTER_LIMITS: {
+    transform: stringToJson(err => {
+      throw new Error(`Invalid multer options: ${err}`);
+    }),
+    schema: object().optional().default(<MulterLimitOptions>{}),
   },
 };

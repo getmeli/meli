@@ -1,6 +1,7 @@
 import { parseEnv } from '../commons/env/parse-env';
 import { Logger } from '../commons/logger/logger';
 import { envSpec } from './env-spec';
+import { MulterLimitOptions } from '../commons/multer/types';
 
 export interface Env {
   DEBUG: string;
@@ -63,6 +64,7 @@ export interface Env {
   MELI_USER: string;
   MELI_PASSWORD: string;
   MELI_MAX_ORGS: number;
+  MELI_MULTER_LIMITS: MulterLimitOptions;
 }
 
 export const env: Env = parseEnv(envSpec);
