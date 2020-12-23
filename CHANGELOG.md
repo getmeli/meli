@@ -1,3 +1,10 @@
+# [1.0.0-beta.8](https://github.com/getmeli/meli/compare/v1.0.0-beta.7...v1.0.0-beta.8) (2020-12-23)
+
+
+### Features
+
+* add env var for multer limits ([500a796](https://github.com/getmeli/meli/commit/500a7960931b8d763f35ef3fdffe0e35cf0c4651))
+
 # [1.0.0-beta.7](https://github.com/getmeli/meli/compare/v1.0.0-beta.6...v1.0.0-beta.7) (2020-12-18)
 
 
