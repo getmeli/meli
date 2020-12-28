@@ -1,3 +1,12 @@
+# [1.0.0-beta.9](https://github.com/getmeli/meli/compare/v1.0.0-beta.8...v1.0.0-beta.9) (2020-12-28)
+
+
+### Bug Fixes
+
+* auto https disabling not working ([#162](https://github.com/getmeli/meli/issues/162)) ([4cefff7](https://github.com/getmeli/meli/commit/4cefff7a9e0ebfc6102761ff6c3aca76cc683b4d))
+* list site hooks route should not be in org routes ([a6951b7](https://github.com/getmeli/meli/commit/a6951b77a806d78c721ed9adda510713d982e08e))
+* search is broken ([9f9eb94](https://github.com/getmeli/meli/commit/9f9eb947094a2221af7640b61e9eb4171db3f5e1))
+
 # [1.0.0-beta.8](https://github.com/getmeli/meli/compare/v1.0.0-beta.7...v1.0.0-beta.8) (2020-12-23)
 
 
