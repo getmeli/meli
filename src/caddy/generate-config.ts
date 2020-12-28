@@ -7,13 +7,19 @@ import { uiRoute } from './config/ui-route';
 import { apiRoute } from './config/api-route';
 import { URL } from 'url';
 import { fallback } from './config/fallback';
+import { Logger } from '../commons/logger/logger';
+
+const logger = new Logger('meli.api.caddy:generateConfig');
 
 const sitesUrl = new URL(env.MELI_SITES_URL);
 
 export async function generateConfig(): Promise<any> {
   const sites = await Sites().find().toArray();
 
-  const sslDisabled = sitesUrl.protocol === 'http:' && env.MELI_HTTPS_AUTO;
+  const sslEnabled = sitesUrl.protocol === 'https:' && env.MELI_HTTPS_AUTO;
+
+  logger.debug('sslEnabled', sslEnabled);
+
   return {
     logging: {
       logs: {
@@ -30,7 +36,7 @@ export async function generateConfig(): Promise<any> {
       http: {
         servers: {
           sites: {
-            listen: sslDisabled ? [':80'] : [':443'],
+            listen: sslEnabled ? [':443'] : [':80'],
             routes: [
               ...(env.MELI_STANDALONE ? [] : [
                 apiRoute,
@@ -40,11 +46,11 @@ export async function generateConfig(): Promise<any> {
               fallback,
             ],
             errors: getErrorRoutes(),
-            ...(sslDisabled ? {} : generateServerTlsConfig(sites)),
+            ...(sslEnabled ? generateServerTlsConfig(sites) : {}),
           },
         },
       },
-      tls: sslDisabled ? undefined : {
+      tls: sslEnabled ? {
         automation: {
           policies: [
             ...(!env.MELI_ACME_SERVER ? [] : [{
@@ -58,7 +64,7 @@ export async function generateConfig(): Promise<any> {
           ],
         },
         certificates: generateManualCertificatesConfig(sites),
-      },
+      } : undefined,
     },
   };
 }
