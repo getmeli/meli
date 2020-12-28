@@ -12,7 +12,6 @@ import { deleteInvite } from './handlers/invites/delete-invite';
 import { createOrg } from './handlers/create-org';
 import { apiEndpoint } from '../api/api-endpoint';
 import { ApiScope } from '../api/api-scope';
-import { listSiteHooks } from '../sites/handlers/hooks/list-site-hooks';
 
 const router = Router();
 
@@ -119,18 +118,6 @@ apiEndpoint({
   method: 'post',
   path: '/api/v1/orgs/:orgId/teams',
   handler: createTeam,
-  auth: true,
-  apiScope: ApiScope.team_create,
-  router,
-});
-
-// hooks
-
-apiEndpoint({
-  name: 'create team',
-  method: 'get',
-  path: '/api/v1/orgs/:orgId/hooks',
-  handler: listSiteHooks,
   auth: true,
   apiScope: ApiScope.team_create,
   router,
