@@ -7,11 +7,12 @@ export const pageValidators = [
   query({
     size: {
       transform: stringToInt(),
-      $schema: number().default(10).min(0).max(100),
+      $schema: number().optional().default(10).min(0)
+        .max(100),
     },
     page: {
       transform: stringToInt(),
-      $schema: number().default(0).min(0),
+      $schema: number().optional().default(0).min(0),
     },
   }),
 ];

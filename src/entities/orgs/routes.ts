@@ -12,6 +12,7 @@ import { deleteInvite } from './handlers/invites/delete-invite';
 import { createOrg } from './handlers/create-org';
 import { apiEndpoint } from '../api/api-endpoint';
 import { ApiScope } from '../api/api-scope';
+import { listSites } from './handlers/sites/list-sites';
 
 const router = Router();
 
@@ -120,6 +121,17 @@ apiEndpoint({
   handler: createTeam,
   auth: true,
   apiScope: ApiScope.team_create,
+  router,
+});
+
+// sites
+apiEndpoint({
+  name: 'list sites',
+  method: 'get',
+  path: '/api/v1/orgs/:orgId/sites',
+  handler: listSites,
+  auth: true,
+  apiScope: ApiScope.sites_list,
   router,
 });
 

@@ -57,7 +57,7 @@ async function handler(req: Request, res: Response): Promise<void> {
   res.json(pageResponse(sites, count));
 }
 
-export const listSites = [
+export const listTeamSites = [
   ...teamExistsGuard,
   ...canReadTeamGuard,
   ...validators,

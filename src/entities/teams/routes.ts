@@ -4,7 +4,7 @@ import { deleteTeam } from './handlers/delete-team';
 import { getTeam } from './handlers/get-team';
 import { addMember } from './handlers/members/add-member';
 import { deleteMember } from './handlers/members/delete-member';
-import { listSites } from './handlers/sites/list-sites';
+import { listTeamSites } from './handlers/sites/list-team-sites';
 import { listMembers } from './handlers/members/list-members';
 import { addSite } from './handlers/sites/add-site';
 import { apiEndpoint } from '../api/api-endpoint';
@@ -46,7 +46,7 @@ apiEndpoint({
   name: 'list sites',
   method: 'get',
   path: '/api/v1/teams/:teamId/sites',
-  handler: listSites,
+  handler: listTeamSites,
   auth: true,
   apiScope: ApiScope.team_sites_list,
   router,
