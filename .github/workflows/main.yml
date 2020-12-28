@@ -1,5 +1,5 @@
 name: main
-on: [ push ]
+on: [ push, pull_request ]
 env:
   GITHUB_REPOSITORY_SSH_URL: "git@github.com:${{ github.repository }}.git"
   TMP_DOCKER_IMAGE: "getmeli/api/${{ github.ref }}"
