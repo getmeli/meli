@@ -33,7 +33,7 @@ router.get(gitea_redirect, passport.authenticate('gitea'));
 router.get(gitea_callback, passport.authenticate('gitea', passportOptions), authenticate, redirectToUi);
 router.get(google_redirect, passport.authenticate('google', googleOptions));
 router.get(google_callback, passport.authenticate('google', passportOptions), authenticate, redirectToUi);
-router.get(saml_redirect, passport.authenticate('saml', oidOptions));
+router.get(saml_redirect, passport.authenticate('saml', passportOptions));
 router.post(saml_callback, passport.authenticate('saml', passportOptions), authenticate, redirectToUi);
 router.get(github_redirect, passport.authenticate('github'));
 router.get(github_callback, passport.authenticate('github', passportOptions), authenticate, redirectToUi);
