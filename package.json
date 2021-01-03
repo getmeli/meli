@@ -52,7 +52,7 @@
     "jest": "^26.2.2",
     "nock": "^13.0.4",
     "rimraf": "^3.0.2",
-    "semantic-release": "^17.2.2",
+    "semantic-release": "^17.3.1",
     "semantic-release-license": "^1.0.2",
     "terser-webpack-plugin": "^3.0.8",
     "ts-jest": "^26.1.4",
