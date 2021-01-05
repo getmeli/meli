@@ -1,3 +1,10 @@
+# [1.0.0-beta.10](https://github.com/getmeli/meli/compare/v1.0.0-beta.9...v1.0.0-beta.10) (2021-01-05)
+
+
+### Bug Fixes
+
+* api token not serialized properly on creation ([9224592](https://github.com/getmeli/meli/commit/922459206e3560d0fa9dcdd57cd6035aac02a671))
+
 # [1.0.0-beta.9](https://github.com/getmeli/meli/compare/v1.0.0-beta.8...v1.0.0-beta.9) (2020-12-28)
 
 
