@@ -1,13 +1,13 @@
 import { body } from '../../../../commons/express-joi/body';
 import { Request, Response } from 'express';
 import { uuid } from '../../../../utils/uuid';
-import { serializeSiteToken } from '../../../sites/serialize-site-token';
 import { emitEvent } from '../../../../events/emit-event';
 import { wrapAsyncMiddleware } from '../../../../commons/utils/wrap-async-middleware';
 import { getUser } from '../../../../auth/utils/get-user';
 import { $apiToken, ApiToken, ApiTokens } from '../../api-token';
 import { EventType } from '../../../../events/event-type';
 import { generateTokenValue } from '../../../../utils/generate-token-value';
+import { serializeApiToken } from '../../serialize-api-token';
 
 const validators = [
   body($apiToken),
@@ -34,7 +34,7 @@ async function handler(req: Request, res: Response): Promise<void> {
     apiToken,
   });
 
-  res.json(serializeSiteToken(apiToken));
+  res.json(serializeApiToken(apiToken));
 }
 
 /*
