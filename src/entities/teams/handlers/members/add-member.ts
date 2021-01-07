@@ -39,7 +39,7 @@ async function handler(req: Request, res: Response): Promise<void> {
       $ne: memberId,
     },
   }, {
-    $push: {
+    $addToSet: {
       members: memberId,
     },
   });
