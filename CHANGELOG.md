@@ -1,3 +1,10 @@
+# [1.0.0-beta.13](https://github.com/getmeli/meli/compare/v1.0.0-beta.12...v1.0.0-beta.13) (2021-01-07)
+
+
+### Features
+
+* ensure team member belongs to org ([ca8568d](https://github.com/getmeli/meli/commit/ca8568d6a7b7a4d7858c75a118ac35bad273303a))
+
 # [1.0.0-beta.12](https://github.com/getmeli/meli/compare/v1.0.0-beta.11...v1.0.0-beta.12) (2021-01-07)
 
 
