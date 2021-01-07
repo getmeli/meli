@@ -25,8 +25,7 @@ async function handler(req: Request, res: Response): Promise<void> {
 
   const team = await Teams().findOne({ _id: teamId });
   const org = await Orgs().findOne({ _id: team.orgId });
-  const member = await Members().findOne({ _id: memberId,
-    orgId: org._id });
+  const member = await Members().findOne({ _id: memberId });
 
   if (!member) {
     throw new NotFoundError('No such member');
