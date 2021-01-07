@@ -1,3 +1,10 @@
+# [1.0.0-beta.11](https://github.com/getmeli/meli/compare/v1.0.0-beta.10...v1.0.0-beta.11) (2021-01-07)
+
+
+### Features
+
+* update axios due to vulnerability ([fa86cf5](https://github.com/getmeli/meli/commit/fa86cf5ac2860dbac2c1f1d09552a9228b0a719e))
+
 # [1.0.0-beta.10](https://github.com/getmeli/meli/compare/v1.0.0-beta.9...v1.0.0-beta.10) (2021-01-05)
 
 
