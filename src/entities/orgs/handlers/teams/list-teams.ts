@@ -22,6 +22,7 @@ async function handler(req: Request, res: Response): Promise<void> {
   const user = getUser(req);
 
   const member = await Members().findOne({
+    orgId,
     userId: user._id,
   });
 
