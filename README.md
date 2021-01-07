@@ -18,7 +18,7 @@
 
 ## Getting started
 
-Want to change the way you ship fronend, forever ? Let's get started !
+Want to change the way you ship front-end, forever ? Let's get started !
 
 1. Head to our [installation instructions](https://docs.meli.sh/get-started/installation)
 1. After you have installed Meli and have successfully logged in:
