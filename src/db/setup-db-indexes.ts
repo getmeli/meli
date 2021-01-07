@@ -128,6 +128,11 @@ export async function setupDbIndexes() {
     [Teams().collectionName]: [
       {
         fieldOrSpec: {
+          members: 1,
+        },
+      },
+      {
+        fieldOrSpec: {
           name: 'text',
         },
       },
