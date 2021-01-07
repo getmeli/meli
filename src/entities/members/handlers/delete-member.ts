@@ -11,7 +11,7 @@ import { ForbiddenError } from '../../../commons/errors/forbidden-error';
 import { Members } from '../member';
 import { EventType } from '../../../events/event-type';
 import { Orgs } from '../../orgs/org';
-import { canAdminMemberGuard } from '../guards/can-admin-guard';
+import { canAdminMemberGuard } from '../guards/can-admin-member-guard';
 
 const validators = [
   params(object({

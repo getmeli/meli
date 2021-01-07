@@ -13,6 +13,7 @@ import { Members } from '../../../members/member';
 import { canAdminTeamGuard } from '../../guards/can-admin-team-guard';
 import { EventType } from '../../../../events/event-type';
 import { Orgs } from '../../../orgs/org';
+import { orgMemberExistsGuard } from '../../guards/org-member-exists-guard';
 
 const validators = [
   params(object({
@@ -26,8 +27,7 @@ async function handler(req: Request, res: Response): Promise<void> {
 
   const team = await Teams().findOne({ _id: teamId });
   const org = await Orgs().findOne({ _id: team.orgId });
-  const member = await Members().findOne({ _id: memberId,
-    orgId: org._id });
+  const member = await Members().findOne({ _id: memberId });
 
   if (!member) {
     throw new NotFoundError('Org member not found');
@@ -59,6 +59,7 @@ async function handler(req: Request, res: Response): Promise<void> {
 export const addMember = [
   ...teamExistsGuard,
   ...canAdminTeamGuard,
+  ...orgMemberExistsGuard,
   ...validators,
   wrapAsyncMiddleware(handler),
 ];

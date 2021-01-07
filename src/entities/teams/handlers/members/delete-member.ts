@@ -12,6 +12,7 @@ import { EventType } from '../../../../events/event-type';
 import { Members } from '../../../members/member';
 import { Orgs } from '../../../orgs/org';
 import { NotFoundError } from '../../../../commons/errors/not-found-error';
+import { orgMemberExistsGuard } from '../../guards/org-member-exists-guard';
 
 const validators = [
   params(object({
@@ -54,6 +55,7 @@ async function handler(req: Request, res: Response): Promise<void> {
 export const deleteMember = [
   ...teamExistsGuard,
   ...canAdminTeamGuard,
+  ...orgMemberExistsGuard,
   ...validators,
   wrapAsyncMiddleware(handler),
 ];
