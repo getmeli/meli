@@ -1,6 +1,7 @@
 import { Teams } from '../team';
 import { AppError } from '../../../commons/errors/app-error';
 import { isAdminOrOwner } from '../../../auth/guards/is-admin-or-owner';
+import { Members } from '../../members/member';
 
 export async function canReadTeam(teamId: string, userId: string): Promise<boolean> {
   const team = await Teams().findOne({
@@ -17,5 +18,12 @@ export async function canReadTeam(teamId: string, userId: string): Promise<boole
     return true;
   }
 
-  return members.includes(userId);
+  const member = await Members().findOne({ userId,
+    orgId });
+
+  if (!member) {
+    throw new Error('Not an org member');
+  }
+
+  return members.includes(member._id);
 }
