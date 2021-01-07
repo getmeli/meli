@@ -67,7 +67,7 @@
   "dependencies": {
     "@promster/express": "^4.1.15",
     "@sentry/node": "^5.27.2",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "body-parser": "^1.19.0",
     "chalk": "^4.1.0",
     "compression": "^1.7.4",
