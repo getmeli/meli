@@ -1,3 +1,13 @@
+# [1.0.0-beta.12](https://github.com/getmeli/meli/compare/v1.0.0-beta.11...v1.0.0-beta.12) (2021-01-07)
+
+
+### Bug Fixes
+
+* add missing team member index ([bdcee5a](https://github.com/getmeli/meli/commit/bdcee5a2f11355e155ec64dd8d55f4a321a8682c))
+* prevent duplicate team members ([3eeaeaa](https://github.com/getmeli/meli/commit/3eeaeaadeb888f6ab8ec6571832ed3b8746b0fd2))
+* team member cannot read team and sites ([#179](https://github.com/getmeli/meli/issues/179)) ([8a56c94](https://github.com/getmeli/meli/commit/8a56c942b6f6c9eb3c7941dee6db439d2bc4fc2a))
+* wrong member selected for listing teams when multiple orgs ([03c5d3f](https://github.com/getmeli/meli/commit/03c5d3f349ff7e55678925fd2e7dfee9a01e710d))
+
 # [1.0.0-beta.11](https://github.com/getmeli/meli/compare/v1.0.0-beta.10...v1.0.0-beta.11) (2021-01-07)
 
 
