@@ -30,6 +30,9 @@ import { setBranchRedirects } from './handlers/branches/set-branch-redirects';
 import { getBranch } from './handlers/branches/get-branch';
 import { setSitePassword } from './handlers/set-site-password';
 import { removeSitePassword } from './handlers/remove-site-password';
+import { removeSiteLogo } from './handlers/remove-site-logo';
+import { setSiteLogo } from './handlers/set-site-logo';
+import { getSiteLogo } from './handlers/get-site-logo';
 
 const router = Router();
 
@@ -69,6 +72,35 @@ apiEndpoint({
   handler: deleteSite,
   auth: true,
   apiScope: ApiScope.site_delete,
+  router,
+});
+
+// logo
+apiEndpoint({
+  name: 'set site logo',
+  method: 'post',
+  path: '/api/v1/sites/:siteId/logo',
+  handler: setSiteLogo,
+  auth: true,
+  apiScope: ApiScope.site_logo_set,
+  router,
+});
+apiEndpoint({
+  name: 'remove site logo',
+  method: 'delete',
+  path: '/api/v1/sites/:siteId/logo',
+  handler: removeSiteLogo,
+  auth: true,
+  apiScope: ApiScope.site_logo_remove,
+  router,
+});
+apiEndpoint({
+  name: 'get site logo',
+  method: 'get',
+  path: '/api/v1/sites/:siteId/logo',
+  handler: getSiteLogo,
+  auth: true,
+  apiScope: ApiScope.site_logo_get,
   router,
 });
 

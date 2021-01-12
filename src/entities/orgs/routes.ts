@@ -56,6 +56,8 @@ apiEndpoint({
   apiScope: ApiScope.org_update,
   router,
 });
+
+// logo
 apiEndpoint({
   name: 'set org logo',
   method: 'post',

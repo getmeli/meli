@@ -36,13 +36,13 @@ export const getMessageForEvent: { [eventType in keyof EventData.EventData]: (da
       `Organization **${org.name}** was updated.`,
     )
   ),
-  [EventType.org_logo_set]: ({ org }: EventData.OrgUpdatedEventData) => (
+  [EventType.org_logo_set]: ({ org }: EventData.OrgEventData) => (
     getSlackMessage(
       'Org logo set',
       `The logo of organization **${org.name}** was set.`,
     )
   ),
-  [EventType.org_logo_removed]: ({ org }: EventData.OrgUpdatedEventData) => (
+  [EventType.org_logo_removed]: ({ org }: EventData.OrgEventData) => (
     getSlackMessage(
       'Org logo removed',
       `The logo of organization **${org.name}** was removed.`,
@@ -126,6 +126,18 @@ export const getMessageForEvent: { [eventType in keyof EventData.EventData]: (da
       `Team **${team.name}** was deleted.`,
     )
   ),
+  [EventType.team_logo_set]: ({ team }: EventData.TeamEventData) => (
+    getSlackMessage(
+      'Team logo set',
+      `The logo of team **${team.name}** was set.`,
+    )
+  ),
+  [EventType.team_logo_removed]: ({ team }: EventData.TeamEventData) => (
+    getSlackMessage(
+      'Team logo removed',
+      `The logo of team **${team.name}** was removed.`,
+    )
+  ),
   [EventType.team_member_added]: ({ team, member }: EventData.TeamMemberAddedEventData) => (
     getSlackMessage(
       'Team member added',
@@ -172,6 +184,18 @@ export const getMessageForEvent: { [eventType in keyof EventData.EventData]: (da
     getSlackMessage(
       'Site deleted',
       `Site **${site.name}** was deleted.`,
+    )
+  ),
+  [EventType.site_logo_set]: ({ site }: EventData.SiteEventData) => (
+    getSlackMessage(
+      'Site logo set',
+      `The logo of site **${site.name}** was set.`,
+    )
+  ),
+  [EventType.site_logo_removed]: ({ site }: EventData.SiteEventData) => (
+    getSlackMessage(
+      'Site logo removed',
+      `The logo of site **${site.name}** was removed.`,
     )
   ),
   [EventType.site_hook_created]: ({ site, hook }: EventData.SiteHookCreatedEventData) => (

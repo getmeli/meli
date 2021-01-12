@@ -21,10 +21,10 @@ export const getMessageForEvent: { [eventType in keyof EventData.EventData]: (da
   [EventType.org_updated]: ({ org }: EventData.OrgUpdatedEventData) => (
     getMattermostMessage(`Organization **${org.name}** was updated.`)
   ),
-  [EventType.org_logo_set]: ({ org }: EventData.OrgUpdatedEventData) => (
+  [EventType.org_logo_set]: ({ org }: EventData.OrgEventData) => (
     getMattermostMessage(`The logo of organization **${org.name}** was set.`)
   ),
-  [EventType.org_logo_removed]: ({ org }: EventData.OrgUpdatedEventData) => (
+  [EventType.org_logo_removed]: ({ org }: EventData.OrgEventData) => (
     getMattermostMessage(`The logo of organization **${org.name}** was removed.`)
   ),
   [EventType.org_invite_added]: ({ org, invite }: EventData.OrgInviteAddedEventData) => (
@@ -66,6 +66,12 @@ export const getMessageForEvent: { [eventType in keyof EventData.EventData]: (da
   [EventType.team_deleted]: ({ team }: EventData.TeamDeletedEventData) => (
     getMattermostMessage(`Team **${team.name}** was deleted.`)
   ),
+  [EventType.team_logo_set]: ({ team }: EventData.TeamEventData) => (
+    getMattermostMessage(`The logo of team **${team.name}** was set.`)
+  ),
+  [EventType.team_logo_removed]: ({ team }: EventData.TeamEventData) => (
+    getMattermostMessage(`The logo of team **${team.name}** was removed.`)
+  ),
   [EventType.team_member_added]: ({ team, member }: EventData.TeamMemberAddedEventData) => (
     getMattermostMessage(`**${member.name}** was added to team **${team.name}**.`)
   ),
@@ -91,6 +97,12 @@ Site **${site.name}** was updated. View it live [here](${getSiteUrl(site)}). `)
   ),
   [EventType.site_deleted]: ({ site }: EventData.SiteDeletedEventData) => (
     getMattermostMessage(`Site **${site.name}** was deleted.`)
+  ),
+  [EventType.site_logo_set]: ({ site }: EventData.SiteEventData) => (
+    getMattermostMessage(`The logo of site **${site.name}** was set.`)
+  ),
+  [EventType.site_logo_removed]: ({ site }: EventData.SiteEventData) => (
+    getMattermostMessage(`The logo of site **${site.name}** was removed.`)
   ),
   [EventType.site_hook_created]: ({ site, hook }: EventData.SiteHookCreatedEventData) => (
     getMattermostMessage(`Hook **${hook.name}** of type **${hook.type}** was added to site **${site.name}**.`)

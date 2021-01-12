@@ -26,11 +26,11 @@ export const getMessageForEvent: { [eventType in keyof EventData.EventData]: (da
     subject: 'Org updated',
     text: `Organization ${org.name} was updated.`,
   }),
-  [EventType.org_logo_set]: ({ org }: EventData.OrgUpdatedEventData) => ({
+  [EventType.org_logo_set]: ({ org }: EventData.OrgEventData) => ({
     subject: 'Org logo set',
     text: `The logo of organization ${org.name} was set.`,
   }),
-  [EventType.org_logo_removed]: ({ org }: EventData.OrgUpdatedEventData) => ({
+  [EventType.org_logo_removed]: ({ org }: EventData.OrgEventData) => ({
     subject: 'Org logo removed',
     text: `The logo of organization ${org.name} was removed.`,
   }),
@@ -86,6 +86,14 @@ export const getMessageForEvent: { [eventType in keyof EventData.EventData]: (da
     subject: 'Team deleted',
     text: `Team ${team.name} was deleted.`,
   }),
+  [EventType.team_logo_set]: ({ team }: EventData.TeamEventData) => ({
+    subject: 'Team logo set',
+    text: `The logo of team ${team.name} was set.`,
+  }),
+  [EventType.team_logo_removed]: ({ team }: EventData.TeamEventData) => ({
+    subject: 'Team logo removed',
+    text: `The logo of team ${team.name} was removed.`,
+  }),
   [EventType.team_member_added]: ({ team, member }: EventData.TeamMemberAddedEventData) => ({
     subject: 'Team member added',
     text: `${member.name} was added to team ${team.name}.`,
@@ -117,6 +125,14 @@ export const getMessageForEvent: { [eventType in keyof EventData.EventData]: (da
   [EventType.site_deleted]: ({ site }: EventData.SiteDeletedEventData) => ({
     subject: 'Site deleted',
     text: `Site ${site.name} was deleted.`,
+  }),
+  [EventType.site_logo_set]: ({ site }: EventData.SiteEventData) => ({
+    subject: 'Site logo set',
+    text: `The logo of site ${site.name} was set.`,
+  }),
+  [EventType.site_logo_removed]: ({ site }: EventData.SiteEventData) => ({
+    subject: 'Site logo removed',
+    text: `The logo of site ${site.name} was removed.`,
   }),
   [EventType.site_hook_created]: ({ site, hook }: EventData.SiteHookCreatedEventData) => ({
     subject: 'Site hook created',

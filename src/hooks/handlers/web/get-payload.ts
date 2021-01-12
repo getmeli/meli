@@ -219,6 +219,12 @@ export const getPayload: { [eventType in keyof EventData.EventData]: (data: any)
   [EventType.team_deleted]: ({ team }: EventData.TeamDeletedEventData) => ({
     team: serializeTeam(team),
   }),
+  [EventType.team_logo_set]: ({ team }: EventData.TeamEventData) => ({
+    team: serializeTeam(team),
+  }),
+  [EventType.team_logo_removed]: ({ team }: EventData.TeamEventData) => ({
+    team: serializeTeam(team),
+  }),
   [EventType.team_member_added]: ({ team, member }: EventData.TeamMemberAddedEventData) => ({
     team: serializeTeam(team),
     member: serializeMember(member),
@@ -247,6 +253,12 @@ export const getPayload: { [eventType in keyof EventData.EventData]: (data: any)
     site: serializeSite(site),
   }),
   [EventType.site_deleted]: ({ site }: EventData.SiteDeletedEventData) => ({
+    site: serializeSite(site),
+  }),
+  [EventType.site_logo_set]: ({ site }: EventData.SiteEventData) => ({
+    site: serializeSite(site),
+  }),
+  [EventType.site_logo_removed]: ({ site }: EventData.SiteEventData) => ({
     site: serializeSite(site),
   }),
   [EventType.site_hook_created]: ({ site, hook }: EventData.SiteHookCreatedEventData) => ({
