@@ -13,6 +13,9 @@ import { createOrg } from './handlers/create-org';
 import { apiEndpoint } from '../api/api-endpoint';
 import { ApiScope } from '../api/api-scope';
 import { listSites } from './handlers/sites/list-sites';
+import { setOrgLogo } from './handlers/set-org-logo';
+import { removeOrgLogo } from './handlers/remove-org-logo';
+import { getOrgLogo } from './handlers/get-org-logo';
 
 const router = Router();
 
@@ -51,6 +54,33 @@ apiEndpoint({
   handler: updateOrg,
   auth: true,
   apiScope: ApiScope.org_update,
+  router,
+});
+apiEndpoint({
+  name: 'set org logo',
+  method: 'post',
+  path: '/api/v1/orgs/:orgId/logo',
+  handler: setOrgLogo,
+  auth: true,
+  apiScope: ApiScope.org_logo_set,
+  router,
+});
+apiEndpoint({
+  name: 'remove org logo',
+  method: 'delete',
+  path: '/api/v1/orgs/:orgId/logo',
+  handler: removeOrgLogo,
+  auth: true,
+  apiScope: ApiScope.org_logo_remove,
+  router,
+});
+apiEndpoint({
+  name: 'get org logo',
+  method: 'get',
+  path: '/api/v1/orgs/:orgId/logo',
+  handler: getOrgLogo,
+  auth: true,
+  apiScope: ApiScope.org_logo_get,
   router,
 });
 // TODO delete

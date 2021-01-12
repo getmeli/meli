@@ -26,6 +26,14 @@ export const getMessageForEvent: { [eventType in keyof EventData.EventData]: (da
     subject: 'Org updated',
     text: `Organization ${org.name} was updated.`,
   }),
+  [EventType.org_logo_set]: ({ org }: EventData.OrgUpdatedEventData) => ({
+    subject: 'Org logo set',
+    text: `The logo of organization ${org.name} was set.`,
+  }),
+  [EventType.org_logo_removed]: ({ org }: EventData.OrgUpdatedEventData) => ({
+    subject: 'Org logo removed',
+    text: `The logo of organization ${org.name} was removed.`,
+  }),
   [EventType.org_invite_added]: ({ org, invite }: EventData.OrgInviteAddedEventData) => ({
     subject: 'Org invite added',
     text: `${invite.email} was invited to join organization ${org.name}.`,

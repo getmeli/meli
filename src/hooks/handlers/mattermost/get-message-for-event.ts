@@ -21,6 +21,12 @@ export const getMessageForEvent: { [eventType in keyof EventData.EventData]: (da
   [EventType.org_updated]: ({ org }: EventData.OrgUpdatedEventData) => (
     getMattermostMessage(`Organization **${org.name}** was updated.`)
   ),
+  [EventType.org_logo_set]: ({ org }: EventData.OrgUpdatedEventData) => (
+    getMattermostMessage(`The logo of organization **${org.name}** was set.`)
+  ),
+  [EventType.org_logo_removed]: ({ org }: EventData.OrgUpdatedEventData) => (
+    getMattermostMessage(`The logo of organization **${org.name}** was removed.`)
+  ),
   [EventType.org_invite_added]: ({ org, invite }: EventData.OrgInviteAddedEventData) => (
     getMattermostMessage(`**${invite.email}** was invited to join organization **${org.name}**.`)
   ),

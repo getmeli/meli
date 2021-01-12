@@ -163,6 +163,12 @@ export const getPayload: { [eventType in keyof EventData.EventData]: (data: any)
   [EventType.org_updated]: ({ org }: EventData.OrgUpdatedEventData) => ({
     org: serializeOrg(org),
   }),
+  [EventType.org_logo_set]: ({ org }: EventData.OrgEventData) => ({
+    org: serializeOrg(org),
+  }),
+  [EventType.org_logo_removed]: ({ org }: EventData.OrgEventData) => ({
+    org: serializeOrg(org),
+  }),
   [EventType.org_invite_added]: ({ org, invite }: EventData.OrgInviteAddedEventData) => ({
     org: serializeOrg(org),
     invite: serializeInvite(invite),

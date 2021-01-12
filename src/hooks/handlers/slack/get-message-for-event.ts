@@ -36,6 +36,18 @@ export const getMessageForEvent: { [eventType in keyof EventData.EventData]: (da
       `Organization **${org.name}** was updated.`,
     )
   ),
+  [EventType.org_logo_set]: ({ org }: EventData.OrgUpdatedEventData) => (
+    getSlackMessage(
+      'Org logo set',
+      `The logo of organization **${org.name}** was set.`,
+    )
+  ),
+  [EventType.org_logo_removed]: ({ org }: EventData.OrgUpdatedEventData) => (
+    getSlackMessage(
+      'Org logo removed',
+      `The logo of organization **${org.name}** was removed.`,
+    )
+  ),
   [EventType.org_invite_added]: ({ org, invite }: EventData.OrgInviteAddedEventData) => (
     getSlackMessage(
       'Org invite added',

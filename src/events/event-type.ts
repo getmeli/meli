@@ -4,6 +4,8 @@ export enum EventType {
   user_api_token_deleted = 'user_api_token_deleted',
   user_org_created = 'user_org_created',
   org_updated = 'org_updated',
+  org_logo_removed = 'org_logo_removed',
+  org_logo_set = 'org_logo_set',
   org_invite_added = 'org_invite_added',
   org_invite_deleted = 'org_invite_deleted',
   org_invite_accepted = 'org_invite_accepted',

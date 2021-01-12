@@ -203,6 +203,8 @@ export interface EventData {
   [EventType.user_api_token_deleted]: UserApiTokenDeletedEventData,
   [EventType.user_org_created]: UserOrgCreatedEventData,
   [EventType.org_updated]: OrgUpdatedEventData,
+  [EventType.org_logo_set]: OrgEventData,
+  [EventType.org_logo_removed]: OrgEventData,
   [EventType.org_invite_added]: OrgInviteAddedEventData,
   [EventType.org_invite_deleted]: OrgInviteDeletedEventData,
   [EventType.org_invite_accepted]: OrgInviteAcceptedEventData,
