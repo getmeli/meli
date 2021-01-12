@@ -1,21 +1,21 @@
 import { AcmeSslConfiguration, Site, SiteDomain } from '../../../entities/sites/site';
-import { env } from '../../../env/env';
 import { unique } from '../../../utils/arrays-utils';
-import { URL } from 'url';
 import { getAuthHandler } from './get-auth-handler';
 import { getRedirectRoute } from './get-redirect-route';
 import { getBranchDirInCaddy } from '../../../entities/sites/get-site-dir';
 import { Branch } from '../../../entities/sites/branch';
 import { getSite404ErrorRoutes } from './get-site-404-error-routes';
-
-const sitesUrl = new URL(env.MELI_SITES_URL);
+import { getSiteMainDomain } from '../../../entities/sites/get-site-main-domain';
 
 export function generateSiteRoutes(site: Site): any[] {
   const group = `site_${site._id}`;
   const domains: SiteDomain[] = [
+    // custom domains
     ...(site.domains || []),
-    {
-      name: `${site.name}.${sitesUrl.hostname}`,
+    // domain under meli's hostname
+    <SiteDomain>{
+      name: getSiteMainDomain(site),
+      exposeBranches: true,
       sslConfiguration: {
         type: 'acme',
       } as AcmeSslConfiguration,
@@ -23,7 +23,9 @@ export function generateSiteRoutes(site: Site): any[] {
   ].filter(unique);
 
   return !site.branches ? [] : site.branches.flatMap(branch => {
-    const hosts = domains.map(domain => `${branch.slug}.${domain.name}`);
+    const hosts = domains
+      .filter(domain => !!domain.exposeBranches)
+      .map(domain => `${branch.slug}.${domain.name}`);
     if (branch._id === site.mainBranch) {
       hosts.push(...domains.map(({ name }) => name));
     }

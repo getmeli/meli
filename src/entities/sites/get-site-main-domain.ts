@@ -4,6 +4,6 @@ import { Site } from './site';
 
 const sitesUrl = new URL(env.MELI_SITES_URL);
 
-export function getSiteDomain(site: Site) {
-  return `${site.name}.${sitesUrl.host}`;
+export function getSiteMainDomain(site: Site): string {
+  return `${site.name}.${sitesUrl.hostname}`;
 }

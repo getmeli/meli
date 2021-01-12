@@ -16,6 +16,7 @@ export interface SiteToken {
 export interface SiteDomain {
   name: string;
   sslConfiguration: SslConfiguration;
+  exposeBranches?: boolean;
 }
 
 export type SslConfiguration =
@@ -72,6 +73,7 @@ export const $siteDomain = object({
     $acmeSslConfiguration,
     $manualSslConfiguration,
   ]),
+  exposeBranches: boolean().optional().default(false),
 });
 
 export const $site = object({

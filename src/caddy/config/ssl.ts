@@ -1,68 +1,95 @@
 import { URL } from 'url';
 import { getBranchDomain } from '../../entities/sites/get-branch-domain';
-import { getSiteDomain } from '../../entities/sites/get-site-domain';
-import { ManualSslConfiguration, Site } from '../../entities/sites/site';
+import { getSiteMainDomain } from '../../entities/sites/get-site-main-domain';
+import { ManualSslConfiguration, Site, SiteDomain } from '../../entities/sites/site';
 import { env } from '../../env/env';
 import { unique } from '../../utils/arrays-utils';
 
 const meliUrl = new URL(env.MELI_URL);
 const meliUiUrl = new URL(env.MELI_UI_URL);
 
-export function generateManualCertificatesConfig(sites: Site[]) {
-  const domains = sites
-    .flatMap(site => site.domains)
-    .filter(domain => domain?.sslConfiguration?.type === 'manual');
+function getDomainWithBranches(domain: SiteDomain, site: Site) {
+  return [
+    domain.name,
+    ...(domain.exposeBranches ? site.branches.map(branch => `${branch.slug}.${domain.name}`) : []),
+  ];
+}
 
-  if (domains.length === 0) {
+export function generateManualCertificatesConfig(sites: Site[]) {
+  const pemConfigs = sites.flatMap(site => (
+    site.domains
+      .filter(domain => domain?.sslConfiguration?.type === 'manual')
+      .map(domain => ({
+        certificate: (domain.sslConfiguration as ManualSslConfiguration).fullchain,
+        key: (domain.sslConfiguration as ManualSslConfiguration).privateKey,
+        tags: getDomainWithBranches(domain, site),
+      }))
+  ));
+
+  if (pemConfigs.length === 0) {
     return undefined;
   }
 
   return {
-    load_pem: domains.map(domain => ({
-      certificate: (domain.sslConfiguration as ManualSslConfiguration).fullchain,
-      key: (domain.sslConfiguration as ManualSslConfiguration).privateKey,
-      tags: [domain.name], // TODO id?
-    })),
+    load_pem: pemConfigs,
   };
 }
 
 export function generateServerTlsConfig(sites: Site[]) {
-  const sitesCustomDomains = sites.flatMap(site => site.domains);
-  const sitesMainDomainNames = sites
-    .map(site => getSiteDomain(site));
-  const sitesBranchesDomainNames = sites
-    .flatMap(site => site.branches
-      .map(branch => getBranchDomain(site, branch)));
-  const acmeDomainNames = [
+  const customDomains = sites.flatMap(site => (
+    site.domains.map(domain => ({
+      site,
+      domain,
+    }))
+  ));
+  const mainDomains = sites.map(site => getSiteMainDomain(site));
+  const branchesDomains = sites.flatMap(site => (
+    site.branches.map(branch => getBranchDomain(site, branch))
+  ));
+  const branchesCustomDomainsWithAutoSsl = sites.flatMap(site => (
+    site.branches.flatMap(branch => (
+      site.domains
+        .filter(domain => domain.exposeBranches && domain.sslConfiguration?.type !== 'manual')
+        .map(domain => `${branch.slug}.${domain.name}`)
+    ))
+  ));
+
+  const automaticSslDomains = [
     meliUrl.hostname,
     meliUiUrl.hostname,
-    ...sitesCustomDomains
-      .filter(domain => domain.sslConfiguration?.type === 'acme')
-      .map(domain => domain.name),
-    ...sitesMainDomainNames,
-    ...sitesBranchesDomainNames,
+    ...customDomains
+      .filter(({ domain }) => domain.sslConfiguration?.type === 'acme')
+      .map(({ domain }) => domain.name),
+    ...mainDomains,
+    ...branchesDomains,
+    ...branchesCustomDomainsWithAutoSsl,
   ].filter(unique);
-  const manualCertificatesDomains = sitesCustomDomains
-    .filter(domain => domain.sslConfiguration?.type !== 'acme');
+
+  const customDomainsWithManualSsl = customDomains.filter(({ domain }) => (
+    domain.sslConfiguration?.type !== 'acme'
+  ));
 
   return {
     tls_connection_policies: [
       {
         match: {
-          sni: acmeDomainNames,
+          sni: automaticSslDomains,
         },
       },
-      ...manualCertificatesDomains.map(domain => ({
-        match: {
-          sni: [domain.name],
-        },
-        certificate_selection: {
-          all_tags: [domain.name],
-        },
-      })),
+      ...customDomainsWithManualSsl.map(({ site, domain }) => {
+        const domains = getDomainWithBranches(domain, site);
+        return ({
+          match: {
+            sni: domains,
+          },
+          certificate_selection: {
+            any_tag: domains,
+          },
+        });
+      }),
     ],
     automatic_https: {
-      skip: manualCertificatesDomains.map(domain => domain.name),
+      skip: customDomainsWithManualSsl.map(({ domain }) => domain.name),
       // TODO disable and test if it still works
     },
   };
