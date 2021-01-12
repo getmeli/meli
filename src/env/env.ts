@@ -57,6 +57,7 @@ export interface Env {
   MELI_CADDY_DIR: string;
   MELI_TMP_DIRECTORY: string;
   MELI_SITES_DIR: string;
+  MELI_STORAGE_DIR: string;
   MELI_INVITE_EXPIRATION_TIME: number;
   MELI_ACME_SERVER: string;
   MELI_ACME_CA_PATH: string;

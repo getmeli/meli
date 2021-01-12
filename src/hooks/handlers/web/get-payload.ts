@@ -163,6 +163,12 @@ export const getPayload: { [eventType in keyof EventData.EventData]: (data: any)
   [EventType.org_updated]: ({ org }: EventData.OrgUpdatedEventData) => ({
     org: serializeOrg(org),
   }),
+  [EventType.org_logo_set]: ({ org }: EventData.OrgEventData) => ({
+    org: serializeOrg(org),
+  }),
+  [EventType.org_logo_removed]: ({ org }: EventData.OrgEventData) => ({
+    org: serializeOrg(org),
+  }),
   [EventType.org_invite_added]: ({ org, invite }: EventData.OrgInviteAddedEventData) => ({
     org: serializeOrg(org),
     invite: serializeInvite(invite),
@@ -213,6 +219,12 @@ export const getPayload: { [eventType in keyof EventData.EventData]: (data: any)
   [EventType.team_deleted]: ({ team }: EventData.TeamDeletedEventData) => ({
     team: serializeTeam(team),
   }),
+  [EventType.team_logo_set]: ({ team }: EventData.TeamEventData) => ({
+    team: serializeTeam(team),
+  }),
+  [EventType.team_logo_removed]: ({ team }: EventData.TeamEventData) => ({
+    team: serializeTeam(team),
+  }),
   [EventType.team_member_added]: ({ team, member }: EventData.TeamMemberAddedEventData) => ({
     team: serializeTeam(team),
     member: serializeMember(member),
@@ -241,6 +253,12 @@ export const getPayload: { [eventType in keyof EventData.EventData]: (data: any)
     site: serializeSite(site),
   }),
   [EventType.site_deleted]: ({ site }: EventData.SiteDeletedEventData) => ({
+    site: serializeSite(site),
+  }),
+  [EventType.site_logo_set]: ({ site }: EventData.SiteEventData) => ({
+    site: serializeSite(site),
+  }),
+  [EventType.site_logo_removed]: ({ site }: EventData.SiteEventData) => ({
     site: serializeSite(site),
   }),
   [EventType.site_hook_created]: ({ site, hook }: EventData.SiteHookCreatedEventData) => ({

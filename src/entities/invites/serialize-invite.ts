@@ -7,6 +7,7 @@ export function serializeUserInvite(org: Org, invite: Invite) {
     org: {
       name: org.name,
       color: org.color,
+      logo: org.logo,
     },
     expiresAt: invite.expiresAt,
     memberOptions: invite.memberOptions,

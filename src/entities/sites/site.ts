@@ -5,6 +5,7 @@ import { ARRAY_MAX, COLOR_PATTERN, STRING_MAX_LENGTH, SUBDOMAIN_PATTERN } from '
 import { AppDb } from '../../db/db';
 import { Branch } from './branch';
 import { Password } from './password';
+import { StoredFile } from '../../storage/store-file';
 
 export interface SiteToken {
   _id: string;
@@ -35,10 +36,11 @@ export interface ManualSslConfiguration {
 
 export interface Site {
   _id: string;
-  teamId: string;
-  color: string;
   createdAt: Date;
   updatedAt: Date;
+  teamId: string;
+  color: string;
+  logo?: StoredFile;
   name: string;
   mainBranch?: string;
   domains: SiteDomain[];

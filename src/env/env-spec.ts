@@ -208,6 +208,9 @@ export const envSpec: EnvSpec<Env> = {
   MELI_SITES_DIR: {
     schema: string().optional().default('/sites'),
   },
+  MELI_STORAGE_DIR: {
+    schema: string().optional().default('/files'),
+  },
   MELI_CADDY_ADMIN_API_URL: {
     schema: string().default('http://localhost:2019'),
   },

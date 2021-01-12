@@ -8,9 +8,17 @@ import { Members } from '../entities/members/member';
 import { ApiTokens } from '../entities/api/api-token';
 import { HookDeliveries } from '../hooks/hook-delivery';
 import { Hooks } from '../hooks/hook';
+import { Orgs } from '../entities/orgs/org';
 
 export async function setupDbIndexes() {
   await configureIndexes(AppDb.client, {
+    [Orgs().collectionName]: [
+      {
+        fieldOrSpec: {
+          'invites.token': 1,
+        },
+      },
+    ],
     [Users().collectionName]: [
       {
         fieldOrSpec: {

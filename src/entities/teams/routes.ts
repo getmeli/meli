@@ -9,6 +9,9 @@ import { listMembers } from './handlers/members/list-members';
 import { addSite } from './handlers/sites/add-site';
 import { apiEndpoint } from '../api/api-endpoint';
 import { ApiScope } from '../api/api-scope';
+import { setTeamLogo } from './handlers/set-team-logo';
+import { removeTeamLogo } from './handlers/remove-team-logo';
+import { getTeamLogo } from './handlers/get-team-logo';
 
 const router = Router();
 
@@ -38,6 +41,35 @@ apiEndpoint({
   handler: deleteTeam,
   auth: true,
   apiScope: ApiScope.team_delete,
+  router,
+});
+
+// logo
+apiEndpoint({
+  name: 'set team logo',
+  method: 'post',
+  path: '/api/v1/teams/:teamId/logo',
+  handler: setTeamLogo,
+  auth: true,
+  apiScope: ApiScope.team_logo_set,
+  router,
+});
+apiEndpoint({
+  name: 'remove team logo',
+  method: 'delete',
+  path: '/api/v1/teams/:teamId/logo',
+  handler: removeTeamLogo,
+  auth: true,
+  apiScope: ApiScope.team_logo_remove,
+  router,
+});
+apiEndpoint({
+  name: 'get team logo',
+  method: 'get',
+  path: '/api/v1/teams/:teamId/logo',
+  handler: getTeamLogo,
+  auth: true,
+  apiScope: ApiScope.team_logo_get,
   router,
 });
 
