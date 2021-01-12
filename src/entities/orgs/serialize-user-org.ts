@@ -3,9 +3,9 @@ import { Member } from '../members/member';
 import { serializeOrg } from './serialize-org';
 import { serializeMember } from '../members/serialize-member';
 
-export function serializeUserOrg(org: Org, member: Member) {
+export async function serializeUserOrg(org: Org, member: Member) {
   return {
     org: serializeOrg(org),
-    member: serializeMember(member, org.ownerId),
+    member: await serializeMember(member, org.ownerId),
   };
 }

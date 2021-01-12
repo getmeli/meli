@@ -31,10 +31,12 @@ async function handler(req: Request, res: Response): Promise<void> {
     })
     .toArray();
 
-  const json = orgs.map(org => {
-    const member = members.find(m => m.orgId === org._id);
-    return serializeUserOrg(org, member);
-  });
+  const json = Promise.all(
+    orgs.map(async org => {
+      const member = members.find(m => m.orgId === org._id);
+      return serializeUserOrg(org, member);
+    }),
+  );
 
   res.json(json);
 }

@@ -69,7 +69,7 @@ async function handler(req: Request, res: Response): Promise<void> {
     invite,
   });
 
-  res.json(serializeUserOrg(org, member));
+  res.json(await serializeUserOrg(org, member));
 }
 
 export const acceptInvite = [
