@@ -1,7 +1,5 @@
 import { Request, Response } from 'express';
-import {
-  getPagination, pageResponse, pageValidators,
-} from '../../../../utils/getPagination';
+import { getPagination, pageResponse, pageValidators } from '../../../../utils/getPagination';
 import { wrapAsyncMiddleware } from '../../../../commons/utils/wrap-async-middleware';
 import { object, string } from 'joi';
 import { query } from '../../../../commons/express-joi/query';
@@ -10,6 +8,7 @@ import { params } from '../../../../commons/express-joi/params';
 import { FilterQuery } from 'mongodb';
 import { canReadTeamGuard } from '../../guards/can-read-team-guard';
 import { teamExistsGuard } from '../../guards/team-exists-guard';
+import { serializeSite } from '../../../sites/serialize-site';
 
 const validators = [
   ...pageValidators,
@@ -54,7 +53,9 @@ async function handler(req: Request, res: Response): Promise<void> {
     .limit(pagination.size)
     .toArray();
 
-  res.json(pageResponse(sites, count));
+  const json = sites.map(serializeSite);
+
+  res.json(pageResponse(json, count));
 }
 
 export const listTeamSites = [
