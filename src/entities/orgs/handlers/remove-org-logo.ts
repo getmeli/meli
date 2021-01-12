@@ -9,6 +9,8 @@ import { orgExistsGuard } from '../guards/org-exists-guard';
 import { EventType } from '../../../events/event-type';
 import { params } from '../../../commons/express-joi/params';
 import { $id } from '../../../utils/id';
+import { deleteFile } from '../../../storage/delete-file';
+import { BadRequestError } from '../../../commons/errors/bad-request-error';
 
 const validators = [
   params(object({
@@ -18,6 +20,16 @@ const validators = [
 
 async function handler(req: Request, res: Response): Promise<void> {
   const { orgId } = req.params;
+
+  const { logo } = await Orgs().findOne({
+    _id: orgId,
+  });
+
+  if (!logo) {
+    throw new BadRequestError('Org has no logo');
+  }
+
+  await deleteFile(logo.id);
 
   await Orgs().updateOne({
     _id: orgId,

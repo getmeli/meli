@@ -9,6 +9,8 @@ import { teamExistsGuard } from '../guards/team-exists-guard';
 import { canAdminTeamGuard } from '../guards/can-admin-team-guard';
 import { Teams } from '../team';
 import { serializeTeam } from '../serialize-team';
+import { deleteFile } from '../../../storage/delete-file';
+import { BadRequestError } from '../../../commons/errors/bad-request-error';
 
 const validators = [
   params(object({
@@ -18,6 +20,16 @@ const validators = [
 
 async function handler(req: Request, res: Response): Promise<void> {
   const { teamId } = req.params;
+
+  const { logo } = await Teams().findOne({
+    _id: teamId,
+  });
+
+  if (!logo) {
+    throw new BadRequestError('Team has no logo');
+  }
+
+  await deleteFile(logo.id);
 
   await Teams().updateOne({
     _id: teamId,

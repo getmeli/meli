@@ -9,6 +9,8 @@ import { Sites } from '../site';
 import { serializeSite } from '../serialize-site';
 import { siteExistsGuard } from '../guards/site-exists-guard';
 import { canAdminSiteGuard } from '../guards/can-admin-site-guard';
+import { deleteFile } from '../../../storage/delete-file';
+import { BadRequestError } from '../../../commons/errors/bad-request-error';
 
 const validators = [
   params(object({
@@ -18,6 +20,16 @@ const validators = [
 
 async function handler(req: Request, res: Response): Promise<void> {
   const { siteId } = req.params;
+
+  const { logo } = await Sites().findOne({
+    _id: siteId,
+  });
+
+  if (!logo) {
+    throw new BadRequestError('Site has no logo');
+  }
+
+  await deleteFile(logo.id);
 
   await Sites().updateOne({
     _id: siteId,

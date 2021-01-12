@@ -1,5 +1,6 @@
 import { Site } from './site';
 import { getSiteUrl } from './get-site-url';
+import { env } from '../../env/env';
 
 export function serializeSite(site: Site) {
   return {
@@ -15,5 +16,7 @@ export function serializeSite(site: Site) {
     url: getSiteUrl(site),
     spa: site.spa,
     hasPassword: !!site.password,
+    // ?id=... forces cache refresh
+    logo: site.logo ? `${env.MELI_URL}/api/v1/orgs/${site._id}/logo?id=${site.logo.id}` : undefined,
   };
 }

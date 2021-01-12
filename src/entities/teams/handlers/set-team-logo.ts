@@ -11,6 +11,7 @@ import { teamExistsGuard } from '../guards/team-exists-guard';
 import { canAdminTeamGuard } from '../guards/can-admin-team-guard';
 import { Teams } from '../team';
 import { serializeTeam } from '../serialize-team';
+import { deleteFile } from '../../../storage/delete-file';
 
 const validators = [
   params(object({
@@ -21,6 +22,10 @@ const validators = [
 async function handler(req: Request, res: Response): Promise<void> {
   const { teamId } = req.params;
   const { file } = req;
+
+  const { logo: oldLogo } = await Teams().findOne({
+    _id: teamId,
+  });
 
   const storedFile = await storeFile(file);
 
@@ -35,6 +40,10 @@ async function handler(req: Request, res: Response): Promise<void> {
       },
     },
   );
+
+  if (!oldLogo) {
+    await deleteFile(oldLogo.id);
+  }
 
   const team = await Teams().findOne({
     _id: teamId,

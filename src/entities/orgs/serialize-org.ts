@@ -7,6 +7,6 @@ export function serializeOrg(org: Org) {
     name: org.name,
     color: org.color,
     // ?id=... forces cache refresh
-    logo: `${env.MELI_URL}/api/v1/orgs/${org._id}/logo?id=${org.logo.id}`,
+    logo: org.logo ? `${env.MELI_URL}/api/v1/orgs/${org._id}/logo?id=${org.logo.id}` : undefined,
   };
 }

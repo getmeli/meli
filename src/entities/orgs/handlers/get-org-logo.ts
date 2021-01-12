@@ -4,10 +4,10 @@ import { object } from 'joi';
 import { orgExistsGuard } from '../guards/org-exists-guard';
 import { params } from '../../../commons/express-joi/params';
 import { $id } from '../../../utils/id';
-import { isOrgMemberGuard } from '../guards/is-org-member-guard';
 import { Orgs } from '../org';
 import { getFilePath } from '../../../storage/get-file-path';
 import { NotFoundError } from '../../../commons/errors/not-found-error';
+import { canGetOrgLogoGuard } from '../guards/can-get-org-logo-guard';
 
 const validators = [
   params(object({
@@ -32,7 +32,7 @@ async function handler(req: Request, res: Response): Promise<void> {
 
 export const getOrgLogo = [
   ...orgExistsGuard,
-  ...isOrgMemberGuard,
+  ...canGetOrgLogoGuard,
   ...validators,
   wrapAsyncMiddleware(handler),
 ];

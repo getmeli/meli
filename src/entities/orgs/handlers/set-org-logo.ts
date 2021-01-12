@@ -11,6 +11,7 @@ import { params } from '../../../commons/express-joi/params';
 import { $id } from '../../../utils/id';
 import { upload } from '../../../upload';
 import { storeFile } from '../../../storage/store-file';
+import { deleteFile } from '../../../storage/delete-file';
 
 const validators = [
   params(object({
@@ -21,6 +22,10 @@ const validators = [
 async function handler(req: Request, res: Response): Promise<void> {
   const { orgId } = req.params;
   const { file } = req;
+
+  const { logo: oldLogo } = await Orgs().findOne({
+    _id: orgId,
+  });
 
   const storedFile = await storeFile(file);
 
@@ -35,6 +40,10 @@ async function handler(req: Request, res: Response): Promise<void> {
       },
     },
   );
+
+  if (!oldLogo) {
+    await deleteFile(oldLogo.id);
+  }
 
   const org = await Orgs().findOne({
     _id: orgId,

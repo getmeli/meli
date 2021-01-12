@@ -11,6 +11,7 @@ import { canAdminSiteGuard } from '../guards/can-admin-site-guard';
 import { siteExistsGuard } from '../guards/site-exists-guard';
 import { serializeSite } from '../serialize-site';
 import { Sites } from '../site';
+import { deleteFile } from '../../../storage/delete-file';
 
 const validators = [
   params(object({
@@ -21,6 +22,10 @@ const validators = [
 async function handler(req: Request, res: Response): Promise<void> {
   const { siteId } = req.params;
   const { file } = req;
+
+  const { logo: oldLogo } = await Sites().findOne({
+    _id: siteId,
+  });
 
   const storedFile = await storeFile(file);
 
@@ -35,6 +40,10 @@ async function handler(req: Request, res: Response): Promise<void> {
       },
     },
   );
+
+  if (!oldLogo) {
+    await deleteFile(oldLogo.id);
+  }
 
   const site = await Sites().findOne({
     _id: siteId,
