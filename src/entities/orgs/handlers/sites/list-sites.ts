@@ -13,6 +13,7 @@ import { Members } from '../../../members/member';
 import { isOrgMemberGuard } from '../../guards/is-org-member-guard';
 import { orgExistsGuard } from '../../guards/org-exists-guard';
 import { isAdminOrOwner } from '../../../../auth/guards/is-admin-or-owner';
+import { serializeSite } from '../../../sites/serialize-site';
 
 const validators = [
   ...pageValidators,
@@ -75,7 +76,9 @@ async function handler(req: Request, res: Response): Promise<void> {
     .limit(pagination.size)
     .toArray();
 
-  res.json(pageResponse(sites, count));
+  const json = sites.map(serializeSite);
+
+  res.json(pageResponse(json, count));
 }
 
 export const listSites = [
