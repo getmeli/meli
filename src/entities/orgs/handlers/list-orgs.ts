@@ -31,7 +31,7 @@ async function handler(req: Request, res: Response): Promise<void> {
     })
     .toArray();
 
-  const json = Promise.all(
+  const json = await Promise.all(
     orgs.map(async org => {
       const member = members.find(m => m.orgId === org._id);
       return serializeUserOrg(org, member);
