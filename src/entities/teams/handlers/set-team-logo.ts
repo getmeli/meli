@@ -41,7 +41,7 @@ async function handler(req: Request, res: Response): Promise<void> {
     },
   );
 
-  if (!oldLogo) {
+  if (oldLogo) {
     await deleteFile(oldLogo.id);
   }
 
