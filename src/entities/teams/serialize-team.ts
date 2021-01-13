@@ -1,5 +1,5 @@
 import { Team } from './team';
-import { env } from '../../env/env';
+import { getLogoUrl } from '../../utils/get-logo-url';
 
 export function serializeTeam(team: Team) {
   return {
@@ -8,7 +8,6 @@ export function serializeTeam(team: Team) {
     updatedAt: team.updatedAt,
     name: team.name,
     color: team.color,
-    // ?id=... forces cache refresh
-    logo: team.logo ? `${env.MELI_URL}/api/v1/teams/${team._id}/logo?id=${team.logo.id}` : undefined,
+    logo: getLogoUrl('teams', team),
   };
 }

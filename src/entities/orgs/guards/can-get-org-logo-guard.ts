@@ -3,10 +3,10 @@ import { object } from 'joi';
 import { NextFunction, Request, Response } from 'express';
 import { $id } from '../../../utils/id';
 import { Orgs } from '../org';
-import { isAdminOrOwner } from '../../../auth/guards/is-admin-or-owner';
 import { getUser } from '../../../auth/utils/get-user';
 import { wrapAsyncMiddleware } from '../../../commons/utils/wrap-async-middleware';
 import { ForbiddenError } from '../../../commons/errors/forbidden-error';
+import { isOrgMember } from './is-org-member';
 
 export const canGetOrgLogoGuard = [
   params(object({
@@ -15,14 +15,14 @@ export const canGetOrgLogoGuard = [
   wrapAsyncMiddleware(async (req: Request, res: Response, next: NextFunction) => {
     const { orgId } = req.params;
 
-    // check is admin or owner
+    // check user belongs to org
     const user = getUser(req);
-    const adminOrOwner = await isAdminOrOwner(user._id, orgId);
-    if (adminOrOwner) {
+    const orgMember = await isOrgMember(user._id, orgId);
+    if (orgMember) {
       return next();
     }
 
-    // check if user has an invite token
+    // check user has an invite token
     if (req.query.invite) {
       const count = await Orgs().countDocuments({
         'invites.token': req.query.invite,

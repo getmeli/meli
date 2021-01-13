@@ -1,5 +1,6 @@
 import { Org } from '../orgs/org';
 import { Invite } from '../orgs/invite';
+import { getLogoUrl } from '../../utils/get-logo-url';
 
 export function serializeUserInvite(org: Org, invite: Invite) {
   return {
@@ -7,7 +8,7 @@ export function serializeUserInvite(org: Org, invite: Invite) {
     org: {
       name: org.name,
       color: org.color,
-      logo: org.logo,
+      logo: getLogoUrl('orgs', org, { invite: invite.token }),
     },
     expiresAt: invite.expiresAt,
     memberOptions: invite.memberOptions,
