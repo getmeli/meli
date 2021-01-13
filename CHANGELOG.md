@@ -1,3 +1,20 @@
+# [1.0.0-beta.14](https://github.com/getmeli/meli/compare/v1.0.0-beta.13...v1.0.0-beta.14) (2021-01-13)
+
+
+### Bug Fixes
+
+* missing await in org list ([ea5c456](https://github.com/getmeli/meli/commit/ea5c45644c02198f64dd1182e6cef921842164a9))
+* missing await in org member serializer ([7617d86](https://github.com/getmeli/meli/commit/7617d86c01cacd843d0e6c4457ba947eebded14b))
+* sites not serialized properly ([eb8ee20](https://github.com/getmeli/meli/commit/eb8ee2073eba03d62006d7b4c2dc934fe12be4e8))
+* team sites not serialized properly ([e215f0e](https://github.com/getmeli/meli/commit/e215f0e0d5c3811667a9ba9db5205538b87d17c8))
+
+
+### Features
+
+* expose branches on custom domains [#165](https://github.com/getmeli/meli/issues/165) ([46f3de3](https://github.com/getmeli/meli/commit/46f3de3ad923ad2faf26b66150ebfb8b4c0be92a))
+* logos ([#183](https://github.com/getmeli/meli/issues/183)) ([0074e42](https://github.com/getmeli/meli/commit/0074e424c498661c512f10f453668843a45a454a))
+* show logo to invites and org members ([c5791fe](https://github.com/getmeli/meli/commit/c5791fe3f7ea93fbb3ace8cafaa12db0cb870e26))
+
 # [1.0.0-beta.13](https://github.com/getmeli/meli/compare/v1.0.0-beta.12...v1.0.0-beta.13) (2021-01-07)
 
 
