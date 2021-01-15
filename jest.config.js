@@ -34,8 +34,8 @@ module.exports = {
       version: '0.1.0',
       buildDate: '2020-02-01T15:19:54.093Z',
       commitHash: 'babb2a47d9f3849ff0f697b2df7f44cc9f3b121f',
-      SENTRY_RELEASE: 'meli@test',
-      SENTRY_DSN: 'https://dsn.meli',
     },
+    SENTRY_RELEASE: 'meli@test',
+    SENTRY_DSN: 'https://dsn.meli',
   },
 };

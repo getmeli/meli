@@ -10,8 +10,6 @@ import { AppError } from '../errors/app-error';
 const logger = new Logger('meli.api:handleError');
 
 export function handleError(err: any, req: Request, res: Response, next: NextFunction): void {
-  logger.debug(err);
-
   if (res.headersSent) {
     logger.debug('Headers sent, calling next(err)');
     return next(err);
@@ -29,6 +27,12 @@ export function handleError(err: any, req: Request, res: Response, next: NextFun
   const status = err instanceof ValidationError ? 400 : err?.statusCode || 500;
   const error = err instanceof ValidationError ? err.details : err?.jsonResponse;
   const message = err instanceof AppError || err instanceof HttpError ? err.message : 'Internal error';
+
+  if (status === 500) {
+    logger.error(err);
+  } else {
+    logger.debug(err);
+  }
 
   const errorBody = {
     statusCode: status,

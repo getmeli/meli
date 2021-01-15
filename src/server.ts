@@ -4,7 +4,7 @@ import chalk from 'chalk';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-import express from 'express';
+import express, { Express } from 'express';
 import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
 import { createServer } from 'http';
@@ -47,7 +47,7 @@ if (env.MELI_SENTRY_ENABLED && SENTRY_DSN && SENTRY_RELEASE) {
   logger.info(`Sentry is ${chalk.red('disabled')}`);
 }
 
-export async function server(): Promise<any> {
+export async function server(): Promise<Express> {
   await AppDb.init();
   await migrate(AppDb.client, AppDb.db);
   setupDbIndexes().catch(err => logger.error('Could not setup indexes indexes', err));
@@ -112,4 +112,6 @@ export async function server(): Promise<any> {
   }
 
   io.listen(httpServer);
+
+  return app;
 }
