@@ -1,3 +1,10 @@
+# [1.0.0-beta.15](https://github.com/getmeli/meli/compare/v1.0.0-beta.14...v1.0.0-beta.15) (2021-01-15)
+
+
+### Bug Fixes
+
+* **create organization:** cannot create organization ([#184](https://github.com/getmeli/meli/issues/184)) ([#185](https://github.com/getmeli/meli/issues/185)) ([f8ccf52](https://github.com/getmeli/meli/commit/f8ccf525bcef539c55b81f83375a94ddf3d701ad))
+
 # [1.0.0-beta.14](https://github.com/getmeli/meli/compare/v1.0.0-beta.13...v1.0.0-beta.14) (2021-01-13)
 
 
