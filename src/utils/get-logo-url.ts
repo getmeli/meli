@@ -11,7 +11,7 @@ export function getLogoUrl(context: string, entity: EntityWithLogo, extraQueryPa
   const query = qs.stringify({
     ...extraQueryParams,
     // force cache refresh in frontend
-    id: entity.logo.id,
+    id: entity.logo?.id,
   });
   return entity.logo ? `${env.MELI_URL}/api/v1/${context}/${entity._id}/logo?${query}` : undefined;
 }
