@@ -47,7 +47,13 @@ if (env.MELI_SENTRY_ENABLED && SENTRY_DSN && SENTRY_RELEASE) {
   logger.info(`Sentry is ${chalk.red('disabled')}`);
 }
 
-export async function server(): Promise<{app: Express, httpServer: Server}> {
+export interface MeliServer {
+  app: Express;
+  httpServer: Server;
+  stop: () => void;
+}
+
+export async function server(): Promise<MeliServer> {
   await AppDb.init();
   await migrate(AppDb.client, AppDb.db);
   setupDbIndexes().catch(err => logger.error('Could not setup indexes indexes', err));
@@ -116,5 +122,9 @@ export async function server(): Promise<{app: Express, httpServer: Server}> {
   return {
     app,
     httpServer,
+    stop: () => {
+      logger.info('Stopping HTTP server');
+      httpServer.close();
+    },
   };
 }

@@ -3,9 +3,9 @@ import chalk from 'chalk';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-import express, { Express } from 'express';
+import express  from 'express';
 import helmet from 'helmet';
-import { createServer, Server } from 'http';
+import { createServer } from 'http';
 import morgan from 'morgan';
 import passport from 'passport';
 import { Logger } from '../src/commons/logger/logger';
@@ -13,6 +13,7 @@ import { handleError } from '../src/commons/utils/handle-error';
 import { STRIPE_SIGNATURE_HEADER } from '../src/constants';
 import { env } from '../src/env/env';
 import routes from '../src/routes';
+import { MeliServer } from '../src/server';
 import { io } from '../src/socket/io';
 import { authorizeReq } from '../src/auth/handlers/authorize-req';
 import { authorizeApiReq } from '../src/auth/handlers/authorize-api-req';
@@ -21,7 +22,7 @@ import '../src/auth/passport';
 
 const logger = new Logger('meli.api:test-server');
 
-export async function testServer(): Promise<{app: Express, httpServer: Server}> {
+export async function testServer(): Promise<MeliServer> {
   const app = express();
 
   // middlewares
@@ -74,5 +75,9 @@ export async function testServer(): Promise<{app: Express, httpServer: Server}> 
   return {
     app,
     httpServer,
+    stop: () => {
+      logger.info('Stopping HTTP server');
+      httpServer.close();
+    },
   };
 }
