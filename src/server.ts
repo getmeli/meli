@@ -7,7 +7,7 @@ import cors from 'cors';
 import express, { Express } from 'express';
 import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
-import { createServer } from 'http';
+import { createServer, Server } from 'http';
 import morgan from 'morgan';
 import passport from 'passport';
 import { Logger } from './commons/logger/logger';
@@ -47,7 +47,7 @@ if (env.MELI_SENTRY_ENABLED && SENTRY_DSN && SENTRY_RELEASE) {
   logger.info(`Sentry is ${chalk.red('disabled')}`);
 }
 
-export async function server(): Promise<Express> {
+export async function server(): Promise<{app: Express, httpServer: Server}> {
   await AppDb.init();
   await migrate(AppDb.client, AppDb.db);
   setupDbIndexes().catch(err => logger.error('Could not setup indexes indexes', err));
@@ -113,5 +113,8 @@ export async function server(): Promise<Express> {
 
   io.listen(httpServer);
 
-  return app;
+  return {
+    app,
+    httpServer,
+  };
 }

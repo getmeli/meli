@@ -1,3 +1,5 @@
+import { Express } from 'express';
+import { Server } from 'http';
 import { Collection } from 'mongodb';
 import { testEnv } from '../../../../tests/test-env';
 import { testServer } from '../../../../tests/test-server';
@@ -18,11 +20,13 @@ jest.mock('../../../env/env', () => ({ env: testEnv }));
 
 describe('createOrg', () => {
 
-  let app;
+  let app: Express;
+  let httpServer: Server;
 
   beforeEach(async () => {
-    // TODO spy server
-    app = await testServer();
+    const server = await testServer();
+    app = server.app;
+    httpServer = server.httpServer;
     jest.spyOn(_verifyToken, 'verifyToken').mockReturnValue(Promise.resolve({
       _id: 'authenticatedUserId',
       name: 'Authenticated User',
@@ -30,7 +34,10 @@ describe('createOrg', () => {
     } as User));
   });
 
-  afterEach(() => jest.restoreAllMocks());
+  afterEach(() => {
+    jest.restoreAllMocks();
+    httpServer.close();
+  });
 
   it('should create org', async () => {
     const orgsInsertOne = jest.fn();

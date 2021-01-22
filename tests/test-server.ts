@@ -5,7 +5,7 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express, { Express } from 'express';
 import helmet from 'helmet';
-import { createServer } from 'http';
+import { createServer, Server } from 'http';
 import morgan from 'morgan';
 import passport from 'passport';
 import { Logger } from '../src/commons/logger/logger';
@@ -21,7 +21,7 @@ import '../src/auth/passport';
 
 const logger = new Logger('meli.api:test-server');
 
-export async function testServer(): Promise<Express> {
+export async function testServer(): Promise<{app: Express, httpServer: Server}> {
   const app = express();
 
   // middlewares
@@ -71,5 +71,8 @@ export async function testServer(): Promise<Express> {
 
   io.listen(httpServer);
 
-  return app;
+  return {
+    app,
+    httpServer,
+  };
 }
