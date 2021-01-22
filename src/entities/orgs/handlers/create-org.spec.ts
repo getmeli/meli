@@ -1,4 +1,3 @@
-import { testEnv } from '../../../../tests/test-env';
 import { testServer } from '../../../../tests/test-server';
 import { spyOnCollection } from '../../../../tests/utils/spyon-collection';
 import { spyOnVerifyToken } from '../../../../tests/utils/spyon-verifytoken';
@@ -8,7 +7,7 @@ import { User } from '../../users/user';
 
 import request from 'supertest';
 
-jest.mock('../../../env/env', () => ({ env: testEnv }));
+// jest.mock('../../../env/env', () => ({ env: testEnv }));
 
 describe('createOrg', () => {
 
@@ -22,7 +21,7 @@ describe('createOrg', () => {
   afterEach(() => {
     jest.restoreAllMocks();
     meliServer.stop();
-    testEnv.MELI_MAX_ORGS = 0;
+    (process.env as any).MELI_MAX_ORGS = 0;
   });
 
 
@@ -83,7 +82,8 @@ describe('createOrg', () => {
   });
 
   it('should not create an organization if the cap has been reached', async () => {
-    testEnv.MELI_MAX_ORGS = 1;
+    //testEnv.MELI_MAX_ORGS = 1;
+    (process.env as any).MELI_MAX_ORGS = 1;
 
     const orgs = spyOnCollection('Orgs', {
       countDocuments: jest.fn().mockReturnValue(Promise.resolve(1)),

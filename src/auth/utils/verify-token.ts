@@ -11,8 +11,7 @@ const logger = new Logger('meli.api:verifyToken');
 
 export async function verifyToken(token: string): Promise<User> {
   let userId: string;
-  let
-    issuedAt: number;
+  let issuedAt: number;
   try {
     ({ userId, issuedAt } = await verify(token, env.MELI_JWT_SECRET, {}));
   } catch (e) {

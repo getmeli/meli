@@ -26,7 +26,7 @@ const validators = [
   })),
 ];
 
-const logger = new Logger('meli.api:addSite');
+const logger = new Logger('meli.api:createSite');
 
 async function handler(req: Request, res: Response): Promise<void> {
   const { teamId } = req.params;
@@ -64,7 +64,7 @@ async function handler(req: Request, res: Response): Promise<void> {
   res.json(serializeSite(site));
 }
 
-export const addSite = [
+export const createSite = [
   ...teamExistsGuard,
   ...canAdminTeamGuard,
   ...validators,

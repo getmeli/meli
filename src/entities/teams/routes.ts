@@ -6,7 +6,7 @@ import { addMember } from './handlers/members/add-member';
 import { deleteMember } from './handlers/members/delete-member';
 import { listTeamSites } from './handlers/sites/list-team-sites';
 import { listMembers } from './handlers/members/list-members';
-import { addSite } from './handlers/sites/add-site';
+import { createSite } from './handlers/sites/create-site';
 import { apiEndpoint } from '../api/api-endpoint';
 import { ApiScope } from '../api/api-scope';
 import { setTeamLogo } from './handlers/set-team-logo';
@@ -87,7 +87,7 @@ apiEndpoint({
   name: 'add site',
   method: 'post',
   path: '/api/v1/teams/:teamId/sites',
-  handler: addSite,
+  handler: createSite,
   auth: true,
   apiScope: ApiScope.team_sites_add,
   router,

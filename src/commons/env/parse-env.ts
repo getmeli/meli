@@ -1,5 +1,6 @@
 import { object, Schema } from 'joi';
 import { JOI_OPTIONS } from '../../constants';
+import { InvalidEnvironmentError } from '../errors/invalid-environment-error';
 import { Logger } from '../logger/logger';
 
 const logger = new Logger('meli.api:env.parse');
@@ -36,7 +37,7 @@ export function parseEnv(spec: EnvSpec, processEnv: any = process.env): any {
     const separator = '\n- ';
     const details = separator + error.details.map(d => d.message).join(separator);
     logger.error(`Invalid environment configuration:${details}`);
-    process.exit(1);
+    throw new InvalidEnvironmentError();
   }
 
   return value;

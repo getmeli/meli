@@ -1,15 +1,15 @@
 import request from 'supertest';
 import { testServer } from '../../../../../tests/test-server';
-import { jsonDate } from '../../../../../tests/utils/matchers';
 import { spyOnCollection } from '../../../../../tests/utils/spyon-collection';
 import { spyOnIsAdminOrOwner } from '../../../../../tests/utils/spyon-isadminorowner';
 import { AUTHENTICATED_USER_ID, spyOnVerifyToken } from '../../../../../tests/utils/spyon-verifytoken';
+import * as _configureSiteInCaddy from '../../../../caddy/configuration';
 import * as _emitEvent from '../../../../events/emit-event';
 import { MeliServer } from '../../../../server';
 
 // jest.mock('../../../../env/env', () => ({ env: testEnv }));
 
-describe('createTeam', () => {
+describe('createSite', () => {
 
   let meliServer: MeliServer;
 
@@ -24,78 +24,83 @@ describe('createTeam', () => {
   });
 
 
-  it('should create a team', async () => {
+  it('should create a site', async () => {
     const teams = spyOnCollection('Teams', {
-      insertOne: jest.fn(),
-    });
-    const orgs = spyOnCollection('Orgs', {
       countDocuments: jest.fn().mockReturnValue(Promise.resolve(1)),
-      findOne: jest.fn().mockReturnValue(Promise.resolve({})),
+      findOne: jest.fn().mockReturnValue(Promise.resolve({orgId: 'organization-id'})),
     });
     const members = spyOnCollection('Members', {
       countDocuments: jest.fn().mockReturnValue(Promise.resolve(1)),
     });
+    const sites = spyOnCollection('Sites', {
+      insertOne: jest.fn(),
+    });
+    const configureSiteOnCaddy = jest.spyOn(_configureSiteInCaddy, 'configureSiteInCaddy').mockReturnValue(Promise.resolve());
     jest.spyOn(_emitEvent, 'emitEvent').mockImplementation();
 
 
     const response = await request(meliServer.app)
-      .post('/api/v1/orgs/organization-id/teams')
+      .post('/api/v1/teams/team-id/sites')
       .set('Cookie', ['auth=testToken'])
       .send({
-        name: 'Test Team',
+        name: 'test-site'
       });
 
 
     expect(response.status).toEqual(200);
-    expect(response.body).toMatchObject({
+    expect(sites.insertOne).toHaveBeenCalledWith(expect.objectContaining({
       _id: expect.any(String),
-      color: expect.any(String),
-      createdAt: jsonDate(),
-      updatedAt: jsonDate(),
-      name: 'Test Team',
-    });
-    expect(teams.insertOne).toHaveBeenCalledWith(expect.objectContaining({
-      _id: expect.any(String),
-      orgId: 'organization-id',
+      teamId: 'team-id',
       color: expect.any(String),
       createdAt: expect.any(Date),
       updatedAt: expect.any(Date),
-      name: 'Test Team',
-      members: [],
+      name: 'test-site',
+      domains: [],
+      branches: [],
+      tokens: [{
+        _id: expect.any(String),
+        name: 'first token',
+        value: expect.any(String),
+        createdAt: expect.any(Date),
+      }],
       hooks: [],
     }));
+    expect(configureSiteOnCaddy).toHaveBeenCalled();
   });
 
 
-  it('should check that the organization exists', async () => {
-    const orgs = spyOnCollection('Orgs', {
+  it('should check if the team exists', async () => {
+    const teams = spyOnCollection('Teams', {
       countDocuments: jest.fn().mockReturnValue(Promise.resolve(0)),
     });
 
+
     const response = await request(meliServer.app)
-      .post('/api/v1/orgs/organization-id/teams')
+      .post('/api/v1/teams/team-id/sites')
       .set('Cookie', ['auth=testToken'])
       .send({
-        name: 'Test Team',
+        name: 'test-site'
       });
 
+
     expect(response.status).toEqual(404);
-    expect(orgs.countDocuments).toHaveBeenCalledWith({_id: 'organization-id'}, expect.anything());
+    expect(teams.countDocuments).toHaveBeenCalledWith({_id: 'team-id'}, expect.anything());
   });
 
 
-  it('should check that the user is owner or admin', async () => {
-    const orgs = spyOnCollection('Orgs', {
+  it('should check if the user can administrate the team', async () => {
+    const teams = spyOnCollection('Teams', {
       countDocuments: jest.fn().mockReturnValue(Promise.resolve(1)),
+      findOne: jest.fn().mockReturnValue(Promise.resolve({orgId: 'organization-id'})),
     });
     const isAdminOrOwner = spyOnIsAdminOrOwner(false);
 
 
     const response = await request(meliServer.app)
-      .post('/api/v1/orgs/organization-id/teams')
+      .post('/api/v1/teams/team-id/sites')
       .set('Cookie', ['auth=testToken'])
       .send({
-        name: 'Test Team',
+        name: 'test-site'
       });
 
 
@@ -104,22 +109,21 @@ describe('createTeam', () => {
   });
 
 
-  it('should validate the team', async () => {
-    const orgs = spyOnCollection('Orgs', {
+  it('should validate the site', async () => {
+    const teams = spyOnCollection('Teams', {
       countDocuments: jest.fn().mockReturnValue(Promise.resolve(1)),
+      findOne: jest.fn().mockReturnValue(Promise.resolve({orgId: 'organization-id'})),
     });
-    const members = spyOnCollection('Members', {
-      countDocuments: jest.fn().mockReturnValue(Promise.resolve(1)),
-    });
+    const isAdminOrOwner = spyOnIsAdminOrOwner(true);
+
 
     const response = await request(meliServer.app)
-      .post('/api/v1/orgs/organization-id/teams')
+      .post('/api/v1/teams/team-id/sites')
       .set('Cookie', ['auth=testToken'])
       .send({
-        name: '',
+        name: 'invalid site name'
       });
 
     expect(response.status).toEqual(400);
   });
-
 });
