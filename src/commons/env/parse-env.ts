@@ -11,12 +11,12 @@ export interface EnvVarSpec {
 
 export type EnvSpec<E = any> = { [varName in keyof E]: EnvVarSpec };
 
-export function parseEnv(spec: EnvSpec): any {
+export function parseEnv(spec: EnvSpec, processEnv: any = process.env): any {
   // create object from env
   const env = Object.fromEntries(Object
     .entries(spec)
     .map(([envVarName, { transform }]) => {
-      const rawValue = process.env[envVarName];
+      const rawValue = processEnv[envVarName];
       const value = transform ? transform(rawValue) : rawValue;
       return [envVarName, value];
     }));
