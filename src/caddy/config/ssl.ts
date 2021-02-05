@@ -97,3 +97,17 @@ export function generateServerTlsConfig(sites: Site[]): Partial<Server> {
     },
   };
 }
+
+export function generateBasicServerTlsConfig() {
+  const automaticSslDomains = [meliUrl.hostname, meliUiUrl.hostname].filter(unique);
+
+  return {
+    tls_connection_policies: [
+      {
+        match: {
+          sni: automaticSslDomains,
+        },
+      },
+    ],
+  };
+}

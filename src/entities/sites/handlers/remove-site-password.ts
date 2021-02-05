@@ -4,7 +4,7 @@ import { siteExistsGuard } from '../guards/site-exists-guard';
 import { emitEvent } from '../../../events/emit-event';
 import { EventType } from '../../../events/event-type';
 import { wrapAsyncMiddleware } from '../../../commons/utils/wrap-async-middleware';
-import { configureSiteInCaddy } from '../../../caddy/configuration';
+import { updateSiteInCaddy } from '../../../caddy/configuration';
 import { params } from '../../../commons/express-joi/params';
 import { canAdminSiteGuard } from '../guards/can-admin-site-guard';
 import { object } from 'joi';
@@ -38,7 +38,7 @@ async function handler(req: Request, res: Response): Promise<void> {
     _id: siteId,
   });
 
-  configureSiteInCaddy(site).catch(err => {
+  updateSiteInCaddy(site).catch(err => {
     logger.error(err);
   });
 

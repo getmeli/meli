@@ -30,7 +30,7 @@ async function handler(req: Request, res: Response): Promise<void> {
     _id: siteId,
   });
 
-  removeSiteFromCaddy(siteId).catch(err => {
+  removeSiteFromCaddy(site).catch(err => {
     logger.error(err);
   });
 

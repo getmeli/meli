@@ -11,7 +11,7 @@ import { branchExistsGuard } from '../../guards/branch-exists-guard';
 import { params } from '../../../../commons/express-joi/params';
 import { $id } from '../../../../utils/id';
 import { $branchName } from '../../branch';
-import { configureSiteInCaddy } from '../../../../caddy/configuration';
+import { updateSiteInCaddy } from '../../../../caddy/configuration';
 import { Logger } from '../../../../commons/logger/logger';
 
 const validators = [
@@ -47,7 +47,7 @@ async function handler(req: Request, res: Response): Promise<void> {
   });
   const branch = site.branches.find(brch => brch._id === branchId);
 
-  configureSiteInCaddy(site).catch(err => {
+  updateSiteInCaddy(site).catch(err => {
     logger.error(err);
   });
 

@@ -19,7 +19,7 @@ import { object, string } from 'joi';
 import { STRING_MAX_LENGTH } from '../../../../constants';
 import { body } from '../../../../commons/express-joi/body';
 import { getBranchUrl } from '../../get-branch-url';
-import { configureSiteInCaddy } from '../../../../caddy/configuration';
+import { updateSiteInCaddy } from '../../../../caddy/configuration';
 import { Logger } from '../../../../commons/logger/logger';
 import { slugify } from '../../../../utils/slugify';
 
@@ -123,7 +123,7 @@ async function handler(req: Request, res: Response): Promise<void> {
     site.mainBranch = mainBranch;
   }
 
-  configureSiteInCaddy(site).catch(err => {
+  updateSiteInCaddy(site).catch(err => {
     logger.error(err);
   });
 

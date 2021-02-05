@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { configureSiteInCaddy } from '../../../../caddy/configuration';
+import { addSiteToCaddy } from '../../../../caddy/configuration';
 import { body } from '../../../../commons/express-joi/body';
 import { wrapAsyncMiddleware } from '../../../../commons/utils/wrap-async-middleware';
 import { $siteName, Site, Sites } from '../../../sites/site';
@@ -50,7 +50,7 @@ async function handler(req: Request, res: Response): Promise<void> {
   };
 
   await Sites().insertOne(site);
-  configureSiteInCaddy(site).catch(err => {
+  addSiteToCaddy(site).catch(err => {
     logger.error(err);
   });
 

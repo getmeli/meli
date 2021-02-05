@@ -3,7 +3,7 @@ import { testServer } from '../../../../../tests/test-server';
 import { spyOnCollection } from '../../../../../tests/utils/spyon-collection';
 import { spyOnIsAdminOrOwner } from '../../../../../tests/utils/spyon-isadminorowner';
 import { AUTHENTICATED_USER_ID, spyOnVerifyToken } from '../../../../../tests/utils/spyon-verifytoken';
-import * as _configureSiteInCaddy from '../../../../caddy/configuration';
+import * as _addSiteToCaddy from '../../../../caddy/configuration';
 import * as _emitEvent from '../../../../events/emit-event';
 import { MeliServer } from '../../../../server';
 
@@ -35,7 +35,7 @@ describe('createSite', () => {
     const sites = spyOnCollection('Sites', {
       insertOne: jest.fn(),
     });
-    const configureSiteOnCaddy = jest.spyOn(_configureSiteInCaddy, 'configureSiteInCaddy').mockReturnValue(Promise.resolve());
+    const addSiteToCaddy = jest.spyOn(_addSiteToCaddy, 'addSiteToCaddy').mockReturnValue(Promise.resolve());
     jest.spyOn(_emitEvent, 'emitEvent').mockImplementation();
 
 
@@ -65,7 +65,7 @@ describe('createSite', () => {
       }],
       hooks: [],
     }));
-    expect(configureSiteOnCaddy).toHaveBeenCalled();
+    expect(addSiteToCaddy).toHaveBeenCalled();
   });
 
 

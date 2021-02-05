@@ -8,7 +8,7 @@ import { emitEvent } from '../../../events/emit-event';
 import { canAdminSiteGuard } from '../guards/can-admin-site-guard';
 import { EventType } from '../../../events/event-type';
 import { BadRequestError } from '../../../commons/errors/bad-request-error';
-import { configureSiteInCaddy } from '../../../caddy/configuration';
+import { updateSiteInCaddy } from '../../../caddy/configuration';
 import { Logger } from '../../../commons/logger/logger';
 
 async function branchExists(siteId: string, branchId: string): Promise<boolean> {
@@ -55,7 +55,7 @@ async function handler(req: Request, res: Response): Promise<void> {
     _id: siteId,
   });
 
-  configureSiteInCaddy(site).catch(err => {
+  updateSiteInCaddy(site).catch(err => {
     logger.error(err);
   });
 
