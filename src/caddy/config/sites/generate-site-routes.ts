@@ -4,7 +4,7 @@ import { getAuthHandler } from './get-auth-handler';
 import { getRedirectRoute } from './get-redirect-route';
 import { getBranchDirInCaddy } from '../../../entities/sites/get-site-dir';
 import { Branch } from '../../../entities/sites/branch';
-import { getSite404ErrorRoutes } from './get-site-404-error-routes';
+import { getBranch404ErrorRoute } from './get-branch-404-error-route';
 import { getSiteMainDomain } from '../../../entities/sites/get-site-main-domain';
 
 export function generateSiteRoutes(site: Site): any[] {
@@ -56,8 +56,8 @@ export function generateSiteRoutes(site: Site): any[] {
           ],
           errors: {
             routes: [
-              get401Handler(),
-              ...getSite404ErrorRoutes(site),
+              get401ErrorRoute(),
+              getBranch404ErrorRoute(site, branch),
             ],
           },
         }],
@@ -66,7 +66,7 @@ export function generateSiteRoutes(site: Site): any[] {
   });
 }
 
-function get401Handler() {
+function get401ErrorRoute() {
   return {
     match: [{
       expression: '{http.error.status_code} == 401',
