@@ -10,7 +10,7 @@ import { promises } from 'fs';
 import { canAdminSiteGuard } from '../../guards/can-admin-site-guard';
 import { EventType } from '../../../../events/event-type';
 import { branchExistsGuard } from '../../guards/branch-exists-guard';
-import { removeSiteBranchFromCaddy } from '../../../../caddy/configuration';
+import { removeBranchFromCaddy } from '../../../../caddy/configuration';
 import { Logger } from '../../../../commons/logger/logger';
 
 const validators = [
@@ -64,7 +64,7 @@ async function handler(req: Request, res: Response): Promise<void> {
     },
   });
 
-  removeSiteBranchFromCaddy(site, branch).catch(err => {
+  removeBranchFromCaddy(site, branch).catch(err => {
     logger.error(err);
   });
 

@@ -13,7 +13,7 @@ import { branchExistsGuard } from '../../guards/branch-exists-guard';
 import { params } from '../../../../commons/express-joi/params';
 import { serializeBranch } from '../../serialize-branch';
 import { linkBranchToRelease } from '../../link-branch-to-release';
-import { configureSiteBranchInCaddy } from '../../../../caddy/configuration';
+import { updateBranchInCaddy } from '../../../../caddy/configuration';
 import { Logger } from '../../../../commons/logger/logger';
 
 const validators = [
@@ -65,7 +65,7 @@ async function handler(req: Request, res: Response): Promise<void> {
 
   await linkBranchToRelease(site._id, branch._id, release);
 
-  configureSiteBranchInCaddy(site, branch).catch(err => {
+  updateBranchInCaddy(site, branch).catch(err => {
     logger.error(err);
   });
 

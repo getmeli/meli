@@ -9,7 +9,7 @@ import { EventType } from '../../../../events/event-type';
 import { branchExistsGuard } from '../../guards/branch-exists-guard';
 import { params } from '../../../../commons/express-joi/params';
 import { $id } from '../../../../utils/id';
-import { configureSiteBranchInCaddy } from '../../../../caddy/configuration';
+import { updateBranchInCaddy } from '../../../../caddy/configuration';
 import { ARRAY_MAX } from '../../../../constants';
 import { promises } from 'fs';
 import { getBranchFilePath, getBranchFilesDir } from '../../get-site-dir';
@@ -94,7 +94,7 @@ async function handler(req: Request, res: Response): Promise<void> {
   // do this in memory to avoid querying db again
   branch.redirects = redirects;
 
-  configureSiteBranchInCaddy(site, branch).catch(err => {
+  updateBranchInCaddy(site, branch).catch(err => {
     logger.error(err);
   });
 

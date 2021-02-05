@@ -11,7 +11,7 @@ import { canAdminSiteGuard } from '../../guards/can-admin-site-guard';
 import { EventType } from '../../../../events/event-type';
 import { $branchName, Branch } from '../../branch';
 import { uuid } from '../../../../utils/uuid';
-import { configureSiteBranchInCaddy } from '../../../../caddy/configuration';
+import { addBranchToCaddy } from '../../../../caddy/configuration';
 import { Logger } from '../../../../commons/logger/logger';
 import { slugify } from '../../../../utils/slugify';
 import { linkBranchToRelease } from '../../link-branch-to-release';
@@ -76,7 +76,7 @@ async function handler(req: Request, res: Response): Promise<void> {
     _id: siteId,
   });
 
-  configureSiteBranchInCaddy(site, branch).catch(err => {
+  addBranchToCaddy(site, branch).catch(err => {
     logger.error(err);
   });
 

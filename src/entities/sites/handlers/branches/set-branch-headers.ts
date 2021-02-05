@@ -9,7 +9,7 @@ import { body } from '../../../../commons/express-joi/body';
 import { canAdminSiteGuard } from '../../guards/can-admin-site-guard';
 import { Sites } from '../../site';
 import { serializeBranch } from '../../serialize-branch';
-import { configureSiteBranchInCaddy } from '../../../../caddy/configuration';
+import { updateBranchInCaddy } from '../../../../caddy/configuration';
 import { Logger } from '../../../../commons/logger/logger';
 import { $header } from '../../header';
 
@@ -41,7 +41,7 @@ async function handler(req: Request, res: Response): Promise<void> {
   });
   const branch = site.branches.find(brch => brch._id === branchId);
 
-  configureSiteBranchInCaddy(site, branch).catch(err => {
+  updateBranchInCaddy(site, branch).catch(err => {
     logger.error(err);
   });
 
