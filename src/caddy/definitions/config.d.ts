@@ -1,4 +1,3 @@
-
 declare namespace Caddy {
 
   type TODO = unknown;
@@ -9,6 +8,7 @@ declare namespace Caddy {
   type Duration = number | string;
 
   interface Root {
+    '@id'?: string;
     admin?: Admin;
     logging?: Logging;
     storage?: Storage;
@@ -16,16 +16,13 @@ declare namespace Caddy {
   }
 
   interface HttpServerTlsConnectionPolicy {
+    '@id'?: string;
     match?: TlsHandshakeMatch;
   }
 
   interface TlsHandshakeMatch {
-    sni?: string;
+    '@id'?: string;
+    sni?: string[];
   }
-
-
-
-
-
 
 }

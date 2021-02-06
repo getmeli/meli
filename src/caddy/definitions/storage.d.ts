@@ -1,10 +1,9 @@
 declare namespace Caddy {
-  interface Storage {
-    file_system?: Storages.FileSystem;
-  }
+  type Storage = Storages.FileSystem;
 
   namespace Storages {
     interface FileSystem {
+      '@id'?: string;
       module: 'file_system';
       root?: string;
     }

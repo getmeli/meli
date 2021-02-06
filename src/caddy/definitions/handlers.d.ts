@@ -12,11 +12,14 @@ declare namespace Caddy {
         | Handlers.RequestBody
         | Handlers.ReverseProxy
         | Handlers.Rewrite
+        | Handlers.StaticResponse
         | Handlers.Subroute
-        | Handlers.Templates;
+        | Handlers.Templates
+        | Handlers.Vars;
 
       namespace Handlers {
         interface Acme {
+          '@id'?: string;
           handler: 'acme_server';
           ca?: string;
           host?: string;
@@ -24,8 +27,10 @@ declare namespace Caddy {
         }
 
         interface Authentication {
+          '@id'?: string;
           handler: 'authentication';
           providers: {
+            '@id'?: string;
             http_basic: Authentication.Provider;
           };
         }
@@ -35,6 +40,7 @@ declare namespace Caddy {
 
           namespace Providers {
             interface HttpBasic {
+              '@id'?: string;
               hash?: HttpBasic.HashAlgorithm;
               accounts?: HttpBasic.Account[];
               realm?: string;
@@ -43,6 +49,7 @@ declare namespace Caddy {
 
             namespace HttpBasic {
               interface Account {
+                '@id'?: string;
                 username?: string;
                 password?: string;
                 salt?: string;
@@ -52,10 +59,12 @@ declare namespace Caddy {
 
               namespace HashAlgorithms {
                 interface Bcrypt {
+                  '@id'?: string;
                   algorithm: 'bcrypt';
                 }
 
                 interface Scrypt {
+                  '@id'?: string;
                   algorithm: 'scrypt';
                   N?: number;
                   r?: number;
@@ -68,6 +77,7 @@ declare namespace Caddy {
         }
 
         interface Encode {
+          '@id'?: string;
           handler: 'encode';
           encoding?: Encode.Encoding;
           minimum_length?: number;
@@ -78,6 +88,7 @@ declare namespace Caddy {
 
           namespace Encodings {
             interface Gzip {
+              '@id'?: string;
               level?: number;
             }
             type Zstd = EMPTY_OBJECT;
@@ -85,17 +96,20 @@ declare namespace Caddy {
         }
 
         interface Error {
+          '@id'?: string;
           handler: 'error';
           error?: string;
           status_code?: number | string;
         }
 
         interface FileServer {
+          '@id'?: string;
           handler: 'file_server';
           root?: string;
           hide?: string[];
           index_names?: string[];
           browse?: {
+            '@id'?: string;
             template_file?: string;
           };
           canonical_uris?: boolean;
@@ -103,6 +117,7 @@ declare namespace Caddy {
         }
 
         interface Headers {
+          '@id'?: string;
           handler: 'headers';
           request?: Headers.Request;
           response?: Headers.Response;
@@ -110,6 +125,7 @@ declare namespace Caddy {
 
         namespace Headers {
           interface Request {
+            '@id'?: string;
             add?: { [header: string]: string[] };
             set?: { [header: string]: string[] };
             delete?: string[];
@@ -117,11 +133,13 @@ declare namespace Caddy {
           }
 
           interface Response {
+            '@id'?: string;
             add?: { [header: string]: string[] };
             set?: { [header: string]: string[] };
             delete?: string[];
             replace?: { [header: string]: Headers.Replacement[] };
             require?: {
+              '@id'?: string;
               status_code?: number[];
               headers?: { [header: string]: string[] };
             };
@@ -129,6 +147,7 @@ declare namespace Caddy {
           }
 
           interface Replacement {
+            '@id'?: string;
             search?: string;
             search_regexp?: string;
             replace?: string;
@@ -136,9 +155,11 @@ declare namespace Caddy {
         }
 
         interface Push {
+          '@id'?: string;
           handler: 'push';
           resources?: Push.Resource[];
           headers?: {
+            '@id'?: string;
             add?: { [header: string]: string[] };
             set?: { [header: string]: string[] };
             delete?: string[];
@@ -148,17 +169,20 @@ declare namespace Caddy {
 
         namespace Push {
           interface Resource {
+            '@id'?: string;
             method?: 'GET' | 'HEAD';
             target?: string;
           }
         }
 
         interface RequestBody {
+          '@id'?: string;
           handler: 'request_body';
           max_size?: number;
         }
 
         interface ReverseProxy {
+          '@id'?: string;
           handler: 'reverse_proxy';
           transport?: ReverseProxy.Transport;
           circuit_breaker?: UNDOCUMENTED;
@@ -167,6 +191,7 @@ declare namespace Caddy {
           upstreams?: ReverseProxy.Upstream[];
           flush_interval?: Duration;
           headers?: {
+            '@id'?: string;
             request?: Headers.Request;
             response?: Headers.Response;
           };
@@ -174,15 +199,16 @@ declare namespace Caddy {
           handle_response?: ReverseProxy.HandleResponse;
         }
 
-
         namespace ReverseProxy {
           interface Transport {
+            '@id'?: string;
             fastcgi?: Transports.Fastcgi;
             http?: Transports.Http;
           }
 
           namespace Transports {
             interface Fastcgi {
+              '@id'?: string;
               protocol: 'fastcgi';
               root?: string;
               split_path?: string[];
@@ -193,8 +219,12 @@ declare namespace Caddy {
             }
 
             interface Http {
+              '@id'?: string;
               protocol: 'http';
-              resolver?: { addresses: string[] };
+              resolver?: {
+                '@id'?: string;
+                addresses: string[];
+              };
               tls?: HttpTransport.Tls;
               keep_alive?: HttpTransport.KeepAlive;
               compression?: boolean;
@@ -211,6 +241,7 @@ declare namespace Caddy {
 
             namespace HttpTransport {
               interface Tls {
+                '@id'?: string;
                 root_ca_pool?: string[];
                 root_ca_pem_files?: string[];
                 client_certificate_file?: string[];
@@ -222,6 +253,7 @@ declare namespace Caddy {
               }
 
               interface KeepAlive {
+                '@id'?: string;
                 enabled?: boolean;
                 probe_interval?: Duration;
                 max_idle_conns?: number;
@@ -232,6 +264,7 @@ declare namespace Caddy {
           }
 
           interface LoadBalancing {
+            '@id'?: string;
             selection_policy?: LoadBalancing.SelectionPolicy;
             try_duration?: Duration;
             try_interval?: Duration;
@@ -250,36 +283,46 @@ declare namespace Caddy {
 
             namespace SelectionPolicies {
               interface First {
+                '@id'?: string;
                 policy: 'first';
               }
               interface Header {
+                '@id'?: string;
                 policy: 'header';
                 field?: string;
               }
               interface IpHash {
+                '@id'?: string;
                 policy: 'ip_hash';
               }
               interface LeastConn {
+                '@id'?: string;
                 policy: 'least_conn';
               }
               interface Random {
+                '@id'?: string;
                 policy: 'random';
               }
               interface RandomChoose {
+                '@id'?: string;
                 policy: 'random_choose';
                 choose?: number;
               }
               interface RoundRobin {
+                '@id'?: string;
                 policy: 'round_robin';
               }
               interface UriHash {
+                '@id'?: string;
                 policy: 'uri_hash';
               }
             }
           }
 
           interface HealthChecks {
+            '@id'?: string;
             active?: {
+              '@id'?: string;
               path?: string;
               port?: number;
               headers?: { [header: string]: string };
@@ -290,6 +333,7 @@ declare namespace Caddy {
               expect_body?: string;
             };
             passive?: {
+              '@id'?: string;
               fail_duration?: Duration;
               max_fails?: number;
               unhealthy_request_count?: number;
@@ -299,13 +343,16 @@ declare namespace Caddy {
           }
 
           interface Upstream {
+            '@id'?: string;
             dial?: string;
             lookup_srv?: string;
             max_requests?: number;
           }
 
           interface HandleResponse {
+            '@id'?: string;
             match: {
+              '@id'?: string;
               status_code?: number[];
               headers?: { [header: string]: string };
             };
@@ -315,29 +362,51 @@ declare namespace Caddy {
         }
 
         interface Rewrite {
+          '@id'?: string;
           handler: 'rewrite';
           method?: string;
           url?: string;
           strip_path_prefix?: string;
           strip_path_suffix?: string;
           uri_substring?: {
+            '@id'?: string;
             find?: string;
             replace?: string;
             limit?: number;
           }[];
         }
 
+        interface StaticResponse {
+          '@id'?: string;
+          handler: 'static_response';
+          status_code?: number | string;
+          headers?: { [name: string]: string };
+          body?: string;
+          close?: boolean;
+        }
+
         interface Subroute {
+          '@id'?: string;
           handler: 'subroute';
           routes?: Route[];
-          errors?: { routes?: Route[] };
+          errors?: {
+            '@id'?: string;
+            routes?: Route[];
+          };
         }
 
         interface Templates {
+          '@id'?: string;
           handler: 'templates';
           file_root?: string;
           mime_types?: string[];
           delimiters?: string[];
+        }
+
+        interface Vars {
+          '@id'?: string;
+          handler: 'vars';
+          [name: string]: string;
         }
       }
 
