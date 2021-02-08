@@ -1,6 +1,6 @@
 import { env } from '../env/env';
 import { getErrorRoutes } from './config/get-error-routes';
-import { CADDY_CONFIG_SITES_ID } from './config/ids';
+import { CADDY_CONFIG_MANUAL_CERTIFICATES_ID, CADDY_CONFIG_SITES_ID, CADDY_CONFIG_TLS_ID } from './config/ids';
 import { generateBasicServerTlsConfig } from './config/ssl';
 import { uiRoute } from './config/ui-route';
 import { apiRoute } from './config/api-route';
@@ -48,19 +48,23 @@ export async function generateBasicConfig(): Promise<any> {
         },
       },
       tls: sslEnabled ? {
+        '@id': CADDY_CONFIG_TLS_ID,
         automation: {
-          policies: [
-            ...(!env.MELI_ACME_SERVER ? [] : [{
+          policies: [{
+            on_demand: true,
+            ...(!env.MELI_ACME_SERVER ? {
               issuer: {
                 module: 'acme',
                 ca: env.MELI_ACME_SERVER,
                 trusted_roots_pem_files: env.MELI_ACME_CA_PATH ? [env.MELI_ACME_CA_PATH] : undefined,
               },
-              on_demand: true,
-            }]),
-          ],
+            } : {}),
+          }],
         },
-        certificates: [],
+        certificates: {
+          '@id': CADDY_CONFIG_MANUAL_CERTIFICATES_ID,
+          load_pem: [],
+        },
       } : undefined,
     },
   };
