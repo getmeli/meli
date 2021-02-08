@@ -1,10 +1,11 @@
 import { env } from '../../env/env';
 import { getReverseProxyDial } from '../utils/get-reverse-proxy-dial';
 import { URL } from 'url';
+import Route = Caddy.Http.Route;
 
 const melihost = new URL(env.MELI_URL);
 
-export const apiRoute = {
+export const apiRoute: Route = {
   group: 'api',
   match: [{
     host: [melihost.hostname],

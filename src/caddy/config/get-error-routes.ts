@@ -1,4 +1,6 @@
-export function getErrorRoutes() {
+import Server = Caddy.Http.Server;
+
+export function getErrorRoutes(): Server['errors'] {
   return {
     routes: [
       {

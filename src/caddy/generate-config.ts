@@ -13,7 +13,7 @@ const logger = new Logger('meli.api.caddy:generateConfig');
 
 const sitesUrl = new URL(env.MELI_SITES_URL);
 
-export async function generateConfig(): Promise<any> {
+export async function generateConfig(): Promise<Caddy.Root> {
   const sites = await Sites().find().toArray();
 
   const sslEnabled = sitesUrl.protocol === 'https:' && env.MELI_HTTPS_AUTO;
@@ -55,7 +55,7 @@ export async function generateConfig(): Promise<any> {
           policies: [
             ...(!env.MELI_ACME_SERVER ? [] : [{
               issuer: {
-                module: 'acme',
+                module: 'acme' as const,
                 ca: env.MELI_ACME_SERVER,
                 trusted_roots_pem_files: env.MELI_ACME_CA_PATH ? [env.MELI_ACME_CA_PATH] : undefined,
               },
