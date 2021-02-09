@@ -1,10 +1,9 @@
 FROM node:12-alpine
 
 COPY ./build /app/
+COPY ./migrations /app/migrations
 COPY ./node_modules /app/node_modules
 COPY ./migrate-mongo-config.js /app/
-
-RUN mkdir -p /app/migrations
 
 WORKDIR /app
 
