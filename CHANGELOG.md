@@ -1,3 +1,11 @@
+# [1.0.0-beta.16](https://github.com/getmeli/meli/compare/v1.0.0-beta.15...v1.0.0-beta.16) (2021-02-09)
+
+
+### Bug Fixes
+
+* migrations dir empty in docker image ([b7e1d91](https://github.com/getmeli/meli/commit/b7e1d91970a89c1ac2aa52ed9bd18dd50cf3eaab))
+* set only one 404 route per branch ([e9177dc](https://github.com/getmeli/meli/commit/e9177dc5fe3129c921d4b5f427494dedc749ef82))
+
 # [1.0.0-beta.15](https://github.com/getmeli/meli/compare/v1.0.0-beta.14...v1.0.0-beta.15) (2021-01-15)
 
 
