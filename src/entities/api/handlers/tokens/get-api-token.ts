@@ -4,7 +4,7 @@ import { wrapAsyncMiddleware } from '../../../../commons/utils/wrap-async-middle
 import { params } from '../../../../commons/express-joi/params';
 import { ApiTokens } from '../../api-token';
 import { apiTokenExistsGuard } from '../../guards/api-token-exists-guard';
-import { canAdminApiToken } from '../../guards/can-admin-api-token';
+import { canAdminApiTokenGuard } from '../../guards/can-admin-api-token-guard';
 import { serializeApiToken } from '../../serialize-api-token';
 
 const validators = [
@@ -25,7 +25,7 @@ async function handler(req: Request, res: Response): Promise<void> {
 
 export const getApiToken = [
   ...apiTokenExistsGuard,
-  ...canAdminApiToken,
+  ...canAdminApiTokenGuard,
   ...validators,
   wrapAsyncMiddleware(handler),
 ];

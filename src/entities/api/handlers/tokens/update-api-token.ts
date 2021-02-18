@@ -9,7 +9,7 @@ import { params } from '../../../../commons/express-joi/params';
 import { object } from 'joi';
 import { $id } from '../../../../utils/id';
 import { apiTokenExistsGuard } from '../../guards/api-token-exists-guard';
-import { canAdminApiToken } from '../../guards/can-admin-api-token';
+import { canAdminApiTokenGuard } from '../../guards/can-admin-api-token-guard';
 import { EventType } from '../../../../events/event-type';
 
 const validators = [
@@ -49,7 +49,7 @@ async function handler(req: Request, res: Response): Promise<void> {
 
 export const updateApiToken = [
   ...apiTokenExistsGuard,
-  ...canAdminApiToken,
+  ...canAdminApiTokenGuard,
   ...validators,
   wrapAsyncMiddleware(handler),
 ];
