@@ -1,6 +1,4 @@
-import {
-  NextFunction, Request, Response,
-} from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { ApiScope } from '../../entities/api/api-scope';
 import { ForbiddenError } from '../../commons/errors/forbidden-error';
 

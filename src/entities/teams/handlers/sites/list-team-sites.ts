@@ -40,9 +40,7 @@ async function handler(req: Request, res: Response): Promise<void> {
     ),
   };
 
-  const count = await Sites()
-    .find(dbQuery)
-    .count();
+  const count = await Sites().countDocuments(dbQuery);
 
   const sites = await Sites()
     .find(dbQuery)

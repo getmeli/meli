@@ -80,9 +80,10 @@ describe('createTeam', () => {
       });
 
     expect(response.status).toEqual(404);
-    expect(orgs.countDocuments).toHaveBeenCalledWith({_id: 'organization-id'}, expect.anything());
+    expect(orgs.countDocuments).toHaveBeenCalledWith({ _id: 'organization-id' }, expect.anything());
   });
 
+  // TODO only check that guard has been called + unit test guard
 
   it('should check that the user is owner or admin', async () => {
     const orgs = spyOnCollection('Orgs', {

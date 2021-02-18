@@ -8,8 +8,6 @@ import { params } from '../../../../commons/express-joi/params';
 import { Orgs } from '../../org';
 import { inviteExistsGuard } from '../../guards/invite-exists-guard';
 import { isAdminOrOwnerGuard } from '../../../../auth/guards/is-admin-or-owner-guard';
-import { apiGuard } from '../../../../auth/guards/api-guard';
-import { ApiScope } from '../../../api/api-scope';
 import { EventType } from '../../../../events/event-type';
 
 const validators = [
@@ -48,7 +46,6 @@ async function handler(req: Request, res: Response): Promise<void> {
 
 export const deleteInvite = [
   authGuard,
-  apiGuard(ApiScope.invite_delete),
   ...inviteExistsGuard,
   ...isAdminOrOwnerGuard,
   ...validators,

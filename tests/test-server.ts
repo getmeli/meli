@@ -10,7 +10,6 @@ import morgan from 'morgan';
 import passport from 'passport';
 import { Logger } from '../src/commons/logger/logger';
 import { handleError } from '../src/commons/utils/handle-error';
-import { STRIPE_SIGNATURE_HEADER } from '../src/constants';
 import { env } from '../src/env/env';
 import routes from '../src/routes';
 import { MeliServer } from '../src/server';
@@ -30,21 +29,7 @@ export async function testServer(): Promise<MeliServer> {
   app.use(urlencoded({
     extended: true,
   }));
-  app.use(json({
-    verify: (req: any, res, buf) => {
-      // store raw body for signature verification
-      if (
-        Buffer.isBuffer(buf)
-        && (
-          // important to store rawBody for Stripe signature verification
-          req.header(STRIPE_SIGNATURE_HEADER)
-        )
-      ) {
-        req.rawBody = buf;
-      }
-      return true;
-    },
-  }));
+  app.use(json());
   app.use(cookieParser());
   app.use(compression());
   app.use(helmet());
