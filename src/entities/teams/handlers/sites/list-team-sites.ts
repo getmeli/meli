@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { getPagination, pageResponse, pageValidators } from '../../../../utils/getPagination';
+import { getPagination, pageResponse, pageValidators } from '../../../../utils/get-pagination';
 import { wrapAsyncMiddleware } from '../../../../commons/utils/wrap-async-middleware';
 import { object, string } from 'joi';
 import { query } from '../../../../commons/express-joi/query';
@@ -15,11 +15,9 @@ const validators = [
   params(object({
     teamId: string().optional(),
   })),
-  query({
-    search: {
-      $schema: string().optional().min(3).max(255),
-    },
-  }),
+  query(object({
+    search: string().optional().min(3).max(255),
+  })),
 ];
 
 async function handler(req: Request, res: Response): Promise<void> {

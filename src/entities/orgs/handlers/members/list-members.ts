@@ -4,9 +4,7 @@ import { $id } from '../../../../utils/id';
 import { serializeMember } from '../../../members/serialize-member';
 import { params } from '../../../../commons/express-joi/params';
 import { object } from 'joi';
-import {
-  getPagination, pageResponse, pageValidators,
-} from '../../../../utils/getPagination';
+import { getPagination, pageResponse, pageValidators } from '../../../../utils/get-pagination';
 import { FilterQuery } from 'mongodb';
 import { Member, Members } from '../../../members/member';
 import { Orgs } from '../../org';

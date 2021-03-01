@@ -4,9 +4,7 @@ import { params } from '../../../../commons/express-joi/params';
 import { query } from '../../../../commons/express-joi/query';
 import { wrapAsyncMiddleware } from '../../../../commons/utils/wrap-async-middleware';
 import { Release, Releases } from '../../../releases/release';
-import {
-  getPagination, pageResponse, pageValidators,
-} from '../../../../utils/getPagination';
+import { getPagination, pageResponse, pageValidators } from '../../../../utils/get-pagination';
 import { siteExistsGuard } from '../../guards/site-exists-guard';
 import { FilterQuery } from 'mongodb';
 import { $id } from '../../../../utils/id';
@@ -19,14 +17,10 @@ const validators = [
   params(object({
     siteId: $id,
   })),
-  query({
-    search: {
-      $schema: string().optional().min(3).max(255),
-    },
-    branch: {
-      $schema: string().optional().max(STRING_MAX_LENGTH),
-    },
-  }),
+  query(object({
+    search: string().optional().min(3).max(255),
+    branch: string().optional().max(STRING_MAX_LENGTH),
+  })),
 ];
 
 async function handler(req: Request, res: Response): Promise<void> {

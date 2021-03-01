@@ -1,20 +1,13 @@
 import { Request } from 'express';
 import { query } from '../commons/express-joi/query';
-import { stringToInt } from '../commons/env/transformers';
-import { number } from 'joi';
+import { number, object } from 'joi';
 
 export const pageValidators = [
-  query({
-    size: {
-      transform: stringToInt(),
-      $schema: number().optional().default(10).min(0)
-        .max(100),
-    },
-    page: {
-      transform: stringToInt(),
-      $schema: number().optional().default(0).min(0),
-    },
-  }),
+  query(object({
+    size: number().optional().default(10).min(0)
+      .max(100),
+    page: number().optional().default(0).min(0),
+  })),
 ];
 
 export function getPagination(req: Request): { size: number, offset: number } {

@@ -1,6 +1,4 @@
-import {
-  NextFunction, Request, Response,
-} from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { object, string } from 'joi';
 import { NotFoundError } from '../../../commons/errors/not-found-error';
 import { params } from '../../../commons/express-joi/params';

@@ -13,5 +13,5 @@ export const canAdminSiteGuard = [
     const user = getUser(req);
     const { siteId } = req.params;
     return canAdminSite(siteId, user._id);
-  }, 'Cannot delete team'),
+  }, 'Cannot delete site'),
 ];
