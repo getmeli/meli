@@ -6,9 +6,7 @@ import { $id } from '../../../../utils/id';
 import { canAdminSiteGuard } from '../../guards/can-admin-site-guard';
 import { siteHookExistsGuard } from '../../guards/site-hook-exists-guard';
 import { HookDeliveries } from '../../../../hooks/hook-delivery';
-import {
-  getPagination, pageResponse, pageValidators,
-} from '../../../../utils/getPagination';
+import { getPagination, pageResponse, pageValidators } from '../../../../utils/get-pagination';
 import { serializeHookDelivery } from '../../../../hooks/serialize-hook-delivery';
 import { FilterQuery } from 'mongodb';
 import { Hook } from '../../../../hooks/hook';

@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { Site, Sites } from '../../../sites/site';
 import { object, string } from 'joi';
 import { wrapAsyncMiddleware } from '../../../../commons/utils/wrap-async-middleware';
-import { getPagination, pageResponse, pageValidators } from '../../../../utils/getPagination';
+import { getPagination, pageResponse, pageValidators } from '../../../../utils/get-pagination';
 import { FilterQuery } from 'mongodb';
 import { query } from '../../../../commons/express-joi/query';
 import { Teams } from '../../../teams/team';
@@ -20,12 +20,10 @@ const validators = [
   params(object({
     orgId: $id,
   })),
-  query({
-    search: {
-      $schema: string().optional().empty('').min(3)
-        .max(255),
-    },
-  }),
+  query(object({
+    search: string().optional().empty('').min(3)
+      .max(255),
+  })),
 ];
 
 async function handler(req: Request, res: Response): Promise<void> {

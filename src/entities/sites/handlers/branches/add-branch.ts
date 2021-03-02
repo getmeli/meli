@@ -7,7 +7,6 @@ import { body } from '../../../../commons/express-joi/body';
 import { emitEvent } from '../../../../events/emit-event';
 import { serializeBranch } from '../../serialize-branch';
 import { Releases } from '../../../releases/release';
-import { AppError } from '../../../../commons/errors/app-error';
 import { canAdminSiteGuard } from '../../guards/can-admin-site-guard';
 import { EventType } from '../../../../events/event-type';
 import { $branchName, Branch } from '../../branch';
@@ -16,6 +15,7 @@ import { configureSiteBranchInCaddy } from '../../../../caddy/configuration';
 import { Logger } from '../../../../commons/logger/logger';
 import { slugify } from '../../../../utils/slugify';
 import { linkBranchToRelease } from '../../link-branch-to-release';
+import { NotFoundError } from '../../../../commons/errors/not-found-error';
 
 const validators = [
   body(object({
@@ -30,6 +30,7 @@ async function handler(req: Request, res: Response): Promise<void> {
   const { siteId } = req.params;
   const { releaseId } = req.body;
 
+  // check release exists
   if (releaseId) {
     const count = await Releases().countDocuments({
       _id: releaseId,
@@ -39,7 +40,7 @@ async function handler(req: Request, res: Response): Promise<void> {
     });
 
     if (count === 0) {
-      throw new AppError('Release not found');
+      throw new NotFoundError('Release not found');
     }
   }
 

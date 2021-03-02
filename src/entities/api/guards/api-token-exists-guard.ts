@@ -1,8 +1,6 @@
 import { params } from '../../../commons/express-joi/params';
 import { object } from 'joi';
-import {
-  NextFunction, Request, Response,
-} from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { NotFoundError } from '../../../commons/errors/not-found-error';
 import { $id } from '../../../utils/id';
 import { ApiTokens } from '../api-token';

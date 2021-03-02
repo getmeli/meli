@@ -5,7 +5,7 @@ import { guard } from '../../../commons/express/guard';
 import { getUser } from '../../../auth/utils/get-user';
 import { ApiTokens } from '../api-token';
 
-export const canAdminApiToken = [
+export const canAdminApiTokenGuard = [
   params(object({
     apiTokenId: $id,
   })),
@@ -13,6 +13,9 @@ export const canAdminApiToken = [
     async req => {
       const { apiTokenId } = req.params;
       const user = getUser(req);
+      if (!user) {
+        throw new Error('User not found');
+      }
       const count = await ApiTokens().countDocuments({
         _id: apiTokenId,
         userId: user._id,

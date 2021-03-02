@@ -6,7 +6,7 @@ import { params } from '../../../../commons/express-joi/params';
 import { getUser } from '../../../../auth/utils/get-user';
 import { ApiTokens } from '../../api-token';
 import { apiTokenExistsGuard } from '../../guards/api-token-exists-guard';
-import { canAdminApiToken } from '../../guards/can-admin-api-token';
+import { canAdminApiTokenGuard } from '../../guards/can-admin-api-token-guard';
 import { EventType } from '../../../../events/event-type';
 
 const validators = [
@@ -37,7 +37,7 @@ async function handler(req: Request, res: Response): Promise<void> {
 
 export const deleteApiToken = [
   ...apiTokenExistsGuard,
-  ...canAdminApiToken,
+  ...canAdminApiTokenGuard,
   ...validators,
   wrapAsyncMiddleware(handler),
 ];

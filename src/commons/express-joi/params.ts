@@ -1,7 +1,5 @@
 import { AnySchema } from 'joi';
-import {
-  NextFunction, Request, Response,
-} from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { JOI_OPTIONS } from '../../constants';
 import { BadRequestError } from '../errors/bad-request-error';
 

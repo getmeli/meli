@@ -12,7 +12,6 @@ import morgan from 'morgan';
 import passport from 'passport';
 import { Logger } from './commons/logger/logger';
 import { handleError } from './commons/utils/handle-error';
-import { STRIPE_SIGNATURE_HEADER } from './constants';
 import { AppDb } from './db/db';
 import { migrate } from './db/migrate/migrate';
 import { setupDbIndexes } from './db/setup-db-indexes';
@@ -65,28 +64,13 @@ export async function server(): Promise<MeliServer> {
   app.use(Sentry.Handlers.requestHandler()); // must be first
   app.use(rateLimit({
     windowMs: env.MELI_RATE_LIMIT_WINDOW,
-    // limit each IP to $max requests per $windowMs
     max: env.MELI_RATE_LIMIT_MAX_PER_WINDOW,
   }));
   app.use(morgan('tiny'));
   app.use(urlencoded({
     extended: true,
   }));
-  app.use(json({
-    verify: (req: any, res, buf) => {
-      // store raw body for signature verification
-      if (
-        Buffer.isBuffer(buf)
-        && (
-          // important to store rawBody for Stripe signature verification
-          req.header(STRIPE_SIGNATURE_HEADER)
-        )
-      ) {
-        req.rawBody = buf;
-      }
-      return true;
-    },
-  }));
+  app.use(json());
   app.use(cookieParser());
   app.use(compression());
   app.use(helmet());
