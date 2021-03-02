@@ -61,15 +61,15 @@ async function handler(req: Request, res: Response): Promise<void> {
   if (releaseId) {
     const release = await Releases().findOne({ _id: releaseId });
     await linkBranchToRelease(siteId, branch._id, release);
-  }
 
-  await Releases().updateOne({
-    _id: releaseId,
-  }, {
-    $addToSet: {
-      branches: branch._id,
-    },
-  });
+    await Releases().updateOne({
+      _id: releaseId,
+    }, {
+      $addToSet: {
+        branches: branch._id,
+      },
+    });
+  }
 
   const site = await Sites().findOne({
     _id: siteId,
