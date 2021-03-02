@@ -5,6 +5,7 @@ import * as _Orgs from '../../src/entities/orgs/org';
 import * as _Sites from '../../src/entities/sites/site';
 import * as _Teams from '../../src/entities/teams/team';
 import * as _Users from '../../src/entities/users/user';
+import * as _Releases from '../../src/entities/releases/release';
 
 // In order to be able to use spyOnCollection with a collection, you must import its module here and add it
 // to the TEST_COLLECTIONS constant.
@@ -16,6 +17,7 @@ const TEST_COLLECTIONS = {
   Sites: _Sites,
   Teams: _Teams,
   Users: _Users,
+  Releases: _Releases,
 };
 
 type TestCollections = typeof TEST_COLLECTIONS;

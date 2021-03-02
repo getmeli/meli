@@ -16,6 +16,11 @@ module.exports = {
     'json',
     'ts',
   ],
+  // allows absolute imports from src
+  // moduleDirectories: [
+  //   'node_modules',
+  //   'src',
+  // ],
   collectCoverageFrom: [
     'src/**/*.ts',
     'src/**/*.tsx',
