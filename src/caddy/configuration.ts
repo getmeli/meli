@@ -6,7 +6,12 @@ import { env } from '../env/env';
 import { sequential } from '../utils/promises-utils';
 import { CADDY_CONFIG_SITES_ID, getBranchCaddyConfigId } from './config/ids';
 import { generateBranchRoute, generateSiteRoutes } from './config/sites/generate-site-routes';
-import { CADDY_AXIOS_DEFAULT_CONFIG, deleteCaddyConfigById, updateCaddyConfigById } from './config/caddy-helpers';
+import {
+  CADDY_AXIOS_DEFAULT_CONFIG,
+  deleteCaddyConfigById,
+  postCaddyConfigById,
+  putCaddyConfigById
+} from './config/caddy-helpers';
 import { IdNotFoundError } from './errors/IdNotFoundError';
 import { generateBasicConfig } from './generate-basic-config';
 
@@ -34,8 +39,12 @@ export async function configureBasicCaddyConfig() {
   await axios.post(`${env.MELI_CADDY_ADMIN_API_URL}/load`, config, CADDY_AXIOS_DEFAULT_CONFIG);
 }
 
-export async function addSiteToCaddy(site: Site, config?: any) {
-  await updateCaddyConfigById(CADDY_CONFIG_SITES_ID, '/routes/...', config || generateSiteRoutes(site));
+export async function addSiteToCaddy(site: Site, config?: Caddy.Http.Route[]) {
+  // await postCaddyConfigById(CADDY_CONFIG_SITES_ID, '/routes/0', config || generateSiteRoutes(site));
+  const routes = config || generateSiteRoutes(site);
+  await Promise.all(routes
+    .map(route => putCaddyConfigById(CADDY_CONFIG_SITES_ID, '/routes/2', route))); // 2 because API and UI are first
+  // TODO optimize insertion? what about a global route for all sites and sites as subroutes ? or deleting fallback route to add id after?
   logger.debug(`Added site "${site._id}" to Caddy`);
 }
 
@@ -52,7 +61,7 @@ export async function removeSiteFromCaddy(site: Site) {
 }
 
 export async function addBranchToCaddy(site: Site, branch: Branch, config?: any) {
-  await updateCaddyConfigById(CADDY_CONFIG_SITES_ID, '/routes/0', config || generateBranchRoute(site, branch));
+  await putCaddyConfigById(CADDY_CONFIG_SITES_ID, '/routes/2', config || generateBranchRoute(site, branch));
   logger.debug(`Added branch "${site._id}:${branch.slug}" to Caddy`);
 }
 
@@ -60,7 +69,7 @@ export async function updateBranchInCaddy(site: Site, branch: Branch) {
   const config = generateBranchRoute(site, branch);
 
   try {
-    await updateCaddyConfigById(getBranchCaddyConfigId(site, branch), '/', config);
+    await postCaddyConfigById(getBranchCaddyConfigId(site, branch), '/', config);
     logger.debug(`Updated branch "${site._id}:${branch._id}" in Caddy`);
   } catch (err) {
     if (err instanceof IdNotFoundError) {

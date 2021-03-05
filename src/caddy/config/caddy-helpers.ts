@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { loggers } from 'winston';
 import { Logger } from '../../commons/logger/logger';
 import { env } from '../../env/env';
 import { IdNotFoundError } from '../errors/IdNotFoundError';
@@ -10,9 +9,17 @@ export const CADDY_AXIOS_DEFAULT_CONFIG = {
   timeout: env.MELI_HTTP_TIMEOUT,
 };
 
-export async function updateCaddyConfigById(id: string, path: string, config: any) {
+export async function postCaddyConfigById(id: string, path: string, config: any) {
   try {
     await axios.post(`${env.MELI_CADDY_ADMIN_API_URL}/id/${id}${path || '/'}`, config, CADDY_AXIOS_DEFAULT_CONFIG);
+  } catch (err) {
+    mapIdNotFoundError(err, id);
+  }
+}
+
+export async function putCaddyConfigById(id: string, path: string, config: any) {
+  try {
+    await axios.put(`${env.MELI_CADDY_ADMIN_API_URL}/id/${id}${path || '/'}`, config, CADDY_AXIOS_DEFAULT_CONFIG);
   } catch (err) {
     mapIdNotFoundError(err, id);
   }

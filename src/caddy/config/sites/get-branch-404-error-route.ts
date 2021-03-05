@@ -6,7 +6,7 @@ import { getBranchDirInCaddy } from '../../../entities/sites/get-site-dir';
 
 const sitesUrl = new URL(env.MELI_SITES_URL);
 
-export function getBranch404ErrorRoute(site: Site, branch: Branch) {
+export function getBranch404ErrorRoute(site: Site, branch: Branch): Caddy.Http.Route {
   const hosts = [
     `${branch.slug}.${site.name}.${sitesUrl.hostname}`,
     ...site.domains.map(domain => `${branch.slug}.${domain.name}`),
@@ -19,7 +19,7 @@ export function getBranch404ErrorRoute(site: Site, branch: Branch) {
   return getErrorRoute(hosts, branchDir);
 }
 
-function getErrorRoute(hosts: string[], rootDir: string) {
+function getErrorRoute(hosts: string[], rootDir: string): Caddy.Http.Route {
   return {
     match: [{
       expression: '{http.error.status_code} == 404',

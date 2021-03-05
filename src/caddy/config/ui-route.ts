@@ -2,14 +2,14 @@ import { env } from '../../env/env';
 import { getReverseProxyDial } from '../utils/get-reverse-proxy-dial';
 import { URL } from 'url';
 
-const meliuihost = new URL(env.MELI_UI_URL);
+const meliUiHost = new URL(env.MELI_UI_URL);
 
-function serveUiStatically() {
+function serveUiStatically(): Caddy.Http.Route {
   return {
     group: 'ui',
     match: [
       {
-        host: [meliuihost.hostname],
+        host: [meliUiHost.hostname],
         file: {
           root: env.MELI_UI_DIR,
           try_files: [
@@ -32,12 +32,12 @@ function serveUiStatically() {
   };
 }
 
-function reverseProxyUi() {
+function reverseProxyUi(): Caddy.Http.Route {
   return {
     group: 'ui',
     match: [
       {
-        host: [meliuihost.hostname],
+        host: [meliUiHost.hostname],
         path: ['/*'],
       },
     ],

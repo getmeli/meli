@@ -2,7 +2,7 @@ import { scryptOptions } from '../../../entities/sites/hash-password';
 import { base64Encode } from '../../../commons/utils/base64';
 import { Password } from '../../../entities/sites/password';
 
-export function getAuthHandler(password: Password) {
+export function getAuthHandler(password: Password): Caddy.Http.Route.Handlers.Authentication {
   return {
     // https://caddyserver.com/docs/json/apps/http/servers/routes/handle/authentication/
     handler: 'authentication',

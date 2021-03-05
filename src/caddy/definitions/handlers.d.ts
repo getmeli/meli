@@ -200,11 +200,8 @@ declare namespace Caddy {
         }
 
         namespace ReverseProxy {
-          interface Transport {
-            '@id'?: string;
-            fastcgi?: Transports.Fastcgi;
-            http?: Transports.Http;
-          }
+          type Transport = Transports.Fastcgi
+            | Transports.Http;
 
           namespace Transports {
             interface Fastcgi {
@@ -365,7 +362,7 @@ declare namespace Caddy {
           '@id'?: string;
           handler: 'rewrite';
           method?: string;
-          url?: string;
+          uri?: string;
           strip_path_prefix?: string;
           strip_path_suffix?: string;
           uri_substring?: {

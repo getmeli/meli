@@ -5,31 +5,31 @@ import { getBranchDirInCaddy, getBranchFileRedirectDirInCaddy, getFileRedirectFi
 import { URL } from 'url';
 import { getReverseProxyDial } from '../../utils/get-reverse-proxy-dial';
 
-export function getRedirectRoute(site: Site, branch: Branch, redirect: Redirect) {
+export function getRedirectRoute(site: Site, branch: Branch, redirect: Redirect): Caddy.Http.Route {
   return {
     match: [{
       // https://caddyserver.com/docs/json/apps/http/servers/routes/match/path/
       path: [redirect.path],
     }],
-    handle: getRedirectHandler(site, branch, redirect),
+    handle: getRedirectHandlers(site, branch, redirect),
   };
 }
 
-function getRedirectHandler(site: Site, branch: Branch, redirect: Redirect) {
+function getRedirectHandlers(site: Site, branch: Branch, redirect: Redirect): Caddy.Http.Route.Handler[] {
   switch (redirect.type) {
     case RedirectType.file:
       return getFileRedirectHandler(site, branch, redirect);
     case RedirectType.reverse_proxy:
       return getReverseProxyRedirectPath(site, branch, redirect);
     default:
-      return {
+      return [{
         handler: 'file_server',
         root: getBranchDirInCaddy(site._id, branch._id),
-      };
+      }];
   }
 }
 
-function getFileRedirectHandler(site: Site, branch: Branch, redirect: Redirect<FileRedirectConfig>) {
+function getFileRedirectHandler(site: Site, branch: Branch, redirect: Redirect<FileRedirectConfig>): Caddy.Http.Route.Handler[] {
   return [
     {
       // https://caddyserver.com/docs/json/apps/http/servers/routes/handle/rewrite/
@@ -43,11 +43,15 @@ function getFileRedirectHandler(site: Site, branch: Branch, redirect: Redirect<F
   ];
 }
 
-function getReverseProxyRedirectPath(site: Site, branch: Branch, redirect: Redirect<ReverseProxyRedirectConfig>) {
+function getReverseProxyRedirectPath(
+  site: Site,
+  branch: Branch,
+  redirect: Redirect<ReverseProxyRedirectConfig>,
+): Caddy.Http.Route.Handler[] {
   return [
     ...(!redirect.config.stripPathPrefix ? [] : [{
       // https://caddyserver.com/docs/json/apps/http/servers/routes/handle/rewrite/
-      handler: 'rewrite',
+      handler: 'rewrite' as const,
       strip_path_prefix: redirect.config.stripPathPrefix,
     }]),
     {

@@ -8,11 +8,11 @@ import { Branch } from '../../../entities/sites/branch';
 import { getBranch404ErrorRoute } from './get-branch-404-error-route';
 import { getSiteMainDomain } from '../../../entities/sites/get-site-main-domain';
 
-export function generateSiteRoutes(site: Site): any[] {
+export function generateSiteRoutes(site: Site): Caddy.Http.Route[] {
   return !site.branches ? [] : site.branches.map(branch => generateBranchRoute(site, branch));
 }
 
-export function generateBranchRoute(site: Site, branch: Branch) {
+export function generateBranchRoute(site: Site, branch: Branch): Caddy.Http.Route {
   const domains: SiteDomain[] = [
     // custom domains
     ...(site.domains || []),
@@ -68,7 +68,7 @@ export function generateBranchRoute(site: Site, branch: Branch) {
   };
 }
 
-function get401ErrorRoute() {
+function get401ErrorRoute(): Caddy.Http.Route {
   return {
     match: [{
       expression: '{http.error.status_code} == 401',
@@ -90,7 +90,7 @@ const gzipHandler = {
   },
 };
 
-function getPrimaryRoute(site: Site, branch: Branch) {
+function getPrimaryRoute(site: Site, branch: Branch): Caddy.Http.Route {
   const branchDirInCaddy = getBranchDirInCaddy(site._id, branch._id);
 
   const fileHandler = {
