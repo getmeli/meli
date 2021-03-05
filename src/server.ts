@@ -42,8 +42,6 @@ if (env.MELI_SENTRY_ENABLED && SENTRY_DSN && SENTRY_RELEASE) {
     dsn: SENTRY_DSN,
     release: SENTRY_RELEASE,
   });
-} else {
-  logger.info(`Sentry is ${chalk.red('disabled')}`);
 }
 
 export interface MeliServer {
