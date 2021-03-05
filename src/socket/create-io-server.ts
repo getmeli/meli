@@ -12,9 +12,10 @@ export function createIoServer(httpServer: HttpServer) {
      * https://github.com/socketio/socket.io/issues/3259#issuecomment-474523271
      */
     pingTimeout: 60000,
+    allowEIO3: true,
     cors: {
       origin: env.MELI_UI_URL,
-      methods: ['GET', 'POST'],
+      // methods: ['GET', 'POST'],
       credentials: true,
     },
   });
