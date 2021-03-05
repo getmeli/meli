@@ -9,6 +9,7 @@ describe('body', () => {
 
   let app: Express;
   let server: Server;
+  let b: any;
 
   beforeEach(async () => {
     app = express();
@@ -18,7 +19,10 @@ describe('body', () => {
       body(object({
         test: number().required(),
       })),
-      (req, res) => res.status(200).send(),
+      (req, res) => {
+        b = req.body;
+        res.status(200).send();
+      },
     );
     server = app.listen(3000);
   });
@@ -36,6 +40,7 @@ describe('body', () => {
       });
 
     expect(response.status).toEqual(200);
+    expect(b.test).toEqual(1);
   });
 
   it('should throw error when token not found', async () => {

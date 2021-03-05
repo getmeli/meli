@@ -1,13 +1,14 @@
 import request from 'supertest';
 import express, { Express } from 'express';
 import { Server } from 'http';
-import { query } from './query';
 import { number, object } from 'joi';
+import { query } from './query';
 
 describe('query', () => {
 
   let app: Express;
   let server: Server;
+  let q: any;
 
   beforeEach(async () => {
     app = express();
@@ -16,7 +17,10 @@ describe('query', () => {
       query(object({
         test: number().required(),
       })),
-      (req, res) => res.status(200).send(),
+      (req, res) => {
+        q = req.query;
+        return res.status(200).send();
+      },
     );
     server = app.listen(3000);
   });
@@ -35,6 +39,7 @@ describe('query', () => {
       .send();
 
     expect(response.status).toEqual(200);
+    expect(q.test).toEqual(1);
   });
 
   it('should throw error when token not found', async () => {

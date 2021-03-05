@@ -7,7 +7,11 @@ export function params($schema: AnySchema) {
   return (req: Request, res: Response, next: NextFunction) => {
     $schema
       .validateAsync(req.params, JOI_OPTIONS)
-      .then(() => next(undefined))
+      .then(value => {
+        // req.params = value;
+        // console.log(req.params, value);
+        next();
+      })
       .catch(err => {
         next(new BadRequestError('Invalid params', err.details));
       });

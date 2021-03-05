@@ -7,7 +7,10 @@ export function query($schema: AnySchema) {
   return (req: Request, res: Response, next: NextFunction) => {
     $schema
       .validateAsync(req.query, JOI_OPTIONS)
-      .then(() => next(undefined))
+      .then(value => {
+        req.query = value;
+        next(undefined);
+      })
       .catch(err => {
         next(new BadRequestError('Invalid query', err.details));
       });
