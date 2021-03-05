@@ -5,6 +5,7 @@ import { ManualSslConfiguration, Site, SiteDomain } from '../../entities/sites/s
 import { env } from '../../env/env';
 import { unique } from '../../utils/arrays-utils';
 import HttpServerTlsConnectionPolicy = Caddy.HttpServerTlsConnectionPolicy;
+import Certificates = Caddy.Tls.Certificates;
 
 const meliUrl = new URL(env.MELI_URL);
 const meliUiUrl = new URL(env.MELI_UI_URL);
@@ -16,8 +17,8 @@ function getDomainWithBranches(domain: SiteDomain, site: Site) {
   ];
 }
 
-export function generateManualCertificatesConfig(sites: Site[]) {
-  const pemConfigs = sites.flatMap(site => (
+export function generateManualCertificatesConfig(sites: Site[]): Certificates {
+  const pemConfigs: Certificates.LoadPemEntry[] = sites.flatMap(site => (
     site.domains
       .filter(domain => domain?.sslConfiguration?.type === 'manual')
       .map(domain => ({
@@ -46,7 +47,7 @@ export function generateSiteManualCertificateConfigurations(site: Site) {
     }));
 }
 
-export function generateServerTlsConfig(sites: Site[]) {
+export function generateServerTlsConfig(sites: Site[]): Partial<Caddy.Http.Server> {
   const customDomains = sites.flatMap(site => (
     site.domains.map(domain => ({
       site,
@@ -106,7 +107,7 @@ export function generateServerTlsConfig(sites: Site[]) {
   };
 }
 
-export function generateBasicServerTlsConfig() {
+export function generateBasicServerTlsConfig(): Partial<Caddy.Http.Server> {
   const automaticSslDomains = [meliUrl.hostname, meliUiUrl.hostname].filter(unique);
 
   return {

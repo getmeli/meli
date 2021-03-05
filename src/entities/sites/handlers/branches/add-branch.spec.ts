@@ -2,7 +2,8 @@ import request from 'supertest';
 import { testServer } from '../../../../../tests/test-server';
 import { spyOnCollection } from '../../../../../tests/utils/spyon-collection';
 import { spyOnVerifyToken } from '../../../../../tests/utils/spyon-verifytoken';
-import * as _configureSiteBranchInCaddy from '../../../../caddy/configuration';
+import { addBranchToCaddy } from '../../../../caddy/configuration';
+import * as _addBranchToCaddy from '../../../../caddy/configuration';
 import * as _emitEvent from '../../../../events/emit-event';
 import { MeliServer } from '../../../../server';
 import * as _linkBranchToRelease from '../../link-branch-to-release';
@@ -44,7 +45,7 @@ describe('addBranch', () => {
       findOne: jest.fn().mockReturnValue(Promise.resolve(site)),
     });
     const configureSiteBranchInCaddy = jest
-      .spyOn(_configureSiteBranchInCaddy, 'configureSiteBranchInCaddy')
+      .spyOn(_addBranchToCaddy, 'addBranchToCaddy')
       .mockImplementation(() => Promise.resolve());
     const emitEvent = jest.spyOn(_emitEvent, 'emitEvent').mockImplementation();
 
@@ -90,7 +91,7 @@ describe('addBranch', () => {
     });
     const linkBranchToRelease = jest.spyOn(_linkBranchToRelease, 'linkBranchToRelease').mockImplementation();
     jest
-      .spyOn(_configureSiteBranchInCaddy, 'configureSiteBranchInCaddy')
+      .spyOn(_addBranchToCaddy, 'addBranchToCaddy')
       .mockImplementation(() => Promise.resolve());
     jest.spyOn(_emitEvent, 'emitEvent').mockImplementation();
 

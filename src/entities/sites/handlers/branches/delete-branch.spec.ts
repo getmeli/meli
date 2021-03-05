@@ -2,8 +2,8 @@ import request from 'supertest';
 import { testServer } from '../../../../../tests/test-server';
 import { spyOnCollection } from '../../../../../tests/utils/spyon-collection';
 import { spyOnVerifyToken } from '../../../../../tests/utils/spyon-verifytoken';
-import * as _removeSiteBranchFromCaddy from '../../../../caddy/configuration';
-import { removeSiteBranchFromCaddy } from '../../../../caddy/configuration';
+import * as _removeBranchFromCaddy from '../../../../caddy/configuration';
+import { removeBranchFromCaddy } from '../../../../caddy/configuration';
 import * as _emitEvent from '../../../../events/emit-event';
 import { MeliServer } from '../../../../server';
 import { EventType } from '../../../../events/event-type';
@@ -48,7 +48,7 @@ describe('addBranch', () => {
       updateOne: jest.fn(),
     });
     const emitEvent = jest.spyOn(_emitEvent, 'emitEvent').mockImplementation();
-    jest.spyOn(_removeSiteBranchFromCaddy, 'removeSiteBranchFromCaddy').mockReturnValue(Promise.resolve());
+    jest.spyOn(_removeBranchFromCaddy, 'removeBranchFromCaddy').mockReturnValue(Promise.resolve());
 
     const response = await request(meliServer.app)
       .delete('/api/v1/sites/siteId/branches/branchId')
@@ -78,7 +78,7 @@ describe('addBranch', () => {
         },
       }],
     ]);
-    expect(removeSiteBranchFromCaddy).toHaveBeenCalledWith(site, branch);
+    expect(removeBranchFromCaddy).toHaveBeenCalledWith(site, branch);
     expect(emitEvent).toHaveBeenCalledWith(EventType.site_branch_deleted, expect.objectContaining({ site, branch }));
   });
 
