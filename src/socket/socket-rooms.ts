@@ -1,6 +1,5 @@
 import { Socket } from 'socket.io';
 import chalk from 'chalk';
-import { io } from './io';
 import { Logger } from '../commons/logger/logger';
 import { User, userSocketRoom } from '../entities/users/user';
 import { siteSocketRoom } from '../entities/sites/site';
@@ -12,6 +11,7 @@ import { canReadTeam } from '../entities/teams/guards/can-read-team';
 import { orgSocketRoom } from '../entities/orgs/org';
 import { isOrgMember } from '../entities/orgs/guards/is-org-member';
 import { canAdminSite } from '../entities/sites/guards/can-admin-site';
+import { Io } from './create-io-server';
 
 const logger = new Logger('meli.api:rooms');
 
@@ -50,80 +50,82 @@ function joinRoom(
     .catch(err => logger.error(err));
 }
 
-io.on('connection', socket => {
-  logger.debug(`Socket connected ${socket.id}`);
+export function initSocketRooms() {
+  Io.server.on('connection', socket => {
+    logger.debug(`Socket connected ${socket.id}`);
 
-  socket.on('join.user', userId => {
-    joinRoom(
-      socket,
-      userId,
-      userSocketRoom,
-      user => user._id === userId,
-    );
+    socket.on('join.user', userId => {
+      joinRoom(
+        socket,
+        userId,
+        userSocketRoom,
+        user => user._id === userId,
+      );
+    });
+
+    // TODO make sure user has the right to leave the room (not another use trying to make another use leave a room)
+    // socket.on('leave.user', userId => {
+    //   socket.leave(userSocketRoom(userId));
+    // });
+
+    socket.on('join.site', siteId => {
+      joinRoom(
+        socket,
+        siteId,
+        siteSocketRoom,
+        user => canAdminSite(siteId, user._id),
+      );
+    });
+
+    // TODO make sure user has the right to leave the room (not another use trying to make another use leave a room)
+    // socket.on('leave.site', userId => {
+    //   socket.leave(siteSocketRoom(userId));
+    // });
+
+    socket.on('join.release', releaseId => {
+      joinRoom(
+        socket,
+        releaseId,
+        releaseSocketRoom,
+        user => canAdminRelease(releaseId, user._id),
+      );
+    });
+
+    // TODO make sure user has the right to leave the room (not another use trying to make another use leave a room)
+    // socket.on('leave.release', userId => {
+    //   socket.leave(siteSocketRoom(userId));
+    // });
+
+    socket.on('join.team', teamId => {
+      joinRoom(
+        socket,
+        teamId,
+        teamSocketRoom,
+        user => canReadTeam(teamId, user._id),
+      );
+    });
+
+    // TODO make sure user has the right to leave the room (not another use trying to make another use leave a room)
+    // socket.on('leave.release', userId => {
+    //   socket.leave(siteSocketRoom(userId));
+    // });
+
+    socket.on('join.org', orgId => {
+      joinRoom(
+        socket,
+        orgId,
+        orgSocketRoom,
+        user => isOrgMember(user._id, orgId),
+      );
+    });
+
+    // TODO make sure user has the right to leave the room (not another use trying to make another use leave a room)
+    // socket.on('leave.release', userId => {
+    //   socket.leave(siteSocketRoom(userId));
+    // });
+
+    // TODO org.invites
+    // TODO org.members
+    // TODO team.members
   });
-
-  // TODO make sure user has the right to leave the room (not another use trying to make another use leave a room)
-  // socket.on('leave.user', userId => {
-  //   socket.leave(userSocketRoom(userId));
-  // });
-
-  socket.on('join.site', siteId => {
-    joinRoom(
-      socket,
-      siteId,
-      siteSocketRoom,
-      user => canAdminSite(siteId, user._id),
-    );
-  });
-
-  // TODO make sure user has the right to leave the room (not another use trying to make another use leave a room)
-  // socket.on('leave.site', userId => {
-  //   socket.leave(siteSocketRoom(userId));
-  // });
-
-  socket.on('join.release', releaseId => {
-    joinRoom(
-      socket,
-      releaseId,
-      releaseSocketRoom,
-      user => canAdminRelease(releaseId, user._id),
-    );
-  });
-
-  // TODO make sure user has the right to leave the room (not another use trying to make another use leave a room)
-  // socket.on('leave.release', userId => {
-  //   socket.leave(siteSocketRoom(userId));
-  // });
-
-  socket.on('join.team', teamId => {
-    joinRoom(
-      socket,
-      teamId,
-      teamSocketRoom,
-      user => canReadTeam(teamId, user._id),
-    );
-  });
-
-  // TODO make sure user has the right to leave the room (not another use trying to make another use leave a room)
-  // socket.on('leave.release', userId => {
-  //   socket.leave(siteSocketRoom(userId));
-  // });
-
-  socket.on('join.org', orgId => {
-    joinRoom(
-      socket,
-      orgId,
-      orgSocketRoom,
-      user => isOrgMember(user._id, orgId),
-    );
-  });
-
-  // TODO make sure user has the right to leave the room (not another use trying to make another use leave a room)
-  // socket.on('leave.release', userId => {
-  //   socket.leave(siteSocketRoom(userId));
-  // });
-
-  // TODO org.invites
-  // TODO org.members
-  // TODO team.members
-});
+}

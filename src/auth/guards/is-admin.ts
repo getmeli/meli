@@ -1,4 +1,4 @@
-import { Members } from '../../members/member';
+import { Members } from '../../entities/members/member';
 
 export async function isAdmin(userId: string, orgId: string) {
   const count = await Members().countDocuments({

@@ -10,7 +10,7 @@ import { serializeMember } from '../serialize-member';
 import { params } from '../../../commons/express-joi/params';
 import { BadRequestError } from '../../../commons/errors/bad-request-error';
 import { Members } from '../member';
-import { isOwner } from '../../users/guards/is-owner';
+import { isOwner } from '../../../auth/guards/is-owner';
 import { EventType } from '../../../events/event-type';
 import { canAdminMemberGuard } from '../guards/can-admin-member-guard';
 

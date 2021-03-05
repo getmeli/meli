@@ -6,7 +6,7 @@ import { emitEvent } from '../../../events/emit-event';
 import { params } from '../../../commons/express-joi/params';
 import { memberExistsGuard } from '../guards/member-exists-guard';
 import { Teams } from '../../teams/team';
-import { isOwner } from '../../users/guards/is-owner';
+import { isOwner } from '../../../auth/guards/is-owner';
 import { ForbiddenError } from '../../../commons/errors/forbidden-error';
 import { Members } from '../member';
 import { EventType } from '../../../events/event-type';

@@ -13,11 +13,11 @@ import { handleError } from '../src/commons/utils/handle-error';
 import { env } from '../src/env/env';
 import routes from '../src/routes';
 import { MeliServer } from '../src/server';
-import { io } from '../src/socket/io';
 import { authorizeReq } from '../src/auth/handlers/authorize-req';
 import { authorizeApiReq } from '../src/auth/handlers/authorize-api-req';
-import '../src/socket/socket-rooms';
 import '../src/auth/passport';
+import { createIoServer } from '../src/socket/create-io-server';
+import { initSocketRooms } from '../src/socket/socket-rooms';
 
 const logger = new Logger('meli.api:test-server');
 
@@ -50,12 +50,13 @@ export async function testServer(): Promise<MeliServer> {
   app.use(handleError);
 
   const httpServer = createServer(app);
+  createIoServer(httpServer);
+
+  initSocketRooms();
 
   httpServer.listen(env.MELI_PORT, () => {
     logger.info(`Listening on port ${chalk.bold.green(env.MELI_PORT)}`);
   });
-
-  io.listen(httpServer);
 
   return {
     app,

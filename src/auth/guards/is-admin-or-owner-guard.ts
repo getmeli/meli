@@ -9,9 +9,12 @@ export const isAdminOrOwnerGuard = [
   params(object({
     orgId: $id,
   })),
-  guard(req => {
+  guard(async req => {
     const user = getUser(req);
     const { orgId } = req.params;
+    if (!user) {
+      return false;
+    }
     return isAdminOrOwner(user._id, orgId);
   }, 'Cannot admin team members'),
 ];

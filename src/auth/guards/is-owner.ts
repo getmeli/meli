@@ -1,4 +1,4 @@
-import { Orgs } from '../../orgs/org';
+import { Orgs } from '../../entities/orgs/org';
 
 export async function isOwner(userId: string, orgId: string) {
   const count = await Orgs().countDocuments({

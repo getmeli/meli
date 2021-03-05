@@ -1,4 +1,4 @@
-import * as _isOwner from '../../src/entities/users/guards/is-owner';
+import * as _isOwner from '../../src/auth/guards/is-owner';
 
 export function spyOnIsOwner(value: boolean, requiredUserId?: string, requiredOrgId?: string) {
   return jest.spyOn(_isOwner, 'isOwner').mockImplementation(async (userId, orgId) => {

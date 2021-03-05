@@ -3,7 +3,7 @@ import { guard } from '../../../commons/express/guard';
 import { params } from '../../../commons/express-joi/params';
 import { object } from 'joi';
 import { $id } from '../../../utils/id';
-import { isOwner } from '../../users/guards/is-owner';
+import { isOwner } from '../../../auth/guards/is-owner';
 
 export const canWriteOrgGuard = [
   params(object({

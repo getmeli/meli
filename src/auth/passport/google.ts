@@ -24,7 +24,6 @@ if (
       clientID: env.MELI_GOOGLE_CLIENT_ID,
       clientSecret: env.MELI_GOOGLE_CLIENT_SECRET,
       callbackURL: oauthCallbackUrl,
-
     },
     (accessToken, refreshToken, profile, cb) => {
       cb(undefined, <PassportUser>{

@@ -53,9 +53,7 @@ describe('addBranch', () => {
     const response = await request(meliServer.app)
       .delete('/api/v1/sites/siteId/branches/branchId')
       .set('Cookie', ['auth=testToken'])
-      .send({
-        name: 'test-branch',
-      });
+      .send();
 
     expect(response.status).toEqual(204);
     expect(branchExistsGuard[0]).toHaveBeenCalled();
@@ -82,6 +80,14 @@ describe('addBranch', () => {
     ]);
     expect(removeSiteBranchFromCaddy).toHaveBeenCalledWith(site, branch);
     expect(emitEvent).toHaveBeenCalledWith(EventType.site_branch_deleted, expect.objectContaining({ site, branch }));
+  });
+
+  it('should throw error when use not authenticated', async () => {
+    const response = await request(meliServer.app)
+      .delete('/api/v1/sites/siteId/branches/branchId')
+      .send();
+
+    expect(response.status).toEqual(401);
   });
 
 });

@@ -18,12 +18,12 @@ import { setupDbIndexes } from './db/setup-db-indexes';
 import { env } from './env/env';
 import { setupPrometheus } from './prometheus/setup-prometheus';
 import routes from './routes';
-import { io } from './socket/io';
 import { configureCaddy } from './caddy/configuration';
 import { authorizeReq } from './auth/handlers/authorize-req';
 import { authorizeApiReq } from './auth/handlers/authorize-api-req';
-import './socket/socket-rooms';
 import './auth/passport';
+import { createIoServer } from './socket/create-io-server';
+import { initSocketRooms } from './socket/socket-rooms';
 
 const logger = new Logger('meli.api:server');
 
@@ -92,6 +92,9 @@ export async function server(): Promise<MeliServer> {
   app.use(handleError);
 
   const httpServer = createServer(app);
+  createIoServer(httpServer);
+
+  initSocketRooms();
 
   httpServer.listen(env.MELI_PORT, () => {
     logger.info(`Listening on port ${chalk.bold.green(env.MELI_PORT)}`);
@@ -100,8 +103,6 @@ export async function server(): Promise<MeliServer> {
   if (env.MELI_PROMETHEUS_HOST && env.MELI_PROMETHEUS_PORT) {
     await setupPrometheus(app, env.MELI_PROMETHEUS_HOST, env.MELI_PROMETHEUS_PORT);
   }
-
-  io.listen(httpServer);
 
   return {
     app,
