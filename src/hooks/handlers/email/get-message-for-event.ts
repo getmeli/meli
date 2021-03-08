@@ -18,7 +18,7 @@ export const getMessageForEvent: { [eventType in keyof EventData.EventData]: (da
     subject: 'User api token deleted',
     text: `Api token named ${apiToken.name} was deleted for user ${user.name}.`,
   }),
-  [EventType.user_org_created]: ({ user, org }: EventData.UserOrgCreatedEventData) => ({
+  [EventType.org_created]: ({ user, org }: EventData.UserOrgCreatedEventData) => ({
     subject: 'User org created',
     text: `Organization ${org.name} was created for user ${user.name}.`,
   }),
@@ -74,7 +74,7 @@ export const getMessageForEvent: { [eventType in keyof EventData.EventData]: (da
     subject: 'Org hook deleted',
     text: `Hook ${hook.name} of type ${hook.type} from organization ${org.name} was deleted.`,
   }),
-  [EventType.org_team_added]: ({ org, team }: EventData.OrgTeamAddedEventData) => ({
+  [EventType.team_added]: ({ org, team }: EventData.OrgTeamAddedEventData) => ({
     subject: 'Org team added',
     text: `Team ${team.name} was added to organization ${org.name}.`,
   }),
@@ -114,7 +114,7 @@ export const getMessageForEvent: { [eventType in keyof EventData.EventData]: (da
     subject: 'Team hook deleted',
     text: `Hook ${hook.name} of type ${hook.type} was removed from team ${team.name}.`,
   }),
-  [EventType.team_site_added]: ({ team, site }: EventData.TeamSiteAddedEventData) => ({
+  [EventType.site_added]: ({ team, site }: EventData.TeamSiteAddedEventData) => ({
     subject: 'Team site added',
     text: `Site ${site.name} was added to team ${team.name}. View it live here: ${getSiteUrl(site)}. `,
   }),

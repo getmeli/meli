@@ -25,7 +25,7 @@ export async function getHooksForEvent<T extends keyof EventData>(eventType: T, 
     case EventType.user_api_token_created:
     case EventType.user_api_token_updated:
     case EventType.user_api_token_deleted:
-    case EventType.user_org_created:
+    case EventType.org_created:
       return (data as UserEventData).user.hooks;
     case EventType.org_updated:
     case EventType.org_invite_added:
@@ -38,7 +38,7 @@ export async function getHooksForEvent<T extends keyof EventData>(eventType: T, 
     case EventType.org_hook_created:
     case EventType.org_hook_updated:
     case EventType.org_hook_deleted:
-    case EventType.org_team_added:
+    case EventType.team_added:
       org = (data as OrgEventData).org;
       owner = await Users().findOne({
         _id: org.ownerId,
@@ -54,7 +54,7 @@ export async function getHooksForEvent<T extends keyof EventData>(eventType: T, 
     case EventType.team_hook_created:
     case EventType.team_hook_updated:
     case EventType.team_hook_deleted:
-    case EventType.team_site_added:
+    case EventType.site_added:
       team = (data as TeamEventData).team;
       org = await Orgs().findOne({
         _id: team.orgId,

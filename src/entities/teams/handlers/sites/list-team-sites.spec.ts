@@ -44,11 +44,7 @@ describe('listTeamSites', () => {
       countDocuments: jest.fn().mockReturnValue(Promise.resolve(2)),
       find: jest.fn().mockReturnValue({
         sort: sort.mockReturnValue({
-          skip: skip.mockReturnValue({
-            limit: limit.mockReturnValue({
-              toArray: toArray.mockReturnValue([{ id: 1 }, { id: 2 }]),
-            }),
-          }),
+          toArray: toArray.mockReturnValue([{ id: 1 }, { id: 2 }]),
         }),
       }),
     });
@@ -59,15 +55,9 @@ describe('listTeamSites', () => {
       .send();
 
     expect(response.status).toEqual(200);
-    expect(response.body).toEqual({
-      items: [{ id: 1 }, { id: 2 }],
-      count: 2,
-    });
-    expect(sites.countDocuments).toHaveBeenCalledWith({ teamId: 'team-id' });
+    expect(response.body).toEqual([{ id: 1 }, { id: 2 }]);
     expect(sites.find).toHaveBeenCalledWith({ teamId: 'team-id' });
     expect(sort).toHaveBeenCalledWith({ updatedAt: -1 });
-    expect(skip).toHaveBeenCalledWith(0);
-    expect(limit).toHaveBeenCalledWith(10);
     expect(toArray).toHaveBeenCalled();
     expect(serializeSite.mock.calls.map(call => call.slice(0, 1))).toEqual([
       [{ id: 1 }],

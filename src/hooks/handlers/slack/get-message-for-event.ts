@@ -24,7 +24,7 @@ export const getMessageForEvent: { [eventType in keyof EventData.EventData]: (da
       `Api token named **${apiToken.name}** was deleted for user **${user.name}**.`,
     )
   ),
-  [EventType.user_org_created]: ({ user, org }: EventData.UserOrgCreatedEventData) => (
+  [EventType.org_created]: ({ user, org }: EventData.UserOrgCreatedEventData) => (
     getSlackMessage(
       'User org created',
       `Organization **${org.name}** was created for user **${user.name}**.`,
@@ -108,7 +108,7 @@ export const getMessageForEvent: { [eventType in keyof EventData.EventData]: (da
       `Hook **${hook.name}** of type **${hook.type}** from organization **${org.name}** was deleted.`,
     )
   ),
-  [EventType.org_team_added]: ({ org, team }: EventData.OrgTeamAddedEventData) => (
+  [EventType.team_added]: ({ org, team }: EventData.OrgTeamAddedEventData) => (
     getSlackMessage(
       'Org team added',
       `Team **${team.name}** was added to organization **${org.name}**.`,
@@ -168,7 +168,7 @@ export const getMessageForEvent: { [eventType in keyof EventData.EventData]: (da
       `Hook **${hook.name}** of type **${hook.type}** was removed from team **${team.name}**.`,
     )
   ),
-  [EventType.team_site_added]: ({ team, site }: EventData.TeamSiteAddedEventData) => (
+  [EventType.site_added]: ({ team, site }: EventData.TeamSiteAddedEventData) => (
     getSlackMessage(
       'Team site added',
       `Site **${site.name}** was added to team **${team.name}**. View it live [here](${getSiteUrl(site)}). `,

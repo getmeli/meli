@@ -15,7 +15,7 @@ export const getMessageForEvent: { [eventType in keyof EventData.EventData]: (da
   [EventType.user_api_token_deleted]: ({ user, apiToken }: EventData.UserApiTokenDeletedEventData) => (
     getMattermostMessage(`Api token named **${apiToken.name}** was deleted for user **${user.name}**.`)
   ),
-  [EventType.user_org_created]: ({ user, org }: EventData.UserOrgCreatedEventData) => (
+  [EventType.org_created]: ({ user, org }: EventData.UserOrgCreatedEventData) => (
     getMattermostMessage(`Organization **${org.name}** was created for user **${user.name}**.`)
   ),
   [EventType.org_updated]: ({ org }: EventData.OrgUpdatedEventData) => (
@@ -57,7 +57,7 @@ export const getMessageForEvent: { [eventType in keyof EventData.EventData]: (da
   [EventType.org_hook_deleted]: ({ org, hook }: EventData.OrgHookDeletedEventData) => (
     getMattermostMessage(`Hook **${hook.name}** of type **${hook.type}** from organization **${org.name}** was deleted.`)
   ),
-  [EventType.org_team_added]: ({ org, team }: EventData.OrgTeamAddedEventData) => (
+  [EventType.team_added]: ({ org, team }: EventData.OrgTeamAddedEventData) => (
     getMattermostMessage(`Team **${team.name}** was added to organization **${org.name}**.`)
   ),
   [EventType.team_updated]: ({ team }: EventData.TeamUpdatedEventData) => (
@@ -87,7 +87,7 @@ export const getMessageForEvent: { [eventType in keyof EventData.EventData]: (da
   [EventType.team_hook_deleted]: ({ team, hook }: EventData.TeamHookDeletedEventData) => (
     getMattermostMessage(`Hook **${hook.name}** of type **${hook.type}** was removed from team **${team.name}**.`)
   ),
-  [EventType.team_site_added]: ({ team, site }: EventData.TeamSiteAddedEventData) => (
+  [EventType.site_added]: ({ team, site }: EventData.TeamSiteAddedEventData) => (
     getMattermostMessage(`
 Site **${site.name}** was added to team **${team.name}**. View it live [here](${getSiteUrl(site)}). `)
   ),

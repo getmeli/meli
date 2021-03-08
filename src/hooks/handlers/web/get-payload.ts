@@ -156,7 +156,7 @@ export const getPayload: { [eventType in keyof EventData.EventData]: (data: any)
     user: serializeUser(user),
     apiToken: serializeApiToken(apiToken),
   }),
-  [EventType.user_org_created]: ({ user, org }: EventData.UserOrgCreatedEventData) => ({
+  [EventType.org_created]: ({ user, org }: EventData.UserOrgCreatedEventData) => ({
     user: serializeUser(user),
     org: serializeOrg(org),
   }),
@@ -209,7 +209,7 @@ export const getPayload: { [eventType in keyof EventData.EventData]: (data: any)
     org: serializeOrg(org),
     hook: serializeHook(hook),
   }),
-  [EventType.org_team_added]: ({ org, team }: EventData.OrgTeamAddedEventData) => ({
+  [EventType.team_added]: ({ org, team }: EventData.OrgTeamAddedEventData) => ({
     org: serializeOrg(org),
     team: serializeTeam(team),
   }),
@@ -245,7 +245,7 @@ export const getPayload: { [eventType in keyof EventData.EventData]: (data: any)
     team: serializeTeam(team),
     hook: serializeHook(hook),
   }),
-  [EventType.team_site_added]: ({ team, site }: EventData.TeamSiteAddedEventData) => ({
+  [EventType.site_added]: ({ team, site }: EventData.TeamSiteAddedEventData) => ({
     team: serializeTeam(team),
     site: serializeSite(site),
   }),

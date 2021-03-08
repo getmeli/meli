@@ -7,9 +7,7 @@ export function params($schema: AnySchema) {
   return (req: Request, res: Response, next: NextFunction) => {
     $schema
       .validateAsync(req.params, JOI_OPTIONS)
-      .then(value => {
-        // req.params = value;
-        // console.log(req.params, value);
+      .then(() => {
         next();
       })
       .catch(err => {

@@ -1,131 +1,98 @@
 import { Socket } from 'socket.io';
-import chalk from 'chalk';
 import { Logger } from '../commons/logger/logger';
-import { User, userSocketRoom } from '../entities/users/user';
-import { siteSocketRoom } from '../entities/sites/site';
-import { releaseSocketRoom } from '../entities/releases/release';
+import { User } from '../entities/users/user';
 import { canAdminRelease } from '../entities/releases/guards/can-admin-release';
 import { getUserFromSocket } from '../auth/utils/get-user-from-socket';
-import { teamSocketRoom } from '../entities/teams/team';
 import { canReadTeam } from '../entities/teams/guards/can-read-team';
-import { orgSocketRoom } from '../entities/orgs/org';
 import { isOrgMember } from '../entities/orgs/guards/is-org-member';
 import { canAdminSite } from '../entities/sites/guards/can-admin-site';
 import { Io } from './create-io-server';
 
-const logger = new Logger('meli.api:rooms');
+const logger = new Logger('meli.api:socket');
 
-function joinRoom(
+function createRoom(
   socket: Socket,
-  docId: string,
-  getRoom: (docId: string) => string,
-  checkAccess: (user: User) => Promise<boolean> | boolean,
+  room: string,
+  checkAccess: (user: User, entityId: any) => Promise<boolean> | boolean,
 ) {
-  if (!docId) {
-    logger.debug(`Id "${chalk.blue(docId)}" is empty or not en object id`);
-    return;
-  }
+  socket.on(`join.${room}`, async entityId => {
+    if (!entityId) {
+      logger.debug('entityId empty, returning');
+      socket.emit('error', {
+        context: `join.${room}`,
+        message: 'No entity id provided',
+      });
+      return;
+    }
 
-  const room = getRoom(docId);
-  logger.debug(`${chalk.bold(socket.id)} asking to join room ${chalk.bold(room)}`);
+    logger.debug(socket.id, 'asking to join room', room);
 
-  let socketUser;
-  getUserFromSocket(socket)
-    .then(user => {
-      if (!user) {
-        logger.debug(`no user found in socket, not joining room ${chalk.bold(room)}`);
-        return false;
-      }
-      socketUser = user;
-      return checkAccess(user);
-    })
-    .then(canJoin => {
-      if (canJoin) {
-        socket.join(room);
-        logger.debug(`${chalk.bold(socketUser.name)} joined room ${chalk.bold(room)}`);
-      } else {
-        logger.debug(`${chalk.bold(socketUser?.name || socket.id)} is ${chalk.red('not')} allowed to join room ${chalk.bold(room)}`);
-      }
-    })
-    .catch(err => logger.error(err));
+    let user: User;
+    try {
+      user = await getUserFromSocket(socket);
+    } catch (e) {
+      logger.error(e);
+      socket.emit('error', {
+        context: `join.${room}`,
+        message: 'Could not get user from socket',
+      });
+      return;
+    }
+
+    if (!user) {
+      logger.debug('no user found in socket, not joining room', room);
+      socket.emit('error', {
+        context: `join.${room}`,
+        message: 'Socket not authenticated',
+      });
+      return;
+    }
+
+    let canJoin: boolean;
+    try {
+      canJoin = await checkAccess(user, entityId);
+    } catch (e) {
+      logger.error(e);
+      socket.emit('error', {
+        context: `join.${room}`,
+        message: 'Could not check if you could join room',
+      });
+      return;
+    }
+
+    if (canJoin) {
+      socket.join(`${room}.${entityId}`);
+      logger.debug(user.name, 'joined room', room);
+    } else {
+      logger.debug(user.name, 'not allowed to join room', room);
+      socket.emit('error', {
+        context: `join.${room}`,
+        message: 'Not allowed to join room',
+      });
+    }
+  });
+
+  socket.on(`leave.${room}`, entityId => {
+    if (!entityId) {
+      logger.debug('entityId empty, cannot determine room to leave, returning');
+      socket.emit('error', {
+        context: `leave.${room}`,
+        message: 'No entity id provided',
+      });
+      return;
+    }
+    socket.leave(`${room}.${entityId}`);
+  });
 }
 
 export function initSocketRooms() {
   Io.server.on('connection', socket => {
-    logger.debug(`Socket connected ${socket.id}`);
+    logger.debug('socket connected', socket.id);
 
-    socket.on('join.user', userId => {
-      joinRoom(
-        socket,
-        userId,
-        userSocketRoom,
-        user => user._id === userId,
-      );
-    });
-
-    // TODO make sure user has the right to leave the room (not another use trying to make another use leave a room)
-    // socket.on('leave.user', userId => {
-    //   socket.leave(userSocketRoom(userId));
-    // });
-
-    socket.on('join.site', siteId => {
-      joinRoom(
-        socket,
-        siteId,
-        siteSocketRoom,
-        user => canAdminSite(siteId, user._id),
-      );
-    });
-
-    // TODO make sure user has the right to leave the room (not another use trying to make another use leave a room)
-    // socket.on('leave.site', userId => {
-    //   socket.leave(siteSocketRoom(userId));
-    // });
-
-    socket.on('join.release', releaseId => {
-      joinRoom(
-        socket,
-        releaseId,
-        releaseSocketRoom,
-        user => canAdminRelease(releaseId, user._id),
-      );
-    });
-
-    // TODO make sure user has the right to leave the room (not another use trying to make another use leave a room)
-    // socket.on('leave.release', userId => {
-    //   socket.leave(siteSocketRoom(userId));
-    // });
-
-    socket.on('join.team', teamId => {
-      joinRoom(
-        socket,
-        teamId,
-        teamSocketRoom,
-        user => canReadTeam(teamId, user._id),
-      );
-    });
-
-    // TODO make sure user has the right to leave the room (not another use trying to make another use leave a room)
-    // socket.on('leave.release', userId => {
-    //   socket.leave(siteSocketRoom(userId));
-    // });
-
-    socket.on('join.org', orgId => {
-      joinRoom(
-        socket,
-        orgId,
-        orgSocketRoom,
-        user => isOrgMember(user._id, orgId),
-      );
-    });
-
-    // TODO make sure user has the right to leave the room (not another use trying to make another use leave a room)
-    // socket.on('leave.release', userId => {
-    //   socket.leave(siteSocketRoom(userId));
-    // });
-
-    // TODO org.invites
-    // TODO org.members
-    // TODO team.members
+    createRoom(socket, 'user', (user, userId) => user._id === userId);
+    createRoom(socket, 'site', (user, siteId) => canAdminSite(siteId, user._id));
+    createRoom(socket, 'release', (user, releaseId) => canAdminRelease(releaseId, user._id));
+    createRoom(socket, 'team', (user, teamId) => canReadTeam(teamId, user._id));
+    createRoom(socket, 'org', (user, orgId) => isOrgMember(orgId, user._id));
   });
 }

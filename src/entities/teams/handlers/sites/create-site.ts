@@ -54,7 +54,7 @@ async function handler(req: Request, res: Response): Promise<void> {
     logger.error(err);
   });
 
-  emitEvent(EventType.team_site_added, {
+  emitEvent(EventType.site_added, {
     team: await Teams().findOne({
       _id: teamId,
     }),

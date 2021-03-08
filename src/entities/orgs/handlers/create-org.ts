@@ -34,7 +34,7 @@ async function handler(req: Request, res: Response): Promise<void> {
     hooks: [],
   };
   await Orgs().insertOne(org);
-  emitEvent(EventType.user_org_created, {
+  emitEvent(EventType.org_created, {
     org,
     user,
   });
@@ -68,7 +68,7 @@ async function handler(req: Request, res: Response): Promise<void> {
     hooks: [],
   };
   await Teams().insertOne(team);
-  emitEvent(EventType.org_team_added, {
+  emitEvent(EventType.team_added, {
     org,
     team,
   });

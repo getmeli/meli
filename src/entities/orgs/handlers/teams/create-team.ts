@@ -39,7 +39,7 @@ async function handler(req: Request, res: Response): Promise<void> {
 
   await Teams().insertOne(team);
 
-  emitEvent(EventType.org_team_added, {
+  emitEvent(EventType.team_added, {
     org: await Orgs().findOne({
       _id: orgId,
     }),
