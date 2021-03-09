@@ -10,6 +10,7 @@ export function handleSocketEvent<T extends keyof EventData>(eventType: T, data:
 
   if (!messageBuilder) {
     logger.debug('no message builder for', eventType);
+    return;
   }
 
   const { room, data: serializedData } = messageBuilder(data);
