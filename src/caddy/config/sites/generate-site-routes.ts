@@ -79,8 +79,24 @@ function get401ErrorRoute() {
   };
 }
 
+// https://caddyserver.com/docs/json/apps/http/servers/routes/handle/headers/
+const cacheHandler = {
+  handler: 'headers',
+  response: {
+    set: {
+      'Cache-Control': ['public', 'max-age=0', 'must-revalidate'],
+    },
+  },
+};
+
 function getPrimaryRoute(site: Site, branch: Branch) {
   const branchDirInCaddy = getBranchDirInCaddy(site._id, branch._id);
+
+  const fileHandler = {
+    handler: 'file_server',
+    root: branchDirInCaddy,
+  };
+
   if (site.spa) {
     return {
       match: [{
@@ -97,17 +113,16 @@ function getPrimaryRoute(site: Site, branch: Branch) {
           handler: 'rewrite',
           uri: '{http.matchers.file.relative}',
         },
-        {
-          handler: 'file_server',
-          root: branchDirInCaddy,
-        },
+        cacheHandler,
+        fileHandler,
       ],
     };
   }
+
   return {
-    handle: [{
-      handler: 'file_server',
-      root: branchDirInCaddy,
-    }],
+    handle: [
+      cacheHandler,
+      fileHandler,
+    ],
   };
 }
