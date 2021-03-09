@@ -89,6 +89,15 @@ const cacheHandler = {
   },
 };
 
+// https://caddyserver.com/docs/json/apps/http/servers/routes/handle/encode/encodings/gzip/
+// https://caddy.community/t/gzip-headers-when-using-encode-handler/11781
+const gzipHandler = {
+  handler: 'encode',
+  encodings: {
+    gzip: {},
+  },
+};
+
 function getPrimaryRoute(site: Site, branch: Branch) {
   const branchDirInCaddy = getBranchDirInCaddy(site._id, branch._id);
 
@@ -114,6 +123,7 @@ function getPrimaryRoute(site: Site, branch: Branch) {
           uri: '{http.matchers.file.relative}',
         },
         cacheHandler,
+        gzipHandler,
         fileHandler,
       ],
     };
@@ -122,6 +132,7 @@ function getPrimaryRoute(site: Site, branch: Branch) {
   return {
     handle: [
       cacheHandler,
+      gzipHandler,
       fileHandler,
     ],
   };
