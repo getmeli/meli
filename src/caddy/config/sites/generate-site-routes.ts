@@ -79,16 +79,6 @@ function get401ErrorRoute() {
   };
 }
 
-// https://caddyserver.com/docs/json/apps/http/servers/routes/handle/headers/
-const cacheHandler = {
-  handler: 'headers',
-  response: {
-    set: {
-      'Cache-Control': ['public', 'max-age=0', 'must-revalidate'],
-    },
-  },
-};
-
 // https://caddyserver.com/docs/json/apps/http/servers/routes/handle/encode/encodings/gzip/
 // https://caddy.community/t/gzip-headers-when-using-encode-handler/11781
 const gzipHandler = {
@@ -104,6 +94,21 @@ function getPrimaryRoute(site: Site, branch: Branch) {
   const fileHandler = {
     handler: 'file_server',
     root: branchDirInCaddy,
+  };
+
+  // https://caddyserver.com/docs/json/apps/http/servers/routes/handle/headers/
+  const headersHandler = {
+    handler: 'headers',
+    response: {
+      set: {
+        'Cache-Control': ['public', 'max-age=0', 'must-revalidate'],
+        ...[...(site.headers || []), ...(branch.headers || [])].reduce((prev, { name, value }) => {
+          // TODO should this be split by comma ?
+          prev[name] = [value];
+          return prev;
+        }, {}),
+      },
+    },
   };
 
   if (site.spa) {
@@ -122,7 +127,7 @@ function getPrimaryRoute(site: Site, branch: Branch) {
           handler: 'rewrite',
           uri: '{http.matchers.file.relative}',
         },
-        cacheHandler,
+        headersHandler,
         gzipHandler,
         fileHandler,
       ],
@@ -131,7 +136,7 @@ function getPrimaryRoute(site: Site, branch: Branch) {
 
   return {
     handle: [
-      cacheHandler,
+      headersHandler,
       gzipHandler,
       fileHandler,
     ],

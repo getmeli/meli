@@ -6,6 +6,7 @@ import { AppDb } from '../../db/db';
 import { Branch } from './branch';
 import { Password } from './password';
 import { StoredFile } from '../../storage/store-file';
+import { $header, Header } from './header';
 
 export interface SiteToken {
   _id: string;
@@ -49,6 +50,7 @@ export interface Site {
   hooks: string[];
   spa?: boolean;
   password?: Password;
+  headers?: Header[];
 }
 
 export const Sites = () => AppDb.db.collection<Site>('sites');
@@ -78,7 +80,7 @@ export const $siteDomain = object({
   exposeBranches: boolean().optional().default(false),
 });
 
-export const $site = object({
+export const $site = object<Site>({
   name: $siteName,
   color: string().required().regex(COLOR_PATTERN),
   mainBranch: string()
@@ -88,4 +90,7 @@ export const $site = object({
     .default([])
     .items($siteDomain),
   spa: boolean().optional().default(false),
+  headers: array().min(0).max(ARRAY_MAX).optional()
+    .default([])
+    .items($header),
 });

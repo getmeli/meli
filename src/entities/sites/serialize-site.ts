@@ -17,5 +17,6 @@ export function serializeSite(site: Site): any {
     url: getSiteUrl(site),
     spa: site.spa,
     hasPassword: !!site.password,
+    headers: site.headers || [],
   };
 }

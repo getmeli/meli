@@ -1,50 +1,38 @@
 import { Request, Response } from 'express';
 import { branchExistsGuard } from '../../guards/branch-exists-guard';
-import { object, string } from 'joi';
-import { STRING_MAX_LENGTH } from '../../../../constants';
+import { array, object } from 'joi';
+import { ARRAY_MAX } from '../../../../constants';
 import { emitEvent } from '../../../../events/emit-event';
 import { EventType } from '../../../../events/event-type';
 import { wrapAsyncMiddleware } from '../../../../commons/utils/wrap-async-middleware';
 import { body } from '../../../../commons/express-joi/body';
-import { BadRequestError } from '../../../../commons/errors/bad-request-error';
 import { canAdminSiteGuard } from '../../guards/can-admin-site-guard';
 import { Sites } from '../../site';
 import { serializeBranch } from '../../serialize-branch';
 import { configureSiteBranchInCaddy } from '../../../../caddy/configuration';
 import { Logger } from '../../../../commons/logger/logger';
-
-async function releaseExists(siteId: string, branchId: string): Promise<boolean> {
-  const count = await Sites().countDocuments({
-    _id: siteId,
-    'branches._id': branchId,
-  }, {
-    limit: 1,
-  });
-  return count === 1;
-}
+import { $header } from '../../header';
 
 const validators = [
   body(object({
-    release: string().optional().max(STRING_MAX_LENGTH),
+    headers: array().min(0).max(ARRAY_MAX).optional()
+      .default([])
+      .items($header)
+      .unique((a, b) => a.name.toLowerCase() === b.name.toLowerCase()),
   })),
 ];
 
-const logger = new Logger('meli.api:updateBranch');
+const logger = new Logger('meli.api:setBranchHeaders');
 
 async function handler(req: Request, res: Response): Promise<void> {
   const { siteId, branchId } = req.params;
-
-  const releaseBranchExists = await releaseExists(siteId, req.body.mainBranch);
-  if (!releaseBranchExists) {
-    throw new BadRequestError('Release not found');
-  }
 
   await Sites().updateOne({
     _id: siteId,
     'branches._id': branchId,
   }, {
     $set: {
-      'branches.$.release': req.body.release,
+      'branches.$.headers': req.body.headers,
     },
   });
 
@@ -57,14 +45,15 @@ async function handler(req: Request, res: Response): Promise<void> {
     logger.error(err);
   });
 
-  emitEvent(EventType.site_updated, {
+  emitEvent(EventType.site_branch_updated, {
     site,
+    branch,
   });
 
   res.json(serializeBranch(site, branch));
 }
 
-export const updateBranch = [
+export const setBranchHeaders = [
   ...branchExistsGuard,
   ...canAdminSiteGuard,
   ...validators,

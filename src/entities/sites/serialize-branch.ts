@@ -9,5 +9,6 @@ export function serializeBranch(site: Site, branch: Branch) {
     release: branch.release,
     hasPassword: !!branch.password,
     url: getBranchUrl(site, branch),
+    headers: branch.headers || [],
   };
 }

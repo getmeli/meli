@@ -33,6 +33,8 @@ import { removeSitePassword } from './handlers/remove-site-password';
 import { removeSiteLogo } from './handlers/remove-site-logo';
 import { setSiteLogo } from './handlers/set-site-logo';
 import { getSiteLogo } from './handlers/get-site-logo';
+import { setBranchHeaders } from './handlers/branches/set-branch-headers';
+import { setSiteHeaders } from './set-site-headers';
 
 const router = Router();
 
@@ -72,6 +74,15 @@ apiEndpoint({
   handler: deleteSite,
   auth: true,
   apiScope: ApiScope.site_delete,
+  router,
+});
+apiEndpoint({
+  name: 'set site headers',
+  method: 'put',
+  path: '/api/v1/sites/:siteId/headers',
+  handler: setSiteHeaders,
+  auth: true,
+  apiScope: ApiScope.site_headers_set,
   router,
 });
 
@@ -267,6 +278,15 @@ apiEndpoint({
   handler: setBranchRedirects,
   auth: true,
   apiScope: ApiScope.site_branch_redirects_set,
+  router,
+});
+apiEndpoint({
+  name: 'set branch headers',
+  method: 'put',
+  path: '/api/v1/sites/:siteId/branches/:branchId/headers',
+  handler: setBranchHeaders,
+  auth: true,
+  apiScope: ApiScope.site_branch_headers_set,
   router,
 });
 
