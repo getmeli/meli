@@ -1,3 +1,28 @@
+# [1.0.0-beta.17](https://github.com/getmeli/meli/compare/v1.0.0-beta.16...v1.0.0-beta.17) (2021-03-10)
+
+
+### Bug Fixes
+
+* error when unhandled socket event ([3e0151a](https://github.com/getmeli/meli/commit/3e0151a5d00bb4f8667d1ce005dfbc1d8e278e3c))
+* req.query not typed ([581e3ca](https://github.com/getmeli/meli/commit/581e3caf3610a5981baa6693d6b677230c7ee67d))
+* socket io protocol error ([6e414a0](https://github.com/getmeli/meli/commit/6e414a04d2c1d5c8584c36b66a9f1c3cad5f2859))
+* **add branch:** should not update release when no id given ([b3b25e8](https://github.com/getmeli/meli/commit/b3b25e8d7951548932281274317efbdbc5fa1df3))
+
+
+### Features
+
+* add websocket handler [#194](https://github.com/getmeli/meli/issues/194) ([2aad514](https://github.com/getmeli/meli/commit/2aad51452b23163c5c644f4735e75a8098fbb8f3))
+* change api scope formats ([#200](https://github.com/getmeli/meli/issues/200)) ([ed34896](https://github.com/getmeli/meli/commit/ed348969660882c0d1723e7333963ded5b8167ab))
+* configure gzip compression ([#195](https://github.com/getmeli/meli/issues/195)) ([bc5e3ff](https://github.com/getmeli/meli/commit/bc5e3ffcd421a48cc7363f63791e353fd1df8559))
+* custom headers per branch or site ([#195](https://github.com/getmeli/meli/issues/195)) ([c8645a7](https://github.com/getmeli/meli/commit/c8645a76b0cc11194a22ad81b4dcd654149ef550))
+* forbid underscores in site name ([#193](https://github.com/getmeli/meli/issues/193)) ([f263f09](https://github.com/getmeli/meli/commit/f263f090b9c40bc481ed1979a1ae87b51975d035))
+* set cache-control header ([#195](https://github.com/getmeli/meli/issues/195)) ([09621ea](https://github.com/getmeli/meli/commit/09621ea233715b101644f714477bccbd1dc75344))
+
+
+### BREAKING CHANGES
+
+* all API tokens currently in use will be invalidated.
+
 # [1.0.0-beta.16](https://github.com/getmeli/meli/compare/v1.0.0-beta.15...v1.0.0-beta.16) (2021-02-09)
 
 
