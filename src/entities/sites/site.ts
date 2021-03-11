@@ -55,10 +55,6 @@ export interface Site {
 
 export const Sites = () => AppDb.db.collection<Site>('sites');
 
-export function siteSocketRoom(id: string): string {
-  return `site.${id}`;
-}
-
 export const $siteName = string().required().max(STRING_MAX_LENGTH).regex(SUBDOMAIN_PATTERN);
 
 export const $acmeSslConfiguration = object<AcmeSslConfiguration>({

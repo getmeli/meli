@@ -10,7 +10,3 @@ export interface Member {
 }
 
 export const Members = () => AppDb.db.collection<Member>('members');
-
-export function orgMemberSocketRoom(id: string): string {
-  return `org.${id}.members`;
-}

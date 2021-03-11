@@ -15,7 +15,3 @@ export interface User {
 }
 
 export const Users = () => AppDb.db.collection<User>('users');
-
-export function userSocketRoom(id: string): string {
-  return `user.${id}`;
-}

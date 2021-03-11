@@ -15,7 +15,3 @@ export interface Org {
 }
 
 export const Orgs = () => AppDb.db.collection<Org>('orgs');
-
-export function orgSocketRoom(id: string): string {
-  return `org.${id}`;
-}

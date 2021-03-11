@@ -1,6 +1,4 @@
-import {
-  array, date, object, string,
-} from 'joi';
+import { array, date, object, string } from 'joi';
 import { STRING_MAX_LENGTH } from '../../constants';
 import { AppDb } from '../../db/db';
 import { ApiScope } from './api-scope';
@@ -19,10 +17,6 @@ export interface ApiToken {
 }
 
 export const ApiTokens = () => AppDb.db.collection<ApiToken>('api-tokens');
-
-export function apiTokenSocketRoom(id: string): string {
-  return `apiTokens.${id}`;
-}
 
 export const $apiToken = object<ApiToken>({
   name: string().required().max(STRING_MAX_LENGTH),

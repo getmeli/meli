@@ -14,7 +14,3 @@ export interface Team {
 }
 
 export const Teams = () => AppDb.db.collection<Team>('teams');
-
-export function teamSocketRoom(id: string): string {
-  return `team.${id}`;
-}

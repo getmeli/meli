@@ -7,7 +7,3 @@ export interface Invite {
     admin: boolean;
   }
 }
-
-export function orgInviteSocketRoom(id: string): string {
-  return `org.${id}.invites`;
-}
