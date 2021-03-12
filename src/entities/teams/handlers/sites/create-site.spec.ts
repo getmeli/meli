@@ -3,7 +3,7 @@ import { testServer } from '../../../../../tests/test-server';
 import { spyOnCollection } from '../../../../../tests/utils/spyon-collection';
 import { spyOnIsAdminOrOwner } from '../../../../../tests/utils/spyon-isadminorowner';
 import { AUTHENTICATED_USER_ID, spyOnVerifyToken } from '../../../../../tests/utils/spyon-verifytoken';
-import * as _addSiteToCaddy from '../../../../caddy/configuration';
+import * as _addSiteToCaddy from '../../../../caddy/config/sites/add-site-to-caddy';
 import * as _emitEvent from '../../../../events/emit-event';
 import { MeliServer } from '../../../../server';
 

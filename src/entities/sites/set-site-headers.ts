@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { array, object } from 'joi';
-import { updateSiteInCaddy } from '../../caddy/configuration';
+import { updateSiteInCaddy } from '../../caddy/config/sites/update-site-in-caddy';
 import { ARRAY_MAX } from '../../constants';
 import { $header } from './header';
 import { emitEvent } from '../../events/emit-event';

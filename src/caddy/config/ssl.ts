@@ -1,22 +1,17 @@
-import { URL } from 'url';
 import { getBranchDomain } from '../../entities/sites/get-branch-domain';
 import { getSiteMainDomain } from '../../entities/sites/get-site-main-domain';
-import { ManualSslConfiguration, Site, SiteDomain } from '../../entities/sites/site';
-import { env } from '../../env/env';
+import { getDomainWithBranches } from '../../entities/sites/helpers/domains';
+import { ManualSslConfiguration, Site } from '../../entities/sites/site';
+import { MELI_UI_URL, MELI_URL } from '../../runtime-constants';
 import { unique } from '../../utils/arrays-utils';
 import HttpServerTlsConnectionPolicy = Caddy.HttpServerTlsConnectionPolicy;
 import Certificates = Caddy.Tls.Certificates;
 
-const meliUrl = new URL(env.MELI_URL);
-const meliUiUrl = new URL(env.MELI_UI_URL);
-
-function getDomainWithBranches(domain: SiteDomain, site: Site) {
-  return [
-    domain.name,
-    ...(domain.exposeBranches ? site.branches.map(branch => `${branch.slug}.${domain.name}`) : []),
-  ];
-}
-
+/**
+ * Generates the config for /app/tls/certificates for all sites
+ *
+ * @deprecated
+ */
 export function generateManualCertificatesConfig(sites: Site[]): Certificates {
   const pemConfigs: Certificates.LoadPemEntry[] = sites.flatMap(site => (
     site.domains
@@ -37,16 +32,7 @@ export function generateManualCertificatesConfig(sites: Site[]): Certificates {
   };
 }
 
-export function generateSiteManualCertificateConfigurations(site: Site) {
-  return site.domains
-    .filter(domain => domain?.sslConfiguration?.type === 'manual')
-    .map(domain => ({
-      certificate: (domain.sslConfiguration as ManualSslConfiguration).fullchain,
-      key: (domain.sslConfiguration as ManualSslConfiguration).privateKey,
-      tags: getDomainWithBranches(domain, site),
-    }));
-}
-
+/** @deprecated */
 export function generateServerTlsConfig(sites: Site[]): Partial<Caddy.Http.Server> {
   const customDomains = sites.flatMap(site => (
     site.domains.map(domain => ({
@@ -67,8 +53,8 @@ export function generateServerTlsConfig(sites: Site[]): Partial<Caddy.Http.Serve
   ));
 
   const automaticSslDomains = [
-    meliUrl.hostname,
-    meliUiUrl.hostname,
+    MELI_URL.hostname,
+    MELI_UI_URL.hostname,
     ...customDomains
       .filter(({ domain }) => domain.sslConfiguration?.type === 'acme')
       .map(({ domain }) => domain.name),
@@ -104,19 +90,5 @@ export function generateServerTlsConfig(sites: Site[]): Partial<Caddy.Http.Serve
       skip: customDomainsWithManualSsl.map(({ domain }) => domain.name),
       // TODO disable and test if it still works
     },
-  };
-}
-
-export function generateBasicServerTlsConfig(): Partial<Caddy.Http.Server> {
-  const automaticSslDomains = [meliUrl.hostname, meliUiUrl.hostname].filter(unique);
-
-  return {
-    tls_connection_policies: [
-      {
-        match: {
-          sni: automaticSslDomains,
-        },
-      },
-    ],
   };
 }

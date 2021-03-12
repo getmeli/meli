@@ -1,4 +1,5 @@
-import axios from 'axios';
+import axios, { Method } from 'axios';
+import { performance } from 'perf_hooks';
 import { Logger } from '../../commons/logger/logger';
 import { env } from '../../env/env';
 import { IdNotFoundError } from '../errors/IdNotFoundError';
@@ -11,7 +12,7 @@ export const CADDY_AXIOS_DEFAULT_CONFIG = {
 
 export async function postCaddyConfigById(id: string, path: string, config: any) {
   try {
-    await axios.post(`${env.MELI_CADDY_ADMIN_API_URL}/id/${id}${path || '/'}`, config, CADDY_AXIOS_DEFAULT_CONFIG);
+    await caddyRequest('POST', `/id/${id}${path || '/'}`, config);
   } catch (err) {
     mapIdNotFoundError(err, id);
   }
@@ -19,7 +20,7 @@ export async function postCaddyConfigById(id: string, path: string, config: any)
 
 export async function putCaddyConfigById(id: string, path: string, config: any) {
   try {
-    await axios.put(`${env.MELI_CADDY_ADMIN_API_URL}/id/${id}${path || '/'}`, config, CADDY_AXIOS_DEFAULT_CONFIG);
+    await caddyRequest('PUT', `/id/${id}${path || '/'}`, config);
   } catch (err) {
     mapIdNotFoundError(err, id);
   }
@@ -27,10 +28,23 @@ export async function putCaddyConfigById(id: string, path: string, config: any) 
 
 export async function deleteCaddyConfigById(id: string, path = '/') {
   try {
-    await axios.delete(`${env.MELI_CADDY_ADMIN_API_URL}/id/${id}${path || '/'}`, CADDY_AXIOS_DEFAULT_CONFIG);
+    await caddyRequest('DELETE', `/id/${id}${path || '/'}`);
   } catch (err) {
     mapIdNotFoundError(err, id);
   }
+}
+
+export async function caddyRequest(method: Method, url: string, data?: any) {
+  const start = performance.now();
+  await axios.request({
+    ...CADDY_AXIOS_DEFAULT_CONFIG,
+    baseURL: env.MELI_CADDY_ADMIN_API_URL,
+    method,
+    url,
+    data,
+  });
+  const end = performance.now();
+  logger.debug(`[${method}] ${url}: ${end - start}ms`);
 }
 
 function mapIdNotFoundError(err: any, id: string) {

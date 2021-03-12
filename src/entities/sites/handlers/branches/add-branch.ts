@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { addBranchToCaddy } from '../../../../caddy/config/sites/add-branch-to-caddy';
 import { siteExistsGuard } from '../../guards/site-exists-guard';
 import { object, string } from 'joi';
 import { wrapAsyncMiddleware } from '../../../../commons/utils/wrap-async-middleware';
@@ -11,7 +12,6 @@ import { canAdminSiteGuard } from '../../guards/can-admin-site-guard';
 import { EventType } from '../../../../events/event-type';
 import { $branchName, Branch } from '../../branch';
 import { uuid } from '../../../../utils/uuid';
-import { addBranchToCaddy } from '../../../../caddy/configuration';
 import { Logger } from '../../../../commons/logger/logger';
 import { slugify } from '../../../../utils/slugify';
 import { linkBranchToRelease } from '../../link-branch-to-release';

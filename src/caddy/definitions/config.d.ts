@@ -15,14 +15,4 @@ declare namespace Caddy {
     apps?: Apps;
   }
 
-  interface HttpServerTlsConnectionPolicy {
-    '@id'?: string;
-    match?: TlsHandshakeMatch;
-  }
-
-  interface TlsHandshakeMatch {
-    '@id'?: string;
-    sni?: string[];
-  }
-
 }

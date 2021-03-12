@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { updateBranchInCaddy } from '../../../../caddy/config/sites/update-branch-in-caddy';
 import { branchExistsGuard } from '../../guards/branch-exists-guard';
 import { array, object } from 'joi';
 import { ARRAY_MAX } from '../../../../constants';
@@ -9,7 +10,6 @@ import { body } from '../../../../commons/express-joi/body';
 import { canAdminSiteGuard } from '../../guards/can-admin-site-guard';
 import { Sites } from '../../site';
 import { serializeBranch } from '../../serialize-branch';
-import { updateBranchInCaddy } from '../../../../caddy/configuration';
 import { Logger } from '../../../../commons/logger/logger';
 import { $header } from '../../header';
 

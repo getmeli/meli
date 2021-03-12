@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { updateBranchInCaddy } from '../../../../caddy/config/sites/update-branch-in-caddy';
 import { Sites } from '../../site';
 import { emitEvent } from '../../../../events/emit-event';
 import { wrapAsyncMiddleware } from '../../../../commons/utils/wrap-async-middleware';
@@ -11,7 +12,6 @@ import { params } from '../../../../commons/express-joi/params';
 import { $id } from '../../../../utils/id';
 import { hashPassword } from '../../hash-password';
 import { serializeBranch } from '../../serialize-branch';
-import { updateBranchInCaddy } from '../../../../caddy/configuration';
 import { Logger } from '../../../../commons/logger/logger';
 
 const validators = [

@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { object, string } from 'joi';
+import { removeBranchFromCaddy } from '../../../../caddy/config/sites/remove-branch-from-caddy';
 import { wrapAsyncMiddleware } from '../../../../commons/utils/wrap-async-middleware';
 import { Sites } from '../../site';
 import { params } from '../../../../commons/express-joi/params';
@@ -10,7 +11,6 @@ import { promises } from 'fs';
 import { canAdminSiteGuard } from '../../guards/can-admin-site-guard';
 import { EventType } from '../../../../events/event-type';
 import { branchExistsGuard } from '../../guards/branch-exists-guard';
-import { removeBranchFromCaddy } from '../../../../caddy/configuration';
 import { Logger } from '../../../../commons/logger/logger';
 
 const validators = [

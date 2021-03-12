@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { addSiteToCaddy } from '../../../../caddy/configuration';
+import { addSiteToCaddy } from '../../../../caddy/config/sites/add-site-to-caddy';
 import { body } from '../../../../commons/express-joi/body';
 import { wrapAsyncMiddleware } from '../../../../commons/utils/wrap-async-middleware';
 import { $siteName, Site, Sites } from '../../../sites/site';

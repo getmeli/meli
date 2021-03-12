@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { object } from 'joi';
-import { removeSiteFromCaddy } from '../../../caddy/configuration';
+import { removeSiteFromCaddy } from '../../../caddy/config/sites/remove-site-from-caddy';
 import { params } from '../../../commons/express-joi/params';
 import { wrapAsyncMiddleware } from '../../../commons/utils/wrap-async-middleware';
 import { Sites } from '../site';

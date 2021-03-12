@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { updateSiteInCaddy } from '../../../caddy/config/sites/update-site-in-caddy';
 import { $site, Sites } from '../site';
 import { serializeSite } from '../serialize-site';
 import { wrapAsyncMiddleware } from '../../../commons/utils/wrap-async-middleware';
@@ -8,7 +9,6 @@ import { emitEvent } from '../../../events/emit-event';
 import { canAdminSiteGuard } from '../guards/can-admin-site-guard';
 import { EventType } from '../../../events/event-type';
 import { BadRequestError } from '../../../commons/errors/bad-request-error';
-import { updateSiteInCaddy } from '../../../caddy/configuration';
 import { Logger } from '../../../commons/logger/logger';
 
 async function branchExists(siteId: string, branchId: string): Promise<boolean> {

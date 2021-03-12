@@ -13,6 +13,7 @@ const logger = new Logger('meli.api.caddy:generateConfig');
 
 const sitesUrl = new URL(env.MELI_SITES_URL);
 
+/** @deprecated */
 export async function generateFullConfigOld(): Promise<Caddy.Root> {
   const sites = await Sites().find().toArray();
 

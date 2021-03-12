@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { updateSiteInCaddy } from '../../../../caddy/config/sites/update-site-in-caddy';
 import { Sites } from '../../site';
 import { emitEvent } from '../../../../events/emit-event';
 import { wrapAsyncMiddleware } from '../../../../commons/utils/wrap-async-middleware';
@@ -11,7 +12,6 @@ import { branchExistsGuard } from '../../guards/branch-exists-guard';
 import { params } from '../../../../commons/express-joi/params';
 import { $id } from '../../../../utils/id';
 import { $branchName } from '../../branch';
-import { updateSiteInCaddy } from '../../../../caddy/configuration';
 import { Logger } from '../../../../commons/logger/logger';
 
 const validators = [

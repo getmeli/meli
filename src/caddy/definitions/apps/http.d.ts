@@ -53,4 +53,37 @@ declare namespace Caddy {
     }
   }
 
+  interface HttpServerTlsConnectionPolicy {
+    '@id'?: string;
+    match?: TlsHandshakeMatch;
+    certificate_selection?: CertificateSelection;
+    cipher_suite?: string[];
+    curves?: string[];
+    alpn?: string[];
+    protocol_min?: string;
+    protocol_max?: string;
+    client_authentication?: ClientAuthentication;
+    default_sni?: string;
+  }
+
+  interface TlsHandshakeMatch {
+    '@id'?: string;
+    sni?: string[];
+  }
+
+  interface CertificateSelection {
+    serial_number?: string[];
+    subject_organization?: string[];
+    public_key_algorithm?: number;
+    any_tag?: string[];
+    all_tags?: string[];
+  }
+
+  interface ClientAuthentication {
+    trusted_ca_certs?: string[];
+    trusted_ca_certs_pem_files?: string[];
+    trusted_leaf_certs?: string[];
+    mode?: string;
+  }
+
 }

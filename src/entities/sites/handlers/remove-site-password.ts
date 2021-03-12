@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
+import { updateSiteInCaddy } from '../../../caddy/config/sites/update-site-in-caddy';
 import { serializeSite } from '../serialize-site';
 import { siteExistsGuard } from '../guards/site-exists-guard';
 import { emitEvent } from '../../../events/emit-event';
 import { EventType } from '../../../events/event-type';
 import { wrapAsyncMiddleware } from '../../../commons/utils/wrap-async-middleware';
-import { updateSiteInCaddy } from '../../../caddy/configuration';
 import { params } from '../../../commons/express-joi/params';
 import { canAdminSiteGuard } from '../guards/can-admin-site-guard';
 import { object } from 'joi';

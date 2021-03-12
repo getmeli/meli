@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import tar from 'tar';
+import { updateSiteInCaddy } from '../../../../caddy/config/sites/update-site-in-caddy';
 import { wrapAsyncMiddleware } from '../../../../commons/utils/wrap-async-middleware';
 import { Release, Releases } from '../../../releases/release';
 import { upload } from '../../../../upload';
@@ -19,7 +20,6 @@ import { object, string } from 'joi';
 import { STRING_MAX_LENGTH } from '../../../../constants';
 import { body } from '../../../../commons/express-joi/body';
 import { getBranchUrl } from '../../get-branch-url';
-import { updateSiteInCaddy } from '../../../../caddy/configuration';
 import { Logger } from '../../../../commons/logger/logger';
 import { slugify } from '../../../../utils/slugify';
 

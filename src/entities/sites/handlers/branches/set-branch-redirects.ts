@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { updateBranchInCaddy } from '../../../../caddy/config/sites/update-branch-in-caddy';
 import { Sites } from '../../site';
 import { emitEvent } from '../../../../events/emit-event';
 import { wrapAsyncMiddleware } from '../../../../commons/utils/wrap-async-middleware';
@@ -9,7 +10,6 @@ import { EventType } from '../../../../events/event-type';
 import { branchExistsGuard } from '../../guards/branch-exists-guard';
 import { params } from '../../../../commons/express-joi/params';
 import { $id } from '../../../../utils/id';
-import { updateBranchInCaddy } from '../../../../caddy/configuration';
 import { ARRAY_MAX } from '../../../../constants';
 import { promises } from 'fs';
 import { getBranchFilePath, getBranchFilesDir } from '../../get-site-dir';
