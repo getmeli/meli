@@ -10,7 +10,7 @@ import {
   CADDY_AXIOS_DEFAULT_CONFIG,
   deleteCaddyConfigById,
   postCaddyConfigById,
-  putCaddyConfigById
+  putCaddyConfigById,
 } from './config/caddy-helpers';
 import { IdNotFoundError } from './errors/IdNotFoundError';
 import { generateBasicConfig } from './generate-basic-config';
