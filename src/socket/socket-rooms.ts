@@ -93,6 +93,6 @@ export function initSocketRooms() {
     createRoom(socket, 'site', (user, siteId) => canAdminSite(siteId, user._id));
     createRoom(socket, 'release', (user, releaseId) => canAdminRelease(releaseId, user._id));
     createRoom(socket, 'team', (user, teamId) => canReadTeam(teamId, user._id));
-    createRoom(socket, 'org', (user, orgId) => isOrgMember(orgId, user._id));
+    createRoom(socket, 'org', (user, orgId) => isOrgMember(user._id, orgId));
   });
 }
