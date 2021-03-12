@@ -1,3 +1,4 @@
+import { Header } from '../../../entities/sites/header';
 import { AcmeSslConfiguration, Site, SiteDomain } from '../../../entities/sites/site';
 import { unique } from '../../../utils/arrays-utils';
 import { getBranchCaddyConfigId } from '../ids';
@@ -7,6 +8,9 @@ import { getBranchDirInCaddy } from '../../../entities/sites/get-site-dir';
 import { Branch } from '../../../entities/sites/branch';
 import { getBranch404ErrorRoute } from './get-branch-404-error-route';
 import { getSiteMainDomain } from '../../../entities/sites/get-site-main-domain';
+import Encode = Caddy.Http.Route.Handlers.Encode;
+import FileServer = Caddy.Http.Route.Handlers.FileServer;
+import Headers = Caddy.Http.Route.Handlers.Headers;
 
 export function generateSiteRoutes(site: Site): Caddy.Http.Route[] {
   return !site.branches ? [] : site.branches.map(branch => generateBranchRoute(site, branch));
@@ -83,7 +87,7 @@ function get401ErrorRoute(): Caddy.Http.Route {
 
 // https://caddyserver.com/docs/json/apps/http/servers/routes/handle/encode/encodings/gzip/
 // https://caddy.community/t/gzip-headers-when-using-encode-handler/11781
-const gzipHandler = {
+const gzipHandler: Encode = {
   handler: 'encode',
   encodings: {
     gzip: {},
@@ -93,18 +97,22 @@ const gzipHandler = {
 function getPrimaryRoute(site: Site, branch: Branch): Caddy.Http.Route {
   const branchDirInCaddy = getBranchDirInCaddy(site._id, branch._id);
 
-  const fileHandler = {
+  const fileHandler: FileServer = {
     handler: 'file_server',
     root: branchDirInCaddy,
   };
 
   // https://caddyserver.com/docs/json/apps/http/servers/routes/handle/headers/
-  const headersHandler = {
+  const siteAndBranchHeaders: Header[] = [
+    ...(site.headers || []),
+    ...(branch.headers || []),
+  ];
+  const headersHandler: Headers = {
     handler: 'headers',
     response: {
       set: {
         'Cache-Control': ['public', 'max-age=0', 'must-revalidate'],
-        ...[...(site.headers || []), ...(branch.headers || [])].reduce((prev, { name, value }) => {
+        ...siteAndBranchHeaders.reduce((prev, { name, value }) => {
           // TODO should this be split by comma ?
           prev[name] = [value];
           return prev;

@@ -1,11 +1,11 @@
 import { Request, Response } from 'express';
 import { array, object } from 'joi';
+import { updateSiteInCaddy } from '../../caddy/configuration';
 import { ARRAY_MAX } from '../../constants';
 import { $header } from './header';
 import { emitEvent } from '../../events/emit-event';
 import { EventType } from '../../events/event-type';
 import { wrapAsyncMiddleware } from '../../commons/utils/wrap-async-middleware';
-import { configureSiteInCaddy } from '../../caddy/configuration';
 import { body } from '../../commons/express-joi/body';
 import { canAdminSiteGuard } from './guards/can-admin-site-guard';
 import { Sites } from './site';
@@ -39,7 +39,7 @@ async function handler(req: Request, res: Response): Promise<void> {
     _id: siteId,
   });
 
-  configureSiteInCaddy(site).catch(err => {
+  updateSiteInCaddy(site).catch(err => {
     logger.error(err);
   });
 

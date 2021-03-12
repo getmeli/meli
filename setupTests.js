@@ -10,7 +10,8 @@
 process.env['FORCE_COLOR'] = '1';
 
 // env
-process.env.MELI_URL = 'http://localhost:3001';
+process.env.MELI_PORT = 3999;
+process.env.MELI_URL = 'http://localhost:3999';
 process.env.MELI_MAIL_HOST = 'localhost';
 process.env.MELI_MAIL_PORT = '1025';
 process.env.MELI_BILLING_PRICE_ID = 'price_123';

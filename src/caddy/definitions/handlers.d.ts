@@ -79,7 +79,7 @@ declare namespace Caddy {
         interface Encode {
           '@id'?: string;
           handler: 'encode';
-          encoding?: Encode.Encoding;
+          encodings?: {[name: string]: Encode.Encoding};
           minimum_length?: number;
         }
 
