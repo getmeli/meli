@@ -4,6 +4,7 @@ import { deleteRelease } from './handlers/delete-release';
 import { getRelease } from './handlers/get-release';
 import { apiEndpoint } from '../api/api-endpoint';
 import { ApiScope } from '../api/api-scope';
+import { updateForms } from './handlers/update-forms';
 
 const router = Router();
 
@@ -23,6 +24,15 @@ apiEndpoint({
   handler: updateRelease,
   auth: true,
   apiScope: ApiScope.release_update,
+  router,
+});
+apiEndpoint({
+  name: 'update release',
+  method: 'put',
+  path: '/api/v1/releases/:releaseId/forms',
+  handler: updateForms,
+  auth: true,
+  apiScope: ApiScope.form_update,
   router,
 });
 apiEndpoint({

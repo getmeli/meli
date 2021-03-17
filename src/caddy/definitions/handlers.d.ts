@@ -2,7 +2,8 @@ declare namespace Caddy {
   namespace Http {
     namespace Route {
 
-      type Handler = Handlers.Acme
+      type Handler =
+        Handlers.Acme
         | Handlers.Authentication
         | Handlers.Encode
         | Handlers.Error
@@ -55,7 +56,9 @@ declare namespace Caddy {
                 salt?: string;
               }
 
-              type HashAlgorithm = HashAlgorithms.Bcrypt | HashAlgorithms.Scrypt
+              type HashAlgorithm =
+                HashAlgorithms.Bcrypt
+                | HashAlgorithms.Scrypt
 
               namespace HashAlgorithms {
                 interface Bcrypt {
@@ -84,13 +87,16 @@ declare namespace Caddy {
         }
 
         namespace Encode {
-          type Encoding = Encode.Encodings.Gzip | Encode.Encodings.Zstd;
+          type Encoding =
+            Encode.Encodings.Gzip
+            | Encode.Encodings.Zstd;
 
           namespace Encodings {
             interface Gzip {
               '@id'?: string;
               level?: number;
             }
+
             type Zstd = EMPTY_OBJECT;
           }
         }
@@ -272,7 +278,8 @@ declare namespace Caddy {
           }
 
           namespace LoadBalancing {
-            type SelectionPolicy = SelectionPolicies.First
+            type SelectionPolicy =
+              SelectionPolicies.First
               | SelectionPolicies.Header
               | SelectionPolicies.IpHash
               | SelectionPolicies.LeastConn
@@ -286,32 +293,39 @@ declare namespace Caddy {
                 '@id'?: string;
                 policy: 'first';
               }
+
               interface Header {
                 '@id'?: string;
                 policy: 'header';
                 field?: string;
               }
+
               interface IpHash {
                 '@id'?: string;
                 policy: 'ip_hash';
               }
+
               interface LeastConn {
                 '@id'?: string;
                 policy: 'least_conn';
               }
+
               interface Random {
                 '@id'?: string;
                 policy: 'random';
               }
+
               interface RandomChoose {
                 '@id'?: string;
                 policy: 'random_choose';
                 choose?: number;
               }
+
               interface RoundRobin {
                 '@id'?: string;
                 policy: 'round_robin';
               }
+
               interface UriHash {
                 '@id'?: string;
                 policy: 'uri_hash';
@@ -365,7 +379,7 @@ declare namespace Caddy {
           '@id'?: string;
           handler: 'rewrite';
           method?: string;
-          url?: string;
+          uri?: string;
           strip_path_prefix?: string;
           strip_path_suffix?: string;
           uri_substring?: {
@@ -406,6 +420,7 @@ declare namespace Caddy {
         interface Vars {
           '@id'?: string;
           handler: 'vars';
+
           [name: string]: string;
         }
       }

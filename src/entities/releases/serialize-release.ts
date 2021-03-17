@@ -1,4 +1,5 @@
 import { Release } from './release';
+import { serializeForm } from '../forms/serialize-form';
 
 export function serializeRelease(release: Release) {
   return {
@@ -7,5 +8,6 @@ export function serializeRelease(release: Release) {
     name: release.name,
     siteId: release.siteId,
     branches: release.branches || [],
+    forms: release.forms.map(serializeForm) || [],
   };
 }

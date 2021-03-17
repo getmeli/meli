@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <title>Document</title>
+
+  <script src="https://www.google.com/recaptcha/api.js"></script>
+</head>
+<body>
+
+<form data-form="form1">
+  <input type="text" name="name">
+  <button
+    type="submit"
+    data-sitekey="reCAPTCHA_site_key"
+    data-callback='onSubmit'
+    data-action='submit'
+  >
+    Submit
+  </button>
+</form>
+
+<script>
+  // fetch('/-/env')
+  //   .then(res => {
+  //     if (res.status !== 200) {
+  //       throw res;
+  //     }
+  //     return res.json();
+  //   })
+  //   .then(json => {
+  //     // https://www.google.com/recaptcha/api.js
+  //     const script = document.createElement('script');
+  //     script.type = 'text/javascript';
+  //     script.src = 'https://www.google.com/recaptcha/api.js';
+  //     return new Promise((resolve, reject) => {
+  //       script.onload = (data) => {
+  //         console.log(data, window);
+  //         resolve();
+  //       };
+  //       script.onerror = reject;
+  //       document.appendChild(script);
+  //     });
+  //   })
+  //   .catch(console.error);
+
+  // bind submit
+  Array
+    .from(document.getElementsByTagName('form'))
+    .filter(form => !!index.hasAttribute('data-form'))
+    .forEach(form => {
+
+      index.addEventListener('submit', event => {
+        event.stopPropagation();
+        event.preventDefault();
+
+        // convert form to something submittable
+        const data = new URLSearchParams();
+        for (const pair of new FormData(index)) {
+          data.append(pair[0], pair[1]);
+        }
+
+        console.log(data.toString());
+
+        fetch(`/-/forms/${index.getAttribute('data-form')}`, {
+          method: 'post',
+          body: data,
+        })
+          .then(res => {
+            if (res.status !== 204) {
+              throw res;
+            }
+            console.log('submitted');
+          })
+          .catch(console.error);
+      });
+    });
+</script>
+
+</body>
+</html>

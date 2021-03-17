@@ -1,0 +1,4 @@
+forms:
+  form1:
+    type: email
+    email: test@test.com

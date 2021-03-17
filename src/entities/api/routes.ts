@@ -25,6 +25,11 @@ apiEndpoint({
   auth: true,
   router,
 });
+/*
+ * NEVER ALLOW THIS ENDPOINT TO BE USED VIA API
+ * AS IT WILL ALLOW PRIVILEGE ESCALATION BY CREATING
+ * NEW TOKENS WITH ADDITIONAL SCOPES
+ */
 apiEndpoint({
   name: 'create api token',
   method: 'post',

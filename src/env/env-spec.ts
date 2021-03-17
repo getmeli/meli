@@ -247,4 +247,10 @@ export const envSpec: EnvSpec<Env> = {
     }),
     schema: object().optional().default(<MulterLimitOptions>{}),
   },
+  MELI_GOOGLE_RECAPTCHA_SITE_KEY: {
+    schema: string().optional(),
+  },
+  MELI_GOOGLE_RECAPTCHA_SECRET_KEY: {
+    schema: string().optional(),
+  },
 };

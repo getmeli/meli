@@ -9,6 +9,7 @@ import { Invite } from '../entities/orgs/invite';
 import { Member } from '../entities/members/member';
 import { Release } from '../entities/releases/release';
 import { Branch } from '../entities/sites/branch';
+import { Form } from '../entities/forms/form';
 
 export interface UserEventData {
   user: User;
@@ -195,6 +196,10 @@ export interface SiteBranchPasswordRemovedEventData extends SiteEventData {
 
 export interface SiteBranchRedirectsSetEventData extends SiteEventData {
   branch: Branch;
+}
+
+export interface FormEvent {
+  form: Form;
 }
 
 export interface EventData {
