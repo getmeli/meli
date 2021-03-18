@@ -9,7 +9,7 @@ const logger = new Logger('app.server:validateCaptcha');
 
 export const validateCaptcha = env.MELI_GOOGLE_RECAPTCHA_SECRET_KEY ? (
   (req: Request, res: Response, next: NextFunction) => {
-    const token = req.headers.token;
+    const { token } = req.headers;
 
     if (!token) {
       throw new BadRequestError('Missing captcha token');

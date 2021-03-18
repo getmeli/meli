@@ -1,36 +1,13 @@
 import { Handler, Request, Response } from 'express';
 import { wrapAsyncMiddleware } from '../../../commons/utils/wrap-async-middleware';
-import { sendEmail } from '../../../emails/send-email';
 import { validateCaptcha } from '../guards/validate-captcha';
 import { Sites } from '../../sites/site';
 import { NotFoundError } from '../../../commons/errors/not-found-error';
 import { AppError } from '../../../commons/errors/app-error';
 import { Releases } from '../release';
-import { EmailForm } from '../../forms/form';
 import multer from 'multer';
 import { env } from '../../../env/env';
-
-function submitEmailForm(form: EmailForm, formData: any, files: Express.Multer.File[]): Promise<void> {
-  if (!form.recipient) {
-    throw new AppError('Recipient not defined');
-  }
-  console.log(files);
-  return sendEmail(
-    [form.recipient],
-    `Form submission - ${form.name}`,
-    'form-submission',
-    {
-      formName: form.name,
-      formData: JSON.stringify(formData, null, 2),
-    },
-    files.map(upload => ({
-      filename: `${upload.fieldname}_${upload.originalname}`,
-      path: upload.path,
-      encoding: upload.encoding,
-      contentType: upload.mimetype,
-    })),
-  );
-}
+import { submitEmailForm } from '../../forms/submit-email-form';
 
 async function handler(req: Request, res: Response): Promise<void> {
   const { siteId, branchId, formName } = req.params;
