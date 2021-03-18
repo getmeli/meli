@@ -1,0 +1,16 @@
+apiVersion: projectcontour.io/v1
+kind: HTTPProxy
+metadata:
+  name: meli-ing
+  namespace: meli
+spec:
+  virtualhost:
+    fqdn: meli.domain.io
+  routes:
+   - services:
+     - name: meli-svc
+       port: 80
+       requestHeadersPolicy:
+         set:
+         - name: X-Forwarded-Proto
+           value: https
