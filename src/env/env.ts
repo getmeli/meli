@@ -66,6 +66,7 @@ export interface Env {
   MELI_PASSWORD: string;
   MELI_MAX_ORGS: number;
   MELI_MULTER_LIMITS: MulterLimitOptions;
+  MELI_MULTER_FORM_LIMITS: MulterLimitOptions;
   MELI_GOOGLE_RECAPTCHA_SITE_KEY: string;
   MELI_GOOGLE_RECAPTCHA_SECRET_KEY: string;
 }

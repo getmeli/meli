@@ -4,80 +4,99 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
   <title>Document</title>
 
   <script src="https://www.google.com/recaptcha/api.js"></script>
+
 </head>
 <body>
 
 <form data-form="form1">
   <input type="text" name="name">
-  <button
-    type="submit"
-    data-sitekey="reCAPTCHA_site_key"
-    data-callback='onSubmit'
-    data-action='submit'
-  >
-    Submit
-  </button>
+  <input type="file" name="logo">
+  <button type="submit">Submit</button>
 </form>
 
 <script>
-  // fetch('/-/env')
-  //   .then(res => {
-  //     if (res.status !== 200) {
-  //       throw res;
-  //     }
-  //     return res.json();
-  //   })
-  //   .then(json => {
-  //     // https://www.google.com/recaptcha/api.js
-  //     const script = document.createElement('script');
-  //     script.type = 'text/javascript';
-  //     script.src = 'https://www.google.com/recaptcha/api.js';
-  //     return new Promise((resolve, reject) => {
-  //       script.onload = (data) => {
-  //         console.log(data, window);
-  //         resolve();
-  //       };
-  //       script.onerror = reject;
-  //       document.appendChild(script);
-  //     });
-  //   })
-  //   .catch(console.error);
+  const FORM_NAME_KEY = 'data-form';
 
-  // bind submit
-  Array
-    .from(document.getElementsByTagName('form'))
-    .filter(form => !!index.hasAttribute('data-form'))
-    .forEach(form => {
+  async function getEnv() {
+    const response = await fetch('/-/env');
+    if (response.status !== 200) {
+      throw response;
+    }
+    return response.json();
+  }
 
-      index.addEventListener('submit', event => {
-        event.stopPropagation();
-        event.preventDefault();
-
-        // convert form to something submittable
-        const data = new URLSearchParams();
-        for (const pair of new FormData(index)) {
-          data.append(pair[0], pair[1]);
-        }
-
-        console.log(data.toString());
-
-        fetch(`/-/forms/${index.getAttribute('data-form')}`, {
-          method: 'post',
-          body: data,
-        })
-          .then(res => {
-            if (res.status !== 204) {
-              throw res;
-            }
-            console.log('submitted');
-          })
-          .catch(console.error);
-      });
+  // https://developers.google.com/recaptcha/docs/v3
+  async function bindGoogleRecaptcha(siteKey) {
+    const script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = `https://www.google.com/recaptcha/api.js?render=${siteKey}`;
+    return new Promise((resolve, reject) => {
+      script.onload = resolve;
+      script.onerror = reject;
+      document.body.appendChild(script);
     });
+  }
+
+  async function submitForm(form, token) {
+    const data = new FormData(form);
+
+    // call backend
+    const response = await fetch(`/-/forms/${form.getAttribute(FORM_NAME_KEY)}`, {
+      method: 'post',
+      headers: {
+        'Token': token,
+      },
+      body: data,
+    });
+    if (response.status !== 204) {
+      throw response;
+    }
+  }
+
+  async function bootstrapForm(form, env) {
+    form.addEventListener('submit', event => {
+      event.preventDefault();
+
+      const submit = (token) => {
+        submitForm(form, token)
+          .then(() => {
+            console.log('submit success');
+          })
+          .catch(err => {
+            console.error('failed to submit form', err);
+          });
+      };
+
+      if (env.GOOGLE_RECAPTCHA_SITE_KEY) {
+        // https://developers.google.com/recaptcha/docs/v3#programmatically_invoke_the_challenge
+        grecaptcha.ready(() => {
+          grecaptcha
+            .execute(env.GOOGLE_RECAPTCHA_SITE_KEY, { action: 'submit' })
+            .then(submit);
+        });
+      } else {
+        submit();
+      }
+    });
+  }
+
+  async function main() {
+    const env = await getEnv();
+
+    if (env.GOOGLE_RECAPTCHA_SITE_KEY) {
+      await bindGoogleRecaptcha(env.GOOGLE_RECAPTCHA_SITE_KEY);
+    }
+
+    Array.from(document.getElementsByTagName('form'))
+      .filter(form => !!form.hasAttribute(FORM_NAME_KEY))
+      .forEach(form => bootstrapForm(form, env));
+  }
+
+  main()
+    .catch(console.error);
 </script>
 
 </body>

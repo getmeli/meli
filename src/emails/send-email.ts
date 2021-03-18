@@ -5,6 +5,7 @@ import { emails } from './emails';
 import { compile, TemplateDelegate } from 'handlebars';
 import { env } from '../env/env';
 import { Logger } from '../commons/logger/logger';
+import { Attachment } from 'nodemailer/lib/mailer';
 
 const logger = new Logger('meli.api:sendEmailTemplate');
 
@@ -13,6 +14,7 @@ export async function sendEmail(
   subject: string,
   templateName: string,
   templateVariables: { [key: string]: any },
+  attachments?: Attachment[],
 ): Promise<void> {
   const templatePath = path.resolve(env.MELI_MAIL_TEMPLATE_DIR, `${templateName}.hbs`);
 
@@ -39,6 +41,7 @@ export async function sendEmail(
         to: email,
         subject: `${env.MELI_MAIL_SUBJECT_PREFIX} ${subject}`,
         text,
+        attachments,
       });
     }),
   );
