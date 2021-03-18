@@ -10,7 +10,7 @@ spec:
    - services:
      - name: meli-svc
        port: 80
-       requestHeadersPolicy:
+       requestHeadersPolicy: #Required if SSL is Offloaded
          set:
-         - name: X-Forwarded-Proto
+         - name: X-Forwarded-Proto 
            value: https
