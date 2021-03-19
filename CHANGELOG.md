@@ -1,3 +1,10 @@
+# [1.0.0-beta.19](https://github.com/getmeli/meli/compare/v1.0.0-beta.18...v1.0.0-beta.19) (2021-03-19)
+
+
+### Bug Fixes
+
+* error in release serialize ([9969752](https://github.com/getmeli/meli/commit/9969752eea17a50a214768918b010e5f51ddb7f5))
+
 # [1.0.0-beta.18](https://github.com/getmeli/meli/compare/v1.0.0-beta.17...v1.0.0-beta.18) (2021-03-19)
 
 
