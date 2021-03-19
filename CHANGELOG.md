@@ -1,3 +1,11 @@
+# [1.0.0-beta.20](https://github.com/getmeli/meli/compare/v1.0.0-beta.19...v1.0.0-beta.20) (2021-03-19)
+
+
+### Bug Fixes
+
+* cross-device link error on release upload ([7c261f1](https://github.com/getmeli/meli/commit/7c261f1406120e5ddddd11c09f95afb12ad84cf5))
+* missing optional check in serializers ([ca36dcb](https://github.com/getmeli/meli/commit/ca36dcb1e86c10ffdfa499df3614069facb3dd06))
+
 # [1.0.0-beta.19](https://github.com/getmeli/meli/compare/v1.0.0-beta.18...v1.0.0-beta.19) (2021-03-19)
 
 
