@@ -5,7 +5,7 @@ metadata:
   namespace: meli
 spec:
   virtualhost:
-    fqdn: meli.domain.io
+    fqdn: meli.domain.io #ChangeMe
   routes:
    - services:
      - name: meli-svc
@@ -14,3 +14,22 @@ spec:
          set:
          - name: X-Forwarded-Proto
            value: https
+# ATM Contour does not support Wildcard FQDN - you have to add Additional config for your sites.
+# TODO: Add Nginx-Ingress Example with Wildcard
+#---           
+#apiVersion: projectcontour.io/v1
+#kind: HTTPProxy
+#metadata:
+#  name: meli-ing
+#  namespace: meli
+#spec:
+#  virtualhost:
+#    fqdn: site.meli.domain.io #ChangeMe
+#  routes:
+#   - services:
+#     - name: meli-svc
+#       port: 80
+#       requestHeadersPolicy: #Required if SSL is Offloaded
+#         set:
+#         - name: X-Forwarded-Proto
+#           value: https           
