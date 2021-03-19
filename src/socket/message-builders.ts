@@ -6,6 +6,7 @@ import { getBranchUrl } from '../entities/sites/get-branch-url';
 import { Branch } from '../entities/sites/branch';
 import { Team } from '../entities/teams/team';
 import { Release } from '../entities/releases/release';
+import { serializeForm } from '../entities/forms/serialize-form';
 
 function serializeTeam(team: Team) {
   return {
@@ -25,7 +26,7 @@ function serializeBranch(site: Site, branch: Branch) {
     slug: branch.slug,
     release: branch.release,
     hasPassword: !!branch.password,
-    redirects: branch.redirects.map(redirect => ({
+    redirects: branch.redirects?.map(redirect => ({
       _id: redirect._id,
       type: redirect.type,
       path: redirect.path,
@@ -61,6 +62,7 @@ function serializeRelease(release: Release) {
     name: release.name,
     date: release.date,
     branches: release.branches,
+    forms: release.forms?.map(serializeForm),
   };
 }
 
