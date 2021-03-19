@@ -7,39 +7,43 @@ import { Logger } from '../../../commons/logger/logger';
 
 const logger = new Logger('app.server:validateCaptcha');
 
-export const validateCaptcha = env.MELI_GOOGLE_RECAPTCHA_SECRET_KEY ? (
-  (req: Request, res: Response, next: NextFunction) => {
-    const { token } = req.headers;
+function verifyGoogleRecaptchaV3(req: Request, res: Response, next: NextFunction) {
+  const { token } = req.headers;
 
-    if (!token) {
-      throw new BadRequestError('Missing captcha token');
-    }
-
-    // https://developers.google.com/recaptcha/docs/verify
-    axios
-      .post('https://www.google.com/recaptcha/api/siteverify', {}, {
-        params: {
-          secret: env.MELI_GOOGLE_RECAPTCHA_SECRET_KEY,
-          response: token,
-        },
-      })
-      .then(({ data }) => {
-        if (data.success && data.score > 0.5) {
-          delete req.body.token;
-          return next();
-        }
-
-        if (data['error-codes']) {
-          logger.debug('Could not verify recaptcha', data['error-codes']);
-        }
-
-        next(new AppError('Something went wrong'));
-      })
-      .catch(next);
+  if (!token) {
+    throw new BadRequestError('Missing captcha token');
   }
-) : (
-  (req, res, next) => {
-    logger.warn('You are using forms without a recaptcha, this is greatly discouraged');
-    next();
-  }
+
+  // https://developers.google.com/recaptcha/docs/verify
+  axios
+    .post('https://www.google.com/recaptcha/api/siteverify', {}, {
+      params: {
+        secret: env.MELI_GOOGLE_RECAPTCHA_SECRET_KEY,
+        response: token,
+      },
+    })
+    .then(({ data }) => {
+      if (data.success && data.score > 0.5) {
+        delete req.body.token;
+        return next();
+      }
+
+      if (data['error-codes']) {
+        logger.debug('Could not verify recaptcha', data['error-codes']);
+      }
+
+      next(new AppError('Unsuccessful captcha verification'));
+    })
+    .catch(next);
+}
+
+function passThrough(req, res, next) {
+  logger.warn('You are using forms without a recaptcha, this is greatly discouraged');
+  next();
+}
+
+export const validateCaptcha = (
+  env.MELI_GOOGLE_RECAPTCHA_SECRET_KEY && env.MELI_GOOGLE_RECAPTCHA_SITE_KEY
+    ? verifyGoogleRecaptchaV3
+    : passThrough
 );
