@@ -248,7 +248,7 @@ spec:
                   key: mongo-password
             - name: MONGODB_DATABASE
               value: meli              
-            - name: MONGODB_ROOT_PASSWOR
+            - name: MONGODB_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: mongo
