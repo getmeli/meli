@@ -22,8 +22,9 @@ import { getBranchUrl } from '../../get-branch-url';
 import { configureSiteInCaddy } from '../../../../caddy/configuration';
 import { Logger } from '../../../../commons/logger/logger';
 import { slugify } from '../../../../utils/slugify';
+import { parseConfig } from '../../yaml-config/parse-config';
 
-async function createOrGetBranch(site: Site, branchName: string): Promise<Branch> {
+async function findOrCreateBranch(site: Site, branchName: string): Promise<Branch> {
   let branch: Branch = site.branches.find(c => c.name === branchName);
 
   if (!branch) {
@@ -53,11 +54,11 @@ async function createOrGetBranch(site: Site, branchName: string): Promise<Branch
   return branch;
 }
 
-async function extractReleaseFiles(releaseDirectory: string, file: Express.Multer.File) {
-  await ensureEmptyDirectory(releaseDirectory);
+async function extractReleaseFiles(file: Express.Multer.File, toPath: string) {
+  await ensureEmptyDirectory(toPath);
   await tar.extract({
     file: file.path,
-    cwd: releaseDirectory,
+    cwd: toPath,
   });
 }
 
@@ -78,14 +79,24 @@ const logger = new Logger('meli.api:uploadRelease');
 async function handler(req: Request, res: Response): Promise<void> {
   const { file } = req;
   const { siteId } = req.params;
+  const branchNames: string[] = req.body.branches;
+
+  logger.debug('file uploaded at', file.path);
+
+  const extractPath = await promises.mkdtemp('release');
+
+  await extractReleaseFiles(file, extractPath);
+
+  const siteConfig = await parseConfig(extractPath);
+
+  logger.debug('siteConfig', siteConfig);
 
   const site = await Sites().findOne({
     _id: siteId,
   });
 
-  const branchNames: string[] = req.body.branches;
   const branches = await Promise.all(
-    branchNames.map(branchName => createOrGetBranch(site, branchName)),
+    branchNames.map(branchName => findOrCreateBranch(site, branchName)),
   );
 
   const release: Release = {
@@ -94,18 +105,24 @@ async function handler(req: Request, res: Response): Promise<void> {
     name: req.body.release || uuid(),
     date: new Date(),
     branches: branches.map(({ _id }) => _id),
+    forms: !siteConfig ? undefined : Object.keys(siteConfig.forms).map(key => ({
+      ...siteConfig.forms[key],
+      name: key,
+    })),
   };
+
+  // move extracted files to final destination
+  await promises.rename(extractPath, getReleaseDir(release));
 
   await Releases().insertOne(release);
 
-  const releaseDirectory = getReleaseDir(release);
-  await extractReleaseFiles(releaseDirectory, file);
-
   await Promise.all(
-    branches.map(async branch => {
-      await setBranchRelease(site, branch, release);
-      await linkBranchToRelease(site._id, branch._id, release);
-    }),
+    branches.map(async branch => (
+      Promise.all([
+        setBranchRelease(site, branch, release),
+        linkBranchToRelease(site._id, branch._id, release),
+      ])
+    )),
   );
 
   if (!site.mainBranch) {

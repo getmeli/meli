@@ -3,6 +3,8 @@
   https://github.com/facebook/jest/issues/3853#issuecomment-317117151
  */
 
+const os = require('os');
+
 /*
  * Force chalk to use colors, so we always have them in logs
  * https://github.com/chalk/chalk#chalksupportscolor
@@ -22,3 +24,4 @@ process.env.MELI_JWT_SECRET = 'jwtSecret';
 process.env.MELI_MONGO_URI = 'mongodb://mocked:27017/mocked';
 process.env.MELI_USER = 'user';
 process.env.MELI_PASSWORD = 'password';
+process.env.MELI_STORAGE_DIR = os.tmpdir();

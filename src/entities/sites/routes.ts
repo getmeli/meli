@@ -35,6 +35,7 @@ import { setSiteLogo } from './handlers/set-site-logo';
 import { getSiteLogo } from './handlers/get-site-logo';
 import { setBranchHeaders } from './handlers/branches/set-branch-headers';
 import { setSiteHeaders } from './set-site-headers';
+import { submitForm } from '../releases/handlers/submit-form';
 
 const router = Router();
 
@@ -351,6 +352,17 @@ apiEndpoint({
   handler: listSiteHookDeliveries,
   auth: true,
   apiScope: ApiScope.site_hook_read,
+  router,
+});
+
+// forms
+
+apiEndpoint({
+  name: 'submit a form',
+  method: 'post',
+  path: '/api/v1/sites/:siteId/branches/:branchId/forms/:formName',
+  handler: submitForm,
+  apiScope: ApiScope.form_submit,
   router,
 });
 

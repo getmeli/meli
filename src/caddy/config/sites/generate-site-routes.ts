@@ -6,6 +6,9 @@ import { getBranchDirInCaddy } from '../../../entities/sites/get-site-dir';
 import { Branch } from '../../../entities/sites/branch';
 import { getBranch404ErrorRoute } from './get-branch-404-error-route';
 import { getSiteMainDomain } from '../../../entities/sites/get-site-main-domain';
+import { getReverseProxyDial } from '../../utils/get-reverse-proxy-dial';
+import { env } from '../../../env/env';
+import Route = Caddy.Http.Route;
 
 export function generateSiteRoutes(site: Site): any[] {
   const group = `site_${site._id}`;
@@ -52,6 +55,8 @@ export function generateSiteRoutes(site: Site): any[] {
             ...(!branch.redirects ? [] : branch.redirects.map(redirect => (
               getRedirectRoute(site, branch, redirect)
             ))),
+            getFormsRoute(site, branch),
+            getEnvRoute(),
             getPrimaryRoute(site, branch),
           ],
           errors: {
@@ -139,6 +144,47 @@ function getPrimaryRoute(site: Site, branch: Branch) {
       headersHandler,
       gzipHandler,
       fileHandler,
+    ],
+  };
+}
+
+function getEnvRoute(): Route {
+  return {
+    match: [{
+      path: ['/-/env'],
+    }],
+    handle: [
+      {
+        handler: 'static_response',
+        body: JSON.stringify({
+          GOOGLE_RECAPTCHA_SITE_KEY: env.MELI_GOOGLE_RECAPTCHA_SITE_KEY,
+        }),
+      },
+    ],
+  };
+}
+
+function getFormsRoute(site: Site, branch: Branch): Route {
+  return {
+    match: [{
+      path: ['/-/forms/*'],
+      method: ['POST'],
+    }],
+    handle: [
+      {
+        handler: 'rewrite',
+        strip_path_prefix: '/-/forms/',
+      },
+      {
+        handler: 'rewrite',
+        uri: `/api/v1/sites/${site._id}/branches/${branch._id}/forms/{http.request.uri.path}`,
+      },
+      {
+        handler: 'reverse_proxy',
+        upstreams: [{
+          dial: getReverseProxyDial(env.MELI_URL_INTERNAL),
+        }],
+      },
     ],
   };
 }

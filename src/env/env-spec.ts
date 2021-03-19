@@ -247,4 +247,16 @@ export const envSpec: EnvSpec<Env> = {
     }),
     schema: object().optional().default(<MulterLimitOptions>{}),
   },
+  MELI_MULTER_FORM_LIMITS: {
+    transform: stringToJson(err => {
+      throw new Error(`Invalid multer options: ${err}`);
+    }),
+    schema: object().optional().default(<MulterLimitOptions>{}),
+  },
+  MELI_GOOGLE_RECAPTCHA_SITE_KEY: {
+    schema: string().optional(),
+  },
+  MELI_GOOGLE_RECAPTCHA_SECRET_KEY: {
+    schema: string().optional(),
+  },
 };

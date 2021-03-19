@@ -40,6 +40,7 @@
     "@types/socket.io": "^2.1.13",
     "@types/socket.io-redis": "^1.0.27",
     "@types/supertest": "^2.0.10",
+    "@types/yaml": "^1.9.7",
     "@typescript-eslint/eslint-plugin": "^3.9.0",
     "@typescript-eslint/parser": "^3.9.0",
     "eslint": "^7.7.0",

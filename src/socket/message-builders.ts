@@ -10,6 +10,7 @@ import { Release } from '../entities/releases/release';
 function serializeTeam(team: Team) {
   return {
     _id: team._id,
+    orgId: team.orgId,
     createdAt: team.createdAt,
     updatedAt: team.updatedAt,
     name: team.name,
@@ -86,6 +87,18 @@ export const messageBuilders: Partial<{
     room: `site.${site._id}`,
     data: {
       release: serializeRelease(release),
+    },
+  }),
+  [EventType.team_added]: ({ team }: EventData.TeamEventData) => ({
+    room: `org.${team.orgId}`,
+    data: {
+      team: serializeTeam(team),
+    },
+  }),
+  [EventType.team_deleted]: ({ team }: EventData.TeamEventData) => ({
+    room: `team.${team._id}`,
+    data: {
+      team: serializeTeam(team),
     },
   }),
 };

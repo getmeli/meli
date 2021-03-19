@@ -79,4 +79,6 @@ export enum ApiScope {
   release_read = 'release_read',
   release_update = 'release_update',
   release_delete = 'release_delete',
+  form_update = 'form_update',
+  form_submit = 'form_submit',
 }
