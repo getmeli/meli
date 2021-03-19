@@ -78,11 +78,14 @@ spec:
             - name: sites
               mountPath: /sites
               subPath: sites              
-          #livenessProbe:
+          #livenessProbe: #Uncomment & change host header value
           #  httpGet:
           #    path: /
           #    port: admin
           #    scheme: HTTP
+          #    httpHeaders:
+          #      - name: Host
+          #        value: "meli.domain.io" #ChangeMe            
           #  initialDelaySeconds: 60
           #  timeoutSeconds: 5
           #  periodSeconds: 10
@@ -93,6 +96,9 @@ spec:
           #    path: /
           #    port: admin
           #    scheme: HTTP
+          #    httpHeaders:
+          #      - name: Host
+          #        value: "meli.domain.io" #ChangeMe 
           #  initialDelaySeconds: 30
           #  timeoutSeconds: 5
           #  periodSeconds: 10
