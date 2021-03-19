@@ -1,3 +1,17 @@
+# [1.0.0-beta.18](https://github.com/getmeli/meli/compare/v1.0.0-beta.17...v1.0.0-beta.18) (2021-03-19)
+
+
+### Bug Fixes
+
+* sidebar not updating when create/remove team ([#193](https://github.com/getmeli/meli/issues/193)) ([04b3946](https://github.com/getmeli/meli/commit/04b394614873dfd1e82b99821a1f5975477995f0))
+
+
+### Features
+
+* expose team.orgId in api ([0693f5d](https://github.com/getmeli/meli/commit/0693f5d67349734af9be330fb2d1338f13da0356))
+* forms ([#208](https://github.com/getmeli/meli/issues/208)) ([2a0fba4](https://github.com/getmeli/meli/commit/2a0fba451bad95141e25cc397bc6de362510bc59))
+* Initial K8s Manifest ([#205](https://github.com/getmeli/meli/issues/205)) ([5a5b46b](https://github.com/getmeli/meli/commit/5a5b46bc598ea358674e2ac80ab42fce339d1d64))
+
 # [1.0.0-beta.17](https://github.com/getmeli/meli/compare/v1.0.0-beta.16...v1.0.0-beta.17) (2021-03-10)
 
 
