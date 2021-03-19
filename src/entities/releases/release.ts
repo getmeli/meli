@@ -7,7 +7,7 @@ export interface Release {
   name: string;
   date: Date;
   branches: string[];
-  forms: Form[];
+  forms?: Form[];
 }
 
 export const Releases = () => AppDb.db.collection<Release>('releases');

@@ -8,6 +8,6 @@ export function serializeRelease(release: Release) {
     name: release.name,
     siteId: release.siteId,
     branches: release.branches || [],
-    forms: release.forms.map(serializeForm) || [],
+    forms: release.forms?.map(serializeForm) || [],
   };
 }
