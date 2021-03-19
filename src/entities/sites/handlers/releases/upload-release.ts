@@ -23,6 +23,8 @@ import { configureSiteInCaddy } from '../../../../caddy/configuration';
 import { Logger } from '../../../../commons/logger/logger';
 import { slugify } from '../../../../utils/slugify';
 import { parseConfig } from '../../yaml-config/parse-config';
+import { env } from '../../../../env/env';
+import path from 'path';
 
 async function findOrCreateBranch(site: Site, branchName: string): Promise<Branch> {
   let branch: Branch = site.branches.find(c => c.name === branchName);
@@ -76,6 +78,12 @@ async function setBranchRelease(site: Site, branch: Branch, release: Release): P
 
 const logger = new Logger('meli.api:uploadRelease');
 
+async function getExtractPath(): Promise<string> {
+  const tmpSiteDir = path.join(env.MELI_SITES_DIR, 'tmp');
+  await promises.mkdir(tmpSiteDir, { recursive: true });
+  return path.join(tmpSiteDir, uuid());
+}
+
 async function handler(req: Request, res: Response): Promise<void> {
   const { file } = req;
   const { siteId } = req.params;
@@ -83,7 +91,7 @@ async function handler(req: Request, res: Response): Promise<void> {
 
   logger.debug('file uploaded at', file.path);
 
-  const extractPath = await promises.mkdtemp('release');
+  const extractPath = await getExtractPath();
 
   await extractReleaseFiles(file, extractPath);
 
