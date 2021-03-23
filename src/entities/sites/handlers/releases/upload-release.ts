@@ -120,7 +120,9 @@ async function handler(req: Request, res: Response): Promise<void> {
   };
 
   // move extracted files to final destination
-  await promises.rename(extractPath, getReleaseDir(release));
+  const releaseDir = getReleaseDir(release);
+  await promises.mkdir(releaseDir, { recursive: true });
+  await promises.rename(extractPath, releaseDir);
 
   await Releases().insertOne(release);
 
