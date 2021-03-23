@@ -1,3 +1,10 @@
+# [1.0.0-beta.21](https://github.com/getmeli/meli/compare/v1.0.0-beta.20...v1.0.0-beta.21) (2021-03-23)
+
+
+### Bug Fixes
+
+* missing release dir ([d7f8672](https://github.com/getmeli/meli/commit/d7f8672ca63290fe6ea1bc27ae895148b9047944))
+
 # [1.0.0-beta.20](https://github.com/getmeli/meli/compare/v1.0.0-beta.19...v1.0.0-beta.20) (2021-03-19)
 
 
