@@ -1,0 +1,12 @@
+@import '../../../styles/variables';
+
+.gitea {
+  background: $gitea-bg;
+}
+
+.icon {
+  display: block;
+  width: 100%;
+  position: relative;
+  bottom: -2px;
+}

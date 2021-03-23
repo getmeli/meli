@@ -1,0 +1,32 @@
+$sidebar-width: 300px;
+.app {
+  display: flex;
+  position: relative;
+}
+
+$header-height: 70px;
+
+.header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: $sidebar-width;
+  height: $header-height;
+  display: flex;
+  align-items: center;
+}
+
+.sidebar {
+  width: $sidebar-width;
+  min-height: 100vh;
+  padding-top: $header-height;
+}
+
+.main {
+  min-height: 100vh;
+  //padding-top: 30px;
+  padding-bottom: 100px;
+  flex-direction: column;
+  display: flex;
+  flex-grow: 1;
+}

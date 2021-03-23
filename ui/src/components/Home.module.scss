@@ -1,0 +1,33 @@
+@import '../styles/variables';
+
+.container {
+  padding-top: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logo {
+  width: 100px;
+  position: relative;
+}
+
+.inspire {
+  max-width: 350px;
+  text-align: center;
+}
+
+.quoteContainer {
+  margin-top: 100px;
+  position: relative;
+  font-size: .8em;
+}
+
+.quoteIcon {
+  position: absolute;
+  font-size: 10rem;
+  color: transparentize($dark, .98);
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}

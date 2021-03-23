@@ -1,0 +1,30 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.title {
+  font-size: 3rem;
+  text-align: center;
+  font-family: 'Source Serif Pro', serif;
+  margin-bottom: 0;
+}
+
+.grid {
+  width: 300px;
+
+  @include media-breakpoint-down(xs) {
+    width: 100%;
+  }
+}
+
+.add {
+  text-transform: uppercase;
+  font-weight: bold;
+  text-align: center !important;
+  //border: 2px solid $gray-200 !important;
+}

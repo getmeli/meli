@@ -1,0 +1,246 @@
+@import './variables';
+@import '~react-dates/lib/css/_datepicker.css';
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  //text-transform: capitalize;
+}
+
+h1,
+h2 {
+  line-height: 1.4;
+}
+
+h3 {
+  line-height: 1.6;
+}
+
+.btn {
+  height: 50px;
+  text-transform: uppercase;
+}
+
+.btn-primary,
+.btn-secondary,
+.btn-danger,
+.btn-success,
+.btn-warn,
+.btn-info {
+  color: $light;
+}
+
+.btn-outline-primary,
+.btn-outline-secondary,
+.btn-outline-danger,
+.btn-outline-success,
+.btn-outline-warn,
+.btn-outline-info {
+  &:hover {
+    &:not([disabled]) {
+      color: $light;
+    }
+  }
+}
+
+.btn-sm {
+  height: 30px;
+  border-radius: 0;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0 1rem;
+}
+
+.card {
+  //box-shadow: $_boxShadow;
+  //background: linear-gradient(177.89deg, #ffffff 0%, #f8f5ff 97.11%), #ffffff;
+  background: $_lightGray;
+  border-radius: $border-radius;
+  border: none;
+
+  &.narrow {
+    width: 440px;
+  }
+
+  .card-body {
+    padding: 30px;
+  }
+
+  .card-header {
+    background: none;
+    border-bottom: 2px solid darken($gray-100, 1%);
+    height: 60px;
+    flex-shrink: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    display: flex;
+    align-items: center;
+
+    .card-header-title {
+      font-weight: 600;
+      font-size: 18px;
+      line-height: 110%;
+    }
+
+    &.no-border {
+      border-bottom: none;
+    }
+  }
+}
+
+.list-group-item {
+  transition: all $transition-duration linear;
+}
+
+.ReactModalPortal {
+  position: relative;
+  z-index: 2;
+}
+
+@mixin tableRow($class, $color) {
+  &.#{$class} {
+    $borderColor: transparentize($color, 0.75);
+
+    color: $color;
+    background: transparentize($color, 0.95) !important;
+    border: 2px solid $borderColor !important;
+
+    td {
+      border-top: 2px solid $borderColor !important;
+      border-bottom: 2px solid $borderColor !important;
+    }
+  }
+}
+
+.table {
+  border: $table-border-width solid $table-border-color;
+
+  thead {
+    th {
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 120%;
+      color: #7153ac;
+      border-bottom: 0;
+    }
+  }
+
+  tr {
+    background: $light;
+    transition: background $transition-duration linear;
+
+    @include tableRow(danger, $danger);
+    @include tableRow(success, $success);
+
+
+    &.hoverable {
+      cursor: pointer;
+
+      &:hover {
+        background: transparentize($light, 0.95) !important;
+      }
+    }
+  }
+
+  td {
+    vertical-align: middle;
+  }
+
+  thead {
+    tr {
+      background: $table-head-bg;
+    }
+  }
+}
+
+// badges
+
+.badge {
+  //margin-left: 10px;
+  font-size: 0.75em;
+  line-height: 120%;
+}
+
+.badge-success {
+  //background: $_greenGradient;
+}
+
+.bagde-warning,
+.badge-secondary {
+  //background: $_orangeGradient;
+}
+
+.bagde-danger {
+  //background: $_redGradient;
+}
+
+.bagde-primary {
+  //background: $_spaceGradient;
+}
+
+.badge-info {
+  //background: linear-gradient(241.58deg, #cbbaed 0%, #7153ac 100%);
+  color: $light;
+}
+
+ol > li {
+  margin-bottom: 1rem;
+}
+
+.link, .btn-link {
+  color: $link-color;
+  cursor: pointer;
+
+  // make it applicable to buttons
+  padding: 0;
+  margin: 0;
+  background: none;
+  border: none;
+  outline: none !important;
+  text-transform: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+/* lists */
+
+.list-group-item {
+  border-radius: $border-radius !important;
+  margin-bottom: 10px;
+  background: $_lightGray;
+}
+
+.list-group-item + .list-group-item {
+  //border-top-width: $list-group-border-width;
+}
+
+.list-group-item-action {
+  cursor: pointer;
+  transition: box-shadow $transition-effect $transition-duration, background $transition-effect $transition-duration;
+
+  &:hover {
+    box-shadow: $_boxShadow;
+    //background: $_silverGradient;
+  }
+}
+
+code {
+  color: $primary;
+  background-color: lighten($primary, 65%);
+  border: 1px solid lighten($primary, 62%);
+  border-radius: 6px;
+  padding: 1px 6px;
+  margin-left: 3px;
+  margin-right: 3px;
+}
+
+.font-secondary {
+  font-family: 'Source Serif Pro', serif;
+}

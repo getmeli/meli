@@ -1,0 +1,37 @@
+@import '../styles/variables';
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0.25rem 1rem;
+  margin: 0;
+  z-index: 10;
+}
+
+.link {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 130%;
+  //color: $_rhythm;
+  margin-right: 1rem;
+
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
+.separator {
+  $size: 5px;
+  width: $size;
+  height: $size;
+  border-radius: 50%;
+  background: $_blueBell;
+  display: inline-block;
+  margin: 0 0.5rem;
+  opacity: 0.5;
+}

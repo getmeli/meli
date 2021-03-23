@@ -1,0 +1,44 @@
+@import '../../styles/variables';
+
+.alert {
+  display: flex;
+  padding: 0;
+  //background: transparent;
+  margin-bottom: 1rem;
+}
+
+.icon {
+  width: 42px;
+  min-height: 42px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  //color: $light;
+  font-size: 1.25rem;
+}
+
+.content {
+  flex: 1;
+  padding: 0.5rem 1rem;
+}
+
+@mixin alert($type, $color) {
+  $accentColor: transparentize($color, 0.6);
+  .alert-#{$type} {
+    color: $color;
+    border-color: $accentColor;
+    background: transparentize($color, 0.85) !important;
+
+    .alert-icon {
+      background: $accentColor;
+    }
+  }
+}
+
+:global {
+  @include alert(info, #5c85d6);
+  @include alert(danger, $danger);
+  @include alert(success, $success);
+  @include alert(warning, $warning);
+}

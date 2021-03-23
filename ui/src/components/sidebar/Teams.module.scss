@@ -1,0 +1,34 @@
+@import "../../styles/variables";
+
+.linkHeader {
+  color: $dark;
+  font-size: .8rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.siteIcon {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: block;
+}
+
+.active {
+  &:before {
+    $size: 8px;
+    content: '';
+    width: $size;
+    height: $size;
+    border-radius: 50%;
+    background: $success;
+    position: absolute;
+    top: 50%;
+    left: -$size - 3px;
+    transform: translateY(-50%);
+  }
+}

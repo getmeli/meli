@@ -1,0 +1,42 @@
+@import 'src/styles/variables';
+
+.status {
+  $size: 30px;
+
+  width: $size;
+  height: $size;
+  border-radius: $size;
+  color: $white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: $_spaceGradient;
+  font-size: 1em;
+
+  &.status-created,
+  &.status-paused,
+  &.status-running,
+  &.status-unknown {
+    background: $_blueGradient;
+  }
+
+  &.status-success {
+    background: $_greenGradient;
+  }
+
+  &.status-partial {
+    background: $_orangeGradient;
+  }
+
+  &.status-failure,
+  &.status-failed,
+  &.status-failing {
+    background: $_redGradient;
+  }
+
+  &.status-cancelled,
+  &.status-skipped {
+    background: $_spaceGradient;
+  }
+}

@@ -1,0 +1,27 @@
+@import 'src/styles/variables';
+
+.button {
+  border: 2px solid $text-muted;
+  border-radius: $list-group-border-radius;
+  background: $list-group-bg;
+  padding: $list-group-item-padding-y $list-group-item-padding-x;
+  display: block;
+  width: 100%;
+
+  &:active,
+  &:focus {
+    outline: none;
+  }
+
+  transition: all $transition-duration $transition-effect;
+
+  &:hover {
+    border-color: $primary;
+  }
+
+  &.disabled {
+    &:hover {
+      border-color: $text-muted !important;
+    }
+  }
+}

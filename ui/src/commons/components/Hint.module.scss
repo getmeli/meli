@@ -1,0 +1,18 @@
+@import "../../styles/variables";
+
+.hint {
+  width: 16px;
+  height: 16px;
+  background: $_blueBell;;
+  display: inline-block;
+  text-align: center;
+  line-height: 16px;
+  color: $white;
+  border-radius: 50%;
+  font-size: .5rem;
+
+  &:hover {
+    background: #1B0449;
+    opacity: 0.85;
+  }
+}

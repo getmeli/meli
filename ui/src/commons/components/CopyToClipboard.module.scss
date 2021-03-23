@@ -1,0 +1,9 @@
+@import "src/styles/mixins";
+
+.container {
+  cursor: pointer;
+}
+
+.blur {
+  @include blur(8px);
+}

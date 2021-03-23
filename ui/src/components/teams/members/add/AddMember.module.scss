@@ -1,0 +1,26 @@
+@import "../../../../styles/variables";
+
+.label {
+  visibility: hidden;
+  opacity: 0;
+  transition: all $transition-duration $transition-effect;
+
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.listItem {
+  &:hover {
+    .label {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+}
+
+.modal {
+  width: 80%;
+  height: 80vh !important;
+}

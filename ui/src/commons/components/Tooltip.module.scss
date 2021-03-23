@@ -1,0 +1,38 @@
+@import '../../styles/variables';
+
+.tooltip {
+  background: #1b0449;
+  opacity: 0.85;
+  box-shadow: $_boxShadow;
+  border-radius: 5px;
+  color: #b0abba;
+  padding: 10px 16px !important;
+
+  text-transform: none !important;
+  text-align: left;
+  line-height: $line-height-base;
+
+  &.place-top {
+    &:after {
+      display: none;
+    }
+  }
+
+  &.place-left {
+    &:after {
+      display: none;
+    }
+  }
+
+  &.place-bottom {
+    &:after {
+      display: none;
+    }
+  }
+
+  &.place-right {
+    &:after {
+      display: none;
+    }
+  }
+}

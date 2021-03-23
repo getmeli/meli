@@ -1,0 +1,27 @@
+@import "../../styles/variables";
+@import "../../styles/mixins";
+
+.modal {
+  text-align: center;
+}
+
+.buttons {
+
+  button {
+    margin-left: 1rem;
+  }
+
+  @include media-breakpoint-down(md) {
+    display: flex;
+    flex-direction: column;
+
+    button {
+
+      &:not(:first-child) {
+        margin-top: 15px;
+      }
+
+      margin-left: 0;
+    }
+  }
+}

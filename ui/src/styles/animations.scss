@@ -1,0 +1,30 @@
+.fade-down-appear {
+}
+
+.fade-down-enter {
+  opacity: 0;
+  transform: translateY(-25%);
+  transition: opacity $transition-duration, transform $transition-duration;
+}
+
+.fade-down-enter.fade-down-enter-active {
+  opacity: 1;
+  transform: translateY(0%);
+}
+
+.fade-down-enter.fade-down-enter-done {
+}
+
+.fade-down-exit {
+  opacity: 1;
+  transform: translateY(0%);
+}
+
+.fade-down-exit.fade-down-exit-active {
+  opacity: 0;
+  transform: translateY(25%);
+  transition: opacity $transition-duration, transform $transition-duration;
+}
+
+.fade-down-exit.fade-down-exit-done {
+}

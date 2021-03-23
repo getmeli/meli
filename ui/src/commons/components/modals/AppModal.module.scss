@@ -1,0 +1,51 @@
+@import 'src/styles/variables';
+@import 'src/styles/mixins';
+
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: transparentize($_primary, 0.8);
+}
+
+.container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  max-width: 90%;
+
+  &:focus {
+    outline: none;
+  }
+
+  .card {
+    margin: 0;
+  }
+}
+
+.content {
+  max-height: 80vh;
+  overflow: auto;
+}
+
+:global {
+  *[data-blur='true'] {
+    @include blur(8px);
+  }
+
+  .ReactModal__Overlay {
+    opacity: 0;
+    transition: all $transition-duration $transition-effect;
+  }
+
+  .ReactModal__Overlay--after-open {
+    opacity: 1;
+  }
+
+  .ReactModal__Overlay--before-close {
+    opacity: 0;
+  }
+}

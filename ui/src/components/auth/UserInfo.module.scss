@@ -1,0 +1,32 @@
+@import '../../styles/variables';
+
+.container {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.bubble {
+  width: 40px;
+  height: 40px;
+}
+
+.user {
+  position: relative;
+}
+
+//.gitlab {
+//  background: $gitlab-bg;
+//}
+//
+//.gitea {
+//  background: $gitea-bg;
+//}
+//
+//.github {
+//  background: $github-bg;
+//}
+//
+//.google {
+//  background: $google-bg;
+//}

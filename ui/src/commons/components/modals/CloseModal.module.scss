@@ -1,0 +1,9 @@
+@import 'src/styles/variables';
+@import 'src/styles/mixins';
+
+.container {
+  color: $dark;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}

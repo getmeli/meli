@@ -1,0 +1,150 @@
+@import './variables';
+@import './mixins';
+@import '~bootstrap/scss/bootstrap-grid';
+
+//input {
+//  @include placeholder {
+//    color: $input-placeholder-color !important;
+//  }
+//}
+
+.form-group {
+  position: relative;
+}
+
+.is-invalid {
+  background-image: none !important;
+}
+
+.is-valid {
+  background-image: none !important;
+}
+
+.form-control {
+  &.is-valid:not(focus) {
+    border-color: $input-border-color;
+  }
+
+  &.is-invalid:not(focus) {
+    border-color: $input-border-color;
+  }
+}
+
+.form-control:focus + app-form-control-validity-icon {
+  .custom-append {
+    &.is-valid {
+      color: $form-feedback-valid-color !important;
+    }
+
+    &.is-invalid {
+      color: $form-feedback-invalid-color !important;
+    }
+  }
+}
+
+.form-control-light {
+  .form-control {
+    color: $gray-200 !important;
+    border-color: $gray-600 !important;
+
+    &:focus {
+      border-color: $gray-200 !important;
+    }
+  }
+
+  //input {
+  //  @include placeholder {
+  //    color: $gray-600 !important;
+  //  }
+  //}
+}
+
+label {
+  color: #796c93;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 130%;
+}
+
+.form-control-validity-icon-wrapper {
+  $padding: 0.5em;
+  $fa-fw: 1.25em;
+
+  $iconDivWidth: 2 * $padding + $fa-fw;
+
+  position: relative;
+
+  .form-control {
+    padding-right: $iconDivWidth;
+  }
+
+  .custom-append {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: $iconDivWidth;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+
+    .inner {
+      width: $fa-fw;
+      height: $fa-fw;
+      padding-left: $padding;
+      padding-right: $padding;
+      position: relative;
+    }
+
+    fa-icon {
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+  }
+}
+
+//input[disabled] {
+//  border: 2px solid lighten(#DADFE6, 10) !important;
+//  background: lighten(#DADFE6, 10) !important;
+//}
+
+.input-description {
+  //font-size: .8em;
+  //color: #AAAAAA;
+}
+
+.btn-default {
+  color: $dark;
+  background: #f2f3f6;
+
+  &:hover {
+    background: darken(#f2f3f6, 10);
+  }
+}
+
+.btn-success {
+  color: $light;
+}
+
+.form-section {
+  border-bottom: 3px solid darken($gray-100, 1);
+  padding: 2.5rem 0;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.dropdown-toggle {
+  &.no-toggle {
+    &:after {
+      display: none;
+    }
+  }
+}
+
+.dropdown-menu {
+  @include raised(1);
+}

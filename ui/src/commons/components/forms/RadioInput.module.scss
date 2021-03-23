@@ -1,0 +1,66 @@
+@import '../../../styles/variables';
+
+$animationSpeed: 0.1s;
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+
+  &.disabled {
+    opacity: 0.5;
+
+    .input {
+      cursor: default !important;
+    }
+  }
+}
+
+.bubble {
+  width: 20px;
+  height: 20px;
+  background: #ffffff;
+  border: 2px solid #eeecf9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: border-color $animationSpeed linear;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ff7f66;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity $animationSpeed linear;
+}
+
+.label {
+  font-size: 16px;
+  line-height: 110%;
+  color: $dark;
+}
+
+.input {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin-right: 1.5rem;
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  &.selected {
+    .bubble {
+      border-color: #ff7f66 !important;
+    }
+
+    .dot {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+}

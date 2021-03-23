@@ -1,0 +1,84 @@
+@import '../../../styles/variables';
+
+.container {
+  &.disabled {
+    opacity: .5;
+  }
+}
+
+.icon {
+  width: 49px;
+  height: 26px;
+  border-radius: 40px;
+  overflow: hidden;
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  &:not(.on) {
+    .bg-on {
+      visibility: hidden;
+      opacity: 0;
+    }
+
+    .bg-off {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+
+  &.on {
+    .bg-on {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .bg-off {
+      visibility: hidden;
+      opacity: 0;
+    }
+
+    justify-content: flex-end !important;
+  }
+}
+
+.knob {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  margin: 0 3px;
+  background: #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loader {
+  font-size: 75%;
+}
+
+.label {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 130%;
+}
+
+.bg {
+  transition: opacity 0.2s ease-in-out;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.bg-on {
+  background: linear-gradient(113deg, #7153ac 0%, #1b0449 100%);
+}
+
+.bg-off {
+  background: rgb(136, 136, 136);
+}

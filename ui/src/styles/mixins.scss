@@ -1,0 +1,112 @@
+@import '../styles/variables';
+@import '~bootstrap/scss/mixins/breakpoints';
+
+@mixin selectNone() {
+  -webkit-user-select: none; /* Chrome all / Safari all */
+  -moz-user-select: none; /* Firefox all */
+  -ms-user-select: none; /* IE 10+ */
+  user-select: none; /* Likely future */
+}
+
+// https://materializecss.com/shadow.html
+@mixin raised($i: 0) {
+  @if ($i == 0) {
+    box-shadow: 0 0 4px -2px #000;
+  }
+
+  @if ($i == 1) {
+    //box-shadow: 0 7px 14px 0 rgba(60, 66, 87, .1), 0 3px 6px 0 rgba(0, 0, 0, .07);
+    -webkit-box-shadow: 0px 0px 8px -5px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 0px 8px -5px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 8px -5px rgba(0, 0, 0, 0.75);
+  }
+
+  @if ($i == 2) {
+    box-shadow: 0 8px 17px 2px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2);
+  }
+
+  @if ($i == 3) {
+    box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -7px rgba(0, 0, 0, 0.2);
+  }
+
+  @if ($i == 4) {
+    box-shadow: 0 24px 38px 3px rgba(0, 0, 0, 0.14), 0 9px 46px 8px rgba(0, 0, 0, 0.12), 0 11px 15px -7px rgba(0, 0, 0, 0.2);
+  }
+}
+
+@mixin scaleOnHover($scale: 1.1, $duration: 0.15s) {
+  transition: transform $duration linear;
+  &:hover {
+    transform: scale($scale);
+  }
+}
+
+@mixin fadeGeneric($target, $activatingSelector: '&:hover', $delay: 0.15s) {
+  #{$target} {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility $delay linear, opacity $delay linear;
+  }
+
+  #{$activatingSelector} {
+    #{$target} {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+}
+
+@mixin size($selector, $w, $h: '') {
+  #{$selector} {
+    width: $w;
+    @if ($h == '') {
+      height: $w;
+    } @else {
+      height: $h;
+    }
+  }
+}
+
+@mixin circle($size) {
+  width: $size;
+  height: $size;
+  border-radius: 50%;
+}
+
+@mixin blur($width: 2px) {
+  filter: blur($width);
+  //transition: $transition-duration filter $transition-effect;
+}
+
+@mixin noBlur($width: 2px) {
+  filter: none !important;
+}
+
+// take from docs repo in mixins.scss
+@mixin no-scrollbars {
+  -ms-overflow-style: none; // IE 10+
+  scrollbar-width: none; // Firefox
+  &::-webkit-scrollbar {
+    width: 0; // Safari and Chrome
+    height: 0;
+  }
+}
+
+// https://www.w3schools.com/howto/howto_css_placeholder.asp
+@mixin placeholderColor($color) {
+  &::placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: $color;
+    opacity: 1; /* Firefox */
+  }
+
+  &:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: $color;
+  }
+
+  &::-ms-input-placeholder {
+    /* Microsoft Edge */
+    color: $color;
+  }
+}

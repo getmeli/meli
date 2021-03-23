@@ -1,0 +1,24 @@
+@import "src/styles/variables";
+
+.remove {
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.container {
+  margin-bottom: .25rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &:hover {
+    .remove {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+}
+

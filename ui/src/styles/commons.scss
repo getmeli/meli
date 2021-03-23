@@ -1,0 +1,173 @@
+@import '../styles/mixins';
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.select-none {
+  -webkit-user-select: none; /* Chrome all / Safari all */
+  -moz-user-select: none; /* Firefox all */
+  -ms-user-select: none; /* IE 10+ */
+  user-select: none; /* Likely future */
+}
+
+.raised-1 {
+  @include raised(1);
+}
+
+.page {
+  padding-top: 80px;
+  padding-bottom: 80px;
+}
+
+.vertical-align-middle {
+  vertical-align: middle;
+}
+
+.image-16x16 {
+  width: 16px;
+  height: 16px;
+}
+
+.image-32x32 {
+  width: 32px;
+  height: 32px;
+}
+
+.image-round {
+  border-radius: 50%;
+}
+
+.mt-50 {
+  margin-top: 50px;
+}
+
+.pt-50 {
+  padding-top: 50px;
+}
+
+.pb-50 {
+  padding-bottom: 50px;
+}
+
+.pb-100 {
+  padding-bottom: 100px;
+}
+
+.mt-100 {
+  padding-top: 100px;
+}
+
+.mb-100 {
+  padding-bottom: 100px;
+}
+
+ul.standard {
+  padding-left: 16px;
+  list-style: none;
+  margin-bottom: $grid-gutter-width;
+
+  li {
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: calc((1em - 6px) / 2);
+      left: -16px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: $primary;
+    }
+  }
+}
+
+strong {
+  &.lighter {
+    font-weight: 400;
+    color: #1b0449;
+  }
+}
+
+.overflow-visible {
+  overflow: visible !important;
+}
+
+.card-presentation {
+  text-align: center;
+  margin-bottom: $grid-gutter-width;
+
+  h2 {
+    font-size: 28px;
+  }
+
+  p {
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 130%;
+    text-align: center;
+    color: #796c93;
+  }
+
+  :last-child {
+    margin-bottom: 0;
+  }
+}
+
+.mb-1g {
+  margin-bottom: $grid-gutter-width;
+}
+
+.mt-1g {
+  margin-top: $grid-gutter-width;
+}
+
+.ml-1g {
+  margin-left: $grid-gutter-width;
+}
+
+.mr-1g {
+  margin-right: $grid-gutter-width;
+}
+
+.m-1g {
+  margin: $grid-gutter-width;
+}
+
+.mb-halfg {
+  margin-bottom: $grid-gutter-width / 2;
+}
+
+.ml-halfg {
+  margin-left: $grid-gutter-width / 2;
+}
+
+.mt-halfg {
+  margin-top: $grid-gutter-width / 2;
+}
+
+.mr-halfg {
+  margin-right: $grid-gutter-width / 2;
+}
+
+.m-halfg {
+  margin: $grid-gutter-width / 2;
+}
+
+.font-size-normal {
+  font-size: 1rem;
+}
+
+.overflow-x-auto {
+  overflow-x: auto;
+}
+
+pre {
+  margin-bottom: 0;
+}
+
+.block-link {
+  color: inherit !important;
+  display: block;
+}
