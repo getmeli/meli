@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 import { getMembers, OrgMembersSearchQuery } from '../../../orgs/staff/members/get-members';
 import { OrgMember } from '../../../orgs/staff/members/org-member';
-import { useEnv } from '../../../../providers/EnvProvider';
 import { CardModal } from '../../../../commons/components/modals/CardModal';
 import { SearchInput } from '../../../sites/releases/SearchInput';
 import { LoadMore } from '../../../../commons/components/LoadMore';
@@ -25,7 +24,6 @@ export function AddMember({
 }) {
   const [isOpen, setIsOpen] = useMountedState(false);
   const [initialLoad, setInitialLoad] = useState(true);
-  const env = useEnv();
   const { currentOrg } = useCurrentOrg();
   const [loading, setLoading] = useMountedState(false);
   const [error, setError] = useState();
@@ -39,7 +37,7 @@ export function AddMember({
   useEffect(() => {
     setError(undefined);
     setLoading(true);
-    getMembers(env, currentOrg.org._id, query)
+    getMembers(currentOrg.org._id, query)
       .then(data => {
         itemsRef.current = [...itemsRef.current, ...data.items];
         setItems(itemsRef.current);
@@ -53,7 +51,7 @@ export function AddMember({
         setLoading(false);
         setInitialLoad(false);
       });
-  }, [env, currentOrg, query, setLoading]);
+  }, [currentOrg, query, setLoading]);
 
   const nextPage = () => {
     setQuery({
@@ -89,9 +87,9 @@ export function AddMember({
           className="mb-4"
         />
         {initialLoad ? (
-          <Loader />
+          <Loader/>
         ) : error ? (
-          <AlertError error={error} />
+          <AlertError error={error}/>
         ) : (
           <ul className="list-group">
             {items.map(item => (

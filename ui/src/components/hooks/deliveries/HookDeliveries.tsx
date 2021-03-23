@@ -5,7 +5,6 @@ import { useHookContext } from '../HookProvider';
 import { PaginationData } from '../../../commons/components/Pagination';
 import { LoadMore } from '../../../commons/components/LoadMore';
 import { useMountedState } from '../../../commons/hooks/use-mounted-state';
-import { useEnv } from '../../../providers/EnvProvider';
 import { axios } from '../../../providers/axios';
 import { HookDeliveryView } from './HookDeliveryView';
 import { HookDelivery } from './hook-delivery';
@@ -16,8 +15,7 @@ import { HookDeliveryIcon } from '../../icons/HookDeliveryIcon';
 
 export function HookDeliveries() {
   const { context } = useHookContext();
-  const { hookId } = useParams();
-  const env = useEnv();
+  const { hookId } = useParams<any>();
   const [loading, setLoading] = useMountedState(true);
   const [error, setError] = useState();
   const [deliveries, setDeliveries] = useState<HookDelivery[]>();
@@ -31,7 +29,7 @@ export function HookDeliveries() {
     setLoading(true);
     setError(undefined);
     axios
-      .get(`${env.MELI_API_URL}/api/v1/${context}/hooks/${hookId}/deliveries`, {
+      .get(`/api/v1/${context}/hooks/${hookId}/deliveries`, {
         params: pagination,
       })
       .then(({ data }) => {
@@ -42,7 +40,7 @@ export function HookDeliveries() {
       .catch(setError)
       .catch(err => toast.error(`Could not list hook deliveries: ${err}`))
       .finally(() => setLoading(false));
-  }, [env, pagination, hookId, setLoading, context]);
+  }, [pagination, hookId, setLoading, context]);
 
   const nextPage = () => {
     setPagination({
@@ -57,21 +55,21 @@ export function HookDeliveries() {
         <div>
           {deliveries.length === 0 ? (
             <EmptyList
-              icon={<HookDeliveryIcon />}
+              icon={<HookDeliveryIcon/>}
               title="No sites"
             />
           ) : (
             <ul className="list-group">
               {deliveries.map(hookDelivery => (
-                <HookDeliveryView delivery={hookDelivery} key={hookDelivery._id} />
+                <HookDeliveryView delivery={hookDelivery} key={hookDelivery._id}/>
               ))}
             </ul>
           )}
           {loading && (
-            <Loader />
+            <Loader/>
           )}
           {error && (
-            <AlertError error={error} />
+            <AlertError error={error}/>
           )}
           {hasMore && (
             <div className="d-flex justify-content-center mt-4">

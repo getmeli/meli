@@ -1,3 +1,3 @@
-import { v4 } from 'src/utils/uuid';
+import { v4 } from 'uuid';
 
 export const uuid = v4;

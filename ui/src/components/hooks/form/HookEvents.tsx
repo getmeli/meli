@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { Controller, useFormContext } from 'react-hook-form';
 import { useHookContext } from '../HookProvider';
-import { useEnv } from '../../../providers/EnvProvider';
 import { useMountedState } from '../../../commons/hooks/use-mounted-state';
 import { axios } from '../../../providers/axios';
 import { Loader } from '../../../commons/components/Loader';
@@ -13,7 +12,6 @@ export function HookEvents() {
   const { context } = useHookContext();
   const { control } = useFormContext();
 
-  const env = useEnv();
   const [loading, setLoading] = useMountedState(true);
   const [error, setError] = useState();
   const [events, setEvents] = useState<string[]>();
@@ -21,18 +19,18 @@ export function HookEvents() {
   useEffect(() => {
     setLoading(true);
     setError(undefined);
-    axios.get<string[]>(`${env.MELI_API_URL}/api/v1/${context}/hook-events`)
+    axios.get<string[]>(`/api/v1/${context}/hook-events`)
       .then(({ data }) => data)
       .then(setEvents)
       .catch(setError)
       .catch(err => toast.error(`Could not list hook events: ${err}`))
       .finally(() => setLoading(false));
-  }, [env, setLoading, context]);
+  }, [setLoading, context]);
 
   return loading ? (
-    <Loader />
+    <Loader/>
   ) : error ? (
-    <AlertError error={error} />
+    <AlertError error={error}/>
   ) : (
     <Controller
       control={control}

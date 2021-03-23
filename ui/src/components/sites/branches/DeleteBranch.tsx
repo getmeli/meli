@@ -3,7 +3,6 @@ import { toast } from 'react-toastify';
 import { Button } from '../../../commons/components/Button';
 import { axios } from '../../../providers/axios';
 import { CardModal } from '../../../commons/components/modals/CardModal';
-import { useEnv } from '../../../providers/EnvProvider';
 import { useMountedState } from '../../../commons/hooks/use-mounted-state';
 
 export function DeleteBranch({
@@ -17,12 +16,11 @@ export function DeleteBranch({
 }) {
   const [isOpen, setIsOpen] = useMountedState(false);
   const [loading, setLoading] = useMountedState(false);
-  const env = useEnv();
 
   const deleteToken = () => {
     setLoading(true);
     return axios
-      .delete(`${env.MELI_API_URL}/api/v1/sites/${siteId}/branches/${branchId}`)
+      .delete(`/api/v1/sites/${siteId}/branches/${branchId}`)
       .then(() => {
         setIsOpen(false);
         onDelete();

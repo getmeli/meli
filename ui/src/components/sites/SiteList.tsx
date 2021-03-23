@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { uniqueId } from 'lodash';
-import { useEnv } from '../../providers/EnvProvider';
 import { Loader } from '../../commons/components/Loader';
 import { EmptyList } from '../../commons/components/EmptyList';
 import { getTeamSites } from './get-team-sites';
@@ -14,8 +13,7 @@ import { SiteIcon } from '../icons/SiteIcon';
 import { useMountedState } from '../../commons/hooks/use-mounted-state';
 
 export function SiteList() {
-  const { teamId } = useParams();
-  const env = useEnv();
+  const { teamId } = useParams<any>();
   const [loading, setLoading] = useMountedState(true);
   const [error, setError] = useState();
   const [items, setItems] = useState<Site[]>();
@@ -24,7 +22,7 @@ export function SiteList() {
   useEffect(() => {
     setLoading(true);
     setError(undefined);
-    getTeamSites(env, teamId)
+    getTeamSites(teamId)
       .then(data => {
         itemsRef.current.push(...data);
         setItems(itemsRef.current);
@@ -32,11 +30,11 @@ export function SiteList() {
       .catch(setError)
       .catch(err => toast.error(`Could not list repos: ${err}`))
       .finally(() => setLoading(false));
-  }, [env, teamId, setLoading]);
+  }, [teamId, setLoading]);
 
   const emptyList = (
     <EmptyList
-      icon={<SiteIcon />}
+      icon={<SiteIcon/>}
       title="No sites"
     >
       <AddSite teamId={teamId}>
@@ -48,9 +46,9 @@ export function SiteList() {
   );
 
   return loading ? (
-    <Loader />
+    <Loader/>
   ) : error ? (
-    <AlertError error={error} />
+    <AlertError error={error}/>
   ) : (
     <div className="mt-5" key={uniqueId()}>
       {items.length === 0 ? (
@@ -60,7 +58,7 @@ export function SiteList() {
           <h2>Sites</h2>
           {items.map(site => (
             <Link to={`/sites/${site._id}`} className="d-block" key={site._id}>
-              <SiteCard site={site} />
+              <SiteCard site={site}/>
             </Link>
           ))}
         </>

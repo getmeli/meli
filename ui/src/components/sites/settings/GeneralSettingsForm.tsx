@@ -3,7 +3,6 @@ import { Controller, FormProvider, useFieldArray, useForm } from 'react-hook-for
 import React, { useEffect } from 'react';
 import { toast } from 'react-toastify';
 import classNames from 'classnames';
-import { useEnv } from '../../../providers/EnvProvider';
 import { useSite } from '../SiteView';
 import { Site, SiteDomain } from '../site';
 import { useMountedState } from '../../../commons/hooks/use-mounted-state';
@@ -26,8 +25,7 @@ interface Settings {
 }
 
 export function GeneralSettingsForm() {
-  const env = useEnv();
-  const { siteId } = useParams();
+  const { siteId } = useParams<any>();
   const { site, setSite } = useSite();
 
   const methods = useForm<Settings>({
@@ -52,7 +50,7 @@ export function GeneralSettingsForm() {
   const onSubmit = (updatedSite: Settings) => {
     setLoading(true);
     axios
-      .put<Site>(`${env.MELI_API_URL}/api/v1/sites/${siteId}`, updatedSite)
+      .put<Site>(`/api/v1/sites/${siteId}`, updatedSite)
       .then(({ data }) => data)
       .then(setSite)
       .then(() => toast.success('Site saved'))
@@ -82,7 +80,7 @@ export function GeneralSettingsForm() {
               <strong>General</strong>
             </div>
             <div className="card-body">
-              <SiteNameInput previousName={site.name} />
+              <SiteNameInput previousName={site.name}/>
               <div className="form-group">
                 <label htmlFor="color" className="form-label">Color</label>
                 <input
@@ -97,10 +95,10 @@ export function GeneralSettingsForm() {
                   autoComplete="off"
                   defaultValue="#000000"
                 />
-                <InputError error={errors} path="color" />
+                <InputError error={errors} path="color"/>
               </div>
 
-              <SelectMainBranch siteId={siteId} />
+              <SelectMainBranch siteId={siteId}/>
             </div>
           </div>
 
@@ -113,7 +111,7 @@ export function GeneralSettingsForm() {
                   <Toggle value={value} onChange={onChange} className="w-100">
                     <div className="d-flex justify-content-between flex-grow-1">
                       <strong>Single page application (SPA) mode</strong>
-                      <DocsLink href="https://docs.meli.sh/get-started/single-page-applications-spa" className="ml-2" />
+                      <DocsLink href="https://docs.meli.sh/get-started/single-page-applications-spa" className="ml-2"/>
                     </div>
                   </Toggle>
                 )}

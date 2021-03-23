@@ -6,7 +6,6 @@ import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import { uniqueId } from 'lodash';
 import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 import { axios } from '../../../providers/axios';
-import { useEnv } from '../../../providers/EnvProvider';
 import { ApiToken } from './api-token';
 import { ApiTokenForm, ApiTokenFormData } from './ApiTokenForm';
 import { useMountedState } from '../../../commons/hooks/use-mounted-state';
@@ -23,11 +22,10 @@ import { CopyToClipboard } from '../../../commons/components/CopyToClipboard';
 import { routeUp } from '../../../commons/utils/route-up';
 
 export function ApiTokenView() {
-  const { apiTokenId } = useParams();
+  const { apiTokenId } = useParams<any>();
   const [uid] = useState(uniqueId());
   const { url } = useRouteMatch();
 
-  const env = useEnv();
   const [loading, setLoading] = useMountedState(true);
   const [error, setError] = useState();
   const [apiToken, setApiToken] = useState<ApiToken>();
@@ -36,17 +34,17 @@ export function ApiTokenView() {
     setLoading(true);
     setError(undefined);
     axios
-      .get(`${env.MELI_API_URL}/api/v1/api-tokens/${apiTokenId}`)
+      .get(`/api/v1/api-tokens/${apiTokenId}`)
       .then(({ data }) => data)
       .then(setApiToken)
       .catch(setError)
       .catch(err => toast.error(`Could not get api token: ${err}`))
       .finally(() => setLoading(false));
-  }, [env, setLoading, apiTokenId]);
+  }, [setLoading, apiTokenId]);
 
   const onChange = useCallback(
     (formData: ApiTokenFormData): Promise<void> => axios
-      .put<ApiToken>(`${env.MELI_API_URL}/api/v1/api-tokens/${apiTokenId}`, {
+      .put<ApiToken>(`/api/v1/api-tokens/${apiTokenId}`, {
         name: formData.name,
         activatesAt: formData.activePeriod.from,
         expiresAt: formData.activePeriod.to,
@@ -56,7 +54,7 @@ export function ApiTokenView() {
       .catch(err => {
         toast.error(`Could not update api token: ${err}`);
       }),
-    [env, apiTokenId],
+    [apiTokenId],
   );
 
   const onDelete = () => {
@@ -64,9 +62,9 @@ export function ApiTokenView() {
   };
 
   return loading ? (
-    <Loader />
+    <Loader/>
   ) : error ? (
-    <AlertError error={error} />
+    <AlertError error={error}/>
   ) : (
     <>
       <SubHeader className="d-flex align-items-center justify-content-between">
@@ -76,13 +74,13 @@ export function ApiTokenView() {
           </h5>
         </div>
         <div className="d-flex align-items-center">
-          <ApiTokenActivationPeriod apiToken={apiToken} />
+          <ApiTokenActivationPeriod apiToken={apiToken}/>
           <ButtonIcon className="ml-3" {...dropdownToggle(uid)}>
-            <FontAwesomeIcon icon={faEllipsisV} />
+            <FontAwesomeIcon icon={faEllipsisV}/>
           </ButtonIcon>
           <Dropdown id={uid}>
             <DeleteApiToken tokenId={apiTokenId} onDelete={onDelete}>
-              <DropdownLink icon={<FontAwesomeIcon icon={faTrashAlt} fixedWidth />}>
+              <DropdownLink icon={<FontAwesomeIcon icon={faTrashAlt} fixedWidth/>}>
                 Delete
               </DropdownLink>
             </DeleteApiToken>

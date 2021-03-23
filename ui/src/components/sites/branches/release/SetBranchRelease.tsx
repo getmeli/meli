@@ -4,7 +4,6 @@ import { Button } from '../../../../commons/components/Button';
 import { axios } from '../../../../providers/axios';
 import { CardModal } from '../../../../commons/components/modals/CardModal';
 import { useMountedState } from '../../../../commons/hooks/use-mounted-state';
-import { useEnv } from '../../../../providers/EnvProvider';
 import { Branch } from '../branch';
 
 export function SetBranchRelease({
@@ -21,12 +20,11 @@ export function SetBranchRelease({
 }) {
   const [isOpen, setIsOpen] = useMountedState(false);
   const [loading, setLoading] = useMountedState(false);
-  const env = useEnv();
 
   const setBranchRelease = () => {
     setLoading(true);
     return axios
-      .put<Branch>(`${env.MELI_API_URL}/api/v1/sites/${siteId}/branches/${branchId}/release`, {
+      .put<Branch>(`/api/v1/sites/${siteId}/branches/${branchId}/release`, {
         release: releaseId,
       })
       .then(() => {

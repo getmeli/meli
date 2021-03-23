@@ -4,7 +4,6 @@ import { uniqueId } from 'lodash';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useShortcut } from '../../commons/keyboard/use-shortcut';
 import { ADD_TEAM_SHORTCUT_KEY } from '../../commons/keyboard/shortcuts-keys';
-import { useEnv } from '../../providers/EnvProvider';
 import { axios } from '../../providers/axios';
 import { routerHistory } from '../../providers/history';
 import { Tooltip, tooltipToggle } from '../../commons/components/Tooltip';
@@ -22,7 +21,6 @@ function AddTeamModal({ closeModal, onAdded }: {
   closeModal;
   onAdded?: (team: Team) => void;
 }) {
-  const env = useEnv();
   const methods = useForm({
     mode: 'onChange',
   });
@@ -31,7 +29,7 @@ function AddTeamModal({ closeModal, onAdded }: {
   const { currentOrg } = useCurrentOrg();
 
   const onChange = formData => axios
-    .post<Team>(`${env.MELI_API_URL}/api/v1/orgs/${currentOrg.org._id}/teams`, formData)
+    .post<Team>(`/api/v1/orgs/${currentOrg.org._id}/teams`, formData)
     .then(({ data }) => {
       if (onAdded) {
         onAdded(data);
@@ -61,7 +59,7 @@ function AddTeamModal({ closeModal, onAdded }: {
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <TeamNameInput setInputRef={setInputRef} />
+        <TeamNameInput setInputRef={setInputRef}/>
         <div className="d-flex justify-content-end">
           <Button
             type="submit"
@@ -124,7 +122,7 @@ export function AddTeam({
         </Tooltip>
       )}
       <CardModal isOpen={isOpen} closeModal={closeModal} title="Add team">
-        <AddTeamModal closeModal={closeModal} onAdded={onAdded} />
+        <AddTeamModal closeModal={closeModal} onAdded={onAdded}/>
       </CardModal>
     </>
   );

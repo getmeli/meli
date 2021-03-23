@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { uniqueId } from 'lodash';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useEnv } from '../../providers/EnvProvider';
 import { axios } from '../../providers/axios';
 import { Tooltip, tooltipToggle } from '../../commons/components/Tooltip';
 import { OrgNameInput } from './settings/OrgNameInput';
@@ -19,7 +18,6 @@ function Modal({ closeModal, onAdded }: {
   closeModal;
   onAdded: (org: UserOrg) => void;
 }) {
-  const env = useEnv();
   const methods = useForm<Form>({
     mode: 'onChange',
   });
@@ -29,7 +27,7 @@ function Modal({ closeModal, onAdded }: {
   const onSubmit = (form: Form) => {
     setLoading(true);
     axios
-      .post<UserOrg>(`${env.MELI_API_URL}/api/v1/orgs`, form)
+      .post<UserOrg>(`/api/v1/orgs`, form)
       .then(({ data }) => {
         onAdded(data);
       })
@@ -53,7 +51,7 @@ function Modal({ closeModal, onAdded }: {
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <OrgNameInput setInputRef={setInputRef} />
+        <OrgNameInput setInputRef={setInputRef}/>
         <div className="d-flex justify-content-end">
           <Button
             type="submit"
@@ -97,7 +95,7 @@ export function AddOrg({
         </Tooltip>
       )}
       <CardModal isOpen={isOpen} closeModal={closeModal} title="Create org">
-        <Modal closeModal={closeModal} onAdded={onAdded} />
+        <Modal closeModal={closeModal} onAdded={onAdded}/>
       </CardModal>
     </>
   );

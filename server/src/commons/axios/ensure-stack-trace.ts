@@ -1,4 +1,4 @@
-import { AxiosInstance } from 'src/commons/axios/axios';
+import { AxiosInstance } from 'axios';
 import { AxiosError } from './axios-error';
 
 // https://github.com/axios/axios/issues/2387#issuecomment-652242713

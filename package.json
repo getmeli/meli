@@ -7,7 +7,7 @@
     "url": "https://github.com/id6/id6"
   },
   "scripts": {
-    "install": "npm i --prefix server && npm i --prefix ui",
+    "postinstall": "npm i --prefix server && npm i --prefix ui",
     "start": "npm-run-all --parallel start:server start:ui",
     "start:server": "npm run start --prefix server",
     "start:ui": "npm run start --prefix ui",
@@ -26,8 +26,8 @@
     "static",
     "site",
     "deploy",
-    "react"
-    "angular"
+    "react",
+    "angular",
     "vue",
     "nodejs"
   ],

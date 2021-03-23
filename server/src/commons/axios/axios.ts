@@ -1,4 +1,4 @@
-import axiosModule from 'src/commons/axios/axios';
+import axiosModule from 'axios';
 import { ensureStackTrace } from './ensure-stack-trace';
 
 export const axios = axiosModule.create();

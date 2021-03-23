@@ -3,7 +3,6 @@ import { toast } from 'react-toastify';
 import { Link, useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen } from '@fortawesome/free-solid-svg-icons';
-import { useEnv } from '../../../../providers/EnvProvider';
 import { useMountedState } from '../../../../commons/hooks/use-mounted-state';
 import { axios } from '../../../../providers/axios';
 import { Loader } from '../../../../commons/components/Loader';
@@ -17,7 +16,6 @@ function useBranchHeaders(
   siteId: string,
   branchId: string,
 ) {
-  const env = useEnv();
   const [loading, setLoading] = useMountedState(true);
   const [error, setError] = useState();
   const [headers, setHeaders] = useState<Header[]>();
@@ -26,12 +24,12 @@ function useBranchHeaders(
     setLoading(true);
     setError(undefined);
     axios
-      .get<Branch>(`${env.MELI_API_URL}/api/v1/sites/${siteId}/branches/${branchId}`)
+      .get<Branch>(`/api/v1/sites/${siteId}/branches/${branchId}`)
       .then(({ data }) => data.headers)
       .then(setHeaders)
       .catch(setError)
       .finally(() => setLoading(false));
-  }, [env, setLoading, siteId, branchId]);
+  }, [setLoading, siteId, branchId]);
 
   return {
     headers,
@@ -47,12 +45,11 @@ function useSetBranchHeaders(
   setHeaders: (headers: Header[]) => void,
 ) {
   const [loading, setLoading] = useMountedState(false);
-  const env = useEnv();
 
   const updateHeaders = (headers: Header[]) => {
     setLoading(true);
     axios
-      .put<Branch>(`${env.MELI_API_URL}/api/v1/sites/${siteId}/branches/${branchId}/headers`, {
+      .put<Branch>(`/api/v1/sites/${siteId}/branches/${branchId}/headers`, {
         headers: headers || [],
       })
       .then(({ data }) => {
@@ -79,9 +76,9 @@ function SiteHeaders({ siteId }: {
   const { headers, loading, error } = useSiteHeaders(siteId);
 
   return loading ? (
-    <Loader />
+    <Loader/>
   ) : error ? (
-    <AlertError error={error} />
+    <AlertError error={error}/>
   ) : (
     <>
       <div className="d-flex justify-content-between mb-3 d-flex align-items-center">
@@ -89,23 +86,23 @@ function SiteHeaders({ siteId }: {
         <Link to={`/sites/${siteId}/settings/headers`}>
           Edit
           {' '}
-          <FontAwesomeIcon icon={faPen} className="ml-2" />
+          <FontAwesomeIcon icon={faPen} className="ml-2"/>
         </Link>
       </div>
       <table className="table">
         <thead>
-          <tr>
-            <th>Name</th>
-            <th>Value</th>
-          </tr>
+        <tr>
+          <th>Name</th>
+          <th>Value</th>
+        </tr>
         </thead>
         <tbody>
-          {headers.map(({ name, value }) => (
-            <tr key={name}>
-              <td>{name}</td>
-              <td>{value}</td>
-            </tr>
-          ))}
+        {headers.map(({ name, value }) => (
+          <tr key={name}>
+            <td>{name}</td>
+            <td>{value}</td>
+          </tr>
+        ))}
         </tbody>
       </table>
     </>
@@ -113,14 +110,14 @@ function SiteHeaders({ siteId }: {
 }
 
 export function BranchHeaders() {
-  const { siteId, branchId } = useParams();
+  const { siteId, branchId } = useParams<any>();
   const { headers, setHeaders, loading, error } = useBranchHeaders(siteId, branchId);
   const { loading: updating, updateHeaders } = useSetBranchHeaders(siteId, branchId, setHeaders);
 
   return loading ? (
-    <Loader />
+    <Loader/>
   ) : error ? (
-    <AlertError error={error} />
+    <AlertError error={error}/>
   ) : (
     <>
       <h2>Branch headers</h2>

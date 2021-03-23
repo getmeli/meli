@@ -4,7 +4,6 @@ import { toast } from 'react-toastify';
 import { EmptyList } from '../../../commons/components/EmptyList';
 import { LoadMore } from '../../../commons/components/LoadMore';
 import { AlertError } from '../../../commons/components/AlertError';
-import { useEnv } from '../../../providers/EnvProvider';
 import { getReleases, ReleaseSearchQuery } from './get-releases';
 import { Release } from './release';
 import { CodeSnippet } from '../../../commons/components/CodeSnippet';
@@ -17,11 +16,12 @@ import { useBranch } from '../branches/BranchView';
 import { useRoom } from '../../../websockets/use-room';
 import { EventType } from '../../../websockets/event-type';
 import { Site } from '../site';
+import { useEnv } from '../../../providers/EnvProvider';
 
 function UploadReleaseSnippet({ siteId, className }: { siteId: string; className? }) {
   const env = useEnv();
   const snippet = `npx @getmeli/cli upload \\
-    --url ${env.MELI_API_URL} \\
+    --url ${env.MELI_URL} \\
     --site ${siteId} \\
     --token <token> \\
     <path>`;
@@ -55,8 +55,7 @@ function HowToUpload({ children }: { children: any }) {
 }
 
 export function Releases() {
-  const env = useEnv();
-  const { siteId } = useParams();
+  const { siteId } = useParams<any>();
   const branchContext = useBranch();
   const [loading, setLoading] = useMountedState(true);
   const [error, setError] = useState();
@@ -120,7 +119,7 @@ export function Releases() {
     setError(undefined);
     setLoading(true);
 
-    getReleases(env, siteId, searchQuery)
+    getReleases(siteId, searchQuery)
       .then(data => {
         itemsRef.current = searchQuery.search ? data.items : [...itemsRef.current, ...data.items];
         setItems(itemsRef.current);
@@ -134,7 +133,7 @@ export function Releases() {
         setLoading(false);
         setSearching(false);
       });
-  }, [env, siteId, searchQuery, setLoading]);
+  }, [siteId, searchQuery, setLoading]);
 
   const nextPage = () => {
     setSearchQuery({
@@ -144,12 +143,12 @@ export function Releases() {
   };
 
   const uploadSnippet = (
-    <UploadReleaseSnippet siteId={siteId} />
+    <UploadReleaseSnippet siteId={siteId}/>
   );
 
   const emptyList = (
     <EmptyList
-      icon={<ReleaseIcon />}
+      icon={<ReleaseIcon/>}
       title="No releases"
     >
       <p>There are no releases yet, use our CLI to upload one</p>
@@ -203,7 +202,7 @@ export function Releases() {
             />
           )}
           {error && (
-            <AlertError error={error} className="mt-4" />
+            <AlertError error={error} className="mt-4"/>
           )}
         </ul>
       )}

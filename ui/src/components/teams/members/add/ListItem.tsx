@@ -1,7 +1,6 @@
 import React from 'react';
 import { toast } from 'react-toastify';
 import classNames from 'classnames';
-import { useEnv } from '../../../../providers/EnvProvider';
 import { axios } from '../../../../providers/axios';
 import { Loader } from '../../../../commons/components/Loader';
 import { OrgMember } from '../../../orgs/staff/members/org-member';
@@ -16,12 +15,11 @@ export function ListItem({
   onAdded: (teamMember: TeamMember) => void;
 }) {
   const [loading, setLoading] = useMountedState(false);
-  const env = useEnv();
 
   const select = () => {
     setLoading(true);
     return axios
-      .put<TeamMember>(`${env.MELI_API_URL}/api/v1/teams/${teamId}/members/${member._id}`, {
+      .put<TeamMember>(`/api/v1/teams/${teamId}/members/${member._id}`, {
         member: member._id,
       })
       .then(({ data }) => {
@@ -43,7 +41,7 @@ export function ListItem({
       <strong>{member.name}</strong>
       <div>
         {loading && (
-          <Loader />
+          <Loader/>
         )}
       </div>
     </div>

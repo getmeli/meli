@@ -7,7 +7,6 @@ import { CardModal } from '../../../commons/components/modals/CardModal';
 import { Button } from '../../../commons/components/Button';
 import { InputError } from '../../../commons/components/forms/InputError';
 import { maxLength, required } from '../../../commons/components/forms/form-constants';
-import { useEnv } from '../../../providers/EnvProvider';
 import { axios } from '../../../providers/axios';
 import { randomString } from '../../../commons/utils/random-string';
 import { Site } from '../site';
@@ -39,13 +38,12 @@ export function SitePassword({
     mode: 'onChange',
   });
 
-  const env = useEnv();
   const [loading, setLoading] = useState(false);
 
   const setPassword = (formData: FormData) => {
     setLoading(true);
     axios
-      .put<Site>(`${env.MELI_API_URL}/api/v1/sites/${site._id}/password`, formData)
+      .put<Site>(`/api/v1/sites/${site._id}/password`, formData)
       .then(({ data }) => {
         onChange(data);
         closeModal();
@@ -59,7 +57,7 @@ export function SitePassword({
   const removePassword = () => {
     setLoading(true);
     axios
-      .delete<Site>(`${env.MELI_API_URL}/api/v1/sites/${site._id}/password`)
+      .delete<Site>(`/api/v1/sites/${site._id}/password`)
       .then(({ data }) => onChange(data))
       .catch(err => {
         toast.error(`Could not remove site password: ${err}`);
@@ -104,7 +102,7 @@ export function SitePassword({
               autoComplete="off"
               defaultValue={randomSecret}
             />
-            <InputError error={errors} path="password" />
+            <InputError error={errors} path="password"/>
           </div>
           <div className="d-flex justify-content-end">
             <Button

@@ -4,7 +4,6 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { Button } from '../../../commons/components/Button';
 import { axios } from '../../../providers/axios';
 import { CardModal } from '../../../commons/components/modals/CardModal';
-import { useEnv } from '../../../providers/EnvProvider';
 import { Release } from './release';
 import { ReleaseNameInput } from './ReleaseNameInput';
 import { useMountedState } from '../../../commons/hooks/use-mounted-state';
@@ -13,7 +12,6 @@ function ModalContent({ releaseId, onRenamed }: {
   releaseId: string;
   onRenamed: (release: Release) => void;
 }) {
-  const env = useEnv();
   const methods = useForm({
     mode: 'onChange',
   });
@@ -21,7 +19,7 @@ function ModalContent({ releaseId, onRenamed }: {
   const { handleSubmit, formState: { isDirty } } = methods;
 
   const onChange = formData => axios
-    .put<Release>(`${env.MELI_API_URL}/api/v1/releases/${releaseId}`, formData)
+    .put<Release>(`/api/v1/releases/${releaseId}`, formData)
     .then(({ data }) => data)
     .then(onRenamed)
     .catch(err => {
@@ -44,7 +42,7 @@ function ModalContent({ releaseId, onRenamed }: {
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <ReleaseNameInput setInputRef={setInputRef} />
+        <ReleaseNameInput setInputRef={setInputRef}/>
         <div className="d-flex justify-content-end">
           <Button
             type="submit"
@@ -86,7 +84,7 @@ export function RenameRelease({
         {children}
       </div>
       <CardModal isOpen={isOpen} closeModal={closeModal} title="Rename release">
-        <ModalContent onRenamed={renamed} releaseId={releaseId} />
+        <ModalContent onRenamed={renamed} releaseId={releaseId}/>
       </CardModal>
     </>
   );

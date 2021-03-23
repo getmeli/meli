@@ -9,7 +9,7 @@ export function getMembers(
   search?: string,
 ): Promise<Page<TeamMember>> {
   return axios
-    .get(`${env.MELI_API_URL}/api/v1/teams/${teamId}/members`, {
+    .get(`/api/v1/teams/${teamId}/members`, {
       params: {
         search: search || undefined,
       },

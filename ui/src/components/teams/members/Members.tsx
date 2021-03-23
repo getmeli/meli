@@ -5,7 +5,6 @@ import classNames from 'classnames';
 import { EmptyList } from '../../../commons/components/EmptyList';
 import { Loader } from '../../../commons/components/Loader';
 import { AlertError } from '../../../commons/components/AlertError';
-import { useEnv } from '../../../providers/EnvProvider';
 import { TeamMember } from './team-member';
 import { axios } from '../../../providers/axios';
 import { AddMember } from './add/AddMember';
@@ -19,8 +18,7 @@ function sortMembers(a: TeamMember, b: TeamMember): number {
 }
 
 export function Members() {
-  const env = useEnv();
-  const { teamId } = useParams();
+  const { teamId } = useParams<any>();
   const [loading, setLoading] = useMountedState(true);
   const [error, setError] = useState();
   const [items, setItems] = useState<TeamMember[]>();
@@ -28,13 +26,13 @@ export function Members() {
   useEffect(() => {
     setLoading(true);
     setError(undefined);
-    axios.get(`${env.MELI_API_URL}/api/v1/teams/${teamId}/members`)
+    axios.get(`/api/v1/teams/${teamId}/members`)
       .then(({ data }) => data)
       .then(setItems)
       .catch(setError)
       .catch(err => toast.error(`Could not list members: ${err}`))
       .finally(() => setLoading(false));
-  }, [env, teamId, setLoading]);
+  }, [teamId, setLoading]);
 
   const onAdd = member => {
     setItems([member, ...items].sort(sortMembers));
@@ -46,7 +44,7 @@ export function Members() {
 
   const emptyList = (
     <EmptyList
-      icon={<TeamMemberIcon />}
+      icon={<TeamMemberIcon/>}
       title="No members"
     >
       <p>There are no members yet</p>
@@ -59,9 +57,9 @@ export function Members() {
   );
 
   return loading ? (
-    <Loader />
+    <Loader/>
   ) : error ? (
-    <AlertError error={error} />
+    <AlertError error={error}/>
   ) : (
     <>
       {items.length === 0 ? (

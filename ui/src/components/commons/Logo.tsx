@@ -7,7 +7,6 @@ import { faUpload } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
 import { ButtonIcon } from '../../commons/components/ButtonIcon';
 import { Bubble } from '../../commons/components/Bubble';
-import { useEnv } from '../../providers/EnvProvider';
 import { axios } from '../../providers/axios';
 import styles from './Logo.module.scss';
 
@@ -22,8 +21,6 @@ export function Logo<T extends Value>({ context, value, setValue, className }: {
   setValue: (value: T) => void;
   className?: any;
 }) {
-  const env = useEnv();
-
   const [uploading, setUploading] = useState(false);
   const [isDragActive, setIsDragActive] = useState(false);
 
@@ -33,7 +30,7 @@ export function Logo<T extends Value>({ context, value, setValue, className }: {
     const formData = new FormData();
     formData.append('file', acceptedFiles[0]);
     axios
-      .post<T>(`${env.MELI_API_URL}/api/v1/${context}/${value._id}/logo`, formData, {
+      .post<T>(`/api/v1/${context}/${value._id}/logo`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -52,7 +49,7 @@ export function Logo<T extends Value>({ context, value, setValue, className }: {
   const removeLogo = () => {
     setRemoving(true);
     axios
-      .delete<T>(`${env.MELI_API_URL}/api/v1/${context}/${value._id}/logo`)
+      .delete<T>(`/api/v1/${context}/${value._id}/logo`)
       .then(({ data }) => {
         setValue(data);
       })
@@ -83,7 +80,7 @@ export function Logo<T extends Value>({ context, value, setValue, className }: {
       </div>
       <div className="card-body d-flex justify-content-between align-items-center">
         {value.logo ? (
-          <Bubble src={value.logo} className={styles.logo} />
+          <Bubble src={value.logo} className={styles.logo}/>
         ) : (
           <div className="text-muted">
             Drag a file here
@@ -92,11 +89,11 @@ export function Logo<T extends Value>({ context, value, setValue, className }: {
         <div className="d-flex align-items-center">
           <input {...getInputProps()} />
           <ButtonIcon loading={uploading} onClick={open}>
-            <FontAwesomeIcon icon={faUpload} />
+            <FontAwesomeIcon icon={faUpload}/>
           </ButtonIcon>
           {value.logo && (
             <ButtonIcon loading={removing} onClick={removeLogo}>
-              <FontAwesomeIcon icon={faTrashAlt} />
+              <FontAwesomeIcon icon={faTrashAlt}/>
             </ButtonIcon>
           )}
         </div>

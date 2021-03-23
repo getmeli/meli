@@ -7,7 +7,6 @@ import { Branch } from '../branches/branch';
 import { HeaderList } from './HeaderList';
 import { Loader } from '../../../commons/components/Loader';
 import { AlertError } from '../../../commons/components/AlertError';
-import { useEnv } from '../../../providers/EnvProvider';
 import { axios } from '../../../providers/axios';
 import { useSiteHeaders } from './use-site-headers';
 
@@ -16,12 +15,11 @@ function useSetSiteHeaders(
   setHeaders: (headers: Header[]) => void,
 ) {
   const [loading, setLoading] = useMountedState(false);
-  const env = useEnv();
 
   const updateHeaders = (headers: Header[]) => {
     setLoading(true);
     axios
-      .put<Branch>(`${env.MELI_API_URL}/api/v1/sites/${siteId}/headers`, {
+      .put<Branch>(`/api/v1/sites/${siteId}/headers`, {
         headers: headers || [],
       })
       .then(({ data }) => {
@@ -43,14 +41,14 @@ function useSetSiteHeaders(
 }
 
 export function SiteHeaders() {
-  const { siteId } = useParams();
+  const { siteId } = useParams<any>();
   const { headers, setHeaders, loading, error } = useSiteHeaders(siteId);
   const { loading: updating, updateHeaders } = useSetSiteHeaders(siteId, setHeaders);
 
   return loading ? (
-    <Loader />
+    <Loader/>
   ) : error ? (
-    <AlertError error={error} />
+    <AlertError error={error}/>
   ) : (
     <div className="mt-4">
       <HeaderList

@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
-import { useEnv } from '../../providers/EnvProvider';
 import { SubHeader } from '../SubHeader';
 import { NotFound } from '../../commons/components/NotFound';
 import { NavPills } from '../../commons/components/NavPills';
@@ -30,24 +29,23 @@ export function OrgView() {
   const { currentOrg: { org: { _id: currentOrgId } } } = useCurrentOrg();
   const [org, setOrg] = useState<Org>();
 
-  const env = useEnv();
   const [loading, setLoading] = useMountedState(true);
   const [error, setError] = useState();
   useEffect(() => {
     setLoading(true);
     setError(undefined);
     axios
-      .get<Org>(`${env.MELI_API_URL}/api/v1/orgs/${currentOrgId}`)
+      .get<Org>(`/api/v1/orgs/${currentOrgId}`)
       .then(({ data }) => data)
       .then(setOrg)
       .catch(setError)
       .finally(() => setLoading(false));
-  }, [env, currentOrgId, setLoading]);
+  }, [currentOrgId, setLoading]);
 
   return loading ? (
-    <Loader />
+    <Loader/>
   ) : error ? (
-    <AlertError error={error} />
+    <AlertError error={error}/>
   ) : (
     <div className="container">
       <div className="row">
@@ -55,7 +53,7 @@ export function OrgView() {
           <SubHeader className="d-flex align-items-center justify-content-between">
             <div className="d-flex align-items-center">
               <h5 className="mb-0 d-flex align-items-center">
-                <Bubble color={org.color} src={org.logo} />
+                <Bubble color={org.color} src={org.logo}/>
                 <span className="ml-2">{org.name}</span>
               </h5>
             </div>
@@ -65,7 +63,7 @@ export function OrgView() {
                   to: `${url}/settings`,
                   label: (
                     <>
-                      <SettingsIcon className="mr-2" />
+                      <SettingsIcon className="mr-2"/>
                       {' '}
                       Settings
                     </>
@@ -75,7 +73,7 @@ export function OrgView() {
                   to: `${url}/staff`,
                   label: (
                     <>
-                      <OrgMemberIcon className="mr-2" />
+                      <OrgMemberIcon className="mr-2"/>
                       {' '}
                       Staff
                     </>
@@ -92,10 +90,10 @@ export function OrgView() {
             }}
             >
               <Switch>
-                <Route path={path} exact component={() => <Redirect to={`${url}/settings`} />} />
-                <Route path={`${path}/staff`} exact component={Staff} />
-                <Route path={`${path}/settings`} exact component={OrgSettings} />
-                <Route component={NotFound} />
+                <Route path={path} exact component={() => <Redirect to={`${url}/settings`}/>}/>
+                <Route path={`${path}/staff`} exact component={Staff}/>
+                <Route path={`${path}/settings`} exact component={OrgSettings}/>
+                <Route component={NotFound}/>
               </Switch>
             </Context.Provider>
           </div>

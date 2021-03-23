@@ -4,7 +4,6 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { Button } from '../../../commons/components/Button';
 import { axios } from '../../../providers/axios';
 import { CardModal } from '../../../commons/components/modals/CardModal';
-import { useEnv } from '../../../providers/EnvProvider';
 import { Branch } from './branch';
 import { BranchNameInput } from './BranchNameInput';
 import { useMountedState } from '../../../commons/hooks/use-mounted-state';
@@ -16,7 +15,6 @@ function ModalContent({
   branchId: string;
   onRenamed: (branch: Branch) => void;
 }) {
-  const env = useEnv();
   const methods = useForm({
     mode: 'onChange',
   });
@@ -26,7 +24,7 @@ function ModalContent({
   const onSubmit = formData => {
     setLoading(true);
     axios
-      .put<Branch>(`${env.MELI_API_URL}/api/v1/sites/${siteId}/branches/${branchId}/name`, formData)
+      .put<Branch>(`/api/v1/sites/${siteId}/branches/${branchId}/name`, formData)
       .then(({ data }) => onRenamed(data))
       .catch(err => {
         toast.error(`Could not rename branch: ${err}`);
@@ -45,7 +43,7 @@ function ModalContent({
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <BranchNameInput setInputRef={setInputRef} />
+        <BranchNameInput setInputRef={setInputRef}/>
         <div className="d-flex justify-content-end">
           <Button
             type="submit"
@@ -88,7 +86,7 @@ export function RenameBranch({
         {children}
       </div>
       <CardModal isOpen={isOpen} closeModal={closeModal} title="Rename branch">
-        <ModalContent onRenamed={renamed} siteId={siteId} branchId={branchId} />
+        <ModalContent onRenamed={renamed} siteId={siteId} branchId={branchId}/>
       </CardModal>
     </>
   );

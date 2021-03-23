@@ -4,7 +4,6 @@ import { Controller, useForm } from 'react-hook-form';
 import { Button } from '../../../../commons/components/Button';
 import { axios } from '../../../../providers/axios';
 import { CardModal } from '../../../../commons/components/modals/CardModal';
-import { useEnv } from '../../../../providers/EnvProvider';
 import { isEmail, maxLength, required } from '../../../../commons/components/forms/form-constants';
 import { InputError } from '../../../../commons/components/forms/InputError';
 import styles from './AddInvite.module.scss';
@@ -22,7 +21,6 @@ function AddMemberModal({ closeModal, onAdded }: {
   closeModal;
   onAdded: (member: OrgMember) => void;
 }) {
-  const env = useEnv();
   const { currentOrg } = useCurrentOrg();
   const {
     register, errors, handleSubmit, formState: { isDirty }, control,
@@ -32,7 +30,7 @@ function AddMemberModal({ closeModal, onAdded }: {
   const [loading, setLoading] = useMountedState(false);
 
   const onChange = (member: InviteRequest) => axios
-    .post(`${env.MELI_API_URL}/api/v1/orgs/${currentOrg.org._id}/invites`, member)
+    .post(`/api/v1/orgs/${currentOrg.org._id}/invites`, member)
     .then(({ data }) => {
       onAdded(data);
     })
@@ -63,7 +61,7 @@ function AddMemberModal({ closeModal, onAdded }: {
           placeholder="steve@apple.com"
           autoComplete="off"
         />
-        <InputError error={errors} path="email" />
+        <InputError error={errors} path="email"/>
       </div>
       <div className="form-group flex-grow-1 col">
         <Controller
@@ -81,7 +79,7 @@ function AddMemberModal({ closeModal, onAdded }: {
             </Toggle>
           )}
         />
-        <InputError error={errors} path="admin" />
+        <InputError error={errors} path="admin"/>
       </div>
       <div className="d-flex justify-content-end">
         <Button
@@ -114,7 +112,7 @@ export function AddInvite({
         {children}
       </div>
       <CardModal isOpen={isOpen} closeModal={closeModal} title="Invite org member">
-        <AddMemberModal closeModal={closeModal} onAdded={onAdded} />
+        <AddMemberModal closeModal={closeModal} onAdded={onAdded}/>
       </CardModal>
     </>
   );

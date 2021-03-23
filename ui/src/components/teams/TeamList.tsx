@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { uniqueId } from 'lodash';
-import { useEnv } from '../../providers/EnvProvider';
 import { Loader } from '../../commons/components/Loader';
 import { EmptyList } from '../../commons/components/EmptyList';
 import { AlertError } from '../../commons/components/AlertError';
@@ -21,7 +20,6 @@ import { EventType } from '../../websockets/event-type';
 import { Org } from '../orgs/org';
 
 export function TeamList() {
-  const env = useEnv();
   const { currentOrg } = useCurrentOrg();
   const [loading, setLoading] = useMountedState(true);
   const [error, setError] = useState();
@@ -39,7 +37,7 @@ export function TeamList() {
     setLoading(true);
     setError(undefined);
     axios
-      .get<Team[]>(`${env.MELI_API_URL}/api/v1/orgs/${currentOrg.org._id}/teams`)
+      .get<Team[]>(`/api/v1/orgs/${currentOrg.org._id}/teams`)
       .then(({ data }) => {
         itemsRef.current.push(...data);
         setItems(itemsRef.current);
@@ -47,7 +45,7 @@ export function TeamList() {
       .catch(setError)
       .catch(err => toast.error(`Could not list repos: ${err}`))
       .finally(() => setLoading(false));
-  }, [env, pagination, currentOrg, setLoading]);
+  }, [pagination, currentOrg, setLoading]);
 
   const nextPage = () => {
     setPagination({
@@ -58,7 +56,7 @@ export function TeamList() {
 
   const emptyList = (
     <EmptyList
-      icon={<TeamIcon />}
+      icon={<TeamIcon/>}
       title="No teams"
     >
       <AddTeam>
@@ -70,9 +68,9 @@ export function TeamList() {
   );
 
   return loading ? (
-    <Loader />
+    <Loader/>
   ) : error ? (
-    <AlertError error={error} />
+    <AlertError error={error}/>
   ) : (
     <div className="mt-5" key={uniqueId()}>
       {items.length === 0 ? (
@@ -85,11 +83,11 @@ export function TeamList() {
               <Link to={`/teams/${team._id}`} className="d-block" key={team._id}>
                 <li className="list-group-item list-group-item-action d-flex align-items-center justify-content-between">
                   <div className="d-flex align-items-center">
-                    <Bubble color={team.color} src={team.logo} />
+                    <Bubble color={team.color} src={team.logo}/>
                     <span className="ml-2">{team.name}</span>
                   </div>
                   <div className="d-flex align-items-center">
-                    <FromNow date={team.createdAt} label="Created" />
+                    <FromNow date={team.createdAt} label="Created"/>
                   </div>
                 </li>
               </Link>

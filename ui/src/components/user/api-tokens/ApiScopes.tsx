@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { faLock } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useEnv } from '../../../providers/EnvProvider';
 import { useMountedState } from '../../../commons/hooks/use-mounted-state';
 import { axios } from '../../../providers/axios';
 import { Loader } from '../../../commons/components/Loader';
@@ -35,7 +34,6 @@ export function ApiScopes({
   value: ApiScope[];
   onChange: (scopes: ApiScope[]) => void;
 }) {
-  const env = useEnv();
   const [loading, setLoading] = useMountedState(true);
   const [error, setError] = useState();
   const [groups, setGroups] = useState<EndpointGroup[]>();
@@ -43,12 +41,12 @@ export function ApiScopes({
   useEffect(() => {
     setLoading(true);
     axios
-      .get<ApiEndpoint[]>(`${env.MELI_API_URL}/api/v1/api-endpoints`)
+      .get<ApiEndpoint[]>(`/api/v1/api-endpoints`)
       .then(({ data }) => buildGroups(data))
       .then(setGroups)
       .catch(setError)
       .finally(() => setLoading(false));
-  }, [env, setLoading]);
+  }, [setLoading]);
 
   const toggle = (isOn: boolean, scopes: ApiScope[]) => {
     if (isOn) {
@@ -59,9 +57,9 @@ export function ApiScopes({
   };
 
   return loading ? (
-    <Loader />
+    <Loader/>
   ) : error ? (
-    <AlertError error={error} />
+    <AlertError error={error}/>
   ) : (
     <ul className="list-group">
       {groups.map(({ group, endpoints }) => (
@@ -87,7 +85,7 @@ export function ApiScopes({
                 <div className="d-flex justify-content-between align-items-center flex-grow-1">
                   <div className="d-flex align-items-center">
                     <div className={styles.method}>
-                      <HttpMethodBadge method={endpoint.method} className="mr-3" />
+                      <HttpMethodBadge method={endpoint.method} className="mr-3"/>
                     </div>
                     <div className="mr-3">
                       <FontAwesomeIcon icon={faLock} fixedWidth {...tooltipToggle(id)} />

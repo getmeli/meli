@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 import { AlertError } from '../../../../commons/components/AlertError';
 import { LoadMore } from '../../../../commons/components/LoadMore';
-import { useEnv } from '../../../../providers/EnvProvider';
 import { SearchInput } from '../../../sites/releases/SearchInput';
 import { useOrg } from '../../OrgView';
 import { getMembers, OrgMembersSearchQuery } from './get-members';
@@ -13,7 +12,6 @@ import { OrgMemberIcon } from '../../../icons/OrgMemberIcon';
 import { Loader } from '../../../../commons/components/Loader';
 
 export function Members() {
-  const env = useEnv();
   const [loading, setLoading] = useMountedState(true);
   const [error, setError] = useState();
   const [items, setItems] = useState<OrgMember[]>([]);
@@ -70,7 +68,7 @@ export function Members() {
     setLoading(true);
     setError(undefined);
 
-    getMembers(env, org._id, searchQuery)
+    getMembers(org._id, searchQuery)
       .then(data => {
         itemsRef.current = searchQuery.search ? data.items : [...itemsRef.current, ...data.items];
         setItems(itemsRef.current);
@@ -82,7 +80,7 @@ export function Members() {
         setSearching(false);
         setLoading(false);
       });
-  }, [env, org, searchQuery, setLoading]);
+  }, [org, searchQuery, setLoading]);
 
   const nextPage = () => {
     setSearchQuery({
@@ -104,7 +102,7 @@ export function Members() {
       <div className="mt-4 card">
         <div className="card-header d-flex justify-content-between">
           <div>
-            <OrgMemberIcon className="mr-2" />
+            <OrgMemberIcon className="mr-2"/>
             <strong>Members</strong>
           </div>
           <div>
@@ -118,9 +116,9 @@ export function Members() {
         </div>
         <div className="card-body">
           {loading ? (
-            <Loader />
+            <Loader/>
           ) : error ? (
-            <AlertError error={error} />
+            <AlertError error={error}/>
           ) : items.length === 0 ? (
             <>No search results found</>
           ) : (
@@ -141,7 +139,7 @@ export function Members() {
                 />
               )}
               {error && (
-                <AlertError error={error} className="mt-4" />
+                <AlertError error={error} className="mt-4"/>
               )}
             </ul>
           )}

@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useEnv } from '../providers/EnvProvider';
 import { useMountedState } from '../commons/hooks/use-mounted-state';
 import { axios } from '../providers/axios';
 import { CopyToClipboard } from '../commons/components/CopyToClipboard';
@@ -11,7 +10,6 @@ interface ApiInfo {
 }
 
 function useApiInfo() {
-  const env = useEnv();
   const [loading, setLoading] = useMountedState(false);
   const [error, setError] = useState();
   const [apiInfo, setApiInfo] = useState<ApiInfo>();
@@ -20,12 +18,12 @@ function useApiInfo() {
     setLoading(true);
     setError(undefined);
     axios
-      .get<ApiInfo>(`${env.MELI_API_URL}/system/info`)
+      .get<ApiInfo>(`/system/info`)
       .then(({ data }) => data)
       .then(setApiInfo)
       .catch(setError)
       .finally(() => setLoading(false));
-  }, [env, setLoading]);
+  }, [setLoading]);
 
   return {
     apiInfo,

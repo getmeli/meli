@@ -1,6 +1,5 @@
 import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { useEnv } from './EnvProvider';
 import { axios } from './axios';
 import { OrgMember } from '../components/orgs/staff/members/org-member';
 import { Org } from '../components/orgs/org';
@@ -36,7 +35,6 @@ export function OrgProvider(props) {
   const [initialized, setInitialized] = useState(!localStorage.getItem(storageKey));
   const [loading, setLoading] = useState(!!localStorage.getItem(storageKey));
   const [currentOrg, setCurrentOrg] = useState<CurrentOrg>();
-  const env = useEnv();
   const { user } = useAuth();
 
   const signOutOrg = () => {
@@ -49,8 +47,8 @@ export function OrgProvider(props) {
     setLoading(true);
     return Promise
       .all([
-        axios.get<Org>(`${env.MELI_API_URL}/api/v1/orgs/${orgId}`),
-        axios.get<OrgMember>(`${env.MELI_API_URL}/api/v1/orgs/${orgId}/member`),
+        axios.get<Org>(`/api/v1/orgs/${orgId}`),
+        axios.get<OrgMember>(`/api/v1/orgs/${orgId}/member`),
       ])
       .then(([{ data: org }, { data: member }]) => {
         const newCurrentOrg: CurrentOrg = {
@@ -67,7 +65,7 @@ export function OrgProvider(props) {
         setInitialized(true);
         setLoading(false);
       });
-  }, [env]);
+  }, []);
 
   useEffect(() => {
     const orgId = localStorage.getItem(storageKey);
@@ -81,7 +79,7 @@ export function OrgProvider(props) {
       setInitialized(true);
       setLoading(false);
     }
-  }, [env, setLoading, user, changeCurrentOrg]);
+  }, [setLoading, user, changeCurrentOrg]);
 
   const contextValue: OrgContext = {
     initialized,
@@ -96,7 +94,7 @@ export function OrgProvider(props) {
     <FullPageCentered>
       <p>
         Loading organization
-        <Loader className="ml-2" />
+        <Loader className="ml-2"/>
       </p>
     </FullPageCentered>
   ) : (

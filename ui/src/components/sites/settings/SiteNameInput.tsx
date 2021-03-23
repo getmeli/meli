@@ -1,7 +1,7 @@
 import { useFormContext } from 'react-hook-form';
 import React from 'react';
 import { toast } from 'react-toastify';
-import { Env, useEnv } from '../../../providers/EnvProvider';
+import { Env } from '../../../providers/EnvProvider';
 import { isSubdomain, maxLength, required } from '../../../commons/components/forms/form-constants';
 import { debounceTime } from '../../../utils/debounce-time';
 import { InputError } from '../../../commons/components/forms/InputError';
@@ -15,7 +15,7 @@ async function validateName(env: Env, name: string, previousName?: string): Prom
     return undefined;
   }
   return axios
-    .post<string | undefined>(`${env.MELI_API_URL}/api/v1/sites.validate/name`, {
+    .post<string | undefined>(`/api/v1/sites.validate/name`, {
       name,
     })
     .then(({ data }) => data || undefined)
@@ -30,7 +30,6 @@ export function SiteNameInput({ setInputRef, previousName }: {
   previousName?: string;
 }) {
   const { register, errors } = useFormContext();
-  const env = useEnv();
 
   const ref = input => {
     if (setInputRef) {
@@ -40,7 +39,7 @@ export function SiteNameInput({ setInputRef, previousName }: {
       required,
       maxLength: maxLength(),
       pattern: isSubdomain,
-      validate: debounceTime<string | undefined>(val => validateName(env, val, previousName), 300),
+      validate: debounceTime<string | undefined>(val => validateName(val, previousName), 300),
     })(input);
   };
 
@@ -56,7 +55,7 @@ export function SiteNameInput({ setInputRef, previousName }: {
         placeholder="lisa"
         autoComplete="off"
       />
-      <InputError error={errors} path="name" />
+      <InputError error={errors} path="name"/>
     </div>
   );
 }

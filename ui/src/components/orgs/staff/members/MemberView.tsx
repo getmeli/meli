@@ -9,7 +9,6 @@ import { DeleteMember } from './DeleteMember';
 import { ButtonIcon } from '../../../../commons/components/ButtonIcon';
 import { Toggle } from '../../../../commons/components/forms/Toggle';
 import { Dropdown, dropdownToggle } from '../../../../commons/components/dropdown/Dropdown';
-import { useEnv } from '../../../../providers/EnvProvider';
 import { axios } from '../../../../providers/axios';
 import { useCurrentOrg } from '../../../../providers/OrgProvider';
 import { Loader } from '../../../../commons/components/Loader';
@@ -21,13 +20,12 @@ function AdminToggle({ member, setMember }: {
   member: OrgMember;
   setMember: (member: OrgMember) => void;
 }) {
-  const env = useEnv();
   const [loading, setLoading] = useMountedState(false);
 
   const toggle = () => {
     setLoading(true);
     axios
-      .put<OrgMember>(`${env.MELI_API_URL}/api/v1/members/${member._id}`, {
+      .put<OrgMember>(`/api/v1/members/${member._id}`, {
         admin: !member.admin,
       })
       .then(({ data }) => data)
@@ -46,7 +44,7 @@ function AdminToggle({ member, setMember }: {
       disabled={loading}
     >
       {loading && (
-        <Loader className="mr-2" />
+        <Loader className="mr-2"/>
       )}
       admin
     </Toggle>
@@ -79,17 +77,17 @@ export function MemberView({
       <div className="d-flex align-items-center">
         <IsOwner>
           {!member.owner && (
-          <AdminToggle
-            member={member}
-            setMember={setMember}
-          />
+            <AdminToggle
+              member={member}
+              setMember={setMember}
+            />
           )}
           <ButtonIcon className="ml-3" {...dropdownToggle(uid)}>
-            <FontAwesomeIcon icon={faEllipsisV} />
+            <FontAwesomeIcon icon={faEllipsisV}/>
           </ButtonIcon>
           <Dropdown id={uid}>
             <DeleteMember memberId={member._id} onDelete={onDelete}>
-              <DropdownLink icon={<FontAwesomeIcon icon={faTrashAlt} />} disabled={member.owner}>
+              <DropdownLink icon={<FontAwesomeIcon icon={faTrashAlt}/>} disabled={member.owner}>
                 Delete
               </DropdownLink>
             </DeleteMember>

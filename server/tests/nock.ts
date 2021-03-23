@@ -1,4 +1,4 @@
-import nock from 'tests/nock';
+import nock from 'nock';
 import { appendFileSync } from 'fs';
 
 console.log('Starting nock recordings');

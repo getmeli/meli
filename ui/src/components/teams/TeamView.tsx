@@ -5,7 +5,6 @@ import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import { uniqueId } from 'lodash';
 import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 import { axios } from '../../providers/axios';
-import { useEnv } from '../../providers/EnvProvider';
 import { Team } from './team';
 import { Loader } from '../../commons/components/Loader';
 import { AlertError } from '../../commons/components/AlertError';
@@ -35,10 +34,9 @@ export const useTeam = () => useContext(Context);
 
 export function TeamView() {
   const { url, path } = useRouteMatch();
-  const { teamId } = useParams();
+  const { teamId } = useParams<any>();
   const [uid] = useState(uniqueId());
 
-  const env = useEnv();
   const [loading, setLoading] = useMountedState(true);
   const [error, setError] = useState();
   const [team, setTeam] = useState<Team>();
@@ -47,17 +45,17 @@ export function TeamView() {
     setLoading(true);
     setError(undefined);
     axios
-      .get<Team>(`${env.MELI_API_URL}/api/v1/teams/${teamId}`)
+      .get<Team>(`/api/v1/teams/${teamId}`)
       .then(({ data }) => data)
       .then(setTeam)
       .catch(setError)
       .finally(() => setLoading(false));
-  }, [env, teamId, setLoading]);
+  }, [teamId, setLoading]);
 
   return loading ? (
-    <Loader />
+    <Loader/>
   ) : error ? (
-    <AlertError error={error} />
+    <AlertError error={error}/>
   ) : (
     <Context.Provider value={{
       team, setTeam,
@@ -69,7 +67,7 @@ export function TeamView() {
             <SubHeader className="d-flex align-items-center justify-content-between">
               <div className="d-flex align-items-center">
                 <h5 className="mb-0 d-flex align-items-center">
-                  <Bubble color={team.color} src={team.logo} />
+                  <Bubble color={team.color} src={team.logo}/>
                   <span className="ml-2">{team.name}</span>
                 </h5>
               </div>
@@ -79,7 +77,7 @@ export function TeamView() {
                     to: `${url}/sites`,
                     label: (
                       <>
-                        <SiteIcon className="mr-2" />
+                        <SiteIcon className="mr-2"/>
                         {' '}
                         Sites
                       </>
@@ -89,7 +87,7 @@ export function TeamView() {
                     to: `${url}/members`,
                     label: (
                       <>
-                        <TeamMemberIcon className="mr-2" />
+                        <TeamMemberIcon className="mr-2"/>
                         {' '}
                         Members
                       </>
@@ -99,7 +97,7 @@ export function TeamView() {
                     to: `${url}/settings`,
                     label: (
                       <>
-                        <SettingsIcon className="mr-2" />
+                        <SettingsIcon className="mr-2"/>
                         {' '}
                         Settings
                       </>
@@ -108,11 +106,11 @@ export function TeamView() {
                 ]}
                 />
                 <ButtonIcon className="ml-3" {...dropdownToggle(uid)}>
-                  <FontAwesomeIcon icon={faEllipsisV} />
+                  <FontAwesomeIcon icon={faEllipsisV}/>
                 </ButtonIcon>
                 <Dropdown id={uid}>
                   <DeleteTeam id={teamId}>
-                    <DropdownLink icon={<FontAwesomeIcon icon={faTrashAlt} fixedWidth />}>
+                    <DropdownLink icon={<FontAwesomeIcon icon={faTrashAlt} fixedWidth/>}>
                       Delete
                     </DropdownLink>
                   </DeleteTeam>
@@ -122,11 +120,11 @@ export function TeamView() {
 
             <div className="mt-4">
               <Switch>
-                <Route path={path} exact component={() => <Redirect to={`${url}/sites`} />} />
-                <Route path={`${path}/sites`} exact component={SiteList} />
-                <Route path={`${path}/members`} exact component={Members} />
-                <Route path={`${path}/settings`} exact component={TeamSettings} />
-                <Route component={NotFound} />
+                <Route path={path} exact component={() => <Redirect to={`${url}/sites`}/>}/>
+                <Route path={`${path}/sites`} exact component={SiteList}/>
+                <Route path={`${path}/members`} exact component={Members}/>
+                <Route path={`${path}/settings`} exact component={TeamSettings}/>
+                <Route component={NotFound}/>
               </Switch>
             </div>
           </div>

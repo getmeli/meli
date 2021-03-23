@@ -1,19 +1,18 @@
 import { useFormContext } from 'react-hook-form';
 import React from 'react';
 import { toast } from 'react-toastify';
-import { Env, useEnv } from '../../../providers/EnvProvider';
 import { maxLength, required } from '../../../commons/components/forms/form-constants';
 import { debounceTime } from '../../../utils/debounce-time';
 import { InputError } from '../../../commons/components/forms/InputError';
 import { axios } from '../../../providers/axios';
 import { useSite } from '../SiteView';
 
-async function validateName(env: Env, siteId: string, name: string): Promise<string | undefined> {
+async function validateName(siteId: string, name: string): Promise<string | undefined> {
   if (!name) {
     return undefined;
   }
   return axios
-    .post<string | undefined>(`${env.MELI_API_URL}/api/v1/sites/${siteId}/branches.validate/name`, {
+    .post<string | undefined>(`/api/v1/sites/${siteId}/branches.validate/name`, {
       name,
     })
     .then(({ data }) => data || undefined)
@@ -28,7 +27,6 @@ export function BranchNameInput({ setInputRef }: {
 }) {
   const { register, errors } = useFormContext();
   const { site } = useSite();
-  const env = useEnv();
 
   const ref = input => {
     if (setInputRef) {
@@ -37,7 +35,7 @@ export function BranchNameInput({ setInputRef }: {
     register({
       required,
       maxLength: maxLength(),
-      validate: debounceTime<string | undefined>(val => validateName(env, site._id, val), 300),
+      validate: debounceTime<string | undefined>(val => validateName(site._id, val), 300),
     })(input);
   };
 
@@ -53,7 +51,7 @@ export function BranchNameInput({ setInputRef }: {
         placeholder="next"
         autoComplete="off"
       />
-      <InputError error={errors} path="name" />
+      <InputError error={errors} path="name"/>
     </div>
   );
 }

@@ -5,7 +5,6 @@ import classNames from 'classnames';
 import { EmptyList } from '../../../commons/components/EmptyList';
 import { Loader } from '../../../commons/components/Loader';
 import { AlertError } from '../../../commons/components/AlertError';
-import { useEnv } from '../../../providers/EnvProvider';
 import { Token } from './token';
 import { axios } from '../../../providers/axios';
 import { AddToken } from './AddToken';
@@ -19,8 +18,7 @@ function sortTokens(a: Token, b: Token): number {
 }
 
 export function TokenList() {
-  const env = useEnv();
-  const { siteId } = useParams();
+  const { siteId } = useParams<any>();
   const [loading, setLoading] = useMountedState(true);
   const [error, setError] = useState();
   const [items, setItems] = useState<Token[]>();
@@ -28,13 +26,13 @@ export function TokenList() {
   useEffect(() => {
     setLoading(true);
     setError(undefined);
-    axios.get(`${env.MELI_API_URL}/api/v1/sites/${siteId}/tokens`)
+    axios.get(`/api/v1/sites/${siteId}/tokens`)
       .then(({ data }) => data)
       .then(setItems)
       .catch(setError)
       .catch(err => toast.error(`Could not list tokens: ${err}`))
       .finally(() => setLoading(false));
-  }, [env, siteId, setLoading]);
+  }, [siteId, setLoading]);
 
   const onAdd = token => {
     setItems([token, ...items].sort(sortTokens));
@@ -46,7 +44,7 @@ export function TokenList() {
 
   const emptyList = (
     <EmptyList
-      icon={<TokenIcon />}
+      icon={<TokenIcon/>}
       title="No tokens"
     >
       <p>There are no tokens yet</p>
@@ -59,9 +57,9 @@ export function TokenList() {
   );
 
   return loading ? (
-    <Loader />
+    <Loader/>
   ) : error ? (
-    <AlertError error={error} />
+    <AlertError error={error}/>
   ) : (
     <>
       {items.length === 0 ? (

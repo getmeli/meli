@@ -5,7 +5,6 @@ import { faPaperPlane } from '@fortawesome/free-regular-svg-icons';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Loader } from '../../../../commons/components/Loader';
 import { AlertError } from '../../../../commons/components/AlertError';
-import { useEnv } from '../../../../providers/EnvProvider';
 import { Invite } from './invite';
 import { axios } from '../../../../providers/axios';
 import { InviteView } from './InviteView';
@@ -19,7 +18,6 @@ function sortInvites(a: Invite, b: Invite): number {
 }
 
 export function Invites() {
-  const env = useEnv();
   const [loading, setLoading] = useMountedState(true);
   const [error, setError] = useState();
   const [items, setItems] = useState<Invite[]>();
@@ -28,13 +26,13 @@ export function Invites() {
   useEffect(() => {
     setLoading(true);
     setError(undefined);
-    axios.get(`${env.MELI_API_URL}/api/v1/orgs/${currentOrg.org._id}/invites`)
+    axios.get(`/api/v1/orgs/${currentOrg.org._id}/invites`)
       .then(({ data }) => data)
       .then(setItems)
       .catch(setError)
       .catch(err => toast.error(`Could not list invites: ${err}`))
       .finally(() => setLoading(false));
-  }, [env, currentOrg, setLoading]);
+  }, [currentOrg, setLoading]);
 
   const onAdd = invite => {
     setItems([invite, ...items].sort(sortInvites));
@@ -48,20 +46,20 @@ export function Invites() {
     <div className="mt-4 card">
       <div className="card-header d-flex justify-content-between">
         <div>
-          <FontAwesomeIcon icon={faPaperPlane} className="mr-2" />
+          <FontAwesomeIcon icon={faPaperPlane} className="mr-2"/>
           <strong>Invites</strong>
         </div>
         <AddInvite onAdded={onAdd}>
           <ButtonIcon>
-            <FontAwesomeIcon icon={faPlus} />
+            <FontAwesomeIcon icon={faPlus}/>
           </ButtonIcon>
         </AddInvite>
       </div>
       <div className="card-body">
         {loading ? (
-          <Loader />
+          <Loader/>
         ) : error ? (
-          <AlertError error={error} />
+          <AlertError error={error}/>
         ) : items.length === 0 ? (
           <div className="text-center">No invites to show</div>
         ) : (

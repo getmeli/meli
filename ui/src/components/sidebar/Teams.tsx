@@ -3,7 +3,6 @@ import { NavLink } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useEnv } from '../../providers/EnvProvider';
 import { Loader } from '../../commons/components/Loader';
 import { AlertError } from '../../commons/components/AlertError';
 import { Team } from '../teams/team';
@@ -37,24 +36,23 @@ function TeamSection({ team, className, onDelete }: { team: Team; className?; on
           to={`/teams/${team._id}`}
           activeClassName={styles.active}
         >
-          <Bubble color={team.color} src={team.logo} />
+          <Bubble color={team.color} src={team.logo}/>
           <span className="ml-2 text-uppercase">{team.name}</span>
         </NavLink>
         <div>
           <AddSite teamId={team._id}>
             <ButtonIcon>
-              <FontAwesomeIcon icon={faPlus} />
+              <FontAwesomeIcon icon={faPlus}/>
             </ButtonIcon>
           </AddSite>
         </div>
       </div>
-      <Sites teamId={team._id} />
+      <Sites teamId={team._id}/>
     </div>
   );
 }
 
 export function Teams({ className }: { className? }) {
-  const env = useEnv();
   const [loading, setLoading] = useMountedState(true);
   const [error, setError] = useState();
   const [teams, setTeams] = useState<Team[]>();
@@ -71,7 +69,7 @@ export function Teams({ className }: { className? }) {
     setLoading(true);
     setError(undefined);
     axios
-      .get<Team[]>(`${env.MELI_API_URL}/api/v1/orgs/${currentOrg.org._id}/teams`)
+      .get<Team[]>(`/api/v1/orgs/${currentOrg.org._id}/teams`)
       .then(({ data }) => {
         teamsRef.current = data;
         setTeams(teamsRef.current.sort(sortTeams));
@@ -79,16 +77,16 @@ export function Teams({ className }: { className? }) {
       .catch(setError)
       .catch(err => toast.error(`Could not list teams: ${err}`))
       .finally(() => setLoading(false));
-  }, [env, currentOrg, setLoading]);
+  }, [currentOrg, setLoading]);
 
   const onTeamDeleted = (team: Team) => {
     setTeams(teams.filter(({ _id }) => _id !== team._id));
   };
 
   return loading ? (
-    <Loader />
+    <Loader/>
   ) : error ? (
-    <AlertError error={error} />
+    <AlertError error={error}/>
   ) : (
     <div className={className}>
       {teams.length === 0 ? (

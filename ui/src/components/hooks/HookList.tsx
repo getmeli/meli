@@ -8,7 +8,6 @@ import { axios } from '../../providers/axios';
 import { Loader } from '../../commons/components/Loader';
 import { AlertError } from '../../commons/components/AlertError';
 import { useMountedState } from '../../commons/hooks/use-mounted-state';
-import { useEnv } from '../../providers/EnvProvider';
 import { useHookContext } from './HookProvider';
 import { Hook } from './hook';
 import { HookIcon } from '../icons/HookIcon';
@@ -21,7 +20,6 @@ export function HookList() {
   const { url } = useRouteMatch();
   const { context } = useHookContext();
 
-  const env = useEnv();
   const [loading, setLoading] = useMountedState(true);
   const [error, setError] = useState();
   const [hooks, setHooks] = useState<Hook[]>();
@@ -29,17 +27,17 @@ export function HookList() {
   useEffect(() => {
     setLoading(true);
     setError(undefined);
-    axios.get<Hook[]>(`${env.MELI_API_URL}/api/v1/${context}/hooks`)
+    axios.get<Hook[]>(`/api/v1/${context}/hooks`)
       .then(({ data }) => data.sort(sortHooks))
       .then(setHooks)
       .catch(setError)
       .catch(err => toast.error(`Could not list hooks: ${err}`))
       .finally(() => setLoading(false));
-  }, [env, setLoading, context]);
+  }, [setLoading, context]);
 
   const emptyList = (
     <EmptyList
-      icon={<HookIcon />}
+      icon={<HookIcon/>}
       title="No hooks"
     >
       <p>There are no hooks yet</p>
@@ -52,9 +50,9 @@ export function HookList() {
   );
 
   return loading ? (
-    <Loader />
+    <Loader/>
   ) : error ? (
-    <AlertError error={error} />
+    <AlertError error={error}/>
   ) : (
     <>
       {hooks.length === 0 ? (

@@ -5,7 +5,6 @@ import classNames from 'classnames';
 import { EmptyList } from '../../../commons/components/EmptyList';
 import { Loader } from '../../../commons/components/Loader';
 import { AlertError } from '../../../commons/components/AlertError';
-import { useEnv } from '../../../providers/EnvProvider';
 import { axios } from '../../../providers/axios';
 import styles from './BranchList.module.scss';
 import { BranchIcon } from '../../icons/BranchIcon';
@@ -19,8 +18,7 @@ function sortBranches(a: Branch, b: Branch): number {
 }
 
 export function BranchList() {
-  const env = useEnv();
-  const { siteId } = useParams();
+  const { siteId } = useParams<any>();
   const [loading, setLoading] = useMountedState(true);
   const [error, setError] = useState();
   const [items, setItems] = useState<Branch[]>();
@@ -28,12 +26,12 @@ export function BranchList() {
   useEffect(() => {
     setLoading(true);
     setError(undefined);
-    axios.get<Branch[]>(`${env.MELI_API_URL}/api/v1/sites/${siteId}/branches`)
+    axios.get<Branch[]>(`/api/v1/sites/${siteId}/branches`)
       .then(({ data }) => setItems(data))
       .catch(setError)
       .catch(err => toast.error(`Could not list branches: ${err}`))
       .finally(() => setLoading(false));
-  }, [env, siteId, setLoading]);
+  }, [siteId, setLoading]);
 
   const onAdded = branch => {
     setItems([branch, ...items].sort(sortBranches));
@@ -41,7 +39,7 @@ export function BranchList() {
 
   const emptyList = (
     <EmptyList
-      icon={<BranchIcon />}
+      icon={<BranchIcon/>}
       title="No branches"
     >
       <p>There are no branches yet</p>
@@ -54,9 +52,9 @@ export function BranchList() {
   );
 
   return loading ? (
-    <Loader />
+    <Loader/>
   ) : error ? (
-    <AlertError error={error} />
+    <AlertError error={error}/>
   ) : (
     <>
       {items.length === 0 ? (

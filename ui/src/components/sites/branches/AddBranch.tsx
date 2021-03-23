@@ -4,7 +4,6 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { Button } from '../../../commons/components/Button';
 import { axios } from '../../../providers/axios';
 import { CardModal } from '../../../commons/components/modals/CardModal';
-import { useEnv } from '../../../providers/EnvProvider';
 import { Branch } from './branch';
 import { BranchNameInput } from './BranchNameInput';
 import { useMountedState } from '../../../commons/hooks/use-mounted-state';
@@ -16,7 +15,6 @@ function ModalContent({
   releaseId?: string;
   onAdded: (branch: Branch) => void;
 }) {
-  const env = useEnv();
   const methods = useForm({
     mode: 'onChange',
   });
@@ -24,7 +22,7 @@ function ModalContent({
   const { handleSubmit, formState: { isDirty } } = methods;
 
   const onChange = formData => axios
-    .post<Branch>(`${env.MELI_API_URL}/api/v1/sites/${siteId}/branches`, {
+    .post<Branch>(`/api/v1/sites/${siteId}/branches`, {
       ...formData,
       releaseId,
     })
@@ -50,7 +48,7 @@ function ModalContent({
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <BranchNameInput setInputRef={setInputRef} />
+        <BranchNameInput setInputRef={setInputRef}/>
         <div className="d-flex justify-content-end">
           <Button
             type="submit"
@@ -93,7 +91,7 @@ export function AddBranch({
         {children}
       </div>
       <CardModal isOpen={isOpen} closeModal={closeModal} title="Add branch">
-        <ModalContent onAdded={added} siteId={siteId} releaseId={releaseId} />
+        <ModalContent onAdded={added} siteId={siteId} releaseId={releaseId}/>
       </CardModal>
     </>
   );

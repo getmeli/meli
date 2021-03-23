@@ -8,7 +8,6 @@ import { Branch } from './branch';
 import { Button } from '../../../commons/components/Button';
 import { InputError } from '../../../commons/components/forms/InputError';
 import { maxLength, required } from '../../../commons/components/forms/form-constants';
-import { useEnv } from '../../../providers/EnvProvider';
 import { axios } from '../../../providers/axios';
 import { randomString } from '../../../commons/utils/random-string';
 
@@ -40,13 +39,12 @@ export function BranchPassword({
     mode: 'onChange',
   });
 
-  const env = useEnv();
   const [loading, setLoading] = useState(false);
 
   const setPassword = (formData: FormData) => {
     setLoading(true);
     axios
-      .put<Branch>(`${env.MELI_API_URL}/api/v1/sites/${siteId}/branches/${branch._id}/password`, formData)
+      .put<Branch>(`/api/v1/sites/${siteId}/branches/${branch._id}/password`, formData)
       .then(({ data }) => {
         onChange(data);
         closeModal();
@@ -60,7 +58,7 @@ export function BranchPassword({
   const removePassword = () => {
     setLoading(true);
     axios
-      .delete<Branch>(`${env.MELI_API_URL}/api/v1/sites/${siteId}/branches/${branch._id}/password`)
+      .delete<Branch>(`/api/v1/sites/${siteId}/branches/${branch._id}/password`)
       .then(({ data }) => onChange(data))
       .catch(err => {
         toast.error(`Could not remove branch password: ${err}`);
@@ -105,7 +103,7 @@ export function BranchPassword({
               autoComplete="off"
               defaultValue={randomSecret}
             />
-            <InputError error={errors} path="password" />
+            <InputError error={errors} path="password"/>
           </div>
           <div className="d-flex justify-content-end">
             <Button

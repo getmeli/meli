@@ -1,65 +1,37 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { merge } from 'lodash';
-import { FullPageCentered } from '../commons/components/FullPageCentered';
+import axios from 'axios';
+import { FullPageLoader } from '../commons/components/FullPageLoader';
 import { AlertError } from '../commons/components/AlertError';
-import { axios } from './axios';
-import { Loader } from '../commons/components/Loader';
 
 export interface Env {
-  MELI_API_URL: string;
+  MELI_URL: string;
 }
 
-const defaultEnv: Partial<Env> = {};
+const Context = createContext<Env>(undefined as any);
 
-export const EnvContext = createContext<Env>(undefined);
-
-export const useEnv = () => useContext(EnvContext);
-
-function parseEnv(dotenv: string): any {
-  return dotenv
-    .split('\n')
-    .map(str => str.match(/^(\w+)=(.*)$/))
-    .filter(arr => !!arr)
-    .reduce(
-      (current, [, key, val]) => {
-        current[key] = val;
-        return current;
-      },
-      {},
-    );
-}
+export const useEnv = () => useContext(Context);
 
 export function EnvProvider(props) {
   const [loading, setLoading] = useState(true);
   const [env, setEnv] = useState<Env>();
-  const [error, setError] = useState();
+  const [error, setError] = useState<any>();
 
   useEffect(() => {
     axios
-      .get('/env.txt')
-      .then(({ data }) => parseEnv(data))
-      .then(json => merge(defaultEnv, json))
-      .then(loadedEnv => {
-        setEnv(loadedEnv);
-        // eslint-disable-next-line no-console
-        console.log('env', loadedEnv);
+      .get('/api/system/env')
+      .then(({ data }) => {
+        setEnv(data);
+        console.log('backend env', data);
       })
       .finally(() => setLoading(false))
-      .catch(setError);
+      .catch(err => setError(`Could not load backend env: ${err.toString()}`));
   }, []);
 
   return loading ? (
-    <FullPageCentered>
-      <p>
-        Loading env
-        <Loader className="ml-2" />
-      </p>
-    </FullPageCentered>
+    <FullPageLoader/>
   ) : error ? (
-    <FullPageCentered>
-      <AlertError error={error} />
-    </FullPageCentered>
+    <AlertError error={error}/>
   ) : (
-    <EnvContext.Provider value={env} {...props} />
+    <Context.Provider value={env} {...props} />
   );
 }

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import classNames from 'classnames';
-import { useEnv } from '../../providers/EnvProvider';
 import { Loader } from '../../commons/components/Loader';
 import { AlertError } from '../../commons/components/AlertError';
 import { getTeamSites } from '../sites/get-team-sites';
@@ -34,14 +33,13 @@ function ListItem({ site, onDeleted }: {
       className={styles.site}
       activeClassName={styles.active}
     >
-      <Bubble color={site.color} src={site.logo} />
+      <Bubble color={site.color} src={site.logo}/>
       <span className="ml-2">{site.name}</span>
     </NavLink>
   );
 }
 
 export function Sites({ teamId, className }: { teamId; className? }) {
-  const env = useEnv();
   const [loading, setLoading] = useMountedState(true);
   const [error, setError] = useState();
   const [sites, setItems] = useState<Site[]>();
@@ -55,14 +53,14 @@ export function Sites({ teamId, className }: { teamId; className? }) {
   useEffect(() => {
     setLoading(true);
     setError(undefined);
-    getTeamSites(env, teamId)
+    getTeamSites(teamId)
       .then(items => {
         setItems(items.sort(sortSites));
       })
       .catch(setError)
       .catch(err => toast.error(`Could not list sites: ${err}`))
       .finally(() => setLoading(false));
-  }, [env, teamId, setLoading]);
+  }, [teamId, setLoading]);
 
   const onDelete = (siteId: string) => {
     setItems(sites.filter(s => s._id !== siteId));
@@ -75,9 +73,9 @@ export function Sites({ teamId, className }: { teamId; className? }) {
   );
 
   return loading ? (
-    <Loader />
+    <Loader/>
   ) : error ? (
-    <AlertError error={error} />
+    <AlertError error={error}/>
   ) : (
     <div className={classNames(className)}>
       <div>

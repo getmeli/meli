@@ -3,7 +3,6 @@ import { toast } from 'react-toastify';
 import classNames from 'classnames';
 import { Button } from '../../commons/components/Button';
 import { axios } from '../../providers/axios';
-import { useEnv } from '../../providers/EnvProvider';
 import { useMountedState } from '../../commons/hooks/use-mounted-state';
 
 export function TestHook({
@@ -14,11 +13,10 @@ export function TestHook({
   disabled: boolean;
 }) {
   const [loading, setLoading] = useMountedState(false);
-  const env = useEnv();
   const test = () => {
     setLoading(true);
     axios
-      .post(`${env.MELI_API_URL}/api/v1/sites/notifications/test`, config)
+      .post(`/api/v1/sites/notifications/test`, config)
       .then(() => toast.success('It worked !'))
       .catch(err => toast.error(`It didnt work: ${err}`))
       .finally(() => setLoading(false));

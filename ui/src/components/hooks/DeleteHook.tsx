@@ -4,7 +4,6 @@ import { Button } from '../../commons/components/Button';
 import { axios } from '../../providers/axios';
 import { CardModal } from '../../commons/components/modals/CardModal';
 import { useMountedState } from '../../commons/hooks/use-mounted-state';
-import { useEnv } from '../../providers/EnvProvider';
 import { useHookContext } from './HookProvider';
 
 export function DeleteHook({
@@ -17,13 +16,12 @@ export function DeleteHook({
 }) {
   const [isOpen, setIsOpen] = useMountedState(false);
   const [loading, setLoading] = useMountedState(false);
-  const env = useEnv();
   const { context } = useHookContext();
 
   const remove = () => {
     setLoading(true);
     return axios
-      .delete(`${env.MELI_API_URL}/api/v1/${context}/hooks/${hookId}`)
+      .delete(`/api/v1/${context}/hooks/${hookId}`)
       .then(() => {
         setIsOpen(false);
         onDelete();

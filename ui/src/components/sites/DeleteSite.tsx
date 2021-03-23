@@ -1,7 +1,6 @@
 import React from 'react';
 import { toast } from 'react-toastify';
 import { axios } from '../../providers/axios';
-import { useEnv } from '../../providers/EnvProvider';
 import { routerHistory } from '../../providers/history';
 import { Button } from '../../commons/components/Button';
 import { CardModal } from '../../commons/components/modals/CardModal';
@@ -17,12 +16,11 @@ export function DeleteSite({
 }) {
   const [isOpen, setIsOpen] = useMountedState(false);
   const [loading, setLoading] = useMountedState(false);
-  const env = useEnv();
 
   const deleteSite = () => {
     setLoading(true);
     return axios
-      .delete(`${env.MELI_API_URL}/api/v1/sites/${id}`)
+      .delete(`/api/v1/sites/${id}`)
       .then(() => {
         setIsOpen(false);
         routerHistory.push(`/teams/${teamId}/sites`);

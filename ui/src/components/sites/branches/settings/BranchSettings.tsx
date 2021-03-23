@@ -5,7 +5,7 @@ import { useBranch } from '../BranchView';
 import { BranchGeneralSettings } from './BranchGeneralSettings';
 
 export function BranchSettings() {
-  const { siteId } = useParams();
+  const { siteId } = useParams<any>();
   const { branch, setBranch } = useBranch();
   return (
     <>
@@ -19,7 +19,7 @@ export function BranchSettings() {
         </div>
       </div>
 
-      <BranchGeneralSettings />
+      <BranchGeneralSettings/>
     </>
   );
 }

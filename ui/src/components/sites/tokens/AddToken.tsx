@@ -4,7 +4,6 @@ import { useForm } from 'react-hook-form';
 import { Button } from '../../../commons/components/Button';
 import { axios } from '../../../providers/axios';
 import { CardModal } from '../../../commons/components/modals/CardModal';
-import { useEnv } from '../../../providers/EnvProvider';
 import { Token } from './token';
 import { maxLength, required } from '../../../commons/components/forms/form-constants';
 import { InputError } from '../../../commons/components/forms/InputError';
@@ -18,7 +17,6 @@ function AddTokenModal({
   siteId: string;
   onAdded: (token: Token) => void;
 }) {
-  const env = useEnv();
   const {
     register, errors, handleSubmit, formState: { isDirty },
   } = useForm({
@@ -27,7 +25,7 @@ function AddTokenModal({
   const [loading, setLoading] = useMountedState(false);
 
   const onChange = token => axios
-    .post(`${env.MELI_API_URL}/api/v1/sites/${siteId}/tokens`, token)
+    .post(`/api/v1/sites/${siteId}/tokens`, token)
     .then(({ data }) => {
       onAdded(data);
     })
@@ -57,7 +55,7 @@ function AddTokenModal({
           placeholder="Steve's token"
           autoComplete="off"
         />
-        <InputError error={errors} path="name" />
+        <InputError error={errors} path="name"/>
       </div>
       <div className="d-flex justify-content-end">
         <Button
@@ -91,7 +89,7 @@ export function AddToken({
         {children}
       </div>
       <CardModal isOpen={isOpen} closeModal={closeModal} title="Create token">
-        <AddTokenModal closeModal={closeModal} siteId={siteId} onAdded={onAdded} />
+        <AddTokenModal closeModal={closeModal} siteId={siteId} onAdded={onAdded}/>
       </CardModal>
     </>
   );

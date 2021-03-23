@@ -9,7 +9,7 @@ export function getTokens(
   search?: string,
 ): Promise<Page<Token>> {
   return axios
-    .get(`${env.MELI_API_URL}/api/v1/sites/${siteId}/tokens`, {
+    .get(`/api/v1/sites/${siteId}/tokens`, {
       params: {
         search: search || undefined,
       },

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useEnv } from '../../providers/EnvProvider';
 import { axios } from '../../providers/axios';
 import { queryParams } from '../../utils/query-params';
 import { Loader } from '../../commons/components/Loader';
@@ -11,16 +10,15 @@ import { useMountedState } from '../../commons/hooks/use-mounted-state';
 export function UserInvites() {
   const { token } = queryParams();
 
-  const env = useEnv();
   const [loading, setLoading] = useMountedState(!!token);
   const [error, setError] = useState();
   const [invite, setInvite] = useState<UserInvite>();
 
   useEffect(() => {
-    if (token && env) {
+    if (token) {
       setLoading(true);
       axios
-        .post<UserInvite>(`${env.MELI_API_URL}/api/v1/invites/${token}`, {
+        .post<UserInvite>(`/api/v1/invites/${token}`, {
           token,
         })
         .then(({ data }) => data)
@@ -28,7 +26,7 @@ export function UserInvites() {
         .catch(setError)
         .finally(() => setLoading(false));
     }
-  }, [env, token, setLoading]);
+  }, [token, setLoading]);
 
   return (
     <div className="container mt-5 pb-100">
@@ -46,11 +44,11 @@ export function UserInvites() {
             </div>
           ) : (
             loading ? (
-              <Loader />
+              <Loader/>
             ) : error ? (
-              <AlertError error={error} />
+              <AlertError error={error}/>
             ) : (
-              <UserInviteView invite={invite} token={token} />
+              <UserInviteView invite={invite} token={token}/>
             )
           )}
         </div>

@@ -4,7 +4,6 @@ import { toast } from 'react-toastify';
 import styles from './OrgSettings.module.scss';
 import { Button } from '../../../commons/components/Button';
 import { OrgNameInput } from './OrgNameInput';
-import { useEnv } from '../../../providers/EnvProvider';
 import { axios } from '../../../providers/axios';
 import { InputError } from '../../../commons/components/forms/InputError';
 import { COLOR_PATTERN, required } from '../../../commons/components/forms/form-constants';
@@ -18,7 +17,6 @@ interface Settings {
 }
 
 export function OrgGeneralSettings() {
-  const env = useEnv();
   const { org, setOrg } = useOrg();
 
   const methods = useForm<Settings>({
@@ -39,7 +37,7 @@ export function OrgGeneralSettings() {
   const onSubmit = (settings: Settings) => {
     setLoading(true);
     axios
-      .put<Org>(`${env.MELI_API_URL}/api/v1/orgs/${org._id}`, settings)
+      .put<Org>(`/api/v1/orgs/${org._id}`, settings)
       .then(({ data }) => data)
       .then(setOrg)
       .then(() => toast.success('Org saved'))
@@ -59,7 +57,7 @@ export function OrgGeneralSettings() {
             <strong>General settings</strong>
           </div>
           <div className="card-body">
-            <OrgNameInput />
+            <OrgNameInput/>
             <div className="form-group">
               <label htmlFor="color" className="form-label">Color</label>
               <input
@@ -74,7 +72,7 @@ export function OrgGeneralSettings() {
                 autoComplete="off"
                 defaultValue="#000000"
               />
-              <InputError error={errors} path="color" />
+              <InputError error={errors} path="color"/>
             </div>
           </div>
         </div>

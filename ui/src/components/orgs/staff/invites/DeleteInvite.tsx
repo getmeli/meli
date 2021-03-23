@@ -3,7 +3,6 @@ import { toast } from 'react-toastify';
 import { Button } from '../../../../commons/components/Button';
 import { axios } from '../../../../providers/axios';
 import { CardModal } from '../../../../commons/components/modals/CardModal';
-import { useEnv } from '../../../../providers/EnvProvider';
 import { useCurrentOrg } from '../../../../providers/OrgProvider';
 import { useMountedState } from '../../../../commons/hooks/use-mounted-state';
 
@@ -17,13 +16,12 @@ export function DeleteInvite({
 }) {
   const [isOpen, setIsOpen] = useMountedState(false);
   const [loading, setLoading] = useMountedState(false);
-  const env = useEnv();
   const { currentOrg } = useCurrentOrg();
 
   const deleteInvite = () => {
     setLoading(true);
     return axios
-      .delete(`${env.MELI_API_URL}/api/v1/orgs/${currentOrg.org._id}/invites/${inviteId}`)
+      .delete(`/api/v1/orgs/${currentOrg.org._id}/invites/${inviteId}`)
       .then(() => {
         setIsOpen(false);
         onDelete();

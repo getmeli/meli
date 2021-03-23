@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { uniqueId } from 'lodash';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useEnv } from '../../providers/EnvProvider';
 import { axios } from '../../providers/axios';
 import { routerHistory } from '../../providers/history';
 import { Tooltip, tooltipToggle } from '../../commons/components/Tooltip';
@@ -14,7 +13,6 @@ import { useMountedState } from '../../commons/hooks/use-mounted-state';
 import { IsAdmin } from '../auth/IsAdmin';
 
 function AddSiteModal({ teamId, closeModal }: { teamId; closeModal }) {
-  const env = useEnv();
   const methods = useForm({
     mode: 'onChange',
   });
@@ -22,7 +20,7 @@ function AddSiteModal({ teamId, closeModal }: { teamId; closeModal }) {
   const { handleSubmit, formState: { isDirty } } = methods;
 
   const onChange = formData => axios
-    .post<Site>(`${env.MELI_API_URL}/api/v1/teams/${teamId}/sites`, formData)
+    .post<Site>(`/api/v1/teams/${teamId}/sites`, formData)
     .then(({ data }) => {
       routerHistory.push(`/sites/${data._id}`);
     })
@@ -49,7 +47,7 @@ function AddSiteModal({ teamId, closeModal }: { teamId; closeModal }) {
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <SiteNameInput setInputRef={setInputRef} />
+        <SiteNameInput setInputRef={setInputRef}/>
         <div className="d-flex justify-content-end">
           <Button
             type="submit"
@@ -95,7 +93,7 @@ export function AddSite({
         </Tooltip>
       )}
       <CardModal isOpen={isOpen} closeModal={closeModal} title="Add site">
-        <AddSiteModal closeModal={closeModal} teamId={teamId} />
+        <AddSiteModal closeModal={closeModal} teamId={teamId}/>
       </CardModal>
     </>
   );

@@ -1,5 +1,4 @@
 import React from 'react';
-import { useEnv } from '../../../providers/EnvProvider';
 import styles from './SignInWithGitlab.module.scss';
 import gitlabLogo from '../../../assets/images/git-servers/gitlab.svg';
 import { SignInButton } from './SignInButton';
@@ -7,10 +6,9 @@ import { SignInButton } from './SignInButton';
 export function SignInWithGitlab({ className }: {
   className?: any;
 }) {
-  const env = useEnv();
   return (
     <a
-      href={`${env.MELI_API_URL}/auth/gitlab`}
+      href={`/auth/gitlab`}
       className={className}
     >
       <SignInButton

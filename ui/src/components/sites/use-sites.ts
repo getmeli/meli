@@ -1,6 +1,5 @@
 import { useCallback } from 'react';
 import { axios } from '../../providers/axios';
-import { useEnv } from '../../providers/EnvProvider';
 import { Site } from './site';
 import { Page } from '../../commons/types/page';
 import { PaginationData } from '../../commons/components/Pagination';
@@ -19,7 +18,6 @@ interface UseSites {
 }
 
 export function useSites(): UseSites {
-  const env = useEnv();
   const { currentOrg } = useCurrentOrg();
 
   const [loading, setLoading] = useMountedState(false);
@@ -29,13 +27,13 @@ export function useSites(): UseSites {
   const cb = useCallback((query?: ListSitesQuery) => {
     setLoading(true);
     axios
-      .get<Page<Site>>(`${env.MELI_API_URL}/api/v1/orgs/${currentOrg.org._id}/sites`, {
+      .get<Page<Site>>(`/api/v1/orgs/${currentOrg.org._id}/sites`, {
         params: query,
       })
       .then(res => setData(res.data))
       .catch(setError)
       .finally(() => setLoading(false));
-  }, [env, currentOrg, setData, setError, setLoading]);
+  }, [currentOrg, setData, setError, setLoading]);
 
   return {
     cb,

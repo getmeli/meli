@@ -3,7 +3,6 @@ import { toast } from 'react-toastify';
 import { Button } from '../../../../commons/components/Button';
 import { axios } from '../../../../providers/axios';
 import { CardModal } from '../../../../commons/components/modals/CardModal';
-import { useEnv } from '../../../../providers/EnvProvider';
 import { useMountedState } from '../../../../commons/hooks/use-mounted-state';
 
 export function DeleteMember({
@@ -16,12 +15,11 @@ export function DeleteMember({
 }) {
   const [isOpen, setIsOpen] = useMountedState(false);
   const [loading, setLoading] = useMountedState(false);
-  const env = useEnv();
 
   const deleteMember = () => {
     setLoading(true);
     return axios
-      .delete(`${env.MELI_API_URL}/api/v1/members/${memberId}`)
+      .delete(`/api/v1/members/${memberId}`)
       .then(() => {
         setIsOpen(false);
         onDelete();

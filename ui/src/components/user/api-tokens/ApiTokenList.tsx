@@ -5,7 +5,6 @@ import { Link, useRouteMatch } from 'react-router-dom';
 import { EmptyList } from '../../../commons/components/EmptyList';
 import { Loader } from '../../../commons/components/Loader';
 import { AlertError } from '../../../commons/components/AlertError';
-import { useEnv } from '../../../providers/EnvProvider';
 import { ApiToken } from './api-token';
 import { axios } from '../../../providers/axios';
 import styles from './ApiTokenList.module.scss';
@@ -20,7 +19,6 @@ function sortTokens(a: ApiToken, b: ApiToken): number {
 export function ApiTokenList() {
   const { url } = useRouteMatch();
 
-  const env = useEnv();
   const [loading, setLoading] = useMountedState(true);
   const [error, setError] = useState();
   const [items, setItems] = useState<ApiToken[]>();
@@ -28,17 +26,17 @@ export function ApiTokenList() {
   useEffect(() => {
     setLoading(true);
     setError(undefined);
-    axios.get<ApiToken[]>(`${env.MELI_API_URL}/api/v1/api-tokens`)
+    axios.get<ApiToken[]>(`/api/v1/api-tokens`)
       .then(({ data }) => data.sort(sortTokens))
       .then(setItems)
       .catch(setError)
       .catch(err => toast.error(`Could not list tokens: ${err}`))
       .finally(() => setLoading(false));
-  }, [env, setLoading]);
+  }, [setLoading]);
 
   const emptyList = (
     <EmptyList
-      icon={<TokenIcon />}
+      icon={<TokenIcon/>}
       title="No tokens"
     >
       <p>There are no tokens yet</p>
@@ -51,9 +49,9 @@ export function ApiTokenList() {
   );
 
   return loading ? (
-    <Loader />
+    <Loader/>
   ) : error ? (
-    <AlertError error={error} />
+    <AlertError error={error}/>
   ) : (
     <>
       {items.length === 0 ? (
@@ -77,7 +75,7 @@ export function ApiTokenList() {
               </div>
 
               <div className="d-flex align-items-center">
-                <ApiTokenActivationPeriod apiToken={apiToken} />
+                <ApiTokenActivationPeriod apiToken={apiToken}/>
               </div>
             </Link>
           ))}

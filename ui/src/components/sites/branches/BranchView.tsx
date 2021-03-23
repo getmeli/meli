@@ -12,7 +12,6 @@ import DropdownSeparator from '../../../commons/components/dropdown/DropdownSepa
 import { ButtonIcon } from '../../../commons/components/ButtonIcon';
 import { useSite } from '../SiteView';
 import { Tooltip, tooltipToggle } from '../../../commons/components/Tooltip';
-import { useEnv } from '../../../providers/EnvProvider';
 import { useMountedState } from '../../../commons/hooks/use-mounted-state';
 import { axios } from '../../../providers/axios';
 import { Loader } from '../../../commons/components/Loader';
@@ -36,7 +35,6 @@ import { BranchHeaders } from './headers/BranchHeaders';
 import { Forms } from './forms/Forms';
 
 function useSiteBranch(siteId: string, branchId: string) {
-  const env = useEnv();
   const [loading, setLoading] = useMountedState(true);
   const [error, setError] = useState();
   const [branch, setBranch] = useState<Branch>();
@@ -45,12 +43,12 @@ function useSiteBranch(siteId: string, branchId: string) {
     setLoading(true);
     setError(undefined);
     axios
-      .get<Branch>(`${env.MELI_API_URL}/api/v1/sites/${siteId}/branches/${branchId}`)
+      .get<Branch>(`/api/v1/sites/${siteId}/branches/${branchId}`)
       .then(({ data }) => data)
       .then(setBranch)
       .catch(setError)
       .finally(() => setLoading(false));
-  }, [env, setLoading, siteId, branchId]);
+  }, [setLoading, siteId, branchId]);
 
   return {
     branch,
@@ -69,7 +67,7 @@ const Context = createContext<BranchContext>(undefined);
 export const useBranch = () => useContext(Context);
 
 export function BranchView() {
-  const { siteId, branchId } = useParams();
+  const { siteId, branchId } = useParams<any>();
   const { path, url } = useRouteMatch();
   const { site } = useSite();
   const [uid] = useState(uniqueId());
@@ -90,9 +88,9 @@ export function BranchView() {
   };
 
   return loading ? (
-    <Loader />
+    <Loader/>
   ) : error ? (
-    <AlertError error={error} />
+    <AlertError error={error}/>
   ) : (
     <Context.Provider value={{
       branch, setBranch,
@@ -101,7 +99,7 @@ export function BranchView() {
       <SubHeader className="d-flex align-items-center justify-content-between">
         <div className="d-flex align-items-center">
           <h5 className="mb-0 d-flex align-items-center">
-            <BranchIcon className="mr-2" />
+            <BranchIcon className="mr-2"/>
             <strong>{branch.name}</strong>
           </h5>
           {current && (
@@ -116,10 +114,10 @@ export function BranchView() {
             </>
           )}
           {branch.release && (
-            <BranchRelease releaseId={branch.release} />
+            <BranchRelease releaseId={branch.release}/>
           )}
           <ExternalLink href={branch.url} className="ml-3">
-            <FontAwesomeIcon icon={faExternalLinkAlt} />
+            <FontAwesomeIcon icon={faExternalLinkAlt}/>
           </ExternalLink>
         </div>
         <div className="d-flex align-items-center">
@@ -128,7 +126,7 @@ export function BranchView() {
               to: `${url}/releases`,
               label: (
                 <>
-                  <ReleaseIcon className="mr-2" />
+                  <ReleaseIcon className="mr-2"/>
                   ️ Releases
                 </>
               ),
@@ -137,7 +135,7 @@ export function BranchView() {
               to: `${url}/redirects`,
               label: (
                 <>
-                  <RedirectIcon className="mr-2" />
+                  <RedirectIcon className="mr-2"/>
                   {' '}
                   Redirects
                 </>
@@ -147,7 +145,7 @@ export function BranchView() {
               to: `${url}/headers`,
               label: (
                 <>
-                  <HeaderIcon className="mr-2" />
+                  <HeaderIcon className="mr-2"/>
                   {' '}
                   Headers
                 </>
@@ -157,7 +155,7 @@ export function BranchView() {
               to: `${url}/forms`,
               label: (
                 <>
-                  <HeaderIcon className="mr-2" />
+                  <HeaderIcon className="mr-2"/>
                   {' '}
                   Forms
                 </>
@@ -167,7 +165,7 @@ export function BranchView() {
               to: `${url}/settings`,
               label: (
                 <>
-                  <SettingsIcon className="mr-2" />
+                  <SettingsIcon className="mr-2"/>
                   {' '}
                   Settings
                 </>
@@ -176,17 +174,17 @@ export function BranchView() {
           ]}
           />
           <ButtonIcon className="ml-2" {...dropdownToggle(uid)}>
-            <FontAwesomeIcon icon={faEllipsisV} />
+            <FontAwesomeIcon icon={faEllipsisV}/>
           </ButtonIcon>
           <Dropdown id={uid}>
             <RenameBranch siteId={siteId} branchId={branch._id} onRenamed={setBranch}>
-              <DropdownLink icon={<FontAwesomeIcon icon={faPencilAlt} />}>
+              <DropdownLink icon={<FontAwesomeIcon icon={faPencilAlt}/>}>
                 Rename
               </DropdownLink>
             </RenameBranch>
-            <DropdownSeparator />
+            <DropdownSeparator/>
             <DeleteBranch siteId={siteId} branchId={branch._id} onDelete={onDelete}>
-              <DropdownLink icon={<FontAwesomeIcon icon={faTimes} />}>
+              <DropdownLink icon={<FontAwesomeIcon icon={faTimes}/>}>
                 Delete
               </DropdownLink>
             </DeleteBranch>
@@ -196,13 +194,13 @@ export function BranchView() {
 
       <div className="mt-4">
         <Switch>
-          <Route path={path} exact component={() => <Redirect to={`${url}/releases`} />} />
-          <Route path={`${path}/releases`} exact component={Releases} />
-          <Route path={`${path}/redirects`} exact component={BranchRedirects} />
-          <Route path={`${path}/settings`} exact component={BranchSettings} />
-          <Route path={`${path}/headers`} exact component={BranchHeaders} />
-          <Route path={`${path}/forms`} exact component={Forms} />
-          <Route component={NotFound} />
+          <Route path={path} exact component={() => <Redirect to={`${url}/releases`}/>}/>
+          <Route path={`${path}/releases`} exact component={Releases}/>
+          <Route path={`${path}/redirects`} exact component={BranchRedirects}/>
+          <Route path={`${path}/settings`} exact component={BranchSettings}/>
+          <Route path={`${path}/headers`} exact component={BranchHeaders}/>
+          <Route path={`${path}/forms`} exact component={Forms}/>
+          <Route component={NotFound}/>
         </Switch>
       </div>
     </Context.Provider>

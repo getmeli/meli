@@ -5,7 +5,6 @@ import classNames from 'classnames';
 import { maxLength, required } from '../../../commons/components/forms/form-constants';
 import { InputError } from '../../../commons/components/forms/InputError';
 import { useMountedState } from '../../../commons/hooks/use-mounted-state';
-import { useEnv } from '../../../providers/EnvProvider';
 import { axios } from '../../../providers/axios';
 import { useAuth } from '../../../providers/AuthProvider';
 import { Button } from '../../../commons/components/Button';
@@ -17,13 +16,12 @@ interface FormData {
 
 function useSignIn() {
   const [loading, setLoading] = useMountedState(false);
-  const env = useEnv();
   const { fetchUser } = useAuth();
 
   const signIn = (formData: FormData) => {
     setLoading(true);
     axios
-      .post<void>(`${env.MELI_API_URL}/auth/in-memory`, formData)
+      .post<void>(`/auth/in-memory`, formData)
       .then(() => {
         fetchUser();
       })
@@ -65,7 +63,7 @@ export function SignInWithUserPassword({ className }: {
           className="form-control"
           autoComplete="off"
         />
-        <InputError error={errors} path="user" />
+        <InputError error={errors} path="user"/>
       </div>
       <div className="form-group">
         <label htmlFor="password">Password</label>
@@ -80,7 +78,7 @@ export function SignInWithUserPassword({ className }: {
           className="form-control"
           autoComplete="off"
         />
-        <InputError error={errors} path="password" />
+        <InputError error={errors} path="password"/>
       </div>
       <Button
         type="submit"

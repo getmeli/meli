@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { uniqueId } from 'lodash';
-import { useEnv } from '../../../providers/EnvProvider';
 import { useMountedState } from '../../../commons/hooks/use-mounted-state';
 import { Release } from '../releases/release';
 import { axios } from '../../../providers/axios';
@@ -9,7 +8,6 @@ import { AlertError } from '../../../commons/components/AlertError';
 import { Tooltip, tooltipToggle } from '../../../commons/components/Tooltip';
 
 function useRelease(releaseId: string) {
-  const env = useEnv();
   const [loading, setLoading] = useMountedState(!!releaseId);
   const [error, setError] = useState();
   const [release, setRelease] = useState<Release>();
@@ -19,13 +17,13 @@ function useRelease(releaseId: string) {
       setLoading(true);
       setError(undefined);
       axios
-        .get<Release>(`${env.MELI_API_URL}/api/v1/releases/${releaseId}`)
+        .get<Release>(`/api/v1/releases/${releaseId}`)
         .then(({ data }) => data)
         .then(setRelease)
         .catch(setError)
         .finally(() => setLoading(false));
     }
-  }, [env, releaseId, setLoading]);
+  }, [releaseId, setLoading]);
 
   return {
     release,
@@ -43,9 +41,9 @@ export function BranchRelease({ releaseId }: {
   } = useRelease(releaseId);
 
   return loading ? (
-    <Loader />
+    <Loader/>
   ) : error ? (
-    <AlertError error={error} />
+    <AlertError error={error}/>
   ) : (
     <>
       <div

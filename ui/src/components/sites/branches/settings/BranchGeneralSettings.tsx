@@ -6,7 +6,6 @@ import { Site, SiteDomain } from '../../site';
 import { useSite } from '../../SiteView';
 import { axios } from '../../../../providers/axios';
 import { useMountedState } from '../../../../commons/hooks/use-mounted-state';
-import { useEnv } from '../../../../providers/EnvProvider';
 
 interface Settings {
   name: string;
@@ -15,8 +14,7 @@ interface Settings {
 }
 
 export function BranchGeneralSettings() {
-  const env = useEnv();
-  const { siteId } = useParams();
+  const { siteId } = useParams<any>();
   const { site, setSite } = useSite();
 
   const methods = useForm<Settings>({
@@ -35,7 +33,7 @@ export function BranchGeneralSettings() {
   const onSubmit = (updatedSite: Settings) => {
     setLoading(true);
     axios
-      .put<Site>(`${env.MELI_API_URL}/api/v1/sites/${siteId}`, updatedSite)
+      .put<Site>(`/api/v1/sites/${siteId}`, updatedSite)
       .then(({ data }) => data)
       .then(setSite)
       .then(() => toast.success('Site saved'))

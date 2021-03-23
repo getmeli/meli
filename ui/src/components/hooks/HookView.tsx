@@ -9,7 +9,6 @@ import { ButtonIcon } from '../../commons/components/ButtonIcon';
 import { routerHistory } from '../../providers/history';
 import { Dropdown, dropdownToggle } from '../../commons/components/dropdown/Dropdown';
 import { Loader } from '../../commons/components/Loader';
-import { useEnv } from '../../providers/EnvProvider';
 import { DeleteHook } from './DeleteHook';
 import { DropdownLink } from '../../commons/components/dropdown/DropdownLink';
 import { SubHeader } from '../SubHeader';
@@ -24,12 +23,11 @@ import { HookDeliveries } from './deliveries/HookDeliveries';
 import { NotFound } from '../../commons/components/NotFound';
 
 export function HookView() {
-  const { hookId } = useParams();
+  const { hookId } = useParams<any>();
   const [uid] = useState(uniqueId());
   const { url, path } = useRouteMatch();
   const { context } = useHookContext();
 
-  const env = useEnv();
   const [loading, setLoading] = useMountedState(true);
   const [error, setError] = useState();
   const [hook, setHook] = useState<Hook>();
@@ -38,18 +36,18 @@ export function HookView() {
     setLoading(true);
     setError(undefined);
     axios
-      .get<Hook>(`${env.MELI_API_URL}/api/v1/${context}/hooks/${hookId}`)
+      .get<Hook>(`/api/v1/${context}/hooks/${hookId}`)
       .then(({ data }) => setHook(data))
       .catch(setError)
       .catch(err => toast.error(`Could not get hook: ${err}`))
       .finally(() => setLoading(false));
-  }, [env, setLoading, hookId, context]);
+  }, [setLoading, hookId, context]);
 
   const onChange = useCallback(
     (formData: Hook): Promise<void> => axios
-      .put<Hook>(`${env.MELI_API_URL}/api/v1/${context}/hooks/${hookId}`, formData)
+      .put<Hook>(`/api/v1/${context}/hooks/${hookId}`, formData)
       .then(({ data }) => setHook(data)),
-    [env, hookId, context],
+    [hookId, context],
   );
 
   const onDelete = () => {
@@ -57,9 +55,9 @@ export function HookView() {
   };
 
   return loading ? (
-    <Loader />
+    <Loader/>
   ) : error ? (
-    <AlertError error={error} />
+    <AlertError error={error}/>
   ) : (
     <>
       <SubHeader className="d-flex align-items-center justify-content-between">
@@ -83,11 +81,11 @@ export function HookView() {
           ]}
           />
           <ButtonIcon className="ml-3" {...dropdownToggle(uid)}>
-            <FontAwesomeIcon icon={faEllipsisV} />
+            <FontAwesomeIcon icon={faEllipsisV}/>
           </ButtonIcon>
           <Dropdown id={uid}>
             <DeleteHook hookId={hookId} onDelete={onDelete}>
-              <DropdownLink icon={<FontAwesomeIcon icon={faTrashAlt} fixedWidth />}>
+              <DropdownLink icon={<FontAwesomeIcon icon={faTrashAlt} fixedWidth/>}>
                 Delete
               </DropdownLink>
             </DeleteHook>
@@ -106,8 +104,8 @@ export function HookView() {
             />
           )}
         />
-        <Route path={`${path}/deliveries`} exact component={HookDeliveries} />
-        <Route component={NotFound} />
+        <Route path={`${path}/deliveries`} exact component={HookDeliveries}/>
+        <Route component={NotFound}/>
       </Switch>
     </>
   );

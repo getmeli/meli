@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
-import { useEnv } from '../../../providers/EnvProvider';
 import { useMountedState } from '../../../commons/hooks/use-mounted-state';
 import { Branch } from '../branches/branch';
 import { axios } from '../../../providers/axios';
@@ -10,7 +9,6 @@ import { AlertError } from '../../../commons/components/AlertError';
 import { InputError } from '../../../commons/components/forms/InputError';
 
 function useBranches(siteId: string) {
-  const env = useEnv();
   const [loading, setLoading] = useMountedState();
   const [error, setError] = useState();
   const [branches, setBranches] = useState<Branch[]>();
@@ -19,12 +17,12 @@ function useBranches(siteId: string) {
     setLoading(true);
     setError(undefined);
     axios
-      .get<Branch[]>(`${env.MELI_API_URL}/api/v1/sites/${siteId}/branches`)
+      .get<Branch[]>(`/api/v1/sites/${siteId}/branches`)
       .then(({ data }) => data)
       .then(setBranches)
       .catch(setError)
       .finally(() => setLoading(false));
-  }, [env, setLoading, siteId]);
+  }, [setLoading, siteId]);
 
   return {
     branches,
@@ -43,9 +41,9 @@ export function SelectMainBranch({ siteId }: {
   const { control, errors } = useFormContext();
 
   return loading ? (
-    <Loader />
+    <Loader/>
   ) : error ? (
-    <AlertError error={error} />
+    <AlertError error={error}/>
   ) : (
     <div className="form-group">
       <label htmlFor="mainBranch">Main branch</label>
@@ -67,7 +65,7 @@ export function SelectMainBranch({ siteId }: {
           />
         )}
       />
-      <InputError error={errors} path="mainBranch" />
+      <InputError error={errors} path="mainBranch"/>
     </div>
   );
 }

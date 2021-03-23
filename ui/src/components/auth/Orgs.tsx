@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { toast } from 'react-toastify';
-import { useEnv } from '../../providers/EnvProvider';
 import { axios } from '../../providers/axios';
 import { Loader } from '../../commons/components/Loader';
 import { AlertError } from '../../commons/components/AlertError';
@@ -35,11 +34,11 @@ function OrgItem({ item }: {
       onClick={selectOrg}
     >
       <div className="d-flex align-items-center">
-        <Bubble color={item.org.color} src={item.org.logo} className="mr-3" />
+        <Bubble color={item.org.color} src={item.org.logo} className="mr-3"/>
         <strong>{item.org.name}</strong>
       </div>
       {loading && (
-        <Loader />
+        <Loader/>
       )}
     </li>
   );
@@ -50,7 +49,6 @@ function sortOrgs(a: UserOrg, b: UserOrg): number {
 }
 
 export function Orgs() {
-  const env = useEnv();
   const [loading, setLoading] = useMountedState(true);
   const [error, setError] = useState();
   const [items, setItems] = useMountedState<UserOrg[]>();
@@ -59,21 +57,21 @@ export function Orgs() {
     setLoading(true);
     setError(undefined);
     axios
-      .get<UserOrg[]>(`${env.MELI_API_URL}/api/v1/orgs`)
+      .get<UserOrg[]>(`/api/v1/orgs`)
       .then(({ data }) => data.sort(sortOrgs))
       .then(setItems)
       .catch(setError)
       .finally(() => setLoading(false));
-  }, [env, setLoading, setItems]);
+  }, [setLoading, setItems]);
 
   const onAdded = (org: UserOrg) => {
     setItems([org, ...items].sort(sortOrgs));
   };
 
   return loading ? (
-    <Loader />
+    <Loader/>
   ) : error ? (
-    <AlertError error={error} />
+    <AlertError error={error}/>
   ) : (
     <div className={classNames(styles.container, 'page')}>
       <div className="container">

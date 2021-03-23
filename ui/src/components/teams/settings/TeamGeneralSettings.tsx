@@ -5,7 +5,6 @@ import { toast } from 'react-toastify';
 import styles from './TeamGeneralSettings.module.scss';
 import { Button } from '../../../commons/components/Button';
 import { TeamNameInput } from './TeamNameInput';
-import { useEnv } from '../../../providers/EnvProvider';
 import { useTeam } from '../TeamView';
 import { axios } from '../../../providers/axios';
 import { InputError } from '../../../commons/components/forms/InputError';
@@ -18,8 +17,7 @@ interface Settings {
 }
 
 export function TeamGeneralSettings() {
-  const env = useEnv();
-  const { teamId } = useParams();
+  const { teamId } = useParams<any>();
   const { team, setTeam } = useTeam();
 
   const methods = useForm<Settings>({
@@ -40,7 +38,7 @@ export function TeamGeneralSettings() {
   const onSubmit = (settings: Settings) => {
     setLoading(true);
     axios
-      .put<Settings>(`${env.MELI_API_URL}/api/v1/teams/${teamId}`, settings)
+      .put<Settings>(`/api/v1/teams/${teamId}`, settings)
       .then(({ data }) => data)
       .then(setTeam)
       .then(() => toast.success('Team saved'))
@@ -60,7 +58,7 @@ export function TeamGeneralSettings() {
             <strong>Team</strong>
           </div>
           <div className="card-body">
-            <TeamNameInput />
+            <TeamNameInput/>
             <div className="form-group">
               <label htmlFor="color" className="form-label">Color</label>
               <input
@@ -76,7 +74,7 @@ export function TeamGeneralSettings() {
                 autoComplete="off"
                 defaultValue="#000000"
               />
-              <InputError error={errors} path="color" />
+              <InputError error={errors} path="color"/>
             </div>
           </div>
         </div>

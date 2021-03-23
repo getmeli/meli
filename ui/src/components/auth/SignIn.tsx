@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { Loader } from '../../commons/components/Loader';
 import { axios } from '../../providers/axios';
-import { useEnv } from '../../providers/EnvProvider';
 import styles from './SignIn.module.scss';
 import { ErrorIcon } from '../../commons/components/ErrorIcon';
 import { useMountedState } from '../../commons/hooks/use-mounted-state';
@@ -13,7 +12,6 @@ import { SignInWithGoogle } from './methods/SignInWithGoogle';
 import { SignInWithUserPassword } from './methods/SignInWithUserPassword';
 
 export function SignIn() {
-  const env = useEnv();
   const [loading, setLoading] = useMountedState(true);
   const [error, setError] = useState();
   const [signInMethods, setSignInMethods] = useState<string[]>();
@@ -21,17 +19,17 @@ export function SignIn() {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`${env.MELI_API_URL}/auth/methods`)
+      .get(`/auth/methods`)
       .then(({ data }) => data)
       .then(setSignInMethods)
       .catch(setError)
       .finally(() => setLoading(false));
-  }, [env, setLoading]);
+  }, [setLoading]);
 
   return loading ? (
-    <Loader />
+    <Loader/>
   ) : error ? (
-    <ErrorIcon error={error} />
+    <ErrorIcon error={error}/>
   ) : (
     <div className={classNames(styles.container)}>
       <div className="container">
@@ -45,19 +43,19 @@ export function SignIn() {
                 Shipping frontend
               </p>
               {signInMethods.includes('in-memory') && (
-                <SignInWithUserPassword className="mb-4" />
+                <SignInWithUserPassword className="mb-4"/>
               )}
               {signInMethods.includes('gitlab') && (
-                <SignInWithGitlab />
+                <SignInWithGitlab/>
               )}
               {signInMethods.includes('github') && (
-                <SignInWithGithub />
+                <SignInWithGithub/>
               )}
               {signInMethods.includes('gitea') && (
-                <SignInWithGitea />
+                <SignInWithGitea/>
               )}
               {signInMethods.includes('google') && (
-                <SignInWithGoogle />
+                <SignInWithGoogle/>
               )}
             </div>
           </div>

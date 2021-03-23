@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { FormProvider, useFieldArray, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { useParams } from 'react-router-dom';
-import { useEnv } from '../../../../providers/EnvProvider';
 import { useMountedState } from '../../../../commons/hooks/use-mounted-state';
 import { axios } from '../../../../providers/axios';
 import { Loader } from '../../../../commons/components/Loader';
@@ -16,7 +15,6 @@ function useBranchFiles(
   siteId: string,
   branchId: string,
 ) {
-  const env = useEnv();
   const [loading, setLoading] = useMountedState(false);
   const [error, setError] = useState();
   const [redirects, setFiles] = useState<BranchRedirect[]>();
@@ -25,12 +23,12 @@ function useBranchFiles(
     setLoading(true);
     setError(undefined);
     axios
-      .get<BranchRedirect[]>(`${env.MELI_API_URL}/api/v1/sites/${siteId}/branches/${branchId}/redirects`)
+      .get<BranchRedirect[]>(`/api/v1/sites/${siteId}/branches/${branchId}/redirects`)
       .then(({ data }) => data)
       .then(setFiles)
       .catch(setError)
       .finally(() => setLoading(false));
-  }, [env, setLoading, siteId, branchId]);
+  }, [setLoading, siteId, branchId]);
 
   return {
     redirects,
@@ -46,12 +44,11 @@ function useSetFiles(
   setFiles: (redirects: BranchRedirect[]) => void,
 ) {
   const [loading, setLoading] = useMountedState(false);
-  const env = useEnv();
 
   const updateFiles = (formData: BranchRedirectsFormData) => {
     setLoading(true);
     axios
-      .put<BranchRedirect[]>(`${env.MELI_API_URL}/api/v1/sites/${siteId}/branches/${branchId}/redirects`, {
+      .put<BranchRedirect[]>(`/api/v1/sites/${siteId}/branches/${branchId}/redirects`, {
         redirects: formData.redirects || [],
       })
       .then(({ data }) => {
@@ -71,7 +68,7 @@ function useSetFiles(
 }
 
 export function BranchRedirects() {
-  const { siteId, branchId } = useParams();
+  const { siteId, branchId } = useParams<any>();
   const methods = useForm({
     mode: 'onChange',
   });
@@ -97,9 +94,9 @@ export function BranchRedirects() {
   }, [redirects, reset]);
 
   return loading ? (
-    <Loader />
+    <Loader/>
   ) : error ? (
-    <AlertError error={error} />
+    <AlertError error={error}/>
   ) : (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(updateFiles)}>
