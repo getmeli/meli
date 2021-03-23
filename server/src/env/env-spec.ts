@@ -10,7 +10,7 @@ import { tmpdir } from 'os';
 import { Env } from './env';
 import { MulterLimitOptions } from '../commons/multer/types';
 
-const resolvePath = val => val ? path.resolve(val) : val;
+const resolvePath = val => (val ? path.resolve(val) : val);
 export const envSpec: EnvSpec<Env> = {
   DEBUG: {
     schema: string().optional(),
