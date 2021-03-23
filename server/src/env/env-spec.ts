@@ -4,12 +4,13 @@ import { commaSeparatedStringToArray, stringToBoolean, stringToInt, stringToJson
 import { isUrl } from '../commons/validators/is-url';
 import { AppError } from '../commons/errors/app-error';
 import chalk from 'chalk';
-import { join } from 'path';
+import path, { join } from 'path';
 import { cidrSubnet } from 'ip';
 import { tmpdir } from 'os';
 import { Env } from './env';
 import { MulterLimitOptions } from '../commons/multer/types';
 
+const resolvePath = val => val ? path.resolve(val) : val;
 export const envSpec: EnvSpec<Env> = {
   DEBUG: {
     schema: string().optional(),
@@ -22,9 +23,6 @@ export const envSpec: EnvSpec<Env> = {
     schema: string().required(),
   },
   MELI_URL_INTERNAL: {
-    schema: string().optional().custom(isUrl).default(process.env.MELI_URL || null),
-  },
-  MELI_UI_URL: {
     schema: string().optional().custom(isUrl).default(process.env.MELI_URL || null),
   },
   MELI_UI_URL_INTERNAL: {
@@ -42,7 +40,7 @@ export const envSpec: EnvSpec<Env> = {
     schema: boolean().optional().default(false),
   },
   MELI_UI_DIR: {
-    schema: string().optional(),
+    schema: string().optional().custom(resolvePath),
   },
   MELI_JWT_SECRET: {
     schema: string().required(),
@@ -175,7 +173,7 @@ export const envSpec: EnvSpec<Env> = {
     schema: string().optional().default('Meli |'),
   },
   MELI_MAIL_TEMPLATE_DIR: {
-    schema: string().optional().default(join(__dirname, './emails/templates')),
+    schema: string().optional().default(join(__dirname, './emails/templates')).custom(resolvePath),
   },
   MELI_SENTRY_ENABLED: {
     transform: stringToBoolean(),
@@ -203,19 +201,19 @@ export const envSpec: EnvSpec<Env> = {
       ),
   },
   MELI_CADDY_DIR: {
-    schema: string().optional().default('/sites'),
+    schema: string().optional().default('/sites').custom(resolvePath),
   },
   MELI_SITES_DIR: {
-    schema: string().optional().default('/sites'),
+    schema: string().optional().default('/sites').custom(resolvePath),
   },
   MELI_STORAGE_DIR: {
-    schema: string().optional().default('/files'),
+    schema: string().optional().default('/files').custom(resolvePath),
   },
   MELI_CADDY_ADMIN_API_URL: {
     schema: string().default('http://localhost:2019'),
   },
   MELI_TMP_DIRECTORY: {
-    schema: string().optional().default(tmpdir()),
+    schema: string().optional().default(tmpdir()).custom(resolvePath),
   },
   MELI_INVITE_EXPIRATION_TIME: {
     transform: stringToInt(),

@@ -14,7 +14,7 @@ export function createIoServer(httpServer: HttpServer) {
     pingTimeout: 60000,
     allowEIO3: true,
     cors: {
-      origin: env.MELI_UI_URL,
+      origin: env.MELI_URL,
       // methods: ['GET', 'POST'],
       credentials: true,
     },

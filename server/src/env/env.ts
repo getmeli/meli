@@ -8,7 +8,6 @@ export interface Env {
   MELI_PORT: number;
   MELI_URL: string;
   MELI_URL_INTERNAL: string;
-  MELI_UI_URL: string;
   MELI_UI_URL_INTERNAL: string;
   MELI_SITES_URL: string;
   MELI_HTTPS_AUTO: string;

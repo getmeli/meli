@@ -43,9 +43,7 @@ class DebugRouter extends Router {
 
 // eslint-disable-next-line no-console
 console.log(
-  `Meli UI ${
-    process.env.REACT_APP_ENTERPRISE ? 'EE' : 'CE'
-  } v${
+  `Meli UI v${
     process.env.REACT_APP_VERSION
   } - ${
     process.env.REACT_APP_BUILD_DATE
@@ -64,7 +62,7 @@ const app = (
       <SocketProvider>
         <AuthProvider>
           <OrgProvider>
-            <App />
+            <App/>
           </OrgProvider>
         </AuthProvider>
       </SocketProvider>
@@ -84,7 +82,7 @@ ReactDOM.render(
         app
       )}
     </div>
-    <Toasts />
+    <Toasts/>
   </>,
   // </React.StrictMode>,
   root,

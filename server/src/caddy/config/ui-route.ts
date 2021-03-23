@@ -2,14 +2,14 @@ import { env } from '../../env/env';
 import { getReverseProxyDial } from '../utils/get-reverse-proxy-dial';
 import { URL } from 'url';
 
-const meliuihost = new URL(env.MELI_UI_URL);
+const meliHost = new URL(env.MELI_URL);
 
 function serveUiStatically() {
   return {
     group: 'ui',
     match: [
       {
-        host: [meliuihost.hostname],
+        host: [meliHost.hostname],
         file: {
           root: env.MELI_UI_DIR,
           try_files: [
@@ -37,7 +37,7 @@ function reverseProxyUi() {
     group: 'ui',
     match: [
       {
-        host: [meliuihost.hostname],
+        host: [meliHost.hostname],
         path: ['/*'],
       },
     ],

@@ -18,7 +18,7 @@ export function EnvProvider(props) {
 
   useEffect(() => {
     axios
-      .get('/api/system/env')
+      .get('/system/env')
       .then(({ data }) => {
         setEnv(data);
         console.log('backend env', data);

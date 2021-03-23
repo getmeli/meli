@@ -9,7 +9,6 @@ import HttpServerTlsConnectionPolicy = Caddy.HttpServerTlsConnectionPolicy;
 import Certificates = Caddy.Tls.Certificates;
 
 const meliUrl = new URL(env.MELI_URL);
-const meliUiUrl = new URL(env.MELI_UI_URL);
 
 function getDomainWithBranches(domain: SiteDomain, site: Site) {
   return [
@@ -59,7 +58,6 @@ export function generateServerTlsConfig(sites: Site[]): Partial<Server> {
 
   const automaticSslDomains = [
     meliUrl.hostname,
-    meliUiUrl.hostname,
     ...customDomains
       .filter(({ domain }) => domain.sslConfiguration?.type === 'acme')
       .map(({ domain }) => domain.name),

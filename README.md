@@ -35,8 +35,10 @@ Want to change the way you ship front-end, forever ? Let's get started !
 - [Automatic HTTPs certificate issuing with letsencrypt (or private ACME server)](https://docs.meli.sh/configuration/ssl)
 - [Deploy branches](https://docs.meli.sh/get-started/branches)
 - [API with per-endpoint scopes](https://docs.meli.sh/api/get-started)
-- Integrations ([Webhooks](https://docs.meli.sh/integrations/webhooks), [Slack](https://docs.meli.sh/integrations/slack), [Mattermost](https://docs.meli.sh/integrations/mattermost), [Email](https://docs.meli.sh/integrations/email))
-- Easily [deploy](https://docs.meli.sh/get-started/installation#installation) and [upgrade](https://docs.meli.sh/get-started/upgrade-and-downgrade) with Docker Compose
+- Integrations ([Webhooks](https://docs.meli.sh/integrations/webhooks), [Slack](https://docs.meli.sh/integrations/slack)
+  , [Mattermost](https://docs.meli.sh/integrations/mattermost), [Email](https://docs.meli.sh/integrations/email))
+- Easily [deploy](https://docs.meli.sh/get-started/installation#installation)
+  and [upgrade](https://docs.meli.sh/get-started/upgrade-and-downgrade) with Docker Compose
 - [Password protected pages](https://docs.meli.sh/branches/password-protected-pages)
 - [Path overrides with in-memory files or reverse proxies](https://docs.meli.sh/branches/redirects#redirects)
 - [Single page application mode](https://docs.meli.sh/get-started/single-page-applications-spa)
@@ -54,21 +56,12 @@ Want to change the way you ship front-end, forever ? Let's get started !
 
 ## Development
 
-### Start UI
-
-1. Clone the [UI repo](https://github.com/getmeli/meli-ui).
-1. `npm i && npm start`
-1. The app is accessible from http://localhost:3001, but we develop from http://localhost:8080 (see below)
-
-### Start Caddy and the API
-
 1. Run `docker-compose -f ./docker-compose-dev.yml up -d`
-1. Configure your `.env` (copy `.env.example` to start with)
+1. Configure `server/.env` (copy `server/.env.example` to start with)
 1. Run `npm i && npm start`
 
-If you develop with the UI, you'll need to clone the [UI repo](https://github.com/getmeli/meli-ui), then start it.
-
 You can now browse at `http://localhost:8080`:
+
 - `http://localhost:8080/` => UI
 - `http://localhost:8080/api`, `http://localhost:8080/auth` and `http://localhost:8080/socket.io` => API
 - `http://loopback.sh` => your sites will be served here
@@ -87,8 +80,7 @@ MELI_SITES_URL=loopback.sh
 
 Your sites will be served at `*.loopback.sh`.
 
-Pros: simple, no config required
-Cons: you need to be connected to the internet
+Pros: simple, no config required Cons: you need to be connected to the internet
 
 #### Using /etc/hosts
 
@@ -99,8 +91,7 @@ Unfortunately, /etc/hosts doesn't support wildcard domains, so you'll need to ed
 127.0.0.1 my-channel.my-site.test
 ```
 
-Pros: simple, can develop without internet
-Cons: have to reconfigure every time you add a site
+Pros: simple, can develop without internet Cons: have to reconfigure every time you add a site
 
 #### Using dnsmasq
 
@@ -124,19 +115,28 @@ ping hello.test
 
 Your sites will be served at `*.test`.
 
-Pros: you don't need to be connected to the internet, no need to reconfigure /etc/hosts
-Cons: a bit complex, config required
+Pros: you don't need to be connected to the internet, no need to reconfigure /etc/hosts Cons: a bit complex, config required
 
 ## License
 
-The words "Open Source" in our README refer to the definition given by many well-recognized dictionaries of various languages, which is "used to describe software for which the original source code is made available to anyone".
+The words "Open Source" in our README refer to the definition given by many well-recognized dictionaries of various languages, which is "
+used to describe software for which the original source code is made available to anyone".
 
-The words "Open Source" in our license, introduced and written by MariaDB, refer to the definition given by the Open Source Foundation. Though we adopted this license to make it easier for users to recognize it, we disagree with this sentence being part of it and are working on this matter.
+The words "Open Source" in our license, introduced and written by MariaDB, refer to the definition given by the Open Source Foundation.
+Though we adopted this license to make it easier for users to recognize it, we disagree with this sentence being part of it and are working
+on this matter.
 
-The BSL license allows you to modify, share, redistribute and use this software for free with the only condition that you do not run a competing SAAS service based on this project, which would both be unfair and jeopardize the options of making this tool sustainable.
+The BSL license allows you to modify, share, redistribute and use this software for free with the only condition that you do not run a
+competing SAAS service based on this project, which would both be unfair and jeopardize the options of making this tool sustainable.
 
-We chose the BSL license because we believe it is fair for both users and maintainers. It allows us to secure a monetization path while providing proper support in the long run. Also, our license converts automatically within 4 years of each release to a license officially recognized by the Open Source Foundation, which secures a way for the community to see the sole restriction removed.
+We chose the BSL license because we believe it is fair for both users and maintainers. It allows us to secure a monetization path while
+providing proper support in the long run. Also, our license converts automatically within 4 years of each release to a license officially
+recognized by the Open Source Foundation, which secures a way for the community to see the sole restriction removed.
 
-We are aware of the debate around the BSL conflicting with rule number 9 of the definition given by the Open Source Foundation. We do believe that, in specific cases, this rule should be relaxed as it prevents platform maintainers to secure a path to sustaining the development of their tool and support of their community while preventing large players from running unfair competition by leveraging their infrastructure and name. There is sufficient material on this matter available on the internet for users to make up their mind.
+We are aware of the debate around the BSL conflicting with rule number 9 of the definition given by the Open Source Foundation. We do
+believe that, in specific cases, this rule should be relaxed as it prevents platform maintainers to secure a path to sustaining the
+development of their tool and support of their community while preventing large players from running unfair competition by leveraging their
+infrastructure and name. There is sufficient material on this matter available on the internet for users to make up their mind.
 
-As a side note, rule number 9 conflicts similarly with the BSL than with the GPL3.0, which does restrict the creation of other software in its own way, while still being officially recognized by the Open Source Foundation.
+As a side note, rule number 9 conflicts similarly with the BSL than with the GPL3.0, which does restrict the creation of other software in
+its own way, while still being officially recognized by the Open Source Foundation.

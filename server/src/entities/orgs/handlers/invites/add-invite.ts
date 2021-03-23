@@ -53,7 +53,7 @@ async function handler(req: Request, res: Response): Promise<void> {
 
   await sendInvite(email, {
     org: org.name,
-    url: `${env.MELI_UI_URL}/invite?token=${invite.token}`,
+    url: `${env.MELI_URL}/invite?token=${invite.token}`,
   });
 
   emitEvent(EventType.org_invite_added, {
