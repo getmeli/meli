@@ -63,7 +63,7 @@ Want to change the way you ship front-end, forever ? Let's get started !
 You can now browse at `http://localhost:8080`:
 
 - `http://localhost:8080/` => UI
-- `http://localhost:8080/api`, `http://localhost:8080/auth` and `http://localhost:8080/socket.io` => API
+- `http://localhost:8080/api`, `http://localhost:8080/auth`, `http://localhost:8080/system` and `http://localhost:8080/socket.io` => API
 - `http://loopback.sh` => your sites will be served here
 
 ### DNS config

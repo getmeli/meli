@@ -6,9 +6,10 @@ RUN apk add --no-cache \
        bash \
        nodejs
 
-# caddy
+# entrypoint
 COPY ./docker/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
+# caddy
 COPY ./docker/caddy-config.json /etc/caddy/config.json
 # ui
 COPY ./ui/build /app/ui
@@ -16,7 +17,7 @@ COPY ./ui/build /app/ui
 COPY ./server/build /app/server
 COPY ./server/node_modules /app/server/node_modules
 COPY ./server/migrate-mongo-config.js /app/server
-COPY ./server/migrations /app/server
+COPY ./server/migrations /app/server/migrations
 
 WORKDIR /app/server
 
