@@ -30,6 +30,7 @@ jobs:
           npx semantic-release -r $GITHUB_REPOSITORY_SSH_URL -d
           echo "Next release version is $(cat VERSION)"
           echo "Next release channel is $(cat RELEASE_CHANNEL)"
+          npm version --no-git-tag-version $(cat VERSION) --allow-same-version
         env:
           RELEASE_DEPLOY_KEY: ${{ secrets.RELEASE_DEPLOY_KEY }}
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
@@ -38,18 +39,9 @@ jobs:
       - name: "test"
         run: npm run test
       - name: "build"
-        run: |
-          if [ -f VERSION ]; then
-            npm version --no-git-tag-version $(cat VERSION) --allow-same-version
-          fi
-          npm run build
+        run: npm run build
       - name: "docker build"
-        run: |
-          docker build --pull -t $TMP_DOCKER_IMAGE -f ./docker/Dockerfile .
-      - name: "docker build unified"
-        if: ${{ env.IS_RELEASE_BRANCH == 'true' }}
-        run: |
-          docker build --pull -t $TMP_DOCKER_IMAGE_UNIFIED -f ./docker/unified.Dockerfile --build-arg "UI_VERSION=$(cat HEAD_BRANCH)" .
+        run: docker build --pull -t $TMP_DOCKER_IMAGE -f ./docker/Dockerfile .
       - name: "release"
         if: ${{ github.ref == 'refs/heads/latest' || github.ref == 'refs/heads/beta' }}
         run: |
