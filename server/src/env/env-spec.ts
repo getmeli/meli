@@ -83,7 +83,22 @@ export const envSpec: EnvSpec<Env> = {
     schema: string().optional(),
   },
   MELI_MONGO_URI: {
-    schema: string().required(),
+    schema: string().optional(),
+  },
+  MELI_MONGO_USER: {
+    schema: string().optional(),
+  },
+  MELI_MONGO_PASSWORD: {
+    schema: string().optional(),
+  },
+  MELI_MONGO_HOST: {
+    schema: string().optional(),
+  },
+  MELI_MONGO_PORT: {
+    schema: number().optional().default(27017),
+  },
+  MELI_MONGO_DB: {
+    schema: string().optional(),
   },
   MELI_MIGRATE_ROLLBACK: {
     transform: stringToBoolean(),

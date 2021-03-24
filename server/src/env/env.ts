@@ -16,6 +16,11 @@ export interface Env {
   MELI_JWT_SECRET: string;
   MELI_JWT_TOKEN_EXPIRATION: number;
   MELI_MONGO_URI: string;
+  MELI_MONGO_USER: string;
+  MELI_MONGO_PASSWORD: string;
+  MELI_MONGO_HOST: string;
+  MELI_MONGO_PORT: number;
+  MELI_MONGO_DB: string;
   MELI_GITLAB_URL: string;
   MELI_GITLAB_CLIENT_ID: string;
   MELI_GITLAB_CLIENT_SECRET: string;
