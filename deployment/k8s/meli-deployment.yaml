@@ -31,20 +31,34 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: meli
-                key: meli-jwt
-          - name: MELI_MONGO_URI
-            value: mongodb://mongouser:ChangeMe@mongo:27017/meli #ChangeMe (See: Mongo Secret)
+                key: meli-jwt                
           - name: MELI_PASSWORD
             valueFrom:
               secretKeyRef:
                 name: meli
                 key: meli-password
           - name: MELI_URL
-            value: https://meli.domain.io #ChangeMe
+            value: https://meli.domain.io           #ChangeMe
           - name: MELI_USER
-            value: user #ChangeMe
+            value: user                             #ChangeMe
           - name: MELI_HTTPS_AUTO
             value: "false"
+          # Deprecated: Mongo Full-URI
+          #- name: MELI_MONGO_URI
+          #  value: mongodb://mongouser:ChangeMe@mongo:27017/meli
+          - name: MELI_MONGO_HOST
+            value: mongo
+          - name: MELI_MONGO_PORT
+            value: 27017
+          - name: MELI_MONGO_USER
+            value: mongouser
+          - name: MELI_MONGO_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mongo
+                key: mongo-user-pw                   #ChangeMe         
+          - name: MELI_MONGO_DB
+            value: meli
           imagePullPolicy: IfNotPresent
           ports:
           - name: http
@@ -58,7 +72,8 @@ spec:
             protocol: TCP
           - name: admin
             containerPort: 2019
-            protocol: TCP                          
+            protocol: TCP
+          # In Work - Docker File needs to be updated  
           #securityContext:
           #  runAsUser: 1001
           volumes: null
@@ -78,32 +93,32 @@ spec:
             - name: sites
               mountPath: /sites
               subPath: sites              
-          #livenessProbe: #Uncomment & change host header value
-          #  httpGet:
-          #    path: /
-          #    port: admin
-          #    scheme: HTTP
-          #    httpHeaders:
-          #      - name: Host
-          #        value: "meli.domain.io" #ChangeMe            
-          #  initialDelaySeconds: 60
-          #  timeoutSeconds: 5
-          #  periodSeconds: 10
-          #  successThreshold: 1
-          #  failureThreshold: 6
-          #readinessProbe:
-          #  httpGet:
-          #    path: /
-          #    port: admin
-          #    scheme: HTTP
-          #    httpHeaders:
-          #      - name: Host
-          #        value: "meli.domain.io" #ChangeMe 
-          #  initialDelaySeconds: 30
-          #  timeoutSeconds: 5
-          #  periodSeconds: 10
-          #  successThreshold: 1
-          #  failureThreshold: 6
+          livenessProbe: 
+            httpGet:
+              path: /
+              port: admin
+              scheme: HTTP
+              httpHeaders:
+                - name: Host
+                  value: "meli.domain.io"             #ChangeMe            
+            initialDelaySeconds: 60
+            timeoutSeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 6
+          readinessProbe:
+            httpGet:
+              path: /
+              port: admin
+              scheme: HTTP
+              httpHeaders:
+                - name: Host
+                  value: "meli.domain.io"             #ChangeMe 
+            initialDelaySeconds: 30
+            timeoutSeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 6
       volumes:
         - name: data
           persistentVolumeClaim:
@@ -131,8 +146,20 @@ metadata:
     app.kubernetes.io/instance: meli-app
     app.kubernetes.io/name: meli
 stringData:
-  meli-password: ChangeMe #ChangeMe
-  meli-jwt: ChangeMe #ChangeMe
+  meli-password: ChangeMe                             #ChangeMe
+  meli-jwt: ChangeMe                                  #ChangeMe
+---
+kind: Secret
+apiVersion: v1
+metadata:
+  name: mongo
+  namespace: meli
+  labels:
+    app.kubernetes.io/instance: meli-app
+    app.kubernetes.io/name: meli
+stringData:
+  mongo-user-pw: ChangeMe                             #ChangeMe
+  mongo-root-pw: ChangeMe                             #ChangeMe
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
@@ -246,12 +273,12 @@ spec:
             protocol: TCP
           env:
             - name: MONGODB_USERNAME
-              value: mongouser #ChangeME
+              value: mongouser
             - name: MONGODB_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: mongo
-                  key: mongo-password
+                  key: mongo-user-pw
             - name: MONGODB_DATABASE
               value: meli              
             - name: MONGODB_ROOT_PASSWORD
@@ -345,15 +372,3 @@ spec:
     app.kubernetes.io/instance: meli-mongo
     app.kubernetes.io/name: meli 
   type: ClusterIP
----
-kind: Secret
-apiVersion: v1
-metadata:
-  name: mongo
-  namespace: meli
-  labels:
-    app.kubernetes.io/instance: meli-app
-    app.kubernetes.io/name: meli
-stringData:
-  mongo-password: ChangeMe #ChangeMe
-  mongo-root-pw: ChangeMe #ChangeMe
