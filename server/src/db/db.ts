@@ -1,7 +1,10 @@
 import { Db, MongoClient } from 'mongodb';
 import { env } from '../env/env';
+import { buildMongoUri } from './build-mongo-uri';
 
-const client = new MongoClient(env.MELI_MONGO_URI, {
+const url = env.MELI_MONGO_URI || buildMongoUri();
+
+const client = new MongoClient(url, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
