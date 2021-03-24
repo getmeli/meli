@@ -57,7 +57,6 @@ export interface Env {
   MELI_RESTRICTED_IPS: string[];
   MELI_RESTRICTED_DOMAINS: string[];
   MELI_CADDY_ADMIN_API_URL: string;
-  // Caddy content path
   MELI_CADDY_DIR: string;
   MELI_TMP_DIRECTORY: string;
   MELI_SITES_DIR: string;
@@ -73,6 +72,10 @@ export interface Env {
   MELI_MULTER_FORM_LIMITS: MulterLimitOptions;
   MELI_GOOGLE_RECAPTCHA_SITE_KEY: string;
   MELI_GOOGLE_RECAPTCHA_SECRET_KEY: string;
+  MELI_SAML_ENDPOINT: string;
+  MELI_SAML_ISSUER: string;
+  MELI_SAML_IDP_CRT: string;
+  MELI_SAML_PRIVATE_CRT: string;
 }
 
 export const env: Env = parseEnv(envSpec);

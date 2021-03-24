@@ -10,6 +10,7 @@ import { github_callback, github_redirect } from './passport/github';
 import { gitlab_callback, gitlab_redirect } from './passport/gitlab';
 import { redirectToUi } from './handlers/redirect-to-ui';
 import { noContent } from '../commons/express/handlers/no-content';
+import { saml_callback, saml_redirect } from './passport/saml';
 
 const router = Router();
 
@@ -34,6 +35,8 @@ router.get(google_redirect, passport.authenticate('google', googleOptions));
 router.get(google_callback, passport.authenticate('google', passportOptions), authenticate, redirectToUi);
 router.get(github_redirect, passport.authenticate('github'));
 router.get(github_callback, passport.authenticate('github', passportOptions), authenticate, redirectToUi);
+router.get(saml_redirect, passport.authenticate('saml', passportOptions));
+router.post(saml_callback, passport.authenticate('saml', passportOptions), authenticate, redirectToUi);
 router.post('/auth/in-memory', passport.authenticate('in-memory', passportOptions), authenticate, noContent);
 
 // auth
