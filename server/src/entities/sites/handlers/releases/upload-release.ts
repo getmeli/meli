@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import tar from 'tar';
+import move from 'mv';
 import { wrapAsyncMiddleware } from '../../../../commons/utils/wrap-async-middleware';
 import { Release, Releases } from '../../../releases/release';
 import { upload } from '../../../../upload';
@@ -25,6 +26,9 @@ import { slugify } from '../../../../utils/slugify';
 import { parseConfig } from '../../yaml-config/parse-config';
 import { env } from '../../../../env/env';
 import path from 'path';
+import { promisify } from 'util';
+
+const mv = promisify(move);
 
 async function findOrCreateBranch(site: Site, branchName: string): Promise<Branch> {
   let branch: Branch = site.branches.find(c => c.name === branchName);
@@ -121,9 +125,8 @@ async function handler(req: Request, res: Response): Promise<void> {
 
   // move extracted files to final destination
   const releaseDir = getReleaseDir(release);
-  await promises.mkdir(releaseDir, { recursive: true });
   logger.debug('renaming', extractPath, 'to', releaseDir);
-  await promises.rename(extractPath, releaseDir);
+  await mv(extractPath, releaseDir, { mkdirp: true });
 
   await Releases().insertOne(release);
 

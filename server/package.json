@@ -91,6 +91,7 @@
     "mongodb": "^3.6.3",
     "morgan": "^1.10.0",
     "multer": "^1.4.2",
+    "mv": "^2.1.1",
     "nodemailer": "^6.4.14",
     "nodemon": "^2.0.4",
     "npm-run-all": "^4.1.5",
