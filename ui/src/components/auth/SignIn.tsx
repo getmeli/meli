@@ -10,6 +10,7 @@ import { SignInWithGitlab } from './methods/SignInWithGitlab';
 import { SignInWithGithub } from './methods/SignInWithGithub';
 import { SignInWithGoogle } from './methods/SignInWithGoogle';
 import { SignInWithUserPassword } from './methods/SignInWithUserPassword';
+import { SignInWithSAML } from './methods/SignInWithSAML';
 
 export function SignIn() {
   const [loading, setLoading] = useMountedState(true);
@@ -56,6 +57,9 @@ export function SignIn() {
               )}
               {signInMethods.includes('google') && (
                 <SignInWithGoogle/>
+              )}
+              {signInMethods.includes('saml') && (
+                <SignInWithSAML/>
               )}
             </div>
           </div>

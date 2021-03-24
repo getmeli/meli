@@ -1,0 +1,11 @@
+@import '../../../styles/variables';
+
+.saml {
+  background: $saml-bg;
+}
+
+.icon {
+  color: $saml-color;
+  display: block;
+  width: 100%;
+}
