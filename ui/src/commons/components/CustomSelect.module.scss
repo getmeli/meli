@@ -1,0 +1,77 @@
+@import "../../styles/variables";
+
+:global {
+  // https://react-select.com/styles#using-classnames
+  .custom-react-select {
+    text-align: left;
+
+    .react-select__control {
+      border: $input-border-width solid $input-border-color;
+      height: $input-height;
+
+      &.react-select__control--is-focused {
+        border-color: $input-focus-border-color !important;
+      }
+
+      &.react-select__control--menu-is-open {
+
+      }
+    }
+
+    .react-select__value-container {
+      height: 100%;
+      margin: 0;
+      padding: $input-padding-y $input-padding-x;
+    }
+
+    .react-select__placeholder {
+      color: $input-placeholder-color;
+    }
+
+    .react-select__input {
+
+    }
+
+    .react-select__indicator-separator {
+      display: none;
+    }
+
+    .react-select__clear-indicator {
+      color: $_blueBell;
+    }
+
+    .react-select__menu {
+      border-radius: 5px;
+      background: linear-gradient(179.21deg, #FFFFFF 0%, #F8F5FF 97.11%);
+      box-shadow: $_boxShadow;
+    }
+
+    .react-select__menu-list {
+      padding: 0;
+    }
+
+    .react-select__option, .react-select-custom-option {
+      &:hover {
+        background: #EEECF9;
+      }
+
+      &.is-focused {
+        background: #EEECF9;
+      }
+    }
+
+    .react-select__option--is-focused {
+      background: #EEECF9;
+    }
+
+    .react-select__option--is-selected {
+      background: transparent;
+      color: $primary;
+    }
+
+    .react-select__option--is-disabled {
+      background: $input-disabled-bg;
+    }
+
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "exclude": [
+    "build"
+  ],
+  "compilerOptions": {
+    "incremental": false,
+    "target": "es2018",
+    "module": "commonjs",
+    "lib": [
+      "esnext"
+    ],
+    "outDir": "../build",
+    "strict": false,
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
+  }
+}

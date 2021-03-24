@@ -1,0 +1,15 @@
+@import "src/styles/variables";
+
+.loader {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.add {
+  text-transform: uppercase;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: center !important;
+}

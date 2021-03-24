@@ -4,12 +4,12 @@
 !.idea/runConfigurations
 
 # deps
-/node_modules
+node_modules
 /.pnp
 .pnp.js
 
 # testing
-/coverage
+coverage
 
 # production
 /build

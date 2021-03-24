@@ -1,0 +1,24 @@
+.gauge {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+
+  .value {
+    font-size: 28px;
+    line-height: 130%;
+    color: inherit;
+  }
+
+  :global {
+    .CircularProgressbar {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+
+    .CircularProgressbar .CircularProgressbar-path {
+      stroke: url(#svg-gauge-gradient);
+    }
+  }
+}

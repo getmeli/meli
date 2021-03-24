@@ -1,0 +1,6 @@
+@import 'src/styles/variables';
+
+.container {
+  flex-shrink: 0;
+  background: $gray-100;
+}

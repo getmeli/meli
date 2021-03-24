@@ -1,0 +1,15 @@
+@import "../../styles/variables";
+
+.loader {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.add {
+  text-transform: uppercase;
+  font-weight: bold;
+  text-align: center !important;
+  //border: 2px solid $gray-200 !important;
+}

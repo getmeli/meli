@@ -1,0 +1,11 @@
+@import '../../../styles/variables';
+
+.google {
+  background: $google-bg;
+}
+
+.icon {
+  color: $google-color;
+  display: block;
+  width: 100%;
+}

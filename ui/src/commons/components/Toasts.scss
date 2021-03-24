@@ -1,0 +1,34 @@
+@import '~react-toastify/dist/ReactToastify.css';
+@import '../../styles/variables';
+
+.Toastify__toast {
+  box-shadow: $_boxShadow !important;
+  border-radius: $border-radius;
+  padding: 15px 30px;
+}
+
+.Toastify__toast--dark {
+  background: $_blackGradient;
+  color: $light;
+}
+
+.Toastify__toast--default {
+  background: $_silverGradient;
+  color: $dark;
+}
+
+.Toastify__toast--info {
+  background: $_blueGradient;
+}
+
+.Toastify__toast--success {
+  background: $_greenGradient;
+}
+
+.Toastify__toast--warning {
+  background: $_orangeGradient;
+}
+
+.Toastify__toast--error {
+  background: $_redGradient;
+}

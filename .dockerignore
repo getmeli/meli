@@ -1,6 +1,7 @@
 *
-!node_modules
-!migrate-mongo-config.js
-!migrations
-!build
-!docker/files
+!server/node_modules
+!server/migrate-mongo-config.js
+!server/migrations
+!server/build
+!ui/build
+!docker

@@ -1,0 +1,26 @@
+@import '../../styles/variables';
+
+.container {
+  cursor: pointer;
+  background: $gray-100;
+  color: $dark;
+  height: 30px;
+  width: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+
+  transition: all $transition-duration $transition-effect;
+
+  &:hover {
+    font-weight: bold;
+    background: $gray-200;
+    text-shadow: $_boxShadow;
+  }
+
+  &.disabled {
+    cursor: default;
+    color: $text-muted;
+  }
+}

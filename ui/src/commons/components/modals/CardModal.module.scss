@@ -1,0 +1,15 @@
+@import 'src/styles/variables';
+@import 'src/styles/mixins';
+
+
+.card {
+  margin: 0;
+  background: $white;
+  border-radius: $border-radius;
+  height: 100%;
+}
+
+.content {
+  max-height: 80vh;
+  overflow: auto;
+}

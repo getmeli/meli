@@ -1,0 +1,41 @@
+@import '../../../styles/variables';
+
+.dropdown {
+  opacity: 1 !important;
+  padding: 0 !important;
+  border: none !important;
+
+  background: #ffffff !important;
+  box-shadow: $_boxShadow !important;
+  border-radius: 5px;
+  color: $dark !important;
+}
+
+:global {
+  .__react_component_tooltip {
+    &.place-top {
+      &:after {
+        display: none !important;
+      }
+    }
+
+    &.place-left {
+      &:after {
+        display: none !important;
+      }
+    }
+
+    &.place-bottom {
+      &:after {
+        display: none !important;
+      }
+    }
+
+    &.place-right {
+      &:after {
+        display: none !important;
+      }
+    }
+  }
+
+}

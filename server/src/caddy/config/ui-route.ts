@@ -1,0 +1,56 @@
+import { env } from '../../env/env';
+import { getReverseProxyDial } from '../utils/get-reverse-proxy-dial';
+import { URL } from 'url';
+
+const meliHost = new URL(env.MELI_URL);
+
+function serveUiStatically() {
+  return {
+    group: 'ui',
+    match: [
+      {
+        host: [meliHost.hostname],
+        file: {
+          root: env.MELI_UI_DIR,
+          try_files: [
+            '{http.request.uri.path}',
+            '/index.html',
+          ],
+        },
+      },
+    ],
+    handle: [
+      {
+        handler: 'rewrite',
+        uri: '{http.matchers.file.relative}',
+      },
+      {
+        handler: 'file_server',
+        root: env.MELI_UI_DIR,
+      },
+    ],
+  };
+}
+
+function reverseProxyUi() {
+  return {
+    group: 'ui',
+    match: [
+      {
+        host: [meliHost.hostname],
+        path: ['/*'],
+      },
+    ],
+    handle: [
+      {
+        handler: 'reverse_proxy',
+        upstreams: [{
+          dial: getReverseProxyDial(env.MELI_UI_URL_INTERNAL.toString()),
+        }],
+      },
+    ],
+    terminal: true,
+  };
+}
+
+export const uiRoute = env.MELI_UI_DIR ? serveUiStatically() : reverseProxyUi();

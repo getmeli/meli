@@ -1,0 +1,11 @@
+@import "../../styles/variables";
+
+.org {
+  background: $gray-100;
+  display: flex;
+  align-items: center;
+  padding: 1.5rem;
+  margin: 2rem 0;
+  font-size: 1.5rem;
+  border-radius: $border-radius;
+}

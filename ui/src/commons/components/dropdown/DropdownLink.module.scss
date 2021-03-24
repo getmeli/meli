@@ -1,0 +1,29 @@
+@import '../../../styles/variables';
+
+.link {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 130%;
+  display: flex;
+  align-items: center;
+  padding: 0.6rem 1rem;
+  color: $dark;
+
+  &.disabled {
+    color: $text-muted;
+  }
+
+  &:not(.disabled) {
+    &:hover {
+      text-decoration: none;
+      color: $primary;
+      cursor: pointer;
+      background: $gray-100;
+    }
+  }
+}
+
+.icon {
+  //width: 30px;
+  margin-right: 8px;
+}

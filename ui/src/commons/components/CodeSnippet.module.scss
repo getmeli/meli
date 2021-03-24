@@ -1,0 +1,100 @@
+//@import "~prismjs/themes/prism-okaidia";
+@import '../../styles/mixins';
+
+// copy pasted from docs site
+
+//Colors
+$color-tertiary: #ffffff;
+$color-accent-primary: #661aff;
+$color-accent-secondary: #ff7f66;
+
+//Fonts
+$font: 'Oxygen Mono';
+
+.code {
+  flex-grow: 1;
+  height: 100%;
+  overflow-y: auto;
+  @include no-scrollbars;
+  background: transparent;
+  border: none;
+
+  * {
+    &::selection {
+      background-color: $color-accent-primary;
+    }
+  }
+}
+
+.container {
+  :global(.hljs) {
+    margin: 0;
+    color: $color-tertiary;
+    font-size: 14px;
+  }
+
+  margin: 10px 0;
+  position: relative;
+
+  pre {
+    width: 100%;
+    background-color: $primary;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 160%;
+    //background-color: #1B0449;
+    border-radius: 5px;
+    //padding: 20px 30px;
+  }
+
+  code {
+    flex-grow: 1;
+    display: block;
+    font-family: $font;
+    color: $color-tertiary;
+    padding: 20px 20px 20px 30px;
+    overflow: visible;
+  }
+
+  .token {
+    &.boolean,
+    &.string {
+      color: $color-accent-secondary;
+    }
+
+    &.comment {
+      color: rgba($color-tertiary, 0.5);
+    }
+  }
+
+  .line-numbers-rows {
+    font-family: $font;
+    font-size: 1.1rem;
+    padding-top: 20px;
+    width: 60px;
+    border-right: none !important;
+    background-color: rgba($color-tertiary, 0.05);
+    border-radius: 5px 0 0 5px;
+    visibility: visible;
+    display: block;
+    height: 100%;
+
+    span {
+      &::before {
+        color: rgba($color-tertiary, 0.25);
+      }
+    }
+  }
+
+  .language-yaml {
+    color: $color-accent-secondary;
+
+    .token {
+      &.key,
+      &.punctuation {
+        color: $color-tertiary;
+      }
+    }
+  }
+}

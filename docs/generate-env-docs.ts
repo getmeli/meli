@@ -7,7 +7,7 @@
  *  still generate the env reference docs.
  */
 
-import { envSpec } from '../src/env/env-spec';
+import { envSpec } from '../server/src/env/env-spec';
 
 interface Entry {
   name: string;

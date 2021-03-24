@@ -1,0 +1,37 @@
+@charset "utf-8";
+
+@import '~animate.css/animate.min.css';
+
+// https://github.com/daneden/animate.css/issues/596
+.animated {
+  -webkit-animation-fill-mode: none !important;
+  animation-fill-mode: none !important;
+}
+
+// must be placed before importing bootstrap
+@import './styles/fonts';
+@import './styles/variables';
+@import '~bootstrap/scss/bootstrap';
+@import './styles/commons';
+@import './styles/forms';
+@import './styles/branding';
+@import './styles/animations';
+
+html,
+body {
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+}
+
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  //background-image: url("./assets/images/bg/bg-top-light.svg"),
+  //url("./assets/images/bg/bg-bottom-light.svg");
+  //background-position: top left, bottom left;
+  //background-repeat: no-repeat, no-repeat;
+  //background-size: 100%, 100%;
+}

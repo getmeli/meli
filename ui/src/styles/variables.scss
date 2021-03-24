@@ -1,0 +1,154 @@
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+
+$_primary: #4F4F4F;
+$_hanPurple: #4F4F4F;
+$_coralReef: #ff7f66;
+$_royalPurple: #7153ac;
+$_blueBell: #a69fc6;
+$_rhythm: rgb(121, 108, 147);
+$_glitter: lighten(#667078, 50%);
+$_magnolia: #667078;
+$_white: rgb(255, 255, 255);
+$_lightGray: lighten($gray-100, 0%);
+
+$_indigoGradient: linear-gradient(0.04deg, #ff9882 0.07%, #5500ff 99.93%);
+$_spaceGradient: linear-gradient(184.01deg, #7153ac 0%, #1b0449 100%);
+$_orangeGradient: linear-gradient(250.75deg, #fca326 0%, #e24329 100%);
+$_greenGradient: linear-gradient(225deg, #50e69b 0%, #1dbe6d 100%);
+$_redGradient: linear-gradient(225deg, #f4719d 0%, #ec135b 100%);
+$_blueGradient: linear-gradient(60.72deg, #1d56c9 0%, #33bbff 100%);
+$_blackGradient: linear-gradient(250.75deg, #4d4d4d 0%, #000000 100%);
+$_silverGradient: linear-gradient(179.31deg, #ffffff 0%, #f8f5ff 97.11%);
+
+$gitlab-color: #f08236;
+$gitlab-bg: linear-gradient(251.46deg, #fca326 0%, #e24329 100%);
+$gitea-color: #ccf7a1;
+$gitea-bg: linear-gradient(222.08deg, #ccf7a1 0%, #73bd28 100%), #ffffff;
+$github-color: #000000;
+$github-bg: linear-gradient(250.75deg, #4d4d4d 0%, #000000 100%);
+$google-color: #e8453c;
+$google-bg: linear-gradient(250.75deg, #e8453c 0%, lighten(#e8453c, 10%) 100%);
+
+$drone-ci: linear-gradient(220.94deg, #0055CC 0%, #00347D 100%), #FFFFFF;
+$circle-ci: linear-gradient(250.75deg, #461F93 0%, #1B0449 100%);
+$travis-ci: linear-gradient(250.75deg, #99D98C 0%, #39AA56 100%);
+$appveyor-ci: linear-gradient(220.94deg, #9A8FD4 0%, #514785 100%), #FFFFFF;
+$semaphore-ci: linear-gradient(250.75deg, #F1D132 0%, #F16332 100%);
+$github-actions: linear-gradient(250.75deg, #4d4d4d 0%, #000000 100%);
+
+$_boxShadow: 0px 10px 50px rgba(27, 4, 73, 0.1), 0px 5px 10px rgba(27, 4, 73, 0.1);
+
+$transition-duration: 0.15s;
+$transition-effect: ease-in-out;
+
+$mobile: 576px;
+$tablet: 768px;
+$desktop: 992px;
+$widescreen: 1180px;
+
+// Bootstrap overrides
+
+$grid-breakpoints: (
+  xs: 0,
+  sm: $mobile,
+  md: $tablet,
+  lg: $desktop,
+  xl: $widescreen,
+);
+
+$primary: $_hanPurple;
+$secondary: $_coralReef;
+$info: $_blueBell;
+$light: $_white;
+$yellow: #fed74f;
+$dark: $_primary;
+$body-bg: $white;
+$body-color: $_primary;
+$success: darken(#50e69b, 15%);
+$danger: #ec135b;
+
+$border-radius: 8px;
+
+// ensure consistency in bootstrap state colors
+$form-feedback-valid-color: $success;
+$form-feedback-invalid-color: $danger;
+$valid-color: $success;
+$invalid-color: $danger;
+$form-feedback-icon-invalid: none;
+$form-feedback-icon-valid: none;
+
+$table-cell-padding: 0.35rem;
+$table-hover-bg: $gray-100;
+$headings-margin-bottom: 1rem;
+
+// these are the colors used by bootstrap for any classes that end with -[success|danger|...]
+$theme-colors: (
+  'success': $success,
+  'danger': $danger,
+);
+
+$font-family-base: 'Source Sans Pro', sans-serif;
+$font-size-base: 1rem;
+$line-height-base: 1.3;
+$font-weight-base: 400;
+
+$font-weight-bolder: 900;
+$font-weight-bold: 800;
+$font-weight-normal: 500;
+$font-weight-light: 300;
+$font-weight-base: $font-weight-normal;
+
+$headings-line-height: 1.3;
+$headings-font-weight: 900;
+
+$h1-font-size: 50px;
+
+$input-border-color: $_glitter;
+$input-height-border: 2px; // TODO ??
+$input-border-width: 2px;
+$input-height: 50px;
+$input-focus-border-color: $primary;
+$input-focus-box-shadow: none;
+
+$btn-border-radius: $border-radius;
+$btn-font-weight: bold;
+$btn-line-height: 100%;
+$btn-border-width: 2px;
+$btn-padding-x: 2.5rem;
+$btn-padding-y: 0;
+
+$card-border-radius: 5px;
+$card-cap-bg: none;
+$card-spacer-x: $grid-gutter-width;
+$card-spacer-y: $grid-gutter-width;
+
+$alert-border-width: 2px;
+$alert-border-radius: 5px;
+
+$link-color: $secondary;
+$link-hover-decoration: none;
+$text-muted: $_blueBell;
+$custom-select-height: $input-height;
+$custom-select-border-color: $input-border-color;
+$custom-select-border-radius: $input-border-radius;
+$custom-select-border-width: $input-border-width;
+
+$placeholder-color: $text-muted;
+$input-placeholder-color: $text-muted;
+
+$alert-margin-bottom: $grid-gutter-width;
+
+$table-head-bg: #f8f5ff;
+$table-border-color: #eeecf9;
+$table-border-width: 2px;
+$table-cell-padding: 15px;
+$table-color: #796c93;
+
+$badge-border-radius: 15px;
+$badge-padding-x: 8px;
+
+$list-group-hover-bg: $_lightGray;
+$list-group-border-radius: 5px;
+$list-group-border-color: $gray-200;
+$list-group-border-width: 0;

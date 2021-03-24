@@ -4,8 +4,6 @@ env:
   GITHUB_REPOSITORY_SSH_URL: "git@github.com:${{ github.repository }}.git"
   TMP_DOCKER_IMAGE: "getmeli/api/${{ github.ref }}"
   DOCKER_IMAGE: "getmeli/api"
-  TMP_DOCKER_IMAGE_UNIFIED: "getmeli/meli/${{ github.ref }}"
-  DOCKER_IMAGE_UNIFIED: "getmeli/meli"
   IS_RELEASE_BRANCH: "${{ github.ref == 'refs/heads/latest' || github.ref == 'refs/heads/next' || github.ref == 'refs/heads/beta' }}"
   GIT_AUTHOR_NAME: "meli-release-bot"
   GIT_COMMITTER_NAME: "meli-release-bot"
@@ -30,6 +28,7 @@ jobs:
           npx semantic-release -r $GITHUB_REPOSITORY_SSH_URL -d
           echo "Next release version is $(cat VERSION)"
           echo "Next release channel is $(cat RELEASE_CHANNEL)"
+          npm version --no-git-tag-version $(cat VERSION) --allow-same-version
         env:
           RELEASE_DEPLOY_KEY: ${{ secrets.RELEASE_DEPLOY_KEY }}
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
@@ -38,18 +37,13 @@ jobs:
       - name: "test"
         run: npm run test
       - name: "build"
-        run: |
-          if [ -f VERSION ]; then
-            npm version --no-git-tag-version $(cat VERSION) --allow-same-version
-          fi
-          npm run build
+        run: npm run build
       - name: "docker build"
         run: |
-          docker build --pull -t $TMP_DOCKER_IMAGE -f ./docker/Dockerfile .
-      - name: "docker build unified"
-        if: ${{ env.IS_RELEASE_BRANCH == 'true' }}
-        run: |
-          docker build --pull -t $TMP_DOCKER_IMAGE_UNIFIED -f ./docker/unified.Dockerfile --build-arg "UI_VERSION=$(cat HEAD_BRANCH)" .
+          rm -rf server/node_modules
+          npm ci --production --prefix server
+          docker build --pull -t $TMP_DOCKER_IMAGE -f ./Dockerfile .
+          npm ci
       - name: "release"
         if: ${{ github.ref == 'refs/heads/latest' || github.ref == 'refs/heads/beta' }}
         run: |
@@ -64,7 +58,6 @@ jobs:
           docker login -u $DOCKER_USER -p $DOCKER_TOKEN
           IS_NEXT=${{ github.ref == 'refs/heads/next' }}
           npx docker-semver-tags --sourceImage $TMP_DOCKER_IMAGE --targetImage $DOCKER_IMAGE --versionTag $(cat VERSION) --channelOnly $IS_NEXT
-          npx docker-semver-tags --sourceImage $TMP_DOCKER_IMAGE_UNIFIED --targetImage $DOCKER_IMAGE_UNIFIED --versionTag $(cat VERSION) --channelOnly $IS_NEXT
         env:
           DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
           DOCKER_USER: ${{ secrets.DOCKER_USER }}

@@ -1,0 +1,45 @@
+@import "../../../styles/variables";
+
+.form {
+
+}
+
+.add {
+  border: 2px solid $_blueBell;
+  border-radius: 50px;
+  background: none;
+  padding: 0.5rem 2rem;
+  color: $_blueBell;
+  display: block;
+  width: 100%;
+  text-transform: uppercase;
+
+  &:active,
+  &:focus {
+    outline: none;
+  }
+
+  transition: border-color $transition-duration $transition-effect, color $transition-duration $transition-effect;
+
+  &:hover {
+    border-color: $dark;
+    color: $dark;
+  }
+}
+
+.remove {
+  width: $input-height;
+  height: $input-height;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  cursor: pointer;
+
+  transition: all $transition-duration $transition-effect;
+
+  &:hover {
+    font-size: 2rem;
+  }
+}

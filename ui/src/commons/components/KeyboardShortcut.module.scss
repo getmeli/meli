@@ -1,0 +1,14 @@
+@import 'src/styles/variables';
+@import 'src/styles/mixins';
+
+.icon {
+  margin-right: 5px;
+}
+
+.shortcut {
+  font-size: .8rem;
+  display: flex;
+  align-items: center;
+  text-transform: uppercase;
+  font-weight: bold;
+}
