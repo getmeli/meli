@@ -1,13 +1,12 @@
 import { useFormContext } from 'react-hook-form';
 import React from 'react';
 import { toast } from 'react-toastify';
-import { Env } from '../../../providers/EnvProvider';
 import { isSubdomain, maxLength, required } from '../../../commons/components/forms/form-constants';
 import { debounceTime } from '../../../utils/debounce-time';
 import { InputError } from '../../../commons/components/forms/InputError';
 import { axios } from '../../../providers/axios';
 
-async function validateName(env: Env, name: string, previousName?: string): Promise<string | undefined> {
+async function validateName(name: string, previousName?: string): Promise<string | undefined> {
   if (!name) {
     return undefined;
   }
