@@ -5,6 +5,7 @@ import { AlertError } from '../commons/components/AlertError';
 
 export interface Env {
   MELI_URL: string;
+  MELI_HTTPS_AUTO: string;
 }
 
 const Context = createContext<Env>(undefined as any);
