@@ -19,7 +19,7 @@ export function nextWaitGenerator(timeoutMilliseconds = 50) {
         // eslint-disable-next-line prefer-promise-reject-errors
         reject(...args);
       } else {
-        resolve(...args);
+        (resolve as any)(...args);
       }
     });
   });
