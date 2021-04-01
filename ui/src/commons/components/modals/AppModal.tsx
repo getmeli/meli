@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import Modal from 'react-modal';
 import classNames from 'classnames';
 import styles from './AppModal.module.scss';
+import { useBlur } from '../../../providers/BlurProvider';
 
 export type AppModalProps = {
   isOpen: boolean;
@@ -13,16 +14,6 @@ export type AppModalProps = {
   [key: string]: any;
 };
 
-const blurElId = 'blur-overlay';
-
-function blurBackground() {
-  document.getElementById(blurElId).setAttribute('data-blur', 'true');
-}
-
-function unblurBackground() {
-  document.getElementById(blurElId).removeAttribute('data-blur');
-}
-
 export function AppModal({
   title,
   children,
@@ -32,20 +23,24 @@ export function AppModal({
   footer,
   ...otherProps
 }: AppModalProps) {
+  const { blur, unblur } = useBlur();
+
   const close = () => {
-    unblurBackground();
     if (closeModal) {
       closeModal();
+      unblur();
     }
   };
 
+  // TODO for some strange reason, isOpen goes to false and unblur is called
+  //   this is why modal blur is broken
   useEffect(() => {
     if (isOpen) {
-      blurBackground();
+      blur();
     } else {
-      unblurBackground();
+      unblur();
     }
-  }, [isOpen]);
+  }, [isOpen, blur, unblur]);
 
   return (
     <Modal

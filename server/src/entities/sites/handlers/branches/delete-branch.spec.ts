@@ -5,7 +5,7 @@ import { spyOnVerifyToken } from '../../../../../tests/utils/spyon-verifytoken';
 import * as _removeSiteBranchFromCaddy from '../../../../caddy/configuration';
 import { removeSiteBranchFromCaddy } from '../../../../caddy/configuration';
 import * as _emitEvent from '../../../../events/emit-event';
-import { MeliServer } from '../../../../server';
+import { MeliServer } from '../../../../createServer';
 import { EventType } from '../../../../events/event-type';
 import { canAdminSiteGuard } from '../../guards/can-admin-site-guard';
 import { branchExistsGuard } from '../../guards/branch-exists-guard';

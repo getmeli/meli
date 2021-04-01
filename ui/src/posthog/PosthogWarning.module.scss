@@ -1,0 +1,30 @@
+@import "src/styles/variables";
+
+.container {
+  padding: 3rem;
+  background: linear-gradient(180deg, #200c39, #220f3f);
+  color: $light;
+}
+
+.logos {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.message {
+  margin-top: 3rem;
+}
+
+.posthogLogo {
+  height: 35px;
+}
+
+.plus {
+  margin: 0 2rem;
+  font-size: 2rem;
+}
+
+.meliLogo {
+  height: 35px;
+}

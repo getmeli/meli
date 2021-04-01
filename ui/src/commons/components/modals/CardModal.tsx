@@ -11,6 +11,7 @@ export type AppModalProps = {
   footer?: any;
   closeModal?: (...args: string[]) => void;
   className?: string;
+  cardClassName?: string;
   [key: string]: any;
 };
 
@@ -20,6 +21,7 @@ export function CardModal({
   isOpen,
   closeModal,
   className,
+  cardClassName,
   footer,
   ...otherProps
 }: AppModalProps) {
@@ -30,10 +32,10 @@ export function CardModal({
       className={className}
       {...otherProps}
     >
-      <div className={classNames('card', styles.card)}>
+      <div className={classNames('card', styles.card, cardClassName)}>
         <div className="card-header d-flex align-items-center justify-content-between">
           <strong className="mr-5">{title}</strong>
-          <CloseModal onClick={closeModal} />
+          <CloseModal onClick={closeModal}/>
         </div>
 
         <div className={`card-body ${styles.content}`}>{children}</div>

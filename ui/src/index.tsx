@@ -13,6 +13,7 @@ import { routerHistory } from './providers/history';
 import { SocketProvider } from './websockets/SocketProvider';
 import { isSentryEnabled, SENTRY_CONFIGURED, SentryProvider } from './commons/sentry/SentryProvider';
 import { OrgProvider } from './providers/OrgProvider';
+import { BlurProvider } from './providers/BlurProvider';
 
 if (SENTRY_CONFIGURED) {
   if (isSentryEnabled()) {
@@ -73,7 +74,7 @@ const app = (
 ReactDOM.render(
   // <React.StrictMode>
   <>
-    <div id="blur-overlay">
+    <BlurProvider>
       {SENTRY_CONFIGURED ? (
         <SentryProvider>
           {app}
@@ -81,7 +82,7 @@ ReactDOM.render(
       ) : (
         app
       )}
-    </div>
+    </BlurProvider>
     <Toasts/>
   </>,
   // </React.StrictMode>,

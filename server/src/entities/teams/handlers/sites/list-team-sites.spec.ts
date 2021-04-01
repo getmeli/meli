@@ -2,7 +2,7 @@ import request from 'supertest';
 import { testServer } from '../../../../../tests/test-server';
 import { spyOnCollection } from '../../../../../tests/utils/spyon-collection';
 import { spyOnVerifyToken } from '../../../../../tests/utils/spyon-verifytoken';
-import { MeliServer } from '../../../../server';
+import { MeliServer } from '../../../../createServer';
 import * as _teamExistsGuard from '../../guards/team-exists-guard';
 import * as _canReadTeamGuard from '../../guards/can-read-team-guard';
 import * as _serializeSite from '../../../sites/serialize-site';

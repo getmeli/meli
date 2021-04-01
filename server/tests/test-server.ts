@@ -12,7 +12,7 @@ import { Logger } from '../src/commons/logger/logger';
 import { handleError } from '../src/commons/utils/handle-error';
 import { env } from '../src/env/env';
 import routes from '../src/routes';
-import { MeliServer } from '../src/server';
+import { MeliServer } from '../src/createServer';
 import { authorizeReq } from '../src/auth/handlers/authorize-req';
 import { authorizeApiReq } from '../src/auth/handlers/authorize-api-req';
 import '../src/auth/passport';
