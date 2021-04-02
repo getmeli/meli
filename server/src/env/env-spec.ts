@@ -272,4 +272,16 @@ export const envSpec: EnvSpec<Env> = {
   MELI_GOOGLE_RECAPTCHA_SECRET_KEY: {
     schema: string().optional(),
   },
+  MELI_SAML_ENDPOINT: {
+    schema: string().optional(),
+  },
+  MELI_SAML_ISSUER: {
+    schema: string().optional(),
+  },
+  MELI_SAML_IDP_CRT: {
+    schema: string().optional(),
+  },
+  MELI_SAML_PRIVATE_CRT: {
+    schema: string().optional(),
+  },
 };
