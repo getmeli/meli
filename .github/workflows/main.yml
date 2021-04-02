@@ -2,8 +2,8 @@ name: main
 on: [ push, pull_request ]
 env:
   GITHUB_REPOSITORY_SSH_URL: "git@github.com:${{ github.repository }}.git"
-  TMP_DOCKER_IMAGE: "getmeli/api/${{ github.ref }}"
-  DOCKER_IMAGE: "getmeli/api"
+  TMP_DOCKER_IMAGE: "getmeli/meli/${{ github.ref }}"
+  DOCKER_IMAGE: "getmeli/meli"
   IS_RELEASE_BRANCH: "${{ github.ref == 'refs/heads/latest' || github.ref == 'refs/heads/next' || github.ref == 'refs/heads/beta' }}"
   GIT_AUTHOR_NAME: "meli-release-bot"
   GIT_COMMITTER_NAME: "meli-release-bot"
