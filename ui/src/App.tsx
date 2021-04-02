@@ -26,6 +26,7 @@ import { UserView } from './components/user/UserView';
 import { PrivateRoute } from './commons/components/PrivateRoute';
 import { FullPageCentered } from './commons/components/FullPageCentered';
 import { Loader } from './commons/components/Loader';
+import { PosthogWarning } from './posthog/PosthogWarning';
 
 function Header() {
   const { user } = useAuth();
@@ -37,15 +38,15 @@ function Header() {
           <div className="col d-flex align-items-center justify-content-between">
             {user && (
               <>
-                <UserInfo />
+                <UserInfo/>
                 {currentOrg && (
                   <div className="d-flex align-items-center">
                     <AddTeam>
                       <ButtonIcon>
-                        <FontAwesomeIcon icon={faPlus} />
+                        <FontAwesomeIcon icon={faPlus}/>
                       </ButtonIcon>
                     </AddTeam>
-                    <Search />
+                    <Search/>
                   </div>
                 )}
               </>
@@ -65,14 +66,15 @@ export function App() {
     <FullPageCentered>
       <p>
         Initializing
-        <Loader className="ml-2" />
+        <Loader className="ml-2"/>
       </p>
     </FullPageCentered>
   ) : (
     <div className={styles.app} id="app">
-      <Header />
+      <PosthogWarning/>
+      <Header/>
       {currentOrg && (
-        <SideBar className={styles.sidebar} />
+        <SideBar className={styles.sidebar}/>
       )}
       <main className={styles.main}>
         <Switch>
@@ -142,12 +144,12 @@ export function App() {
             redirectTo="/orgs"
           />
 
-          <Route path="/legal" component={Legals} />
+          <Route path="/legal" component={Legals}/>
 
-          <Route component={NotFound} />
+          <Route component={NotFound}/>
         </Switch>
       </main>
-      <Footer />
+      <Footer/>
     </div>
   );
 }

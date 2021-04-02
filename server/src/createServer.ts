@@ -7,7 +7,7 @@ import cors from 'cors';
 import express, { Express } from 'express';
 import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
-import { createServer, Server } from 'http';
+import { createServer as createHttpServer, Server } from 'http';
 import morgan from 'morgan';
 import passport from 'passport';
 import { Logger } from './commons/logger/logger';
@@ -24,6 +24,7 @@ import { authorizeApiReq } from './auth/handlers/authorize-api-req';
 import './auth/passport';
 import { createIoServer } from './socket/create-io-server';
 import { initSocketRooms } from './socket/socket-rooms';
+import { initPosthog } from './posthog/init-posthog';
 
 const logger = new Logger('meli.api:server');
 
@@ -50,8 +51,9 @@ export interface MeliServer {
   stop: () => void;
 }
 
-export async function server(): Promise<MeliServer> {
+export async function createServer(): Promise<MeliServer> {
   await AppDb.init();
+  await initPosthog();
   await migrate(AppDb.client, AppDb.db);
   setupDbIndexes().catch(err => logger.error('Could not setup indexes indexes', err));
   await configureCaddy();
@@ -89,7 +91,7 @@ export async function server(): Promise<MeliServer> {
   app.use(Sentry.Handlers.errorHandler());
   app.use(handleError);
 
-  const httpServer = createServer(app);
+  const httpServer = createHttpServer(app);
   createIoServer(httpServer);
 
   initSocketRooms();

@@ -5,7 +5,7 @@ import { spyOnIsAdminOrOwner } from '../../../../../tests/utils/spyon-isadminoro
 import { AUTHENTICATED_USER_ID, spyOnVerifyToken } from '../../../../../tests/utils/spyon-verifytoken';
 import * as _configureSiteInCaddy from '../../../../caddy/configuration';
 import * as _emitEvent from '../../../../events/emit-event';
-import { MeliServer } from '../../../../server';
+import { MeliServer } from '../../../../createServer';
 
 // jest.mock('../../../../env/env', () => ({ env: testEnv }));
 
@@ -27,7 +27,7 @@ describe('createSite', () => {
   it('should create a site', async () => {
     const teams = spyOnCollection('Teams', {
       countDocuments: jest.fn().mockReturnValue(Promise.resolve(1)),
-      findOne: jest.fn().mockReturnValue(Promise.resolve({orgId: 'organization-id'})),
+      findOne: jest.fn().mockReturnValue(Promise.resolve({ orgId: 'organization-id' })),
     });
     const members = spyOnCollection('Members', {
       countDocuments: jest.fn().mockReturnValue(Promise.resolve(1)),
@@ -43,7 +43,7 @@ describe('createSite', () => {
       .post('/api/v1/teams/team-id/sites')
       .set('Cookie', ['auth=testToken'])
       .send({
-        name: 'test-site'
+        name: 'test-site',
       });
 
 
@@ -79,19 +79,19 @@ describe('createSite', () => {
       .post('/api/v1/teams/team-id/sites')
       .set('Cookie', ['auth=testToken'])
       .send({
-        name: 'test-site'
+        name: 'test-site',
       });
 
 
     expect(response.status).toEqual(404);
-    expect(teams.countDocuments).toHaveBeenCalledWith({_id: 'team-id'}, expect.anything());
+    expect(teams.countDocuments).toHaveBeenCalledWith({ _id: 'team-id' }, expect.anything());
   });
 
 
   it('should check if the user can administrate the team', async () => {
     const teams = spyOnCollection('Teams', {
       countDocuments: jest.fn().mockReturnValue(Promise.resolve(1)),
-      findOne: jest.fn().mockReturnValue(Promise.resolve({orgId: 'organization-id'})),
+      findOne: jest.fn().mockReturnValue(Promise.resolve({ orgId: 'organization-id' })),
     });
     const isAdminOrOwner = spyOnIsAdminOrOwner(false);
 
@@ -100,7 +100,7 @@ describe('createSite', () => {
       .post('/api/v1/teams/team-id/sites')
       .set('Cookie', ['auth=testToken'])
       .send({
-        name: 'test-site'
+        name: 'test-site',
       });
 
 
@@ -112,7 +112,7 @@ describe('createSite', () => {
   it('should validate the site', async () => {
     const teams = spyOnCollection('Teams', {
       countDocuments: jest.fn().mockReturnValue(Promise.resolve(1)),
-      findOne: jest.fn().mockReturnValue(Promise.resolve({orgId: 'organization-id'})),
+      findOne: jest.fn().mockReturnValue(Promise.resolve({ orgId: 'organization-id' })),
     });
     const isAdminOrOwner = spyOnIsAdminOrOwner(true);
 
@@ -121,7 +121,7 @@ describe('createSite', () => {
       .post('/api/v1/teams/team-id/sites')
       .set('Cookie', ['auth=testToken'])
       .send({
-        name: 'invalid site name'
+        name: 'invalid site name',
       });
 
     expect(response.status).toEqual(400);

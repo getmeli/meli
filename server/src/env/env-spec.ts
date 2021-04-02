@@ -272,4 +272,7 @@ export const envSpec: EnvSpec<Env> = {
   MELI_GOOGLE_RECAPTCHA_SECRET_KEY: {
     schema: string().optional(),
   },
+  MELI_POSTHOG_ENABLED: {
+    schema: boolean().optional().default(false),
+  },
 };

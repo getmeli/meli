@@ -4,7 +4,7 @@ import { spyOnCollection } from '../../../../../tests/utils/spyon-collection';
 import { spyOnVerifyToken } from '../../../../../tests/utils/spyon-verifytoken';
 import * as _configureSiteBranchInCaddy from '../../../../caddy/configuration';
 import * as _emitEvent from '../../../../events/emit-event';
-import { MeliServer } from '../../../../server';
+import { MeliServer } from '../../../../createServer';
 import * as _linkBranchToRelease from '../../link-branch-to-release';
 import { linkBranchToRelease } from '../../link-branch-to-release';
 import { EventType } from '../../../../events/event-type';

@@ -73,6 +73,7 @@ export interface Env {
   MELI_MULTER_FORM_LIMITS: MulterLimitOptions;
   MELI_GOOGLE_RECAPTCHA_SITE_KEY: string;
   MELI_GOOGLE_RECAPTCHA_SECRET_KEY: string;
+  MELI_POSTHOG_ENABLED: boolean;
 }
 
 export const env: Env = parseEnv(envSpec);

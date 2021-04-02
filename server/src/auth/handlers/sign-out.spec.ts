@@ -1,5 +1,5 @@
 import request from 'supertest';
-import { MeliServer } from '../../server';
+import { MeliServer } from '../../createServer';
 import { spyOnVerifyToken } from '../../../tests/utils/spyon-verifytoken';
 import { testServer } from '../../../tests/test-server';
 

@@ -2,7 +2,7 @@ import { testServer } from '../../../../tests/test-server';
 import { spyOnCollection } from '../../../../tests/utils/spyon-collection';
 import { spyOnVerifyToken } from '../../../../tests/utils/spyon-verifytoken';
 import * as _emitEvent from '../../../events/emit-event';
-import { MeliServer } from '../../../server';
+import { MeliServer } from '../../../createServer';
 import { User } from '../../users/user';
 
 import request from 'supertest';
@@ -50,7 +50,7 @@ describe('createOrg', () => {
       .post('/api/v1/orgs')
       .set('Cookie', ['auth=testToken'])
       .send({
-        name: 'Test Organization'
+        name: 'Test Organization',
       });
 
 
@@ -75,7 +75,7 @@ describe('createOrg', () => {
       userId: 'authenticatedUserId',
       admin: true,
       name: 'Authenticated User',
-      email: 'authenticated@test.tst'
+      email: 'authenticated@test.tst',
     }));
 
     expect(teams.insertOne).toHaveBeenCalled();
@@ -93,7 +93,7 @@ describe('createOrg', () => {
       .post('/api/v1/orgs')
       .set('Cookie', ['auth=testToken'])
       .send({
-        name: 'Test Organization'
+        name: 'Test Organization',
       });
 
 

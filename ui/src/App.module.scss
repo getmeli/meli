@@ -30,3 +30,10 @@ $header-height: 70px;
   display: flex;
   flex-grow: 1;
 }
+
+.banner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+}

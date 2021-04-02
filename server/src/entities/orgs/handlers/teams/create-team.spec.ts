@@ -5,7 +5,7 @@ import { spyOnCollection } from '../../../../../tests/utils/spyon-collection';
 import { spyOnIsAdminOrOwner } from '../../../../../tests/utils/spyon-isadminorowner';
 import { AUTHENTICATED_USER_ID, spyOnVerifyToken } from '../../../../../tests/utils/spyon-verifytoken';
 import * as _emitEvent from '../../../../events/emit-event';
-import { MeliServer } from '../../../../server';
+import { MeliServer } from '../../../../createServer';
 
 // jest.mock('../../../../env/env', () => ({ env: testEnv }));
 

@@ -16,7 +16,8 @@
     "build:ui": "npm run build --prefix ui",
     "test": "npm run test:ui",
     "test:ui": "npm run test --prefix server",
-    "lint": "npm run lint --prefix server"
+    "lint": "npm run lint --prefix server",
+    "lint:fix": "npm run lint:fix --prefix server"
   },
   "keywords": [
     "meli",

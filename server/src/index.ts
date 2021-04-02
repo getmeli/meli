@@ -11,7 +11,7 @@ require('source-map-support/register');
 require('dotenv/config');
 require('./commons/force-chalk-colors');
 
-const { server } = require('./server');
+const { createServer } = require('./createServer');
 
 // eslint-disable-next-line no-console
-server().catch(console.error);
+createServer().catch(console.error);

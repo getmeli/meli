@@ -23,6 +23,7 @@ WORKDIR /app/server
 
 ENV MELI_URL_INTERNAL=http://localhost:3001
 ENV MELI_UI_DIR=/app/ui
+ENV MELI_POSTHOG_ENABLED="true"
 
 # Caddy defaults, copied from official Dockerfile
 # https://github.com/caddyserver/caddy-docker/blob/2093c4a571bfe356447008d229195eb7063232b2/2.3/alpine/Dockerfile
