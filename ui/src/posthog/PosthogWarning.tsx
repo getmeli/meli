@@ -22,7 +22,9 @@ export function PosthogWarning({ className }: {
           <img src={meliLogo} alt="meli" className={styles.meliLogo}/>
         </div>
         <div className="mt-4 text-center">
-          We've added <ExternalLink href="https://github.com/PostHog/posthog">PostHog</ExternalLink> to Meli. It helps us know which versions are being used in production and how many active installations of Meli are being deployed across the world. Please review <ExternalLink href="https://github.com/getmeli/meli/issues/220">this thread</ExternalLink> for more info.
+          We've added <ExternalLink href="https://github.com/PostHog/posthog">PostHog</ExternalLink> to Meli.
+          It helps us know which versions are being used in production and how many active installations are being deployed across the world.
+          You may opt-out of this feature. Please review <ExternalLink href="https://github.com/getmeli/meli/issues/220">this thread</ExternalLink> for more info.
         </div>
         <div className="mt-4 text-center">
           <button type="button" className="btn btn-success" onClick={() => setShow(false)}>
