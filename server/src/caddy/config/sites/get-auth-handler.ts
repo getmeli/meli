@@ -1,8 +1,9 @@
 import { scryptOptions } from '../../../entities/sites/hash-password';
 import { base64Encode } from '../../../commons/utils/base64';
 import { Password } from '../../../entities/sites/password';
+import Authentication = Caddy.Http.Route.Handlers.Authentication;
 
-export function getAuthHandler(password: Password) {
+export function getAuthHandler(password: Password): Authentication {
   return {
     // https://caddyserver.com/docs/json/apps/http/servers/routes/handle/authentication/
     handler: 'authentication',
@@ -17,6 +18,7 @@ export function getAuthHandler(password: Password) {
           p: scryptOptions.p,
           key_length: scryptOptions.keyLength,
         },
+        hash_cache: {},
         accounts: [{
           username: 'user',
           password: Buffer.from(password.hash, 'hex').toString('base64'),
