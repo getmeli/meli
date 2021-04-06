@@ -1,3 +1,20 @@
+# [1.0.0-beta.22](https://github.com/getmeli/meli/compare/v1.0.0-beta.21...v1.0.0-beta.22) (2021-04-06)
+
+
+### Bug Fixes
+
+* site name update issues ([b1126ac](https://github.com/getmeli/meli/commit/b1126aca456997d72ec85d6dcde41fb68e75074a))
+
+
+### Features
+
+* add posthog (closes [#220](https://github.com/getmeli/meli/issues/220)) ([#221](https://github.com/getmeli/meli/issues/221)) ([5995fbb](https://github.com/getmeli/meli/commit/5995fbb94ae8a5f1116c7825ef1bfa35d0d7b10b))
+* enable hash cache for password authentication ([#222](https://github.com/getmeli/meli/issues/222)) ([517f1b1](https://github.com/getmeli/meli/commit/517f1b16235fe3b11dc45fad9c833bba92d925d6))
+* hide ssl config when ssl auto disabled (closes [#210](https://github.com/getmeli/meli/issues/210)) ([772eee9](https://github.com/getmeli/meli/commit/772eee9691b2a28c5ea981ec55637f803801446a))
+* merge ui and server repos (closes [#203](https://github.com/getmeli/meli/issues/203)) ([#214](https://github.com/getmeli/meli/issues/214)) ([5dc005e](https://github.com/getmeli/meli/commit/5dc005e5955cf75889f921786281fc470eb26aed))
+* split mongo env vars ([#217](https://github.com/getmeli/meli/issues/217)) ([236401c](https://github.com/getmeli/meli/commit/236401c2bf55a37556500bed30e78ec87466cff5))
+* use mongo en in k8s ([#219](https://github.com/getmeli/meli/issues/219)) ([69c8d6b](https://github.com/getmeli/meli/commit/69c8d6bcc24398827d3bbaef9b9fdf7f03c12b40))
+
 # [1.0.0-beta.21](https://github.com/getmeli/meli/compare/v1.0.0-beta.20...v1.0.0-beta.21) (2021-03-23)
 
 

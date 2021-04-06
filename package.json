@@ -1,6 +1,6 @@
 {
   "name": "meli",
-  "version": "1.0.0-beta.21",
+  "version": "1.0.0-beta.22",
   "description": "Authentication and authorization service. Never write auth again.",
   "repository": {
     "type": "git",
