@@ -55,11 +55,11 @@ export async function generateFullConfigOld(): Promise<Caddy.Root> {
         automation: {
           policies: [
             ...(!env.MELI_ACME_SERVER ? [] : [{
-              issuer: {
+              issuers: [{
                 module: 'acme' as const,
                 ca: env.MELI_ACME_SERVER,
                 trusted_roots_pem_files: env.MELI_ACME_CA_PATH ? [env.MELI_ACME_CA_PATH] : undefined,
-              },
+              }],
               on_demand: true,
             }]),
           ],
