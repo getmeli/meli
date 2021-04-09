@@ -48,7 +48,11 @@ declare namespace Caddy {
       interface Policy {
         '@id'?: string;
         subjects?: string[];
+        /**
+         * @deprecated Use issuers instead
+         */
         issuer?: Policy.Issuer;
+        issuers?: Policy.Issuer[];
         must_staple?: number;
         renewal_window_ratio?: number;
         key_type?: string;
