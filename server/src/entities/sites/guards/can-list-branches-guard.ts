@@ -8,7 +8,7 @@ import { canAdminSite } from './can-admin-site';
 import { getUser } from '../../../auth/utils/get-user';
 import { isSiteTokenValid } from './is-site-token-valid';
 
-export const canUploadReleaseGuard = [
+export const canListBranchesGuard = [
   params(object({
     siteId: string().required(),
   })),
@@ -27,6 +27,6 @@ export const canUploadReleaseGuard = [
       return next();
     }
 
-    next(new ForbiddenError('Cannot upload release'));
+    next(new ForbiddenError('Cannot list branches'));
   }),
 ];

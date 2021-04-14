@@ -1,3 +1,7 @@
+/* eslint-disable */
+
+import { ApiToken } from './entities/api/api-token';
+
 export interface BuildInfo {
   version: string;
   buildDate: Date;
@@ -11,3 +15,11 @@ declare global {
 }
 
 declare module '*.hbs';
+
+declare global {
+  namespace Express {
+    interface Request {
+      apiToken?: ApiToken;
+    }
+  }
+}

@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { object, string } from 'joi';
+import { object } from 'joi';
 import { wrapAsyncMiddleware } from '../../../../commons/utils/wrap-async-middleware';
 import { Sites } from '../../site';
 import { params } from '../../../../commons/express-joi/params';
@@ -7,16 +7,16 @@ import { emitEvent } from '../../../../events/emit-event';
 import { getBranchDir } from '../../get-site-dir';
 import { $id } from '../../../../utils/id';
 import { promises } from 'fs';
-import { canAdminSiteGuard } from '../../guards/can-admin-site-guard';
 import { EventType } from '../../../../events/event-type';
 import { branchExistsGuard } from '../../guards/branch-exists-guard';
 import { removeSiteBranchFromCaddy } from '../../../../caddy/configuration';
 import { Logger } from '../../../../commons/logger/logger';
+import { canDeleteBranchGuard } from '../../guards/can-delete-branch-guard';
 
 const validators = [
   params(object({
     siteId: $id,
-    branchId: string().required(),
+    branchId: $id,
   })),
 ];
 
@@ -78,7 +78,7 @@ async function handler(req: Request, res: Response): Promise<void> {
 
 export const deleteBranch = [
   ...branchExistsGuard,
-  ...canAdminSiteGuard,
+  ...canDeleteBranchGuard,
   ...validators,
   wrapAsyncMiddleware(handler),
 ];

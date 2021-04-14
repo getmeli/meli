@@ -6,7 +6,7 @@ import { Sites } from '../../site';
 import { siteExistsGuard } from '../../guards/site-exists-guard';
 import { serializeBranch } from '../../serialize-branch';
 import { $id } from '../../../../utils/id';
-import { canAdminSiteGuard } from '../../guards/can-admin-site-guard';
+import { canListBranchesGuard } from '../../guards/can-list-branches-guard';
 
 const validators = [
   params(object({
@@ -26,7 +26,7 @@ async function handler(req: Request, res: Response): Promise<void> {
 
 export const listBranches = [
   ...siteExistsGuard,
-  ...canAdminSiteGuard,
+  ...canListBranchesGuard,
   ...validators,
   wrapAsyncMiddleware(handler),
 ];

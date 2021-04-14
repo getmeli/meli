@@ -16,9 +16,7 @@ export interface ApiEndpoint {
 export const apiEndpoints: ApiEndpoint[] = [];
 
 export function apiEndpoint(endpoint: ApiEndpoint) {
-  const {
-    router, method, path, handler, auth, apiScope,
-  } = endpoint;
+  const { router, method, path, handler, auth, apiScope } = endpoint;
 
   // register endpoint
   router[method](path, [

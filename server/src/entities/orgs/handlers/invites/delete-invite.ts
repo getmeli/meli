@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import { wrapAsyncMiddleware } from '../../../../commons/utils/wrap-async-middleware';
-import { authGuard } from '../../../../auth/guards/auth-guard';
 import { object, string } from 'joi';
 import { $id } from '../../../../utils/id';
 import { emitEvent } from '../../../../events/emit-event';
@@ -45,7 +44,6 @@ async function handler(req: Request, res: Response): Promise<void> {
 }
 
 export const deleteInvite = [
-  authGuard,
   ...inviteExistsGuard,
   ...isAdminOrOwnerGuard,
   ...validators,

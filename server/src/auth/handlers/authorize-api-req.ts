@@ -1,6 +1,4 @@
-import {
-  NextFunction, Request, Response,
-} from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { Logger } from '../../commons/logger/logger';
 import { wrapAsyncMiddleware } from '../../commons/utils/wrap-async-middleware';
 import { Users } from '../../entities/users/user';
@@ -64,7 +62,7 @@ async function handler(req: Request, res: Response, next: NextFunction) {
     });
     if (user) {
       req.user = user;
-      (req as any).apiToken = apiToken;
+      req.apiToken = apiToken;
     }
   } else {
     logger.debug('api token matched nothing in db');

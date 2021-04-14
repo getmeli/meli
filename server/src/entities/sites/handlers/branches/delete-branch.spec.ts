@@ -7,17 +7,18 @@ import { removeSiteBranchFromCaddy } from '../../../../caddy/configuration';
 import * as _emitEvent from '../../../../events/emit-event';
 import { MeliServer } from '../../../../createServer';
 import { EventType } from '../../../../events/event-type';
-import { canAdminSiteGuard } from '../../guards/can-admin-site-guard';
 import { branchExistsGuard } from '../../guards/branch-exists-guard';
 import { promises } from 'fs';
+import { Site } from '../../site';
+import { canDeleteBranchGuard } from '../../guards/can-delete-branch-guard';
 
 jest.mock('../../guards/branch-exists-guard', () => ({
   branchExistsGuard: [
     jest.fn().mockImplementation((req, res, next) => next()),
   ],
 }));
-jest.mock('../../guards/can-admin-site-guard', () => ({
-  canAdminSiteGuard: [
+jest.mock('../../guards/can-delete-branch-guard', () => ({
+  canDeleteBranchGuard: [
     jest.fn().mockImplementation((req, res, next) => next()),
   ],
 }));
@@ -26,9 +27,15 @@ describe('addBranch', () => {
 
   let meliServer: MeliServer;
 
+  let removeSiteBranchFromCaddy: jest.SpyInstance;
+  let emitEvent: jest.SpyInstance;
+
   beforeEach(async () => {
     meliServer = await testServer();
     spyOnVerifyToken();
+
+    removeSiteBranchFromCaddy = jest.spyOn(_removeSiteBranchFromCaddy, 'removeSiteBranchFromCaddy').mockReturnValue(Promise.resolve());
+    emitEvent = jest.spyOn(_emitEvent, 'emitEvent').mockImplementation();
   });
 
   afterEach(() => {
@@ -48,7 +55,6 @@ describe('addBranch', () => {
       updateOne: jest.fn(),
     });
     const emitEvent = jest.spyOn(_emitEvent, 'emitEvent').mockImplementation();
-    jest.spyOn(_removeSiteBranchFromCaddy, 'removeSiteBranchFromCaddy').mockReturnValue(Promise.resolve());
 
     const response = await request(meliServer.app)
       .delete('/api/v1/sites/siteId/branches/branchId')
@@ -57,7 +63,7 @@ describe('addBranch', () => {
 
     expect(response.status).toEqual(204);
     expect(branchExistsGuard[0]).toHaveBeenCalled();
-    expect(canAdminSiteGuard[0]).toHaveBeenCalled();
+    expect(canDeleteBranchGuard[0]).toHaveBeenCalled();
     expect(rmdir).toHaveBeenCalledWith('/sites/siteId/branches/branchId', { "recursive": true });
     expect((Sites.updateOne as any).mock.calls).toEqual([
       [{
@@ -82,12 +88,25 @@ describe('addBranch', () => {
     expect(emitEvent).toHaveBeenCalledWith(EventType.site_branch_deleted, expect.objectContaining({ site, branch }));
   });
 
-  it('should throw error when use not authenticated', async () => {
+  it('should allow deleting a branch with a site token', async () => {
+    const site: Partial<Site> = {
+      _id: 'siteId',
+      branches: [{ _id: 'branchId' } as any],
+      tokens: [{ value: 'token' } as any],
+    };
+    spyOnCollection('Sites', {
+      findOne: jest.fn().mockReturnValue(Promise.resolve(site)),
+      updateOne: jest.fn(),
+      countDocuments: jest.fn(),
+    });
+
     const response = await request(meliServer.app)
       .delete('/api/v1/sites/siteId/branches/branchId')
+      .set('x-meli-token', 'token')
       .send();
 
-    expect(response.status).toEqual(401);
+    expect(response.status).toEqual(204);
+    expect(emitEvent).toHaveBeenCalled();
   });
 
 });

@@ -196,7 +196,6 @@ apiEndpoint({
   method: 'get',
   path: '/api/v1/sites/:siteId/branches',
   handler: listBranches,
-  auth: true,
   apiScope: ApiScope.site_branch_list,
   router,
 });
@@ -223,7 +222,6 @@ apiEndpoint({
   method: 'delete',
   path: '/api/v1/sites/:siteId/branches/:branchId',
   handler: deleteBranch,
-  auth: true,
   apiScope: ApiScope.site_branch_delete,
   router,
 });

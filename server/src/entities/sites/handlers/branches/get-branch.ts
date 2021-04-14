@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import { wrapAsyncMiddleware } from '../../../../commons/utils/wrap-async-middleware';
-import { authGuard } from '../../../../auth/guards/auth-guard';
 import { branchExistsGuard } from '../../guards/branch-exists-guard';
 import { canAdminSiteGuard } from '../../guards/can-admin-site-guard';
 import { Sites } from '../../site';
@@ -21,7 +20,6 @@ async function handler(req: Request, res: Response): Promise<void> {
 }
 
 export const getBranch = [
-  authGuard,
   ...canAdminSiteGuard,
   ...branchExistsGuard,
   ...validators,
