@@ -1,10 +1,10 @@
 {
   "name": "meli",
   "version": "1.0.0-beta.22",
-  "description": "Authentication and authorization service. Never write auth again.",
+  "description": "Open source platform for deploying static sites and frontend applications.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/id6/id6"
+    "url": "https://github.com/getmeli/meli"
   },
   "scripts": {
     "postinstall": "npm i --prefix server && npm i --prefix ui",
