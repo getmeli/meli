@@ -6,6 +6,9 @@
     "type": "git",
     "url": "https://github.com/getmeli/meli"
   },
+  "bugs": {
+    "url": "https://github.com/getmeli/meli/issues"
+  },
   "scripts": {
     "postinstall": "npm i --prefix server && npm i --prefix ui",
     "start": "npm-run-all --parallel start:server start:ui",
