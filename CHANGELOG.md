@@ -1,3 +1,19 @@
+# [1.0.0-beta.23](https://github.com/getmeli/meli/compare/v1.0.0-beta.22...v1.0.0-beta.23) (2021-05-21)
+
+
+### Bug Fixes
+
+* cannot upload or delete logo (closes [#230](https://github.com/getmeli/meli/issues/230)) ([970e1f4](https://github.com/getmeli/meli/commit/970e1f4d5fda64545a95b36028f11c35be90bf7a))
+* incorrect description and missing info in package.json ([#227](https://github.com/getmeli/meli/issues/227)) ([290de80](https://github.com/getmeli/meli/commit/290de80825565bd26cd71d7977641456c9c8309e))
+* wrong site / branch url in ui ([d33f03f](https://github.com/getmeli/meli/commit/d33f03fea45970bf0852ff84339ff5426cdb9660))
+
+
+### Features
+
+* allow deleting branches with site token ([b107ed7](https://github.com/getmeli/meli/commit/b107ed715e6240b4c88ea35cb299fa00f2741be3))
+* update DomainForm with private key help text ([#231](https://github.com/getmeli/meli/issues/231)) ([da4562d](https://github.com/getmeli/meli/commit/da4562d8dbf94f156ae974b5f2ce9d46e15f4c40))
+* upload release with api token ([#216](https://github.com/getmeli/meli/issues/216)) ([#225](https://github.com/getmeli/meli/issues/225)) ([1d5ceb6](https://github.com/getmeli/meli/commit/1d5ceb6f891497bb6e373539dd40f9601dbef0d4))
+
 # [1.0.0-beta.22](https://github.com/getmeli/meli/compare/v1.0.0-beta.21...v1.0.0-beta.22) (2021-04-06)
 
 
