@@ -53,6 +53,7 @@ export function ManualConfig({ input, item }: { input: string; item: SiteDomain 
             defaultValue={(item.sslConfiguration as ManualSslConfiguration)?.privateKey}
             className="form-control"
           />
+          <div className="form-text">Paste your private key including the line beginning with -----BEGIN RSA PRIVATE KEY----- everything between and ending with -----END RSA PRIVATE KEY----- making sure they match those words exactly.</div>
           <InputError error={errors} path={sslPrivateKey}/>
         </div>
       </div>
