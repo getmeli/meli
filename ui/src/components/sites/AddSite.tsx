@@ -12,7 +12,7 @@ import { Site } from './site';
 import { useMountedState } from '../../commons/hooks/use-mounted-state';
 import { IsAdmin } from '../auth/IsAdmin';
 
-function AddSiteModal({ teamId, closeModal }: { teamId; closeModal }) {
+function AddSiteModal({ projectId, closeModal }: { projectId; closeModal }) {
   const methods = useForm({
     mode: 'onChange',
   });
@@ -20,7 +20,7 @@ function AddSiteModal({ teamId, closeModal }: { teamId; closeModal }) {
   const { handleSubmit, formState: { isDirty } } = methods;
 
   const onChange = formData => axios
-    .post<Site>(`/api/v1/teams/${teamId}/sites`, formData)
+    .post<Site>(`/api/v1/projects/${projectId}/sites`, formData)
     .then(({ data }) => {
       routerHistory.push(`/sites/${data._id}`);
     })
@@ -64,9 +64,9 @@ function AddSiteModal({ teamId, closeModal }: { teamId; closeModal }) {
 }
 
 export function AddSite({
-  teamId, children, className, tooltip = true,
+  projectId, children, className, tooltip = true,
 }: {
-  teamId: string;
+  projectId: string;
   children;
   className?;
   tooltip?: boolean;
@@ -93,7 +93,7 @@ export function AddSite({
         </Tooltip>
       )}
       <CardModal isOpen={isOpen} closeModal={closeModal} title="Add site">
-        <AddSiteModal closeModal={closeModal} teamId={teamId}/>
+        <AddSiteModal closeModal={closeModal} projectId={projectId}/>
       </CardModal>
     </>
   );

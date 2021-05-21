@@ -4,7 +4,7 @@ import { Org, Orgs } from '../org';
 import randomColor from 'randomcolor';
 import { emitEvent } from '../../../events/emit-event';
 import { Member, Members } from '../../members/member';
-import { Team, Teams } from '../../teams/team';
+import { Project, Projects } from '../../projects/project';
 import { getUser } from '../../../auth/utils/get-user';
 import { body } from '../../../commons/express-joi/body';
 import { object, string } from 'joi';
@@ -54,23 +54,23 @@ async function handler(req: Request, res: Response): Promise<void> {
     member,
   });
 
-  // create first team
-  const team: Team = {
+  // create first project
+  const project: Project = {
     _id: uuid(),
     orgId: org._id,
     createdAt: new Date(),
     updatedAt: new Date(),
-    name: 'Team 1',
+    name: 'Project 1',
     color: randomColor(),
     members: [
       member._id,
     ],
     hooks: [],
   };
-  await Teams().insertOne(team);
-  emitEvent(EventType.team_added, {
+  await Projects().insertOne(project);
+  emitEvent(EventType.project_added, {
     org,
-    team,
+    project,
   });
 
   res.json(await serializeUserOrg(org, member));

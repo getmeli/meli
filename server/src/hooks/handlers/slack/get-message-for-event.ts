@@ -26,157 +26,157 @@ export const getMessageForEvent: { [eventType in keyof EventData.EventData]: (da
   ),
   [EventType.org_created]: ({ user, org }: EventData.UserOrgCreatedEventData) => (
     getSlackMessage(
-      'User org created',
+      'Organization created',
       `Organization **${org.name}** was created for user **${user.name}**.`,
     )
   ),
   [EventType.org_updated]: ({ org }: EventData.OrgUpdatedEventData) => (
     getSlackMessage(
-      'Org updated',
+      'Organization updated',
       `Organization **${org.name}** was updated.`,
     )
   ),
   [EventType.org_logo_set]: ({ org }: EventData.OrgEventData) => (
     getSlackMessage(
-      'Org logo set',
+      'Organization logo set',
       `The logo of organization **${org.name}** was set.`,
     )
   ),
   [EventType.org_logo_removed]: ({ org }: EventData.OrgEventData) => (
     getSlackMessage(
-      'Org logo removed',
+      'Organization logo removed',
       `The logo of organization **${org.name}** was removed.`,
     )
   ),
   [EventType.org_invite_added]: ({ org, invite }: EventData.OrgInviteAddedEventData) => (
     getSlackMessage(
-      'Org invite added',
+      'Organization invite added',
       `**${invite.email}** was invited to join organization **${org.name}**.`,
     )
   ),
   [EventType.org_invite_deleted]: ({ org, invite }: EventData.OrgInviteDeletedEventData) => (
     getSlackMessage(
-      'Org invite deleted',
+      'Organization invite deleted',
       `The invitation of **${invite.email}** to join organization **${org.name}** was deleted.`,
     )
   ),
   [EventType.org_invite_accepted]: ({ org, invite }: EventData.OrgInviteAcceptedEventData) => (
     getSlackMessage(
-      'Org invite accepted',
+      'Organization invite accepted',
       `**${invite.email}** accepted to join organization **${org.name}**.`,
     )
   ),
   [EventType.org_invite_declined]: ({ org, invite }: EventData.OrgInviteDeclinedEventData) => (
     getSlackMessage(
-      'Org invite declined',
-      `**${invite.email}** declied to join organization **${org.name}**.`,
+      'Organization invite declined',
+      `**${invite.email}** declined to join organization **${org.name}**.`,
     )
   ),
   [EventType.org_member_joined]: ({ org, member }: EventData.OrgMemberJoinedEventData) => (
     getSlackMessage(
-      'Org member joined',
+      'Organization member joined',
       `**${member.name}** joined organization **${org.name}**.`,
     )
   ),
   [EventType.org_member_updated]: ({ org, member }: EventData.OrgMemberUpdatedEventData) => (
     getSlackMessage(
-      'Org member updated',
+      'Organization member updated',
       `**${member.name}** from organization **${org.name}** was updated.`,
     )
   ),
   [EventType.org_member_deleted]: ({ org, member }: EventData.OrgMemberDeletedEventData) => (
     getSlackMessage(
-      'Org member deleted',
+      'Organization member deleted',
       `**${member.name}** left organization **${org.name}**.`,
     )
   ),
   [EventType.org_hook_created]: ({ org, hook }: EventData.OrgHookCreatedEventData) => (
     getSlackMessage(
-      'Org hook created',
+      'Organization hook created',
       `Hook **${hook.name}** of type **${hook.type}** was created for organization **${org.name}**.`,
     )
   ),
   [EventType.org_hook_updated]: ({ org, hook }: EventData.OrgHookUpdatedEventData) => (
     getSlackMessage(
-      'Org hook updated',
+      'Organization hook updated',
       `Hook **${hook.name}** of type **${hook.type}** from organization **${org.name}** was updated.`,
     )
   ),
   [EventType.org_hook_deleted]: ({ org, hook }: EventData.OrgHookDeletedEventData) => (
     getSlackMessage(
-      'Org hook deleted',
+      'Organization hook deleted',
       `Hook **${hook.name}** of type **${hook.type}** from organization **${org.name}** was deleted.`,
     )
   ),
-  [EventType.team_added]: ({ org, team }: EventData.OrgTeamAddedEventData) => (
+  [EventType.project_added]: ({ org, project }: EventData.OrgProjectAddedEventData) => (
     getSlackMessage(
-      'Org team added',
-      `Team **${team.name}** was added to organization **${org.name}**.`,
+      'Project added',
+      `Project **${project.name}** was added to organization **${org.name}**.`,
     )
   ),
-  [EventType.team_updated]: ({ team }: EventData.TeamUpdatedEventData) => (
+  [EventType.project_updated]: ({ project }: EventData.ProjectUpdatedEventData) => (
     getSlackMessage(
-      'Team updated',
-      `Team **${team.name}** was updated.`,
+      'Project updated',
+      `Project **${project.name}** was updated.`,
     )
   ),
-  [EventType.team_deleted]: ({ team }: EventData.TeamDeletedEventData) => (
+  [EventType.project_deleted]: ({ project }: EventData.ProjectDeletedEventData) => (
     getSlackMessage(
-      'Team deleted',
-      `Team **${team.name}** was deleted.`,
+      'Project deleted',
+      `Project **${project.name}** was deleted.`,
     )
   ),
-  [EventType.team_logo_set]: ({ team }: EventData.TeamEventData) => (
+  [EventType.project_logo_set]: ({ project }: EventData.ProjectEventData) => (
     getSlackMessage(
-      'Team logo set',
-      `The logo of team **${team.name}** was set.`,
+      'Project logo set',
+      `The logo of project **${project.name}** was set.`,
     )
   ),
-  [EventType.team_logo_removed]: ({ team }: EventData.TeamEventData) => (
+  [EventType.project_logo_removed]: ({ project }: EventData.ProjectEventData) => (
     getSlackMessage(
-      'Team logo removed',
-      `The logo of team **${team.name}** was removed.`,
+      'Project logo removed',
+      `The logo of project **${project.name}** was removed.`,
     )
   ),
-  [EventType.team_member_added]: ({ team, member }: EventData.TeamMemberAddedEventData) => (
+  [EventType.project_member_added]: ({ project, member }: EventData.ProjectMemberAddedEventData) => (
     getSlackMessage(
-      'Team member added',
-      `**${member.name}** was added to team **${team.name}**.`,
+      'Project member added',
+      `**${member.name}** was added to project **${project.name}**.`,
     )
   ),
-  [EventType.team_member_deleted]: ({ team, member }: EventData.TeamMemberDeletedEventData) => (
+  [EventType.project_member_deleted]: ({ project, member }: EventData.ProjectMemberDeletedEventData) => (
     getSlackMessage(
-      'Team member deleted',
-      `**${member.name}** was removed from team **${team.name}**.`,
+      'Project member deleted',
+      `**${member.name}** was removed from project **${project.name}**.`,
     )
   ),
-  [EventType.team_hook_created]: ({ team, hook }: EventData.TeamHookCreatedEventData) => (
+  [EventType.project_hook_created]: ({ project, hook }: EventData.ProjectHookCreatedEventData) => (
     getSlackMessage(
-      'Team hook created',
-      `Hook **${hook.name}** of type **${hook.type}** was added to team **${team.name}**.`,
+      'Project hook created',
+      `Hook **${hook.name}** of type **${hook.type}** was added to project **${project.name}**.`,
     )
   ),
-  [EventType.team_hook_updated]: ({ team, hook }: EventData.TeamHookUpdatedEventData) => (
+  [EventType.project_hook_updated]: ({ project, hook }: EventData.ProjectHookUpdatedEventData) => (
     getSlackMessage(
-      'Team hook updated',
-      `Hook **${hook.name}** of type **${hook.type}** of team **${team.name}** was updated.`,
+      'Project hook updated',
+      `Hook **${hook.name}** of type **${hook.type}** of project **${project.name}** was updated.`,
     )
   ),
-  [EventType.team_hook_deleted]: ({ team, hook }: EventData.TeamHookDeletedEventData) => (
+  [EventType.project_hook_deleted]: ({ project, hook }: EventData.ProjectHookDeletedEventData) => (
     getSlackMessage(
-      'Team hook deleted',
-      `Hook **${hook.name}** of type **${hook.type}** was removed from team **${team.name}**.`,
+      'Project hook deleted',
+      `Hook **${hook.name}** of type **${hook.type}** was removed from project **${project.name}**.`,
     )
   ),
-  [EventType.site_added]: ({ team, site }: EventData.TeamSiteAddedEventData) => (
+  [EventType.site_added]: ({ project, site }: EventData.ProjectSiteAddedEventData) => (
     getSlackMessage(
-      'Team site added',
-      `Site **${site.name}** was added to team **${team.name}**. View it live [here](${getSiteUrl(site)}). `,
+      'Site added',
+      `Site **${site.name}** was added to project **${project.name}**. View it live [here](${getSiteUrl(site)}). `,
     )
   ),
   [EventType.site_updated]: ({ site }: EventData.SiteUpdatedEventData) => (
     getSlackMessage(
-      'Team site added',
+      'Site updated',
       `Site **${site.name}** was updated. View it live [here](${getSiteUrl(site)}). `,
     )
   ),

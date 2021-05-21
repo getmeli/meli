@@ -1,24 +1,24 @@
-import { EventData, OrgEventData, SiteEventData, TeamEventData, UserEventData } from '../events/event-data';
+import { EventData, OrgEventData, SiteEventData, ProjectEventData, UserEventData } from '../events/event-data';
 import { EventType } from '../events/event-type';
 import { Org, Orgs } from '../entities/orgs/org';
-import { Team, Teams } from '../entities/teams/team';
+import { Project, Projects } from '../entities/projects/project';
 import { User, Users } from '../entities/users/user';
 import { Site } from '../entities/sites/site';
 
 /*
  * org event:
  *    org hooks => org + data
- * team event:
- *    org hook => org + team + data
- *    team hook => org + team + data
+ * project event:
+ *    org hook => org + project + data
+ *    project hook => org + project + data
  * site event:
- *    org hook => org + team + site + data
- *    team hook => org + team + site + data
- *    site hook => org + team + site + data
+ *    org hook => org + project + site + data
+ *    project hook => org + project + site + data
+ *    site hook => org + project + site + data
  */
 export async function getHooksForEvent<T extends keyof EventData>(eventType: T, data: EventData[T]): Promise<string[]> {
   let org: Org;
-  let team: Team;
+  let project: Project;
   let site: Site;
   let owner: User;
   switch (eventType) {
@@ -38,7 +38,7 @@ export async function getHooksForEvent<T extends keyof EventData>(eventType: T, 
     case EventType.org_hook_created:
     case EventType.org_hook_updated:
     case EventType.org_hook_deleted:
-    case EventType.team_added:
+    case EventType.project_added:
       org = (data as OrgEventData).org;
       owner = await Users().findOne({
         _id: org.ownerId,
@@ -47,23 +47,23 @@ export async function getHooksForEvent<T extends keyof EventData>(eventType: T, 
         ...(org.hooks || []),
         ...(owner.hooks || []),
       ];
-    case EventType.team_updated:
-    case EventType.team_deleted:
-    case EventType.team_member_added:
-    case EventType.team_member_deleted:
-    case EventType.team_hook_created:
-    case EventType.team_hook_updated:
-    case EventType.team_hook_deleted:
+    case EventType.project_updated:
+    case EventType.project_deleted:
+    case EventType.project_member_added:
+    case EventType.project_member_deleted:
+    case EventType.project_hook_created:
+    case EventType.project_hook_updated:
+    case EventType.project_hook_deleted:
     case EventType.site_added:
-      team = (data as TeamEventData).team;
+      project = (data as ProjectEventData).project;
       org = await Orgs().findOne({
-        _id: team.orgId,
+        _id: project.orgId,
       });
       owner = await Users().findOne({
         _id: org.ownerId,
       });
       return [
-        ...(team.hooks || []),
+        ...(project.hooks || []),
         ...(org.hooks || []),
         ...(owner.hooks || []),
       ];
@@ -82,18 +82,18 @@ export async function getHooksForEvent<T extends keyof EventData>(eventType: T, 
     case EventType.site_branch_deleted:
     case EventType.site_branch_release_set:
       site = (data as SiteEventData).site;
-      team = await Teams().findOne({
-        _id: site.teamId,
+      project = await Projects().findOne({
+        _id: site.projectId,
       });
       org = await Orgs().findOne({
-        _id: team.orgId,
+        _id: project.orgId,
       });
       owner = await Users().findOne({
         _id: org.ownerId,
       });
       return [
         ...(site.hooks || []),
-        ...(team.hooks || []),
+        ...(project.hooks || []),
         ...(org.hooks || []),
         ...(owner.hooks || []),
       ];

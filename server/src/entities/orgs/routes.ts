@@ -2,8 +2,8 @@ import { Router } from 'express';
 import { updateOrg } from './handlers/update-org';
 import { listOrgs } from './handlers/list-orgs';
 import { listMembers } from './handlers/members/list-members';
-import { listTeams } from './handlers/teams/list-teams';
-import { createTeam } from './handlers/teams/create-team';
+import { listProjects } from './handlers/projects/list-projects';
+import { createProject } from './handlers/projects/create-project';
 import { getOrg } from './handlers/get-org';
 import { getCurrentOrgMember } from './handlers/members/get-current-org-member';
 import { listInvites } from './handlers/invites/list-invites';
@@ -136,23 +136,23 @@ apiEndpoint({
   router,
 });
 
-// teams
+// projects
 apiEndpoint({
-  name: 'list teams',
+  name: 'list projects',
   method: 'get',
-  path: '/api/v1/orgs/:orgId/teams',
-  handler: listTeams,
+  path: '/api/v1/orgs/:orgId/projects',
+  handler: listProjects,
   auth: true,
-  apiScope: ApiScope.team_list,
+  apiScope: ApiScope.project_list,
   router,
 });
 apiEndpoint({
-  name: 'create team',
+  name: 'create project',
   method: 'post',
-  path: '/api/v1/orgs/:orgId/teams',
-  handler: createTeam,
+  path: '/api/v1/orgs/:orgId/projects',
+  handler: createProject,
   auth: true,
-  apiScope: ApiScope.team_create,
+  apiScope: ApiScope.project_create,
   router,
 });
 

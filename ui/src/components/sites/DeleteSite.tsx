@@ -7,10 +7,10 @@ import { CardModal } from '../../commons/components/modals/CardModal';
 import { useMountedState } from '../../commons/hooks/use-mounted-state';
 
 export function DeleteSite({
-  id, teamId, className, children,
+  id, projectId, className, children,
 }: {
   id: string;
-  teamId: string;
+  projectId: string;
   className?: string;
   children: any;
 }) {
@@ -23,7 +23,7 @@ export function DeleteSite({
       .delete(`/api/v1/sites/${id}`)
       .then(() => {
         setIsOpen(false);
-        routerHistory.push(`/teams/${teamId}/sites`);
+        routerHistory.push(`/projects/${projectId}/sites`);
       })
       .catch(err => {
         toast.error(`Could not delete site: ${err}`);

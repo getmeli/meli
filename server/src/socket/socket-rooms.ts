@@ -3,7 +3,7 @@ import { Logger } from '../commons/logger/logger';
 import { User } from '../entities/users/user';
 import { canAdminRelease } from '../entities/releases/guards/can-admin-release';
 import { getUserFromSocket } from '../auth/utils/get-user-from-socket';
-import { canReadTeam } from '../entities/teams/guards/can-read-team';
+import { canReadProject } from '../entities/projects/guards/can-read-project';
 import { isOrgMember } from '../entities/orgs/guards/is-org-member';
 import { canAdminSite } from '../entities/sites/guards/can-admin-site';
 import { Io } from './create-io-server';
@@ -92,7 +92,7 @@ export function initSocketRooms() {
     createRoom(socket, 'user', (user, userId) => user._id === userId);
     createRoom(socket, 'site', (user, siteId) => canAdminSite(siteId, user._id));
     createRoom(socket, 'release', (user, releaseId) => canAdminRelease(releaseId, user._id));
-    createRoom(socket, 'team', (user, teamId) => canReadTeam(teamId, user._id));
+    createRoom(socket, 'project', (user, projectId) => canReadProject(projectId, user._id));
     createRoom(socket, 'org', (user, orgId) => isOrgMember(user._id, orgId));
   });
 }

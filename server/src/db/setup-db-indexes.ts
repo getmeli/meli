@@ -3,7 +3,7 @@ import { configureIndexes } from './indexes/configure-indexes';
 import { Users } from '../entities/users/user';
 import { Sites } from '../entities/sites/site';
 import { Releases } from '../entities/releases/release';
-import { Teams } from '../entities/teams/team';
+import { Projects } from '../entities/projects/project';
 import { Members } from '../entities/members/member';
 import { ApiTokens } from '../entities/api/api-token';
 import { HookDeliveries } from '../hooks/hook-delivery';
@@ -38,7 +38,7 @@ export async function setupDbIndexes() {
     [Sites().collectionName]: [
       {
         fieldOrSpec: {
-          teamId: 1,
+          projectId: 1,
         },
       },
       {
@@ -133,7 +133,7 @@ export async function setupDbIndexes() {
         },
       },
     ],
-    [Teams().collectionName]: [
+    [Projects().collectionName]: [
       {
         fieldOrSpec: {
           members: 1,

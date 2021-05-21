@@ -3,4 +3,4 @@
 // Avoid: C, F?, N, Q, R, T, V, W, A, X
 
 export const SEARCH_SHORTCUT_KEY = 'K';
-export const ADD_TEAM_SHORTCUT_KEY = 'P';
+export const ADD_PROJECT_SHORTCUT_KEY = 'P';

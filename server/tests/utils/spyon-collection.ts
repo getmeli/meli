@@ -3,7 +3,7 @@ import * as _ApiTokens from '../../src/entities/api/api-token';
 import * as _Members from '../../src/entities/members/member';
 import * as _Orgs from '../../src/entities/orgs/org';
 import * as _Sites from '../../src/entities/sites/site';
-import * as _Teams from '../../src/entities/teams/team';
+import * as _Projects from '../../src/entities/projects/project';
 import * as _Users from '../../src/entities/users/user';
 import * as _Releases from '../../src/entities/releases/release';
 
@@ -15,7 +15,7 @@ const TEST_COLLECTIONS = {
   Members: _Members,
   Orgs: _Orgs,
   Sites: _Sites,
-  Teams: _Teams,
+  Projects: _Projects,
   Users: _Users,
   Releases: _Releases,
 };

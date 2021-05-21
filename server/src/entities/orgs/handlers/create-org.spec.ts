@@ -33,7 +33,7 @@ describe('createOrg', () => {
     const members = spyOnCollection('Members', {
       insertOne: jest.fn(),
     });
-    const teams = spyOnCollection('Teams', {
+    const projects = spyOnCollection('Projects', {
       insertOne: jest.fn(),
     });
     const users = spyOnCollection('Users', {
@@ -78,7 +78,7 @@ describe('createOrg', () => {
       email: 'authenticated@test.tst',
     }));
 
-    expect(teams.insertOne).toHaveBeenCalled();
+    expect(projects.insertOne).toHaveBeenCalled();
   });
 
   it('should not create an organization if the cap has been reached', async () => {

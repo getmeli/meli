@@ -12,13 +12,13 @@ import { SignIn } from './components/auth/SignIn';
 import { Home } from './components/Home';
 import { Orgs } from './components/auth/Orgs';
 import { useCurrentOrg } from './providers/OrgProvider';
-import { TeamView } from './components/teams/TeamView';
-import { TeamList } from './components/teams/TeamList';
+import { ProjectView } from './components/projects/ProjectView';
+import { ProjectList } from './components/projects/ProjectList';
 import { OrgView } from './components/orgs/OrgView';
 import { SiteView } from './components/sites/SiteView';
 import { SideBar } from './components/sidebar/SideBar';
 import { UserInfo } from './components/auth/UserInfo';
-import { AddTeam } from './components/teams/AddTeam';
+import { AddProject } from './components/projects/AddProject';
 import { ButtonIcon } from './commons/components/ButtonIcon';
 import { Search } from './components/sites/search/Search';
 import { UserInvites } from './components/invites/UserInvites';
@@ -41,11 +41,11 @@ function Header() {
                 <UserInfo/>
                 {currentOrg && (
                   <div className="d-flex align-items-center">
-                    <AddTeam>
+                    <AddProject>
                       <ButtonIcon>
                         <FontAwesomeIcon icon={faPlus}/>
                       </ButtonIcon>
-                    </AddTeam>
+                    </AddProject>
                     <Search/>
                   </div>
                 )}
@@ -125,15 +125,15 @@ export function App() {
             redirectTo="/orgs"
           />
           <PrivateRoute
-            path="/teams"
+            path="/projects"
             exact
-            component={TeamList}
+            component={ProjectList}
             authed={user && currentOrg}
             redirectTo="/orgs"
           />
           <PrivateRoute
-            path="/teams/:teamId"
-            component={TeamView}
+            path="/projects/:projectId"
+            component={ProjectView}
             authed={user && currentOrg}
             redirectTo="/orgs"
           />
