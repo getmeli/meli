@@ -4,7 +4,8 @@ LABEL maintainer="meli.sh"
 
 RUN apk add --no-cache \
        caddy \
-       nodejs
+       nodejs \
+       npm
 
 # entrypoint
 COPY ./docker/entrypoint.sh /entrypoint.sh
@@ -15,11 +16,14 @@ COPY ./docker/caddy-config.json /etc/caddy/config.json
 COPY ./ui/build /app/ui
 # server
 COPY ./server/build /app/server
-COPY ./server/node_modules /app/server/node_modules
+COPY ./server/package.json /app/server
+COPY ./server/package-lock.json /app/server
 COPY ./server/migrate-mongo-config.js /app/server
 COPY ./server/migrations /app/server/migrations
 
 WORKDIR /app/server
+
+RUN npm ci --production
 
 ENV MELI_URL_INTERNAL=http://localhost:3001
 ENV MELI_UI_DIR=/app/ui
@@ -35,7 +39,6 @@ VOLUME /caddy/data
 EXPOSE 80
 EXPOSE 443
 EXPOSE 2019
-
 
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["node", "index.js"]

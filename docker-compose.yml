@@ -1,0 +1,29 @@
+version: "3"
+
+services:
+
+  meli:
+    image: tmp
+    ports:
+      - 127.0.0.1:8000:80
+    environment:
+      # no trailing slash !
+      MELI_URL: http://localhost:8000
+      MELI_MONGO_URI: mongodb://mongo:27017/meli
+      MELI_JWT_SECRET: changeMe
+      MELI_USER: user
+      MELI_PASSWORD: changeMe
+      MELI_HTTPS_AUTO: "false"
+    volumes:
+      - ./tmp/sites:/sites
+      - ./tmp/files:/files
+      - ./tmp/caddy/data:/data
+      - ./tmp/caddy/config:/config
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:4.2-bionic
+    restart: unless-stopped
+    volumes:
+      - ./tmp/mongo:/data/db

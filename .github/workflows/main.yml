@@ -39,11 +39,7 @@ jobs:
       - name: "build"
         run: npm run build
       - name: "docker build"
-        run: |
-          rm -rf server/node_modules
-          npm ci --production --prefix server
-          docker build --pull -t $TMP_DOCKER_IMAGE -f ./Dockerfile .
-          npm ci
+        run: docker build --pull -t $TMP_DOCKER_IMAGE -f ./Dockerfile .
       - name: "release"
         if: ${{ github.ref == 'refs/heads/latest' || github.ref == 'refs/heads/beta' }}
         run: |

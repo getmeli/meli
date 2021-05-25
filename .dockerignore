@@ -1,5 +1,6 @@
 *
-!server/node_modules
+!server/package.json
+!server/package-lock.json
 !server/migrate-mongo-config.js
 !server/migrations
 !server/build
