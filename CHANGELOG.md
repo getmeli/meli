@@ -1,3 +1,11 @@
+# [1.0.0-beta.24](https://github.com/getmeli/meli/compare/v1.0.0-beta.23...v1.0.0-beta.24) (2021-05-25)
+
+
+### Bug Fixes
+
+* cannot upload logo [#230](https://github.com/getmeli/meli/issues/230) ([3181cab](https://github.com/getmeli/meli/commit/3181cab9cd1a9cb7208405fa74ab1f341cb22c8e))
+* **security:** update lodash ([12e4dc3](https://github.com/getmeli/meli/commit/12e4dc3bb43048f8ee02769cb0b2a208adabe58f))
+
 # [1.0.0-beta.23](https://github.com/getmeli/meli/compare/v1.0.0-beta.22...v1.0.0-beta.23) (2021-05-21)
 
 
