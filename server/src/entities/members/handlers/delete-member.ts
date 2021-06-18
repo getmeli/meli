@@ -5,7 +5,7 @@ import { $id } from '../../../utils/id';
 import { emitEvent } from '../../../events/emit-event';
 import { params } from '../../../commons/express-joi/params';
 import { memberExistsGuard } from '../guards/member-exists-guard';
-import { Teams } from '../../teams/team';
+import { Projects } from '../../projects/project';
 import { isOwner } from '../../../auth/guards/is-owner';
 import { ForbiddenError } from '../../../commons/errors/forbidden-error';
 import { Members } from '../member';
@@ -27,8 +27,8 @@ async function handler(req: Request, res: Response): Promise<void> {
     throw new ForbiddenError('Cannot remove owner');
   }
 
-  // remove from all teams
-  await Teams().updateMany({
+  // remove from all projects
+  await Projects().updateMany({
     orgId,
   }, {
     $pull: {

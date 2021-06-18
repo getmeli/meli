@@ -4,18 +4,18 @@ import { EventType } from '../events/event-type';
 import { getSiteUrl } from '../entities/sites/get-site-url';
 import { getBranchUrl } from '../entities/sites/get-branch-url';
 import { Branch } from '../entities/sites/branch';
-import { Team } from '../entities/teams/team';
+import { Project } from '../entities/projects/project';
 import { Release } from '../entities/releases/release';
 import { serializeForm } from '../entities/forms/serialize-form';
 
-function serializeTeam(team: Team) {
+function serializeProject(project: Project) {
   return {
-    _id: team._id,
-    orgId: team.orgId,
-    createdAt: team.createdAt,
-    updatedAt: team.updatedAt,
-    name: team.name,
-    color: team.color,
+    _id: project._id,
+    orgId: project.orgId,
+    createdAt: project.createdAt,
+    updatedAt: project.updatedAt,
+    name: project.name,
+    color: project.color,
   };
 }
 
@@ -38,7 +38,7 @@ function serializeBranch(site: Site, branch: Branch) {
 function serializeSite(site: Site) {
   return {
     _id: site._id,
-    teamId: site.teamId,
+    projectId: site.projectId,
     color: site.color,
     createdAt: site.createdAt,
     updatedAt: site.updatedAt,
@@ -72,10 +72,10 @@ export const messageBuilders: Partial<{
     data: any;
   }
 }> = {
-  [EventType.site_added]: ({ team, site }: EventData.TeamSiteAddedEventData) => ({
-    room: `team.${team._id}`,
+  [EventType.site_added]: ({ project, site }: EventData.ProjectSiteAddedEventData) => ({
+    room: `project.${project._id}`,
     data: {
-      team: serializeTeam(team),
+      project: serializeProject(project),
       site: serializeSite(site),
     },
   }),
@@ -91,16 +91,16 @@ export const messageBuilders: Partial<{
       release: serializeRelease(release),
     },
   }),
-  [EventType.team_added]: ({ team }: EventData.TeamEventData) => ({
-    room: `org.${team.orgId}`,
+  [EventType.project_added]: ({ project }: EventData.ProjectEventData) => ({
+    room: `org.${project.orgId}`,
     data: {
-      team: serializeTeam(team),
+      project: serializeProject(project),
     },
   }),
-  [EventType.team_deleted]: ({ team }: EventData.TeamEventData) => ({
-    room: `team.${team._id}`,
+  [EventType.project_deleted]: ({ project }: EventData.ProjectEventData) => ({
+    room: `project.${project._id}`,
     data: {
-      team: serializeTeam(team),
+      project: serializeProject(project),
     },
   }),
 };

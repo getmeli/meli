@@ -7,12 +7,12 @@ export enum AppEvent {
   org_member_added = 'org_member_added',
   org_member_updated = 'org_member_updated',
   org_member_deleted = 'org_member_deleted',
-  // teams
-  team_added = 'team_added',
-  team_updated = 'team_updated',
-  team_deleted = 'team_deleted',
-  team_member_added = 'team_member_added',
-  team_member_deleted = 'team_member_deleted',
+  // projects
+  project_added = 'project_added',
+  project_updated = 'project_updated',
+  project_deleted = 'project_deleted',
+  project_member_added = 'project_member_added',
+  project_member_deleted = 'project_member_deleted',
   // sites
   site_added = 'site_added',
   site_updated = 'site_updated',

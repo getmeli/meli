@@ -132,7 +132,7 @@ export function SiteView() {
                 <FontAwesomeIcon icon={faEllipsisV}/>
               </ButtonIcon>
               <Dropdown id={uid}>
-                <DeleteSite id={siteId} teamId={site.teamId}>
+                <DeleteSite id={siteId} projectId={site.projectId}>
                   <DropdownLink icon={<FontAwesomeIcon icon={faTrashAlt} fixedWidth/>}>
                     Delete
                   </DropdownLink>

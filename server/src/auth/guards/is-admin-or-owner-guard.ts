@@ -16,5 +16,5 @@ export const isAdminOrOwnerGuard = [
       return false;
     }
     return isAdminOrOwner(user._id, orgId);
-  }, 'Cannot admin team members'),
+  }, 'Cannot administrate project members'),
 ];

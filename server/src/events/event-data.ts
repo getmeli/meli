@@ -1,7 +1,7 @@
 import { Org } from '../entities/orgs/org';
 import { EventType } from './event-type';
 import { User } from '../entities/users/user';
-import { Team } from '../entities/teams/team';
+import { Project } from '../entities/projects/project';
 import { Site, SiteToken } from '../entities/sites/site';
 import { Hook } from '../hooks/hook';
 import { ApiToken } from '../entities/api/api-token';
@@ -19,8 +19,8 @@ export interface OrgEventData {
   org: Org;
 }
 
-export interface TeamEventData {
-  team: Team;
+export interface ProjectEventData {
+  project: Project;
 }
 
 export interface SiteEventData {
@@ -87,39 +87,39 @@ export interface OrgHookDeletedEventData extends OrgEventData {
   hook: Hook;
 }
 
-export interface OrgTeamAddedEventData extends OrgEventData {
-  team: Team;
+export interface OrgProjectAddedEventData extends OrgEventData {
+  project: Project;
 }
 
-export type TeamUpdatedEventData = TeamEventData
+export type ProjectUpdatedEventData = ProjectEventData
 
-export type TeamDeletedEventData = TeamEventData
+export type ProjectDeletedEventData = ProjectEventData
 
-export interface TeamMemberAddedEventData extends TeamEventData {
+export interface ProjectMemberAddedEventData extends ProjectEventData {
   org: Org;
-  team: Team;
+  project: Project;
   member: Member;
 }
 
-export interface TeamMemberDeletedEventData extends TeamEventData {
+export interface ProjectMemberDeletedEventData extends ProjectEventData {
   org: Org;
-  team: Team;
+  project: Project;
   member: Member;
 }
 
-export interface TeamHookCreatedEventData extends TeamEventData {
+export interface ProjectHookCreatedEventData extends ProjectEventData {
   hook: Hook;
 }
 
-export interface TeamHookUpdatedEventData extends TeamEventData {
+export interface ProjectHookUpdatedEventData extends ProjectEventData {
   hook: Hook;
 }
 
-export interface TeamHookDeletedEventData extends TeamEventData {
+export interface ProjectHookDeletedEventData extends ProjectEventData {
   hook: Hook;
 }
 
-export interface TeamSiteAddedEventData extends TeamEventData {
+export interface ProjectSiteAddedEventData extends ProjectEventData {
   site: Site;
 }
 
@@ -220,17 +220,17 @@ export interface EventData {
   [EventType.org_hook_created]: OrgHookCreatedEventData,
   [EventType.org_hook_updated]: OrgHookUpdatedEventData,
   [EventType.org_hook_deleted]: OrgHookDeletedEventData,
-  [EventType.team_added]: OrgTeamAddedEventData,
-  [EventType.team_updated]: TeamUpdatedEventData,
-  [EventType.team_deleted]: TeamDeletedEventData,
-  [EventType.team_logo_set]: TeamEventData,
-  [EventType.team_logo_removed]: TeamEventData,
-  [EventType.team_member_added]: TeamMemberAddedEventData,
-  [EventType.team_member_deleted]: TeamMemberDeletedEventData,
-  [EventType.team_hook_created]: TeamHookCreatedEventData,
-  [EventType.team_hook_updated]: TeamHookUpdatedEventData,
-  [EventType.team_hook_deleted]: TeamHookDeletedEventData,
-  [EventType.site_added]: TeamSiteAddedEventData,
+  [EventType.project_added]: OrgProjectAddedEventData,
+  [EventType.project_updated]: ProjectUpdatedEventData,
+  [EventType.project_deleted]: ProjectDeletedEventData,
+  [EventType.project_logo_set]: ProjectEventData,
+  [EventType.project_logo_removed]: ProjectEventData,
+  [EventType.project_member_added]: ProjectMemberAddedEventData,
+  [EventType.project_member_deleted]: ProjectMemberDeletedEventData,
+  [EventType.project_hook_created]: ProjectHookCreatedEventData,
+  [EventType.project_hook_updated]: ProjectHookUpdatedEventData,
+  [EventType.project_hook_deleted]: ProjectHookDeletedEventData,
+  [EventType.site_added]: ProjectSiteAddedEventData,
   [EventType.site_updated]: SiteUpdatedEventData,
   [EventType.site_deleted]: SiteDeletedEventData,
   [EventType.site_logo_set]: SiteEventData,

@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import styles from './SideBar.module.scss';
-import { Teams } from './Teams';
+import { Projects } from './Projects';
 
 export function SideBar({ className }: { className? }) {
   return (
@@ -9,7 +9,7 @@ export function SideBar({ className }: { className? }) {
       <div className="container-fluid">
         <div className="row">
           <div className="col">
-            <Teams />
+            <Projects />
           </div>
         </div>
       </div>

@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import classNames from 'classnames';
 import { Loader } from '../../commons/components/Loader';
 import { AlertError } from '../../commons/components/AlertError';
-import { getTeamSites } from '../sites/get-team-sites';
+import { getProjectSites } from '../sites/get-project-sites';
 import { Site } from '../sites/site';
 import styles from './Sites.module.scss';
 import { Bubble } from '../../commons/components/Bubble';
@@ -39,13 +39,13 @@ function ListItem({ site, onDeleted }: {
   );
 }
 
-export function Sites({ teamId, className }: { teamId; className? }) {
+export function Sites({ projectId, className }: { projectId; className? }) {
   const [loading, setLoading] = useMountedState(true);
   const [error, setError] = useState();
   const [sites, setItems] = useState<Site[]>();
 
-  useRoom<{ site: Site }>('team', teamId, [EventType.site_added], ({ site }) => {
-    if (site.teamId === teamId) {
+  useRoom<{ site: Site }>('project', projectId, [EventType.site_added], ({ site }) => {
+    if (site.projectId === projectId) {
       setItems([site, ...sites].sort(sortSites));
     }
   });
@@ -53,14 +53,14 @@ export function Sites({ teamId, className }: { teamId; className? }) {
   useEffect(() => {
     setLoading(true);
     setError(undefined);
-    getTeamSites(teamId)
+    getProjectSites(projectId)
       .then(items => {
         setItems(items.sort(sortSites));
       })
       .catch(setError)
       .catch(err => toast.error(`Could not list sites: ${err}`))
       .finally(() => setLoading(false));
-  }, [teamId, setLoading]);
+  }, [projectId, setLoading]);
 
   const onDelete = (siteId: string) => {
     setItems(sites.filter(s => s._id !== siteId));

@@ -6,7 +6,7 @@ import { serializeBranch } from './serialize-branch';
 export function serializeSite(site: Site): any {
   return {
     _id: site._id,
-    teamId: site.teamId,
+    projectId: site.projectId,
     color: site.color,
     logo: getLogoUrl('sites', site),
     createdAt: site.createdAt,

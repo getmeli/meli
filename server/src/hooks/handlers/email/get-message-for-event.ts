@@ -74,52 +74,52 @@ export const getMessageForEvent: { [eventType in keyof EventData.EventData]: (da
     subject: 'Org hook deleted',
     text: `Hook ${hook.name} of type ${hook.type} from organization ${org.name} was deleted.`,
   }),
-  [EventType.team_added]: ({ org, team }: EventData.OrgTeamAddedEventData) => ({
-    subject: 'Org team added',
-    text: `Team ${team.name} was added to organization ${org.name}.`,
+  [EventType.project_added]: ({ org, project }: EventData.OrgProjectAddedEventData) => ({
+    subject: 'Org project added',
+    text: `Project ${project.name} was added to organization ${org.name}.`,
   }),
-  [EventType.team_updated]: ({ team }: EventData.TeamUpdatedEventData) => ({
-    subject: 'Team updated',
-    text: `Team ${team.name} was updated.`,
+  [EventType.project_updated]: ({ project }: EventData.ProjectUpdatedEventData) => ({
+    subject: 'Project updated',
+    text: `Project ${project.name} was updated.`,
   }),
-  [EventType.team_deleted]: ({ team }: EventData.TeamDeletedEventData) => ({
-    subject: 'Team deleted',
-    text: `Team ${team.name} was deleted.`,
+  [EventType.project_deleted]: ({ project }: EventData.ProjectDeletedEventData) => ({
+    subject: 'Project deleted',
+    text: `Project ${project.name} was deleted.`,
   }),
-  [EventType.team_logo_set]: ({ team }: EventData.TeamEventData) => ({
-    subject: 'Team logo set',
-    text: `The logo of team ${team.name} was set.`,
+  [EventType.project_logo_set]: ({ project }: EventData.ProjectEventData) => ({
+    subject: 'Project logo set',
+    text: `The logo of project ${project.name} was set.`,
   }),
-  [EventType.team_logo_removed]: ({ team }: EventData.TeamEventData) => ({
-    subject: 'Team logo removed',
-    text: `The logo of team ${team.name} was removed.`,
+  [EventType.project_logo_removed]: ({ project }: EventData.ProjectEventData) => ({
+    subject: 'Project logo removed',
+    text: `The logo of project ${project.name} was removed.`,
   }),
-  [EventType.team_member_added]: ({ team, member }: EventData.TeamMemberAddedEventData) => ({
-    subject: 'Team member added',
-    text: `${member.name} was added to team ${team.name}.`,
+  [EventType.project_member_added]: ({ project, member }: EventData.ProjectMemberAddedEventData) => ({
+    subject: 'Project member added',
+    text: `${member.name} was added to project ${project.name}.`,
   }),
-  [EventType.team_member_deleted]: ({ team, member }: EventData.TeamMemberDeletedEventData) => ({
-    subject: 'Team member deleted',
-    text: `${member.name} was removed from team ${team.name}.`,
+  [EventType.project_member_deleted]: ({ project, member }: EventData.ProjectMemberDeletedEventData) => ({
+    subject: 'Project member deleted',
+    text: `${member.name} was removed from project ${project.name}.`,
   }),
-  [EventType.team_hook_created]: ({ team, hook }: EventData.TeamHookCreatedEventData) => ({
-    subject: 'Team hook created',
-    text: `Hook ${hook.name} of type ${hook.type} was added to team ${team.name}.`,
+  [EventType.project_hook_created]: ({ project, hook }: EventData.ProjectHookCreatedEventData) => ({
+    subject: 'Project hook created',
+    text: `Hook ${hook.name} of type ${hook.type} was added to project ${project.name}.`,
   }),
-  [EventType.team_hook_updated]: ({ team, hook }: EventData.TeamHookUpdatedEventData) => ({
-    subject: 'Team hook updated',
-    text: `Hook ${hook.name} of type ${hook.type} of team ${team.name} was updated.`,
+  [EventType.project_hook_updated]: ({ project, hook }: EventData.ProjectHookUpdatedEventData) => ({
+    subject: 'Project hook updated',
+    text: `Hook ${hook.name} of type ${hook.type} of project ${project.name} was updated.`,
   }),
-  [EventType.team_hook_deleted]: ({ team, hook }: EventData.TeamHookDeletedEventData) => ({
-    subject: 'Team hook deleted',
-    text: `Hook ${hook.name} of type ${hook.type} was removed from team ${team.name}.`,
+  [EventType.project_hook_deleted]: ({ project, hook }: EventData.ProjectHookDeletedEventData) => ({
+    subject: 'Project hook deleted',
+    text: `Hook ${hook.name} of type ${hook.type} was removed from project ${project.name}.`,
   }),
-  [EventType.site_added]: ({ team, site }: EventData.TeamSiteAddedEventData) => ({
-    subject: 'Team site added',
-    text: `Site ${site.name} was added to team ${team.name}. View it live here: ${getSiteUrl(site)}. `,
+  [EventType.site_added]: ({ project, site }: EventData.ProjectSiteAddedEventData) => ({
+    subject: 'Project site added',
+    text: `Site ${site.name} was added to project ${project.name}. View it live here: ${getSiteUrl(site)}. `,
   }),
   [EventType.site_updated]: ({ site }: EventData.SiteUpdatedEventData) => ({
-    subject: 'Team site added',
+    subject: 'Project site added',
     text: `Site ${site.name} was updated. View it live here: ${getSiteUrl(site)}. `,
   }),
   [EventType.site_deleted]: ({ site }: EventData.SiteDeletedEventData) => ({

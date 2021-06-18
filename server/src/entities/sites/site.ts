@@ -39,7 +39,7 @@ export interface Site {
   _id: string;
   createdAt: Date;
   updatedAt: Date;
-  teamId: string;
+  projectId: string;
   color: string;
   logo?: StoredFile;
   name: string;

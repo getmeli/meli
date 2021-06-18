@@ -1,4 +1,4 @@
-import { canReadTeam } from '../../teams/guards/can-read-team';
+import { canReadProject } from '../../projects/guards/can-read-project';
 import { Sites } from '../site';
 import { NotFoundError } from '../../../commons/errors/not-found-error';
 
@@ -11,5 +11,5 @@ export async function canAdminSite(siteId: string, userId: string): Promise<bool
     throw new NotFoundError('Site not found');
   }
 
-  return canReadTeam(site.teamId, userId);
+  return canReadProject(site.projectId, userId);
 }

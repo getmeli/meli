@@ -6,7 +6,7 @@ import { Org } from '../../../entities/orgs/org';
 import { Invite } from '../../../entities/orgs/invite';
 import { Member } from '../../../entities/members/member';
 import { Hook } from '../../hook';
-import { Team } from '../../../entities/teams/team';
+import { Project } from '../../../entities/projects/project';
 import { Site, SiteToken } from '../../../entities/sites/site';
 import { Branch } from '../../../entities/sites/branch';
 import { Release } from '../../../entities/releases/release';
@@ -80,13 +80,13 @@ function serializeHook(hook: Hook) {
   };
 }
 
-function serializeTeam(team: Team) {
+function serializeProject(project: Project) {
   return {
-    _id: team._id,
-    createdAt: team.createdAt,
-    updatedAt: team.updatedAt,
-    name: team.name,
-    color: team.color,
+    _id: project._id,
+    createdAt: project.createdAt,
+    updatedAt: project.updatedAt,
+    name: project.name,
+    color: project.color,
   };
 }
 
@@ -109,7 +109,7 @@ function serializeBranch(site: Site, branch: Branch) {
 function serializeSite(site: Site) {
   return {
     _id: site._id,
-    teamId: site.teamId,
+    projectId: site.projectId,
     color: site.color,
     createdAt: site.createdAt,
     updatedAt: site.updatedAt,
@@ -211,44 +211,44 @@ export const getPayload: { [eventType in keyof EventData.EventData]: (data: any)
     org: serializeOrg(org),
     hook: serializeHook(hook),
   }),
-  [EventType.team_added]: ({ org, team }: EventData.OrgTeamAddedEventData) => ({
+  [EventType.project_added]: ({ org, project }: EventData.OrgProjectAddedEventData) => ({
     org: serializeOrg(org),
-    team: serializeTeam(team),
+    project: serializeProject(project),
   }),
-  [EventType.team_updated]: ({ team }: EventData.TeamUpdatedEventData) => ({
-    team: serializeTeam(team),
+  [EventType.project_updated]: ({ project }: EventData.ProjectUpdatedEventData) => ({
+    project: serializeProject(project),
   }),
-  [EventType.team_deleted]: ({ team }: EventData.TeamDeletedEventData) => ({
-    team: serializeTeam(team),
+  [EventType.project_deleted]: ({ project }: EventData.ProjectDeletedEventData) => ({
+    project: serializeProject(project),
   }),
-  [EventType.team_logo_set]: ({ team }: EventData.TeamEventData) => ({
-    team: serializeTeam(team),
+  [EventType.project_logo_set]: ({ project }: EventData.ProjectEventData) => ({
+    project: serializeProject(project),
   }),
-  [EventType.team_logo_removed]: ({ team }: EventData.TeamEventData) => ({
-    team: serializeTeam(team),
+  [EventType.project_logo_removed]: ({ project }: EventData.ProjectEventData) => ({
+    project: serializeProject(project),
   }),
-  [EventType.team_member_added]: ({ team, member }: EventData.TeamMemberAddedEventData) => ({
-    team: serializeTeam(team),
+  [EventType.project_member_added]: ({ project, member }: EventData.ProjectMemberAddedEventData) => ({
+    project: serializeProject(project),
     member: serializeMember(member),
   }),
-  [EventType.team_member_deleted]: ({ team, member }: EventData.TeamMemberDeletedEventData) => ({
-    team: serializeTeam(team),
+  [EventType.project_member_deleted]: ({ project, member }: EventData.ProjectMemberDeletedEventData) => ({
+    project: serializeProject(project),
     member: serializeMember(member),
   }),
-  [EventType.team_hook_created]: ({ team, hook }: EventData.TeamHookCreatedEventData) => ({
-    team: serializeTeam(team),
+  [EventType.project_hook_created]: ({ project, hook }: EventData.ProjectHookCreatedEventData) => ({
+    project: serializeProject(project),
     hook: serializeHook(hook),
   }),
-  [EventType.team_hook_updated]: ({ team, hook }: EventData.TeamHookUpdatedEventData) => ({
-    team: serializeTeam(team),
+  [EventType.project_hook_updated]: ({ project, hook }: EventData.ProjectHookUpdatedEventData) => ({
+    project: serializeProject(project),
     hook: serializeHook(hook),
   }),
-  [EventType.team_hook_deleted]: ({ team, hook }: EventData.TeamHookDeletedEventData) => ({
-    team: serializeTeam(team),
+  [EventType.project_hook_deleted]: ({ project, hook }: EventData.ProjectHookDeletedEventData) => ({
+    project: serializeProject(project),
     hook: serializeHook(hook),
   }),
-  [EventType.site_added]: ({ team, site }: EventData.TeamSiteAddedEventData) => ({
-    team: serializeTeam(team),
+  [EventType.site_added]: ({ project, site }: EventData.ProjectSiteAddedEventData) => ({
+    project: serializeProject(project),
     site: serializeSite(site),
   }),
   [EventType.site_updated]: ({ site }: EventData.SiteUpdatedEventData) => ({

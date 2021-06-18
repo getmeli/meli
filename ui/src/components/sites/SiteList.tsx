@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { uniqueId } from 'lodash';
 import { Loader } from '../../commons/components/Loader';
 import { EmptyList } from '../../commons/components/EmptyList';
-import { getTeamSites } from './get-team-sites';
+import { getProjectSites } from './get-project-sites';
 import { SiteCard } from './SiteCard';
 import { AlertError } from '../../commons/components/AlertError';
 import { Site } from './site';
@@ -13,7 +13,7 @@ import { SiteIcon } from '../icons/SiteIcon';
 import { useMountedState } from '../../commons/hooks/use-mounted-state';
 
 export function SiteList() {
-  const { teamId } = useParams<any>();
+  const { projectId } = useParams<any>();
   const [loading, setLoading] = useMountedState(true);
   const [error, setError] = useState();
   const [items, setItems] = useState<Site[]>();
@@ -22,7 +22,7 @@ export function SiteList() {
   useEffect(() => {
     setLoading(true);
     setError(undefined);
-    getTeamSites(teamId)
+    getProjectSites(projectId)
       .then(data => {
         itemsRef.current.push(...data);
         setItems(itemsRef.current);
@@ -30,14 +30,14 @@ export function SiteList() {
       .catch(setError)
       .catch(err => toast.error(`Could not list repos: ${err}`))
       .finally(() => setLoading(false));
-  }, [teamId, setLoading]);
+  }, [projectId, setLoading]);
 
   const emptyList = (
     <EmptyList
       icon={<SiteIcon/>}
       title="No sites"
     >
-      <AddSite teamId={teamId}>
+      <AddSite projectId={projectId}>
         <button type="button" className="btn btn-primary d-block">
           Add site
         </button>

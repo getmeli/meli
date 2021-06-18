@@ -5,7 +5,7 @@ import { wrapAsyncMiddleware } from '../../../../commons/utils/wrap-async-middle
 import { getPagination, pageResponse, pageValidators } from '../../../../utils/get-pagination';
 import { FilterQuery } from 'mongodb';
 import { query } from '../../../../commons/express-joi/query';
-import { Teams } from '../../../teams/team';
+import { Projects } from '../../../projects/project';
 import { getUser } from '../../../../auth/utils/get-user';
 import { params } from '../../../../commons/express-joi/params';
 import { $id } from '../../../../utils/id';
@@ -31,7 +31,7 @@ async function handler(req: Request, res: Response): Promise<void> {
   const { search } = req.query;
   const pagination = getPagination(req);
 
-  // find user teams in this org
+  // find user projects in this org
   const user = getUser(req);
   const adminOrOwner = await isAdminOrOwner(user._id, orgId);
   const member = await Members().findOne({
@@ -39,7 +39,7 @@ async function handler(req: Request, res: Response): Promise<void> {
     userId: user._id,
   });
 
-  const teams = await Teams()
+  const projects = await Projects()
     .find(adminOrOwner ? {} : {
       members: member._id,
     })
@@ -47,8 +47,8 @@ async function handler(req: Request, res: Response): Promise<void> {
     .toArray();
 
   const dbQuery: FilterQuery<Site> = {
-    teamId: {
-      $in: teams.map(({ _id }) => _id),
+    projectId: {
+      $in: projects.map(({ _id }) => _id),
     },
     ...(
       search

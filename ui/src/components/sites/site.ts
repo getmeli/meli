@@ -24,7 +24,7 @@ export interface ManualSslConfiguration {
 
 export interface Site {
   _id: string;
-  teamId: string;
+  projectId: string;
   name: string;
   color: string;
   logo?: string;
