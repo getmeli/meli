@@ -1,4 +1,5 @@
 import { Org } from '../entities/orgs/org';
+import { Service } from '../entities/services/service';
 import { EventType } from './event-type';
 import { User } from '../entities/users/user';
 import { Project } from '../entities/projects/project';
@@ -198,6 +199,10 @@ export interface SiteBranchRedirectsSetEventData extends SiteEventData {
   branch: Branch;
 }
 
+export interface ProjectServiceAddedEventData extends ProjectEventData {
+  service: Service;
+}
+
 export interface FormEvent {
   form: Form;
 }
@@ -252,4 +257,5 @@ export interface EventData {
   [EventType.site_branch_password_set]: SiteBranchPasswordSetEventData,
   [EventType.site_branch_password_removed]: SiteBranchPasswordRemovedEventData,
   [EventType.site_branch_redirects_set]: SiteBranchRedirectsSetEventData,
+  [EventType.service_added]: ProjectServiceAddedEventData,
 }

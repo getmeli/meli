@@ -8,7 +8,7 @@ import { getProjectSites } from './get-project-sites';
 import { SiteCard } from './SiteCard';
 import { AlertError } from '../../commons/components/AlertError';
 import { Site } from './site';
-import { AddSite } from './AddSite';
+import { AddSiteOrService } from './AddSiteOrService';
 import { SiteIcon } from '../icons/SiteIcon';
 import { useMountedState } from '../../commons/hooks/use-mounted-state';
 
@@ -37,11 +37,11 @@ export function SiteList() {
       icon={<SiteIcon/>}
       title="No sites"
     >
-      <AddSite projectId={projectId}>
+      <AddSiteOrService projectId={projectId}>
         <button type="button" className="btn btn-primary d-block">
           Add site
         </button>
-      </AddSite>
+      </AddSiteOrService>
     </EmptyList>
   );
 

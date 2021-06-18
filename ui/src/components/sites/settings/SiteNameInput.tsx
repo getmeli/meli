@@ -6,7 +6,7 @@ import { debounceTime } from '../../../utils/debounce-time';
 import { InputError } from '../../../commons/components/forms/InputError';
 import { axios } from '../../../providers/axios';
 
-async function validateName(name: string, previousName?: string): Promise<string | undefined> {
+async function validateName(name: string, type: 'static' | 'service', previousName?: string): Promise<string | undefined> {
   if (!name) {
     return undefined;
   }
@@ -14,19 +14,20 @@ async function validateName(name: string, previousName?: string): Promise<string
     return undefined;
   }
   return axios
-    .post<string | undefined>(`/api/v1/sites.validate/name`, {
+    .post<string | undefined>(`/api/v1/${type === 'static' ? 'sites' : 'services'}.validate/name`, {
       name,
     })
     .then(({ data }) => data || undefined)
     .catch(err => {
-      toast.error(`Could not validate site name: ${err}`);
+      toast.error(`Could not validate ${type === 'static' ? 'static site' : 'service'} name: ${err}`);
       return undefined;
     });
 }
 
-export function SiteNameInput({ setInputRef, previousName }: {
+export function SiteNameInput({ setInputRef, previousName, type }: {
   setInputRef?: (input: HTMLInputElement) => void;
   previousName?: string;
+  type: 'static' | 'service'
 }) {
   const { register, errors } = useFormContext();
 
@@ -38,7 +39,7 @@ export function SiteNameInput({ setInputRef, previousName }: {
       required,
       maxLength: maxLength(),
       pattern: isSubdomain,
-      validate: debounceTime<string | undefined>(val => validateName(val, previousName), 300),
+      validate: debounceTime<string | undefined>(val => validateName(val, type, previousName), 300),
     })(input);
   };
 

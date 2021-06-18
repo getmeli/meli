@@ -48,4 +48,5 @@ export enum EventType {
   site_branch_password_set = 'site_branch_password_set',
   site_branch_password_removed = 'site_branch_password_removed',
   site_branch_redirects_set = 'site_branch_redirects_set',
+  service_added = 'service_added',
 }

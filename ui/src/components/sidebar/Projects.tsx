@@ -9,7 +9,7 @@ import { Project } from '../projects/project';
 import styles from './Projects.module.scss';
 import { Bubble } from '../../commons/components/Bubble';
 import { axios } from '../../providers/axios';
-import { AddSite } from '../sites/AddSite';
+import { AddSiteOrService } from '../sites/AddSiteOrService';
 import { ButtonIcon } from '../../commons/components/ButtonIcon';
 import { Sites } from './Sites';
 import { useCurrentOrg } from '../../providers/OrgProvider';
@@ -40,11 +40,11 @@ function ProjectSection({ project, className, onDelete }: { project: Project; cl
           <span className="ml-2 text-uppercase">{project.name}</span>
         </NavLink>
         <div>
-          <AddSite projectId={project._id}>
+          <AddSiteOrService projectId={project._id}>
             <ButtonIcon>
               <FontAwesomeIcon icon={faPlus}/>
             </ButtonIcon>
-          </AddSite>
+          </AddSiteOrService>
         </div>
       </div>
       <Sites projectId={project._id}/>

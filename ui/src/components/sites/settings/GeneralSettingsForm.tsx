@@ -80,7 +80,7 @@ export function GeneralSettingsForm() {
               <strong>General</strong>
             </div>
             <div className="card-body">
-              <SiteNameInput previousName={site.name}/>
+              <SiteNameInput previousName={site.name} type="static"/>
               <div className="form-group">
                 <label htmlFor="color" className="form-label">Color</label>
                 <input

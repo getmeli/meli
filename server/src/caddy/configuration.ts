@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { Logger } from '../commons/logger/logger';
+import { Service, ServiceBranch } from '../entities/services/service';
 import { env } from '../env/env';
 import { Site } from '../entities/sites/site';
 import { Branch } from '../entities/sites/branch';
@@ -42,6 +43,30 @@ export async function configureSiteBranchInCaddy(site: Site, branch: Branch): Pr
 
 export async function removeSiteBranchFromCaddy(site: Site, branch: Branch): Promise<void> {
   logger.debug(`Reconfigured site branch ${site.name}:${branch.name} from Caddy`);
+  // TODO reconfigure branch only (or use another system so we don't have to reconfigure anything on publish)
+  await configureCaddy();
+}
+
+export async function configureServiceInCaddy(service: Service) {
+  logger.debug(`Reconfigured service ${service._id} in Caddy`);
+  // TODO reconfigure site only
+  await configureCaddy();
+}
+
+export async function removeServiceFromCaddy(serviceId: string) {
+  logger.debug(`Removing service ${serviceId} from Caddy`);
+  // TODO reconfigure site only
+  await configureCaddy();
+}
+
+export async function configureServiceBranchInCaddy(service: Service, branch: ServiceBranch): Promise<void> {
+  logger.debug(`Reconfigured service branch ${service._id}:${branch.name} in Caddy`);
+  // TODO reconfigure branch only (or use another system so we don't have to reconfigure anything on publish)
+  await configureCaddy();
+}
+
+export async function removeServiceBranchFromCaddy(service: Service, branch: ServiceBranch): Promise<void> {
+  logger.debug(`Reconfigured service branch ${service.name}:${branch.name} from Caddy`);
   // TODO reconfigure branch only (or use another system so we don't have to reconfigure anything on publish)
   await configureCaddy();
 }
