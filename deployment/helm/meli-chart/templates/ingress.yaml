@@ -1,0 +1,68 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress
+  labels:
+    run: meli-svc
+  annotations:
+    cert-manager.io/cluster-issuer: {{ .Values.ingress.certificateIssuer  | quote }}
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/connection-proxy-header: "keep-alive"
+    # This is useful if we every want to map hosts outside the domain to the meli server
+    # nginx.ingress.kubernetes.io/upstream-vhost:  {{ printf "%s" .Values.ingress.domain | quote }}
+    nginx.ingress.kubernetes.io/send-timeout: "36000"
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "36000"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "36000"
+    # This value should match the value in the deployment
+    nginx.ingress.kubernetes.io/proxy-body-size: "100m"
+spec:
+  ingressClassName: nginx
+
+  # NB - The order of these rules MATTERS
+  rules:
+    # First, check if this is the bare domain.  If so, it will
+    # be interpreted by Meli as a request for the admin pages
+  - host: {{ .Values.ingress.domain | quote }}
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: meli-svc
+            port:
+              number: 80
+    # Now check the wildcard matches.  Ultimately, they get routed
+    # the same, but the host pattern is different.
+  - host: "*.{{ .Values.ingress.domain }}"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: meli-svc
+            port:
+              number: 80
+    # Now check the wildcard matches.  Ultimately, they get routed
+    # the same, but the host pattern is different.
+  {{- range $index, $site := .Values.ingress.sites }}
+  - host: "*.{{ $site }}.{{ $.Values.ingress.domain }}"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: meli-svc
+            port:
+              number: 80
+  {{- end }}
+  tls:
+    - hosts:
+        - {{ .Values.ingress.domain | quote }}
+        - "*.{{ .Values.ingress.domain }}"
+        {{- range $index, $site := .Values.ingress.sites }}
+        - "*.{{ $site }}.{{ $.Values.ingress.domain }}"
+        {{- end }}
+      secretName: {{ .Values.ingress.tlsSecret }}

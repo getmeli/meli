@@ -33,3 +33,5 @@ data
 *.iml
 *.env
 *.tgz
+
+values.yaml

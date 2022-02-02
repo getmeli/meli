@@ -1,0 +1,55 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ .Values.pvcPrefix }}-{{ .Release.Name }}-data
+  labels:
+    {{- include "helper.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.resources.storage.data }}
+  #storageClassName: {}
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ .Values.pvcPrefix }}-{{ .Release.Name }}-config
+  labels:
+    {{- include "helper.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.resources.storage.config }}
+  #storageClassName: {}
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ .Values.pvcPrefix }}-{{ .Release.Name }}-sites
+  labels:
+    {{- include "helper.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.resources.storage.sites }}
+  #storageClassName: {}
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ .Values.pvcPrefix }}-{{ .Release.Name }}-data-db
+  labels:
+    {{- include "helper.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.resources.storage.db }}
+  #storageClassName: {}

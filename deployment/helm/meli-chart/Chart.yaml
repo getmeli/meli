@@ -1,0 +1,14 @@
+apiVersion: v2
+name: meli
+description: A server for deploying static web sites
+
+# This is a chart for an application
+type: application
+
+# The version of this chart is automatically filled in by rsci.  It will
+# be a semantic version compatible with (https://semver.org/)
+version: 1.0.0-beta.24
+
+# Our application version will mirror the chart version except we will
+# leave off the semantic version if it is a work in progress.
+appVersion: 1.0.0-beta.24

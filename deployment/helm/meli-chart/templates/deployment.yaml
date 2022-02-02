@@ -1,0 +1,118 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: meli-app
+  labels:
+    {{- include "helper.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "helper.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "helper.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: meli
+          image: "{{ .Values.image }}:{{ .Values.tag}}"
+          envFrom:
+          - secretRef:
+              name: deployment-env
+          env:
+          - name: MELI_URL
+            value: {{ printf "https://%s" .Values.ingress.domain | quote }} 
+          - name: MELI_USER
+            value: {{ .Values.user | quote }}
+          - name: MELI_HTTPS_AUTO
+            value: "false"
+          - name: MELI_MONGO_HOST
+            value: {{ .Values.mongo.host | quote }} 
+          - name: MELI_MONGO_PORT
+            value: {{ .Values.mongo.port | quote }}
+          - name: MELI_MAX_ORGS
+            value: {{ .Values.maxorgs | quote }}
+          - name: MELI_MONGO_USER
+            value: {{ .Values.mongo.user | quote }}
+          - name: MELI_MONGO_DB
+            value: {{ .Values.mongo.db | quote }}
+          imagePullPolicy: {{ .Values.pullPolicy }}
+          ports:
+          - name: http
+            containerPort: 80
+            protocol: TCP
+          - name: https
+            containerPort: 443
+            protocol: TCP
+          - name: api
+            containerPort: 3001
+            protocol: TCP
+          - name: admin
+            containerPort: 2019
+            protocol: TCP
+          # In Work - Docker File needs to be updated  
+          #securityContext:
+          #  runAsUser: 1001
+          volumes: null
+          resources:
+            requests:
+              cpu: 200m
+              memory: 256Mi
+            #limits:
+            #  cpu500m
+          volumeMounts:
+            - name: data
+              mountPath: /data
+              subPath: data
+            - name: config
+              mountPath: /config
+              subPath: config
+            - name: sites
+              mountPath: /sites
+              subPath: sites              
+          livenessProbe: 
+            httpGet:
+              path: /
+              port: http
+              scheme: HTTP
+              httpHeaders:
+                - name: Host
+                  value: {{ .Values.ingress.domain }}            
+            initialDelaySeconds: 60
+            timeoutSeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 6
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+              scheme: HTTP
+              httpHeaders:
+                - name: Host
+                  value: {{ .Values.ingress.domain }} 
+            initialDelaySeconds: 30
+            timeoutSeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 6
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: {{ .Values.pvcPrefix }}-{{ .Release.Name }}-data
+        - name: config
+          persistentVolumeClaim:
+            claimName: {{ .Values.pvcPrefix }}-{{ .Release.Name }}-config
+        - name: sites
+          persistentVolumeClaim:
+            claimName: {{ .Values.pvcPrefix }}-{{ .Release.Name }}-sites
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      serviceAccountName: default
+      serviceAccount: default
+      #securityContext:
+      #  fsGroup: 1001

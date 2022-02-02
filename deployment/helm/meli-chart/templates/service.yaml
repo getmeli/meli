@@ -1,0 +1,29 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: meli-svc
+  labels:
+    app.kubernetes.io/name: {{ include "helper.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+spec:
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: http
+    - name: https
+      protocol: TCP
+      port: 443
+      targetPort: https
+    - name: admin
+      protocol: TCP
+      port: 2019
+      targetPort: admin
+    - name: api
+      protocol: TCP
+      port: 3001
+      targetPort: api            
+  selector:
+    app.kubernetes.io/name: {{ include "helper.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }} 
+  type: ClusterIP

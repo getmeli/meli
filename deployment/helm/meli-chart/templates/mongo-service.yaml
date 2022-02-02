@@ -1,0 +1,19 @@
+{{- if .Values.mongo.enabled }}
+kind: Service
+apiVersion: v1
+metadata:
+  name: mongo
+  labels:
+    app.kubernetes.io/name: {{ include "helper.name" . }}-mongo
+    app.kubernetes.io/instance: {{ .Release.Name }}
+spec:
+  ports:
+    - name: mongo-svc-port
+      protocol: TCP
+      port: {{ .Values.mongo.port }}
+      targetPort: mongo-port
+  selector:
+    app.kubernetes.io/name: {{ include "helper.name" . }}-mongo
+    app.kubernetes.io/instance: {{ .Release.Name }}
+  type: ClusterIP
+{{ end }}
