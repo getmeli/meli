@@ -25,6 +25,14 @@ const validators = [
   })),
 ];
 
+/** 
+ * Ensure that the construction of these URLs is done
+ * in exactly one place only.
+ */
+export function inviteUrl(invite: Invite): string {
+  return `${env.MELI_URL}/invite?token=${invite.token}`;
+}
+
 async function handler(req: Request, res: Response): Promise<void> {
   const { orgId } = req.params;
   const { email, admin } = req.body;
@@ -53,7 +61,7 @@ async function handler(req: Request, res: Response): Promise<void> {
 
   await sendInvite(email, {
     org: org.name,
-    url: `${env.MELI_URL}/invite?token=${invite.token}`,
+    url: inviteUrl(invite),
   });
 
   emitEvent(EventType.org_invite_added, {
