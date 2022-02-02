@@ -1,0 +1,17 @@
+This will configure the Meli admin server to run at:
+
+https://{{ .Values.ingress.domain }}
+
+It will also direct `cert-manager` to issue certificates for:
+
+https://*.{{ .Values.ingress.domain }}
+{{ range $index, $site := .Values.ingress.sites }}
+https://*.{{ $site }}.{{ $.Values.ingress.domain }}
+{{ end }}
+
+The Meli deployment will pick up any additional environment variables
+from the secret `deployment-env`.  This is where you should put any
+"secrets" like authentication client secrets, passwords, etc.  You are 
+also free to put any other less confidential information in there as well.
+But, at a minimum, it is where you should put authentication related 
+configuration variables like `MELI_PASSWORD`, or `MELI_GITLAB_*`.

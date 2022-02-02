@@ -1,0 +1,97 @@
+{{- if .Values.mongo.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo
+  labels:
+    {{- include "helper.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "helper.name" . }}-mongo
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "helper.name" . }}-mongo
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      containers:
+        - image: bitnami/mongodb
+          imagePullPolicy: IfNotPresent
+          name: mongo
+          securityContext:
+            runAsUser: 1001
+            runAsNonRoot: true         
+          ports:
+          - name: mongo-port
+            containerPort: {{ .Values.mongo.port }}
+            protocol: TCP
+          env:
+            - name: MONGODB_USERNAME
+              value: {{ .Values.mongo.user | quote }}
+            - name: MONGODB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: deployment-env
+                  key: MELI_MONGO_PASSWORD
+            - name: MONGODB_DATABASE
+              value: {{ .Values.mongo.db | quote }}         
+            - name: MONGODB_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: deployment-env
+                  key: MELI_ROOT_MONGO_PASSWORD
+            - name: BITNAMI_DEBUG
+              value: "false"
+          resources:
+            requests:
+              cpu: {{ .Values.resources.mongo.cpu }}
+              memory: {{ .Values.resources.mongo.memory }}
+            #limits:
+            #  cpu500m
+          volumeMounts:
+            - name: data-db
+              mountPath: /bitnami/mongodb
+              subPath: mongodb
+          livenessProbe:
+            exec:
+              command:
+                - mongo
+                - '--disableImplicitSessions'
+                - '--eval'
+                - db.adminCommand('ping')
+            initialDelaySeconds: 30
+            timeoutSeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 6
+          readinessProbe:
+            exec:
+              command:
+                - bash
+                - '-ec'
+                - >
+                  mongo --disableImplicitSessions $TLS_OPTIONS --eval
+                  'db.hello().isWritablePrimary || db.hello().secondary' | grep
+                  -q 'true'
+            initialDelaySeconds: 5
+            timeoutSeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 6
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File                                          
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      serviceAccountName: default
+      serviceAccount: default
+      securityContext:
+        fsGroup: 1001      
+      volumes:
+        - name: data-db
+          persistentVolumeClaim:
+            claimName: {{ .Values.pvcPrefix }}-{{ .Release.Name }}-data-db          
+{{ end }}
