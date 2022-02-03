@@ -1,28 +1,35 @@
-import React, { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
-import { uniqueId } from 'lodash';
-import { FormProvider, useForm } from 'react-hook-form';
-import { axios } from '../../providers/axios';
-import { Tooltip, tooltipToggle } from '../../commons/components/Tooltip';
-import { OrgNameInput } from './settings/OrgNameInput';
-import { Button } from '../../commons/components/Button';
-import { CardModal } from '../../commons/components/modals/CardModal';
-import { useMountedState } from '../../commons/hooks/use-mounted-state';
-import { UserOrg } from '../auth/user-org';
+import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import { uniqueId } from "lodash";
+import { FormProvider, useForm } from "react-hook-form";
+import { axios } from "../../providers/axios";
+import { Tooltip, tooltipToggle } from "../../commons/components/Tooltip";
+import { OrgNameInput } from "./settings/OrgNameInput";
+import { Button } from "../../commons/components/Button";
+import { CardModal } from "../../commons/components/modals/CardModal";
+import { useMountedState } from "../../commons/hooks/use-mounted-state";
+import { UserOrg } from "../auth/user-org";
+import { extractErrorMessage } from "../../utils/extract-error-message";
 
 interface Form {
   name: string;
 }
 
-function Modal({ closeModal, onAdded }: {
+function Modal({
+  closeModal,
+  onAdded,
+}: {
   closeModal;
   onAdded: (org: UserOrg) => void;
 }) {
   const methods = useForm<Form>({
-    mode: 'onChange',
+    mode: "onChange",
   });
   const [loading, setLoading] = useMountedState(false);
-  const { handleSubmit, formState: { isDirty } } = methods;
+  const {
+    handleSubmit,
+    formState: { isDirty },
+  } = methods;
 
   const onSubmit = (form: Form) => {
     setLoading(true);
@@ -34,8 +41,8 @@ function Modal({ closeModal, onAdded }: {
       .finally(() => {
         closeModal();
       })
-      .catch(err => {
-        toast.error(`Could not create org: ${err}`);
+      .catch((err) => {
+        toast.error(`Could not create org: ${extractErrorMessage(err)}`);
       })
       .finally(() => setLoading(false));
   };
@@ -51,7 +58,7 @@ function Modal({ closeModal, onAdded }: {
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <OrgNameInput setInputRef={setInputRef}/>
+        <OrgNameInput setInputRef={setInputRef} />
         <div className="d-flex justify-content-end">
           <Button
             type="submit"
@@ -68,7 +75,10 @@ function Modal({ closeModal, onAdded }: {
 }
 
 export function AddOrg({
-  children, className, tooltip = true, onAdded,
+  children,
+  className,
+  tooltip = true,
+  onAdded,
 }: {
   children;
   className?;
@@ -82,20 +92,12 @@ export function AddOrg({
 
   return (
     <>
-      <div
-        onClick={openModal}
-        className={className}
-        {...tooltipToggle(uid)}
-      >
+      <div onClick={openModal} className={className} {...tooltipToggle(uid)}>
         {children}
       </div>
-      {tooltip && (
-        <Tooltip id={uid}>
-          Create org
-        </Tooltip>
-      )}
+      {tooltip && <Tooltip id={uid}>Create org</Tooltip>}
       <CardModal isOpen={isOpen} closeModal={closeModal} title="Create org">
-        <Modal closeModal={closeModal} onAdded={onAdded}/>
+        <Modal closeModal={closeModal} onAdded={onAdded} />
       </CardModal>
     </>
   );

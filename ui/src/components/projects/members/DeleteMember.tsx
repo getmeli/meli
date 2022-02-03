@@ -1,13 +1,18 @@
-import React from 'react';
-import { toast } from 'react-toastify';
-import { Button } from '../../../commons/components/Button';
-import { axios } from '../../../providers/axios';
-import { CardModal } from '../../../commons/components/modals/CardModal';
-import { useMountedState } from '../../../commons/hooks/use-mounted-state';
-import { IsAdmin } from '../../auth/IsAdmin';
+import React from "react";
+import { toast } from "react-toastify";
+import { Button } from "../../../commons/components/Button";
+import { axios } from "../../../providers/axios";
+import { CardModal } from "../../../commons/components/modals/CardModal";
+import { useMountedState } from "../../../commons/hooks/use-mounted-state";
+import { IsAdmin } from "../../auth/IsAdmin";
+import { extractErrorMessage } from "../../../utils/extract-error-message";
 
 export function DeleteMember({
-  projectId, memberId, className, children, onDelete,
+  projectId,
+  memberId,
+  className,
+  children,
+  onDelete,
 }: {
   projectId: string;
   memberId: string;
@@ -26,8 +31,8 @@ export function DeleteMember({
         setIsOpen(false);
         onDelete();
       })
-      .catch(err => {
-        toast.error(`Could not delete member: ${err}`);
+      .catch((err) => {
+        toast.error(`Could not delete member: ${extractErrorMessage(err)}`);
       })
       .finally(() => setLoading(false));
   };

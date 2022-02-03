@@ -1,13 +1,17 @@
-import React from 'react';
-import { toast } from 'react-toastify';
-import { axios } from '../../providers/axios';
-import { routerHistory } from '../../providers/history';
-import { Button } from '../../commons/components/Button';
-import { CardModal } from '../../commons/components/modals/CardModal';
-import { useMountedState } from '../../commons/hooks/use-mounted-state';
+import React from "react";
+import { toast } from "react-toastify";
+import { axios } from "../../providers/axios";
+import { routerHistory } from "../../providers/history";
+import { Button } from "../../commons/components/Button";
+import { CardModal } from "../../commons/components/modals/CardModal";
+import { useMountedState } from "../../commons/hooks/use-mounted-state";
+import { extractErrorMessage } from "../../utils/extract-error-message";
 
 export function DeleteSite({
-  id, projectId, className, children,
+  id,
+  projectId,
+  className,
+  children,
 }: {
   id: string;
   projectId: string;
@@ -25,8 +29,8 @@ export function DeleteSite({
         setIsOpen(false);
         routerHistory.push(`/projects/${projectId}/sites`);
       })
-      .catch(err => {
-        toast.error(`Could not delete site: ${err}`);
+      .catch((err) => {
+        toast.error(`Could not delete site: ${extractErrorMessage(err)}`);
       })
       .finally(() => setLoading(false));
   };

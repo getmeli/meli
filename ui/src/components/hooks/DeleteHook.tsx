@@ -1,13 +1,17 @@
-import React from 'react';
-import { toast } from 'react-toastify';
-import { Button } from '../../commons/components/Button';
-import { axios } from '../../providers/axios';
-import { CardModal } from '../../commons/components/modals/CardModal';
-import { useMountedState } from '../../commons/hooks/use-mounted-state';
-import { useHookContext } from './HookProvider';
+import React from "react";
+import { toast } from "react-toastify";
+import { Button } from "../../commons/components/Button";
+import { axios } from "../../providers/axios";
+import { CardModal } from "../../commons/components/modals/CardModal";
+import { useMountedState } from "../../commons/hooks/use-mounted-state";
+import { useHookContext } from "./HookProvider";
+import { extractErrorMessage } from "../../utils/extract-error-message";
 
 export function DeleteHook({
-  hookId, className, children, onDelete,
+  hookId,
+  className,
+  children,
+  onDelete,
 }: {
   hookId: string;
   children: any;
@@ -26,8 +30,8 @@ export function DeleteHook({
         setIsOpen(false);
         onDelete();
       })
-      .catch(err => {
-        toast.error(`Could not delete hook: ${err}`);
+      .catch((err) => {
+        toast.error(`Could not delete hook: ${extractErrorMessage(err)}`);
       })
       .finally(() => setLoading(false));
   };

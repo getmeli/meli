@@ -1,21 +1,27 @@
-import React, { useState } from 'react';
-import { useDropzone } from 'react-dropzone';
-import { toast } from 'react-toastify';
-import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUpload } from '@fortawesome/free-solid-svg-icons';
-import classNames from 'classnames';
-import { ButtonIcon } from '../../commons/components/ButtonIcon';
-import { Bubble } from '../../commons/components/Bubble';
-import { axios } from '../../providers/axios';
-import styles from './Logo.module.scss';
+import React, { useState } from "react";
+import { useDropzone } from "react-dropzone";
+import { toast } from "react-toastify";
+import { faTrashAlt } from "@fortawesome/free-regular-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUpload } from "@fortawesome/free-solid-svg-icons";
+import classNames from "classnames";
+import { ButtonIcon } from "../../commons/components/ButtonIcon";
+import { Bubble } from "../../commons/components/Bubble";
+import { axios } from "../../providers/axios";
+import styles from "./Logo.module.scss";
+import { extractErrorMessage } from "../../utils/extract-error-message";
 
 interface Value {
   _id: string;
   logo?: string;
 }
 
-export function Logo<T extends Value>({ context, value, setValue, className }: {
+export function Logo<T extends Value>({
+  context,
+  value,
+  setValue,
+  className,
+}: {
   context: string;
   value: T;
   setValue: (value: T) => void;
@@ -24,22 +30,22 @@ export function Logo<T extends Value>({ context, value, setValue, className }: {
   const [uploading, setUploading] = useState(false);
   const [isDragActive, setIsDragActive] = useState(false);
 
-  const onFileDropped = acceptedFiles => {
+  const onFileDropped = (acceptedFiles) => {
     setIsDragActive(false);
     setUploading(true);
     const formData = new FormData();
-    formData.append('file', acceptedFiles[0]);
+    formData.append("file", acceptedFiles[0]);
     axios
       .post<T>(`/api/v1/${context}/${value._id}/logo`, formData, {
         headers: {
-          'Content-Type': 'multipart/form-data',
+          "Content-Type": "multipart/form-data",
         },
       })
       .then(({ data }) => {
         setValue(data);
       })
-      .catch(err => {
-        toast.error(`Could not upload logo: ${err}`);
+      .catch((err) => {
+        toast.error(`Could not upload logo: ${extractErrorMessage(err)}`);
       })
       .finally(() => setUploading(false));
   };
@@ -53,8 +59,8 @@ export function Logo<T extends Value>({ context, value, setValue, className }: {
       .then(({ data }) => {
         setValue(data);
       })
-      .catch(err => {
-        toast.error(`Could not remove logo: ${err}`);
+      .catch((err) => {
+        toast.error(`Could not remove logo: ${extractErrorMessage(err)}`);
       })
       .finally(() => setRemoving(false));
   };
@@ -70,7 +76,7 @@ export function Logo<T extends Value>({ context, value, setValue, className }: {
 
   return (
     <div
-      className={classNames('card', className, styles.dropzone, {
+      className={classNames("card", className, styles.dropzone, {
         [styles.active]: isDragActive,
       })}
       {...getRootProps()}
@@ -80,20 +86,18 @@ export function Logo<T extends Value>({ context, value, setValue, className }: {
       </div>
       <div className="card-body d-flex justify-content-between align-items-center">
         {value.logo ? (
-          <Bubble src={value.logo} className={styles.logo}/>
+          <Bubble src={value.logo} className={styles.logo} />
         ) : (
-          <div className="text-muted">
-            Drag a file here
-          </div>
+          <div className="text-muted">Drag a file here</div>
         )}
         <div className="d-flex align-items-center">
           <input {...getInputProps()} />
           <ButtonIcon loading={uploading} onClick={open}>
-            <FontAwesomeIcon icon={faUpload}/>
+            <FontAwesomeIcon icon={faUpload} />
           </ButtonIcon>
           {value.logo && (
             <ButtonIcon loading={removing} onClick={removeLogo}>
-              <FontAwesomeIcon icon={faTrashAlt}/>
+              <FontAwesomeIcon icon={faTrashAlt} />
             </ButtonIcon>
           )}
         </div>

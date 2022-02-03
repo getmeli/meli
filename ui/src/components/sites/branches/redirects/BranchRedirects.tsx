@@ -1,20 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { FormProvider, useFieldArray, useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
-import { useParams } from 'react-router-dom';
-import { useMountedState } from '../../../../commons/hooks/use-mounted-state';
-import { axios } from '../../../../providers/axios';
-import { Loader } from '../../../../commons/components/Loader';
-import { AlertError } from '../../../../commons/components/AlertError';
-import { Button } from '../../../../commons/components/Button';
-import { BranchRedirectsFormData } from './branch-redirects-form-data';
-import { BranchRedirectForm } from './BranchRedirectForm';
-import { BranchRedirect, RedirectType } from '../branch-redirect';
+import React, { useEffect, useState } from "react";
+import { FormProvider, useFieldArray, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import { useParams } from "react-router-dom";
+import { useMountedState } from "../../../../commons/hooks/use-mounted-state";
+import { axios } from "../../../../providers/axios";
+import { Loader } from "../../../../commons/components/Loader";
+import { AlertError } from "../../../../commons/components/AlertError";
+import { Button } from "../../../../commons/components/Button";
+import { BranchRedirectsFormData } from "./branch-redirects-form-data";
+import { BranchRedirectForm } from "./BranchRedirectForm";
+import { BranchRedirect, RedirectType } from "../branch-redirect";
+import { extractErrorMessage } from "../../../../utils/extract-error-message";
 
-function useBranchFiles(
-  siteId: string,
-  branchId: string,
-) {
+function useBranchFiles(siteId: string, branchId: string) {
   const [loading, setLoading] = useMountedState(false);
   const [error, setError] = useState();
   const [redirects, setFiles] = useState<BranchRedirect[]>();
@@ -23,7 +21,9 @@ function useBranchFiles(
     setLoading(true);
     setError(undefined);
     axios
-      .get<BranchRedirect[]>(`/api/v1/sites/${siteId}/branches/${branchId}/redirects`)
+      .get<BranchRedirect[]>(
+        `/api/v1/sites/${siteId}/branches/${branchId}/redirects`
+      )
       .then(({ data }) => data)
       .then(setFiles)
       .catch(setError)
@@ -41,22 +41,27 @@ function useBranchFiles(
 function useSetFiles(
   siteId: string,
   branchId: string,
-  setFiles: (redirects: BranchRedirect[]) => void,
+  setFiles: (redirects: BranchRedirect[]) => void
 ) {
   const [loading, setLoading] = useMountedState(false);
 
   const updateFiles = (formData: BranchRedirectsFormData) => {
     setLoading(true);
     axios
-      .put<BranchRedirect[]>(`/api/v1/sites/${siteId}/branches/${branchId}/redirects`, {
-        redirects: formData.redirects || [],
-      })
+      .put<BranchRedirect[]>(
+        `/api/v1/sites/${siteId}/branches/${branchId}/redirects`,
+        {
+          redirects: formData.redirects || [],
+        }
+      )
       .then(({ data }) => {
         setFiles(data);
-        toast.success('Saved branch redirects');
+        toast.success("Saved branch redirects");
       })
-      .catch(err => {
-        toast.error(`Could not save branch redirects: ${err}`);
+      .catch((err) => {
+        toast.error(
+          `Could not save branch redirects: ${extractErrorMessage(err)}`
+        );
       })
       .finally(() => setLoading(false));
   };
@@ -70,20 +75,28 @@ function useSetFiles(
 export function BranchRedirects() {
   const { siteId, branchId } = useParams<any>();
   const methods = useForm({
-    mode: 'onChange',
+    mode: "onChange",
   });
   const {
-    control, handleSubmit, formState: { isDirty }, reset,
+    control,
+    handleSubmit,
+    formState: { isDirty },
+    reset,
   } = methods;
   const formFiles = useFieldArray<BranchRedirect>({
     control,
-    name: 'redirects',
+    name: "redirects",
   });
 
-  const {
-    redirects, setFiles, loading, error,
-  } = useBranchFiles(siteId, branchId);
-  const { loading: updating, updateFiles } = useSetFiles(siteId, branchId, setFiles);
+  const { redirects, setFiles, loading, error } = useBranchFiles(
+    siteId,
+    branchId
+  );
+  const { loading: updating, updateFiles } = useSetFiles(
+    siteId,
+    branchId,
+    setFiles
+  );
 
   useEffect(() => {
     if (redirects && reset) {
@@ -94,13 +107,12 @@ export function BranchRedirects() {
   }, [redirects, reset]);
 
   return loading ? (
-    <Loader/>
+    <Loader />
   ) : error ? (
-    <AlertError error={error}/>
+    <AlertError error={error} />
   ) : (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(updateFiles)}>
-
         {formFiles.fields.map((branchFile, index) => (
           <BranchRedirectForm
             key={branchFile.path || branchFile.id}
@@ -111,9 +123,11 @@ export function BranchRedirects() {
           />
         ))}
         <button
-          onClick={() => formFiles.append({
-            type: RedirectType.file,
-          })}
+          onClick={() =>
+            formFiles.append({
+              type: RedirectType.file,
+            })
+          }
           type="button"
           className="list-group-item list-group-item-action text-center"
         >
@@ -125,9 +139,11 @@ export function BranchRedirects() {
             <Button
               type="button"
               className="mt-3 btn btn-outline-primary animate fadeIn"
-              onClick={() => reset({
-                redirects,
-              })}
+              onClick={() =>
+                reset({
+                  redirects,
+                })
+              }
               disabled={updating}
             >
               Discard

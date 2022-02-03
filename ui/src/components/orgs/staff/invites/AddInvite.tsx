@@ -1,45 +1,58 @@
-import React from 'react';
-import { toast } from 'react-toastify';
-import { Controller, useForm } from 'react-hook-form';
-import { Button } from '../../../../commons/components/Button';
-import { axios } from '../../../../providers/axios';
-import { CardModal } from '../../../../commons/components/modals/CardModal';
-import { isEmail, maxLength, required } from '../../../../commons/components/forms/form-constants';
-import { InputError } from '../../../../commons/components/forms/InputError';
-import styles from './AddInvite.module.scss';
-import { OrgMember } from '../members/org-member';
-import { useCurrentOrg } from '../../../../providers/OrgProvider';
-import { Toggle } from '../../../../commons/components/forms/Toggle';
-import { useMountedState } from '../../../../commons/hooks/use-mounted-state';
+import React from "react";
+import { toast } from "react-toastify";
+import { Controller, useForm } from "react-hook-form";
+import { Button } from "../../../../commons/components/Button";
+import { axios } from "../../../../providers/axios";
+import { CardModal } from "../../../../commons/components/modals/CardModal";
+import {
+  isEmail,
+  maxLength,
+  required,
+} from "../../../../commons/components/forms/form-constants";
+import { InputError } from "../../../../commons/components/forms/InputError";
+import styles from "./AddInvite.module.scss";
+import { OrgMember } from "../members/org-member";
+import { useCurrentOrg } from "../../../../providers/OrgProvider";
+import { Toggle } from "../../../../commons/components/forms/Toggle";
+import { useMountedState } from "../../../../commons/hooks/use-mounted-state";
+import { extractErrorMessage } from "../../../../utils/extract-error-message";
 
 interface InviteRequest {
   email: string;
   admin: boolean;
 }
 
-function AddMemberModal({ closeModal, onAdded }: {
+function AddMemberModal({
+  closeModal,
+  onAdded,
+}: {
   closeModal;
   onAdded: (member: OrgMember) => void;
 }) {
   const { currentOrg } = useCurrentOrg();
   const {
-    register, errors, handleSubmit, formState: { isDirty }, control,
+    register,
+    errors,
+    handleSubmit,
+    formState: { isDirty },
+    control,
   } = useForm<InviteRequest>({
-    mode: 'onChange',
+    mode: "onChange",
   });
   const [loading, setLoading] = useMountedState(false);
 
-  const onChange = (member: InviteRequest) => axios
-    .post(`/api/v1/orgs/${currentOrg.org._id}/invites`, member)
-    .then(({ data }) => {
-      onAdded(data);
-    })
-    .then(closeModal)
-    .catch(err => {
-      toast.error(`Could not add invite: ${err}`);
-    });
+  const onChange = (member: InviteRequest) =>
+    axios
+      .post(`/api/v1/orgs/${currentOrg.org._id}/invites`, member)
+      .then(({ data }) => {
+        onAdded(data);
+      })
+      .then(closeModal)
+      .catch((err) => {
+        toast.error(`Could not add invite: ${extractErrorMessage(err)}`);
+      });
 
-  const onSubmit = data => {
+  const onSubmit = (data) => {
     setLoading(true);
     onChange(data).finally(() => setLoading(false));
   };
@@ -61,7 +74,7 @@ function AddMemberModal({ closeModal, onAdded }: {
           placeholder="steve@apple.com"
           autoComplete="off"
         />
-        <InputError error={errors} path="email"/>
+        <InputError error={errors} path="email" />
       </div>
       <div className="form-group flex-grow-1 col">
         <Controller
@@ -73,13 +86,9 @@ function AddMemberModal({ closeModal, onAdded }: {
             maxLength: maxLength(),
           })}
           defaultValue={false}
-          as={(
-            <Toggle>
-              Admin
-            </Toggle>
-          )}
+          as={<Toggle>Admin</Toggle>}
         />
-        <InputError error={errors} path="admin"/>
+        <InputError error={errors} path="admin" />
       </div>
       <div className="d-flex justify-content-end">
         <Button
@@ -96,7 +105,9 @@ function AddMemberModal({ closeModal, onAdded }: {
 }
 
 export function AddInvite({
-  children, className, onAdded,
+  children,
+  className,
+  onAdded,
 }: {
   children;
   className?;
@@ -111,8 +122,12 @@ export function AddInvite({
       <div onClick={openModal} className={className}>
         {children}
       </div>
-      <CardModal isOpen={isOpen} closeModal={closeModal} title="Invite org member">
-        <AddMemberModal closeModal={closeModal} onAdded={onAdded}/>
+      <CardModal
+        isOpen={isOpen}
+        closeModal={closeModal}
+        title="Invite org member"
+      >
+        <AddMemberModal closeModal={closeModal} onAdded={onAdded} />
       </CardModal>
     </>
   );

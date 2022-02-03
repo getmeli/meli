@@ -1,37 +1,42 @@
-import React, { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
-import { uniqueId } from 'lodash';
-import { FormProvider, useForm } from 'react-hook-form';
-import { axios } from '../../providers/axios';
-import { routerHistory } from '../../providers/history';
-import { Tooltip, tooltipToggle } from '../../commons/components/Tooltip';
-import { SiteNameInput } from './settings/SiteNameInput';
-import { Button } from '../../commons/components/Button';
-import { CardModal } from '../../commons/components/modals/CardModal';
-import { Site } from './site';
-import { useMountedState } from '../../commons/hooks/use-mounted-state';
-import { IsAdmin } from '../auth/IsAdmin';
+import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import { uniqueId } from "lodash";
+import { FormProvider, useForm } from "react-hook-form";
+import { axios } from "../../providers/axios";
+import { routerHistory } from "../../providers/history";
+import { Tooltip, tooltipToggle } from "../../commons/components/Tooltip";
+import { SiteNameInput } from "./settings/SiteNameInput";
+import { Button } from "../../commons/components/Button";
+import { CardModal } from "../../commons/components/modals/CardModal";
+import { Site } from "./site";
+import { useMountedState } from "../../commons/hooks/use-mounted-state";
+import { IsAdmin } from "../auth/IsAdmin";
+import { extractErrorMessage } from "../../utils/extract-error-message";
 
 function AddSiteModal({ projectId, closeModal }: { projectId; closeModal }) {
   const methods = useForm({
-    mode: 'onChange',
+    mode: "onChange",
   });
   const [loading, setLoading] = useMountedState(false);
-  const { handleSubmit, formState: { isDirty } } = methods;
+  const {
+    handleSubmit,
+    formState: { isDirty },
+  } = methods;
 
-  const onChange = formData => axios
-    .post<Site>(`/api/v1/projects/${projectId}/sites`, formData)
-    .then(({ data }) => {
-      routerHistory.push(`/sites/${data._id}`);
-    })
-    .finally(() => {
-      closeModal();
-    })
-    .catch(err => {
-      toast.error(`Could not create site: ${err}`);
-    });
+  const onChange = (formData) =>
+    axios
+      .post<Site>(`/api/v1/projects/${projectId}/sites`, formData)
+      .then(({ data }) => {
+        routerHistory.push(`/sites/${data._id}`);
+      })
+      .finally(() => {
+        closeModal();
+      })
+      .catch((err) => {
+        toast.error(`Could not create site: ${extractErrorMessage(err)}`);
+      });
 
-  const onSubmit = data => {
+  const onSubmit = (data) => {
     setLoading(true);
     onChange(data).finally(() => setLoading(false));
   };
@@ -47,7 +52,7 @@ function AddSiteModal({ projectId, closeModal }: { projectId; closeModal }) {
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <SiteNameInput setInputRef={setInputRef}/>
+        <SiteNameInput setInputRef={setInputRef} />
         <div className="d-flex justify-content-end">
           <Button
             type="submit"
@@ -64,7 +69,10 @@ function AddSiteModal({ projectId, closeModal }: { projectId; closeModal }) {
 }
 
 export function AddSite({
-  projectId, children, className, tooltip = true,
+  projectId,
+  children,
+  className,
+  tooltip = true,
 }: {
   projectId: string;
   children;
@@ -79,11 +87,7 @@ export function AddSite({
   return (
     <>
       <IsAdmin>
-        <div
-          onClick={openModal}
-          className={className}
-          {...tooltipToggle(uid)}
-        >
+        <div onClick={openModal} className={className} {...tooltipToggle(uid)}>
           {children}
         </div>
       </IsAdmin>
@@ -93,7 +97,7 @@ export function AddSite({
         </Tooltip>
       )}
       <CardModal isOpen={isOpen} closeModal={closeModal} title="Add site">
-        <AddSiteModal closeModal={closeModal} projectId={projectId}/>
+        <AddSiteModal closeModal={closeModal} projectId={projectId} />
       </CardModal>
     </>
   );

@@ -1,12 +1,16 @@
-import React from 'react';
-import { toast } from 'react-toastify';
-import { Button } from '../../../commons/components/Button';
-import { axios } from '../../../providers/axios';
-import { CardModal } from '../../../commons/components/modals/CardModal';
-import { useMountedState } from '../../../commons/hooks/use-mounted-state';
+import React from "react";
+import { toast } from "react-toastify";
+import { Button } from "../../../commons/components/Button";
+import { axios } from "../../../providers/axios";
+import { CardModal } from "../../../commons/components/modals/CardModal";
+import { useMountedState } from "../../../commons/hooks/use-mounted-state";
+import { extractErrorMessage } from "../../../utils/extract-error-message";
 
 export function DeleteApiToken({
-  tokenId, className, children, onDelete,
+  tokenId,
+  className,
+  children,
+  onDelete,
 }: {
   tokenId: string;
   children: any;
@@ -24,8 +28,8 @@ export function DeleteApiToken({
         setIsOpen(false);
         onDelete();
       })
-      .catch(err => {
-        toast.error(`Could not delete api token: ${err}`);
+      .catch((err) => {
+        toast.error(`Could not delete api token: ${extractErrorMessage(err)}`);
       })
       .finally(() => setLoading(false));
   };

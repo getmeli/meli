@@ -1,21 +1,28 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { toast } from 'react-toastify';
-import { getMembers, OrgMembersSearchQuery } from '../../../orgs/staff/members/get-members';
-import { OrgMember } from '../../../orgs/staff/members/org-member';
-import { CardModal } from '../../../../commons/components/modals/CardModal';
-import { SearchInput } from '../../../sites/releases/SearchInput';
-import { LoadMore } from '../../../../commons/components/LoadMore';
-import { Loader } from '../../../../commons/components/Loader';
-import { AlertError } from '../../../../commons/components/AlertError';
-import styles from './AddMember.module.scss';
-import { ListItem } from './ListItem';
-import { useCurrentOrg } from '../../../../providers/OrgProvider';
-import { useMountedState } from '../../../../commons/hooks/use-mounted-state';
-import { IsAdmin } from '../../../auth/IsAdmin';
-import { ProjectMember } from '../project-member';
+import React, { useEffect, useRef, useState } from "react";
+import { toast } from "react-toastify";
+import {
+  getMembers,
+  OrgMembersSearchQuery,
+} from "../../../orgs/staff/members/get-members";
+import { OrgMember } from "../../../orgs/staff/members/org-member";
+import { CardModal } from "../../../../commons/components/modals/CardModal";
+import { SearchInput } from "../../../sites/releases/SearchInput";
+import { LoadMore } from "../../../../commons/components/LoadMore";
+import { Loader } from "../../../../commons/components/Loader";
+import { AlertError } from "../../../../commons/components/AlertError";
+import styles from "./AddMember.module.scss";
+import { ListItem } from "./ListItem";
+import { useCurrentOrg } from "../../../../providers/OrgProvider";
+import { useMountedState } from "../../../../commons/hooks/use-mounted-state";
+import { IsAdmin } from "../../../auth/IsAdmin";
+import { ProjectMember } from "../project-member";
+import { extractErrorMessage } from "../../../../utils/extract-error-message";
 
 export function AddMember({
-  projectId, className, children, onAdded,
+  projectId,
+  className,
+  children,
+  onAdded,
 }: {
   projectId: string;
   children: any;
@@ -28,7 +35,9 @@ export function AddMember({
   const [loading, setLoading] = useMountedState(false);
   const [error, setError] = useState();
   const [query, setQuery] = useState<OrgMembersSearchQuery>({
-    search: '', page: 0, size: 10,
+    search: "",
+    page: 0,
+    size: 10,
   });
   const [items, setItems] = useState<OrgMember[]>([]);
   const itemsRef = useRef<OrgMember[]>([]);
@@ -38,14 +47,14 @@ export function AddMember({
     setError(undefined);
     setLoading(true);
     getMembers(currentOrg.org._id, query)
-      .then(data => {
+      .then((data) => {
         itemsRef.current = [...itemsRef.current, ...data.items];
         setItems(itemsRef.current);
         setCanLoadMore(itemsRef.current.length !== data.count);
       })
       .catch(setError)
-      .catch(err => {
-        toast.error(`Could not search releases: ${err}`);
+      .catch((err) => {
+        toast.error(`Could not search releases: ${extractErrorMessage(err)}`);
       })
       .finally(() => {
         setLoading(false);
@@ -65,10 +74,12 @@ export function AddMember({
     onAdded(member);
   };
 
-  const onSearch = val => {
+  const onSearch = (val) => {
     itemsRef.current = [];
     setQuery({
-      ...query, search: val, page: 0,
+      ...query,
+      search: val,
+      page: 0,
     });
   };
 
@@ -87,12 +98,12 @@ export function AddMember({
           className="mb-4"
         />
         {initialLoad ? (
-          <Loader/>
+          <Loader />
         ) : error ? (
-          <AlertError error={error}/>
+          <AlertError error={error} />
         ) : (
           <ul className="list-group">
-            {items.map(item => (
+            {items.map((item) => (
               <ListItem
                 key={item._id}
                 member={item}

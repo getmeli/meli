@@ -1,17 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import classNames from 'classnames';
-import { EmptyList } from '../../../commons/components/EmptyList';
-import { Loader } from '../../../commons/components/Loader';
-import { AlertError } from '../../../commons/components/AlertError';
-import { ProjectMember } from './project-member';
-import { axios } from '../../../providers/axios';
-import { AddMember } from './add/AddMember';
-import { MemberView } from './MemberView';
-import styles from './Members.module.scss';
-import { ProjectMemberIcon } from '../../icons/ProjectMemberIcon';
-import { useMountedState } from '../../../commons/hooks/use-mounted-state';
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+import classNames from "classnames";
+import { EmptyList } from "../../../commons/components/EmptyList";
+import { Loader } from "../../../commons/components/Loader";
+import { AlertError } from "../../../commons/components/AlertError";
+import { ProjectMember } from "./project-member";
+import { axios } from "../../../providers/axios";
+import { AddMember } from "./add/AddMember";
+import { MemberView } from "./MemberView";
+import styles from "./Members.module.scss";
+import { ProjectMemberIcon } from "../../icons/ProjectMemberIcon";
+import { useMountedState } from "../../../commons/hooks/use-mounted-state";
+import { extractErrorMessage } from "../../../utils/extract-error-message";
 
 function sortMembers(a: ProjectMember, b: ProjectMember): number {
   return a.name < b.name ? -1 : a.name > b.name ? 1 : 0;
@@ -26,15 +27,18 @@ export function Members() {
   useEffect(() => {
     setLoading(true);
     setError(undefined);
-    axios.get(`/api/v1/projects/${projectId}/members`)
+    axios
+      .get(`/api/v1/projects/${projectId}/members`)
       .then(({ data }) => data)
       .then(setItems)
       .catch(setError)
-      .catch(err => toast.error(`Could not list members: ${err}`))
+      .catch((err) =>
+        toast.error(`Could not list members: ${extractErrorMessage(err)}`)
+      )
       .finally(() => setLoading(false));
   }, [projectId, setLoading]);
 
-  const onAdd = member => {
+  const onAdd = (member) => {
     setItems([member, ...items].sort(sortMembers));
   };
 
@@ -43,10 +47,7 @@ export function Members() {
   };
 
   const emptyList = (
-    <EmptyList
-      icon={<ProjectMemberIcon/>}
-      title="No members"
-    >
+    <EmptyList icon={<ProjectMemberIcon />} title="No members">
       <p>There are no members yet</p>
       <AddMember projectId={projectId} onAdded={onAdd}>
         <button type="button" className="btn btn-primary">
@@ -57,9 +58,9 @@ export function Members() {
   );
 
   return loading ? (
-    <Loader/>
+    <Loader />
   ) : error ? (
-    <AlertError error={error}/>
+    <AlertError error={error} />
   ) : (
     <>
       {items.length === 0 ? (
@@ -70,11 +71,11 @@ export function Members() {
             <AddMember
               projectId={projectId}
               onAdded={onAdd}
-              className={classNames('list-group-item', styles.add)}
+              className={classNames("list-group-item", styles.add)}
             >
               Add member
             </AddMember>
-            {items.map(member => (
+            {items.map((member) => (
               <MemberView
                 key={member.memberId}
                 projectId={projectId}

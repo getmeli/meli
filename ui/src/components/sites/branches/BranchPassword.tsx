@@ -1,22 +1,29 @@
-import React, { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
-import classNames from 'classnames';
-import { Toggle } from '../../../commons/components/forms/Toggle';
-import { CardModal } from '../../../commons/components/modals/CardModal';
-import { Branch } from './branch';
-import { Button } from '../../../commons/components/Button';
-import { InputError } from '../../../commons/components/forms/InputError';
-import { maxLength, required } from '../../../commons/components/forms/form-constants';
-import { axios } from '../../../providers/axios';
-import { randomString } from '../../../commons/utils/random-string';
+import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import classNames from "classnames";
+import { Toggle } from "../../../commons/components/forms/Toggle";
+import { CardModal } from "../../../commons/components/modals/CardModal";
+import { Branch } from "./branch";
+import { Button } from "../../../commons/components/Button";
+import { InputError } from "../../../commons/components/forms/InputError";
+import {
+  maxLength,
+  required,
+} from "../../../commons/components/forms/form-constants";
+import { axios } from "../../../providers/axios";
+import { randomString } from "../../../commons/utils/random-string";
+import { extractErrorMessage } from "../../../utils/extract-error-message";
 
 interface FormData {
   password: string;
 }
 
 export function BranchPassword({
-  siteId, branch, onChange, className,
+  siteId,
+  branch,
+  onChange,
+  className,
 }: {
   siteId: string;
   branch: Branch;
@@ -33,10 +40,8 @@ export function BranchPassword({
     setRandomSecret(randomString(16));
   }, [isOpen]);
 
-  const {
-    register, errors, handleSubmit,
-  } = useForm<FormData>({
-    mode: 'onChange',
+  const { register, errors, handleSubmit } = useForm<FormData>({
+    mode: "onChange",
   });
 
   const [loading, setLoading] = useState(false);
@@ -44,13 +49,18 @@ export function BranchPassword({
   const setPassword = (formData: FormData) => {
     setLoading(true);
     axios
-      .put<Branch>(`/api/v1/sites/${siteId}/branches/${branch._id}/password`, formData)
+      .put<Branch>(
+        `/api/v1/sites/${siteId}/branches/${branch._id}/password`,
+        formData
+      )
       .then(({ data }) => {
         onChange(data);
         closeModal();
       })
-      .catch(err => {
-        toast.error(`Could not set branch password: ${err}`);
+      .catch((err) => {
+        toast.error(
+          `Could not set branch password: ${extractErrorMessage(err)}`
+        );
       })
       .finally(() => setLoading(false));
   };
@@ -60,8 +70,10 @@ export function BranchPassword({
     axios
       .delete<Branch>(`/api/v1/sites/${siteId}/branches/${branch._id}/password`)
       .then(({ data }) => onChange(data))
-      .catch(err => {
-        toast.error(`Could not remove branch password: ${err}`);
+      .catch((err) => {
+        toast.error(
+          `Could not remove branch password: ${extractErrorMessage(err)}`
+        );
       })
       .finally(() => setLoading(false));
   };
@@ -72,24 +84,26 @@ export function BranchPassword({
         value={!!branch.hasPassword}
         onChange={() => (branch.hasPassword ? removePassword() : openModal())}
         loading={branch.hasPassword && loading}
-        className={classNames(className, 'w-100 font-weight-bold')}
+        className={classNames(className, "w-100 font-weight-bold")}
       >
-        Password protection
-        {' '}
+        Password protection{" "}
         {branch.hasPassword && (
           <>
-            {' '}
-            (user name is
-            {' '}
-            <code>user</code>
-            )
+            {" "}
+            (user name is <code>user</code>)
           </>
         )}
       </Toggle>
-      <CardModal isOpen={isOpen} closeModal={closeModal} title="Set branch password">
+      <CardModal
+        isOpen={isOpen}
+        closeModal={closeModal}
+        title="Set branch password"
+      >
         <form onSubmit={handleSubmit(setPassword)}>
           <div className="form-group">
-            <label htmlFor="password" className="form-label">Password</label>
+            <label htmlFor="password" className="form-label">
+              Password
+            </label>
             <input
               type="text"
               id="password"
@@ -103,7 +117,7 @@ export function BranchPassword({
               autoComplete="off"
               defaultValue={randomSecret}
             />
-            <InputError error={errors} path="password"/>
+            <InputError error={errors} path="password" />
           </div>
           <div className="d-flex justify-content-end">
             <Button

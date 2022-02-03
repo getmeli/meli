@@ -1,13 +1,17 @@
-import React from 'react';
-import { useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
-import classNames from 'classnames';
-import { maxLength, required } from '../../../commons/components/forms/form-constants';
-import { InputError } from '../../../commons/components/forms/InputError';
-import { useMountedState } from '../../../commons/hooks/use-mounted-state';
-import { axios } from '../../../providers/axios';
-import { useAuth } from '../../../providers/AuthProvider';
-import { Button } from '../../../commons/components/Button';
+import React from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import classNames from "classnames";
+import {
+  maxLength,
+  required,
+} from "../../../commons/components/forms/form-constants";
+import { InputError } from "../../../commons/components/forms/InputError";
+import { useMountedState } from "../../../commons/hooks/use-mounted-state";
+import { axios } from "../../../providers/axios";
+import { useAuth } from "../../../providers/AuthProvider";
+import { Button } from "../../../commons/components/Button";
+import { extractErrorMessage } from "../../../utils/extract-error-message";
 
 interface FormData {
   user: string;
@@ -25,8 +29,8 @@ function useSignIn() {
       .then(() => {
         fetchUser();
       })
-      .catch(err => {
-        toast.error(`Could not sign in: ${err}`);
+      .catch((err) => {
+        toast.error(`Could not sign in: ${extractErrorMessage(err)}`);
       })
       .finally(() => setLoading(false));
   };
@@ -37,19 +41,17 @@ function useSignIn() {
   };
 }
 
-export function SignInWithUserPassword({ className }: {
-  className?;
-}) {
+export function SignInWithUserPassword({ className }: { className? }) {
   const {
-    register, errors, handleSubmit, formState: { isDirty },
+    register,
+    errors,
+    handleSubmit,
+    formState: { isDirty },
   } = useForm();
   const { loading, signIn } = useSignIn();
 
   return (
-    <form
-      onSubmit={handleSubmit(signIn)}
-      className={classNames(className)}
-    >
+    <form onSubmit={handleSubmit(signIn)} className={classNames(className)}>
       <div className="form-group">
         <label htmlFor="user">User</label>
         <input
@@ -63,7 +65,7 @@ export function SignInWithUserPassword({ className }: {
           className="form-control"
           autoComplete="off"
         />
-        <InputError error={errors} path="user"/>
+        <InputError error={errors} path="user" />
       </div>
       <div className="form-group">
         <label htmlFor="password">Password</label>
@@ -78,7 +80,7 @@ export function SignInWithUserPassword({ className }: {
           className="form-control"
           autoComplete="off"
         />
-        <InputError error={errors} path="password"/>
+        <InputError error={errors} path="password" />
       </div>
       <Button
         type="submit"

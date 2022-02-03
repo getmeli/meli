@@ -1,15 +1,19 @@
-import { FormProvider, useForm } from 'react-hook-form';
-import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import styles from './ProjectGeneralSettings.module.scss';
-import { Button } from '../../../commons/components/Button';
-import { ProjectNameInput } from './ProjectNameInput';
-import { useProject } from '../ProjectView';
-import { axios } from '../../../providers/axios';
-import { InputError } from '../../../commons/components/forms/InputError';
-import { COLOR_PATTERN, required } from '../../../commons/components/forms/form-constants';
-import { useMountedState } from '../../../commons/hooks/use-mounted-state';
+import { FormProvider, useForm } from "react-hook-form";
+import React, { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+import styles from "./ProjectGeneralSettings.module.scss";
+import { Button } from "../../../commons/components/Button";
+import { ProjectNameInput } from "./ProjectNameInput";
+import { useProject } from "../ProjectView";
+import { axios } from "../../../providers/axios";
+import { InputError } from "../../../commons/components/forms/InputError";
+import {
+  COLOR_PATTERN,
+  required,
+} from "../../../commons/components/forms/form-constants";
+import { useMountedState } from "../../../commons/hooks/use-mounted-state";
+import { extractErrorMessage } from "../../../utils/extract-error-message";
 
 interface Settings {
   name: string;
@@ -21,10 +25,14 @@ export function ProjectGeneralSettings() {
   const { project, setProject } = useProject();
 
   const methods = useForm<Settings>({
-    mode: 'onChange',
+    mode: "onChange",
   });
   const {
-    errors, register, reset, handleSubmit, formState: { isDirty },
+    errors,
+    register,
+    reset,
+    handleSubmit,
+    formState: { isDirty },
   } = methods;
 
   useEffect(() => {
@@ -41,26 +49,26 @@ export function ProjectGeneralSettings() {
       .put<Settings>(`/api/v1/projects/${projectId}`, settings)
       .then(({ data }) => data)
       .then(setProject)
-      .then(() => toast.success('Project saved'))
-      .catch(err => toast.error(`Could not update project: ${err}`))
+      .then(() => toast.success("Project saved"))
+      .catch((err) =>
+        toast.error(`Could not update project: ${extractErrorMessage(err)}`)
+      )
       .finally(() => setLoading(false));
   };
 
   return (
     <FormProvider {...methods}>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className={styles.form}
-      >
-
+      <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
         <div className="mt-4 card">
           <div className="card-header">
             <strong>Project</strong>
           </div>
           <div className="card-body">
-            <ProjectNameInput/>
+            <ProjectNameInput />
             <div className="form-group">
-              <label htmlFor="color" className="form-label">Color</label>
+              <label htmlFor="color" className="form-label">
+                Color
+              </label>
               <input
                 type="color"
                 id="color"
@@ -74,7 +82,7 @@ export function ProjectGeneralSettings() {
                 autoComplete="off"
                 defaultValue="#000000"
               />
-              <InputError error={errors} path="color"/>
+              <InputError error={errors} path="color" />
             </div>
           </div>
         </div>
@@ -99,7 +107,6 @@ export function ProjectGeneralSettings() {
             Save
           </Button>
         </div>
-
       </form>
     </FormProvider>
   );

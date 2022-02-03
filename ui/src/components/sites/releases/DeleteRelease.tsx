@@ -1,12 +1,16 @@
-import React from 'react';
-import { toast } from 'react-toastify';
-import { Button } from '../../../commons/components/Button';
-import { axios } from '../../../providers/axios';
-import { CardModal } from '../../../commons/components/modals/CardModal';
-import { useMountedState } from '../../../commons/hooks/use-mounted-state';
+import React from "react";
+import { toast } from "react-toastify";
+import { Button } from "../../../commons/components/Button";
+import { axios } from "../../../providers/axios";
+import { CardModal } from "../../../commons/components/modals/CardModal";
+import { useMountedState } from "../../../commons/hooks/use-mounted-state";
+import { extractErrorMessage } from "../../../utils/extract-error-message";
 
 export function DeleteRelease({
-  releaseId, className, children, onDelete,
+  releaseId,
+  className,
+  children,
+  onDelete,
 }: {
   releaseId: string;
   children: any;
@@ -24,8 +28,8 @@ export function DeleteRelease({
         setIsOpen(false);
         onDelete();
       })
-      .catch(err => {
-        toast.error(`Could not delete release: ${err}`);
+      .catch((err) => {
+        toast.error(`Could not delete release: ${extractErrorMessage(err)}`);
       })
       .finally(() => setLoading(false));
   };

@@ -1,17 +1,24 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { BehaviorSubject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, filter } from 'rxjs/operators';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import { toast } from 'react-toastify';
-import styles from './SearchModal.module.scss';
-import { routerHistory } from '../../../providers/history';
-import { Loader } from '../../../commons/components/Loader';
-import { SiteCard } from '../SiteCard';
-import { CardModal } from '../../../commons/components/modals/CardModal';
-import { useSites } from '../use-sites';
+import React, { useEffect, useRef, useState } from "react";
+import { BehaviorSubject } from "rxjs";
+import { debounceTime, distinctUntilChanged, filter } from "rxjs/operators";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
+import { toast } from "react-toastify";
+import styles from "./SearchModal.module.scss";
+import { routerHistory } from "../../../providers/history";
+import { Loader } from "../../../commons/components/Loader";
+import { SiteCard } from "../SiteCard";
+import { CardModal } from "../../../commons/components/modals/CardModal";
+import { useSites } from "../use-sites";
+import { extractErrorMessage } from "../../../utils/extract-error-message";
 
-export function SearchModal({ isOpen, closeModal }: { isOpen: boolean; closeModal: () => void }) {
-  const search$ = useRef(new BehaviorSubject(''));
+export function SearchModal({
+  isOpen,
+  closeModal,
+}: {
+  isOpen: boolean;
+  closeModal: () => void;
+}) {
+  const search$ = useRef(new BehaviorSubject(""));
   const [searchInputRef, setSearchInputRef] = useState<HTMLInputElement>();
 
   const { loading, error, data: sites, cb: listSites } = useSites();
@@ -20,11 +27,11 @@ export function SearchModal({ isOpen, closeModal }: { isOpen: boolean; closeModa
     if (isOpen) {
       const subs = search$.current
         .pipe(
-          filter(value => !value || value.length >= 3),
+          filter((value) => !value || value.length >= 3),
           debounceTime(200),
-          distinctUntilChanged(),
+          distinctUntilChanged()
         )
-        .subscribe(value => {
+        .subscribe((value) => {
           listSites({
             search: value || undefined,
             page: 0,
@@ -37,7 +44,7 @@ export function SearchModal({ isOpen, closeModal }: { isOpen: boolean; closeModa
 
   useEffect(() => {
     if (error) {
-      toast.error(`Could not search sites: ${error}`);
+      toast.error(`Could not search sites: ${extractErrorMessage(error)}`);
     }
   }, [error]);
 
@@ -49,7 +56,7 @@ export function SearchModal({ isOpen, closeModal }: { isOpen: boolean; closeModa
     }
   }, [isOpen, searchInputRef]);
 
-  const onItemClick = site => {
+  const onItemClick = (site) => {
     routerHistory.push(`/sites/${site._id}`);
     closeModal();
   };
@@ -69,7 +76,7 @@ export function SearchModal({ isOpen, closeModal }: { isOpen: boolean; closeModa
                 type="text"
                 ref={setSearchInputRef}
                 className="form-control"
-                onChange={e => search$.current.next(e.target.value)}
+                onChange={(e) => search$.current.next(e.target.value)}
                 placeholder="Search sites"
               />
               {loading && (
@@ -80,17 +87,20 @@ export function SearchModal({ isOpen, closeModal }: { isOpen: boolean; closeModa
             </div>
             {sites && (
               <div className="mt-3">
-                {sites.items.length === 0 && (
-                  <strong>No results</strong>
-                )}
+                {sites.items.length === 0 && <strong>No results</strong>}
                 <TransitionGroup>
-                  {sites.items.length !== 0 && sites.items.map(site => (
-                    <CSSTransition key={site._id} timeout={500} classNames="fade-down">
-                      <div className="mb-2" onClick={() => onItemClick(site)}>
-                        <SiteCard site={site} className="bg-light" />
-                      </div>
-                    </CSSTransition>
-                  ))}
+                  {sites.items.length !== 0 &&
+                    sites.items.map((site) => (
+                      <CSSTransition
+                        key={site._id}
+                        timeout={500}
+                        classNames="fade-down"
+                      >
+                        <div className="mb-2" onClick={() => onItemClick(site)}>
+                          <SiteCard site={site} className="bg-light" />
+                        </div>
+                      </CSSTransition>
+                    ))}
                 </TransitionGroup>
               </div>
             )}

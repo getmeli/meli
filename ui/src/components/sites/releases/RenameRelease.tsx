@@ -1,32 +1,40 @@
-import React, { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
-import { FormProvider, useForm } from 'react-hook-form';
-import { Button } from '../../../commons/components/Button';
-import { axios } from '../../../providers/axios';
-import { CardModal } from '../../../commons/components/modals/CardModal';
-import { Release } from './release';
-import { ReleaseNameInput } from './ReleaseNameInput';
-import { useMountedState } from '../../../commons/hooks/use-mounted-state';
+import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import { FormProvider, useForm } from "react-hook-form";
+import { Button } from "../../../commons/components/Button";
+import { axios } from "../../../providers/axios";
+import { CardModal } from "../../../commons/components/modals/CardModal";
+import { Release } from "./release";
+import { ReleaseNameInput } from "./ReleaseNameInput";
+import { useMountedState } from "../../../commons/hooks/use-mounted-state";
+import { extractErrorMessage } from "../../../utils/extract-error-message";
 
-function ModalContent({ releaseId, onRenamed }: {
+function ModalContent({
+  releaseId,
+  onRenamed,
+}: {
   releaseId: string;
   onRenamed: (release: Release) => void;
 }) {
   const methods = useForm({
-    mode: 'onChange',
+    mode: "onChange",
   });
   const [loading, setLoading] = useMountedState(false);
-  const { handleSubmit, formState: { isDirty } } = methods;
+  const {
+    handleSubmit,
+    formState: { isDirty },
+  } = methods;
 
-  const onChange = formData => axios
-    .put<Release>(`/api/v1/releases/${releaseId}`, formData)
-    .then(({ data }) => data)
-    .then(onRenamed)
-    .catch(err => {
-      toast.error(`Could not rename release: ${err}`);
-    });
+  const onChange = (formData) =>
+    axios
+      .put<Release>(`/api/v1/releases/${releaseId}`, formData)
+      .then(({ data }) => data)
+      .then(onRenamed)
+      .catch((err) => {
+        toast.error(`Could not rename release: ${extractErrorMessage(err)}`);
+      });
 
-  const onSubmit = data => {
+  const onSubmit = (data) => {
     setLoading(true);
     onChange(data).finally(() => setLoading(false));
   };
@@ -42,7 +50,7 @@ function ModalContent({ releaseId, onRenamed }: {
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <ReleaseNameInput setInputRef={setInputRef}/>
+        <ReleaseNameInput setInputRef={setInputRef} />
         <div className="d-flex justify-content-end">
           <Button
             type="submit"
@@ -59,7 +67,10 @@ function ModalContent({ releaseId, onRenamed }: {
 }
 
 export function RenameRelease({
-  children, className, releaseId, onRenamed,
+  children,
+  className,
+  releaseId,
+  onRenamed,
 }: {
   children;
   className?;
@@ -70,21 +81,18 @@ export function RenameRelease({
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
 
-  const renamed = val => {
+  const renamed = (val) => {
     onRenamed(val);
     closeModal();
   };
 
   return (
     <>
-      <div
-        onClick={openModal}
-        className={className}
-      >
+      <div onClick={openModal} className={className}>
         {children}
       </div>
       <CardModal isOpen={isOpen} closeModal={closeModal} title="Rename release">
-        <ModalContent onRenamed={renamed} releaseId={releaseId}/>
+        <ModalContent onRenamed={renamed} releaseId={releaseId} />
       </CardModal>
     </>
   );

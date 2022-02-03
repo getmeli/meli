@@ -1,8 +1,15 @@
-import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
-import { axios } from './axios';
-import { Loader } from '../commons/components/Loader';
-import { FullPageCentered } from '../commons/components/FullPageCentered';
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+import { toast } from "react-toastify";
+import { axios } from "./axios";
+import { Loader } from "../commons/components/Loader";
+import { FullPageCentered } from "../commons/components/FullPageCentered";
+import { extractErrorMessage } from "../utils/extract-error-message";
 
 export interface User {
   _id: string;
@@ -35,10 +42,10 @@ export function AuthProvider(props) {
       .then(() => setUser(null))
       // force app to reset (TODO graceful logout)
       .then(() => {
-        window.location.href = '/';
+        window.location.href = "/";
       })
-      .catch(err => {
-        toast.error(`Could not sign out properly: ${err}`);
+      .catch((err) => {
+        toast.error(`Could not sign out properly: ${extractErrorMessage(err)}`);
       });
   }, []);
 
@@ -47,8 +54,8 @@ export function AuthProvider(props) {
     axios
       .get(`/api/v1/user`)
       .then(({ data }) => setUser(data))
-      .catch(err => {
-        toast.error(`Could not get user: ${err}`);
+      .catch((err) => {
+        toast.error(`Could not get user: ${extractErrorMessage(err)}`);
         setUser(null);
       })
       .finally(() => {
@@ -61,26 +68,24 @@ export function AuthProvider(props) {
     fetchUser();
   }, [fetchUser]);
 
-  return (
-    !initialized ? (
-      <FullPageCentered>
-        <p>
-          Loading auth
-          <Loader className="ml-2"/>
-        </p>
-      </FullPageCentered>
-    ) : (
-      <AuthContext.Provider
-        value={{
-          initialized,
-          loading,
-          fetchUser,
-          user,
-          setUser,
-          signOut,
-        }}
-        {...props}
-      />
-    )
+  return !initialized ? (
+    <FullPageCentered>
+      <p>
+        Loading auth
+        <Loader className="ml-2" />
+      </p>
+    </FullPageCentered>
+  ) : (
+    <AuthContext.Provider
+      value={{
+        initialized,
+        loading,
+        fetchUser,
+        user,
+        setUser,
+        signOut,
+      }}
+      {...props}
+    />
   );
 }

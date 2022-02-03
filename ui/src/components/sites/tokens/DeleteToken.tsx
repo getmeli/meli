@@ -1,12 +1,17 @@
-import React from 'react';
-import { toast } from 'react-toastify';
-import { Button } from '../../../commons/components/Button';
-import { axios } from '../../../providers/axios';
-import { CardModal } from '../../../commons/components/modals/CardModal';
-import { useMountedState } from '../../../commons/hooks/use-mounted-state';
+import React from "react";
+import { toast } from "react-toastify";
+import { Button } from "../../../commons/components/Button";
+import { axios } from "../../../providers/axios";
+import { CardModal } from "../../../commons/components/modals/CardModal";
+import { useMountedState } from "../../../commons/hooks/use-mounted-state";
+import { extractErrorMessage } from "../../../utils/extract-error-message";
 
 export function DeleteToken({
-  siteId, tokenId, className, children, onDelete,
+  siteId,
+  tokenId,
+  className,
+  children,
+  onDelete,
 }: {
   siteId: string;
   tokenId: string;
@@ -25,8 +30,8 @@ export function DeleteToken({
         setIsOpen(false);
         onDelete();
       })
-      .catch(err => {
-        toast.error(`Could not delete token: ${err}`);
+      .catch((err) => {
+        toast.error(`Could not delete token: ${extractErrorMessage(err)}`);
       })
       .finally(() => setLoading(false));
   };

@@ -1,21 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
-import { Link, useParams } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPen } from '@fortawesome/free-solid-svg-icons';
-import { useMountedState } from '../../../../commons/hooks/use-mounted-state';
-import { axios } from '../../../../providers/axios';
-import { Loader } from '../../../../commons/components/Loader';
-import { AlertError } from '../../../../commons/components/AlertError';
-import { Branch } from '../branch';
-import { Header } from '../header';
-import { HeaderList } from '../../headers/HeaderList';
-import { useSiteHeaders } from '../../headers/use-site-headers';
+import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import { Link, useParams } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPen } from "@fortawesome/free-solid-svg-icons";
+import { useMountedState } from "../../../../commons/hooks/use-mounted-state";
+import { axios } from "../../../../providers/axios";
+import { Loader } from "../../../../commons/components/Loader";
+import { AlertError } from "../../../../commons/components/AlertError";
+import { Branch } from "../branch";
+import { Header } from "../header";
+import { HeaderList } from "../../headers/HeaderList";
+import { useSiteHeaders } from "../../headers/use-site-headers";
+import { extractErrorMessage } from "../../../../utils/extract-error-message";
 
-function useBranchHeaders(
-  siteId: string,
-  branchId: string,
-) {
+function useBranchHeaders(siteId: string, branchId: string) {
   const [loading, setLoading] = useMountedState(true);
   const [error, setError] = useState();
   const [headers, setHeaders] = useState<Header[]>();
@@ -42,7 +40,7 @@ function useBranchHeaders(
 function useSetBranchHeaders(
   siteId: string,
   branchId: string,
-  setHeaders: (headers: Header[]) => void,
+  setHeaders: (headers: Header[]) => void
 ) {
   const [loading, setLoading] = useMountedState(false);
 
@@ -54,10 +52,10 @@ function useSetBranchHeaders(
       })
       .then(({ data }) => {
         setHeaders(data.headers);
-        toast.success('Saved branch headers');
+        toast.success("Saved branch headers");
       })
-      .catch(err => {
-        toast.error(`Could not save headers: ${err}`);
+      .catch((err) => {
+        toast.error(`Could not save headers: ${extractErrorMessage(err)}`);
       })
       .finally(() => {
         setLoading(false);
@@ -70,39 +68,35 @@ function useSetBranchHeaders(
   };
 }
 
-function SiteHeaders({ siteId }: {
-  siteId: string;
-}) {
+function SiteHeaders({ siteId }: { siteId: string }) {
   const { headers, loading, error } = useSiteHeaders(siteId);
 
   return loading ? (
-    <Loader/>
+    <Loader />
   ) : error ? (
-    <AlertError error={error}/>
+    <AlertError error={error} />
   ) : (
     <>
       <div className="d-flex justify-content-between mb-3 d-flex align-items-center">
         <h2 className="mb-0">Headers set at site level</h2>
         <Link to={`/sites/${siteId}/settings/headers`}>
-          Edit
-          {' '}
-          <FontAwesomeIcon icon={faPen} className="ml-2"/>
+          Edit <FontAwesomeIcon icon={faPen} className="ml-2" />
         </Link>
       </div>
       <table className="table">
         <thead>
-        <tr>
-          <th>Name</th>
-          <th>Value</th>
-        </tr>
+          <tr>
+            <th>Name</th>
+            <th>Value</th>
+          </tr>
         </thead>
         <tbody>
-        {headers.map(({ name, value }) => (
-          <tr key={name}>
-            <td>{name}</td>
-            <td>{value}</td>
-          </tr>
-        ))}
+          {headers.map(({ name, value }) => (
+            <tr key={name}>
+              <td>{name}</td>
+              <td>{value}</td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </>
@@ -111,13 +105,20 @@ function SiteHeaders({ siteId }: {
 
 export function BranchHeaders() {
   const { siteId, branchId } = useParams<any>();
-  const { headers, setHeaders, loading, error } = useBranchHeaders(siteId, branchId);
-  const { loading: updating, updateHeaders } = useSetBranchHeaders(siteId, branchId, setHeaders);
+  const { headers, setHeaders, loading, error } = useBranchHeaders(
+    siteId,
+    branchId
+  );
+  const { loading: updating, updateHeaders } = useSetBranchHeaders(
+    siteId,
+    branchId,
+    setHeaders
+  );
 
   return loading ? (
-    <Loader/>
+    <Loader />
   ) : error ? (
-    <AlertError error={error}/>
+    <AlertError error={error} />
   ) : (
     <>
       <h2>Branch headers</h2>
@@ -126,9 +127,7 @@ export function BranchHeaders() {
         onSubmit={updateHeaders}
         submitting={updating}
       />
-      <SiteHeaders
-        siteId={siteId}
-      />
+      <SiteHeaders siteId={siteId} />
     </>
   );
 }

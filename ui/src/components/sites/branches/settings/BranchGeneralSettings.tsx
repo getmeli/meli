@@ -1,11 +1,12 @@
-import { FormProvider, useForm } from 'react-hook-form';
-import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import { Site, SiteDomain } from '../../site';
-import { useSite } from '../../SiteView';
-import { axios } from '../../../../providers/axios';
-import { useMountedState } from '../../../../commons/hooks/use-mounted-state';
+import { FormProvider, useForm } from "react-hook-form";
+import React, { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+import { Site, SiteDomain } from "../../site";
+import { useSite } from "../../SiteView";
+import { axios } from "../../../../providers/axios";
+import { useMountedState } from "../../../../commons/hooks/use-mounted-state";
+import { extractErrorMessage } from "../../../../utils/extract-error-message";
 
 interface Settings {
   name: string;
@@ -18,7 +19,7 @@ export function BranchGeneralSettings() {
   const { site, setSite } = useSite();
 
   const methods = useForm<Settings>({
-    mode: 'onChange',
+    mode: "onChange",
   });
   const { reset, handleSubmit } = methods;
 
@@ -36,22 +37,22 @@ export function BranchGeneralSettings() {
       .put<Site>(`/api/v1/sites/${siteId}`, updatedSite)
       .then(({ data }) => data)
       .then(setSite)
-      .then(() => toast.success('Site saved'))
-      .catch(err => toast.error(`Could not update site: ${err}`))
+      .then(() => toast.success("Site saved"))
+      .catch((err) =>
+        toast.error(`Could not update site: ${extractErrorMessage(err)}`)
+      )
       .finally(() => setLoading(false));
   };
 
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)}>
-
         {/* <div className="mt-4 card"> */}
         {/*  <div className="card-header no-border d-flex justify-content-between"> */}
         {/*    <strong>Current release</strong> */}
         {/*    <SelectMainBranch siteId={siteId} /> */}
         {/*  </div> */}
         {/* </div> */}
-
       </form>
     </FormProvider>
   );

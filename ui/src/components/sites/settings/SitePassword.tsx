@@ -1,22 +1,28 @@
-import React, { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
-import classNames from 'classnames';
-import { Toggle } from '../../../commons/components/forms/Toggle';
-import { CardModal } from '../../../commons/components/modals/CardModal';
-import { Button } from '../../../commons/components/Button';
-import { InputError } from '../../../commons/components/forms/InputError';
-import { maxLength, required } from '../../../commons/components/forms/form-constants';
-import { axios } from '../../../providers/axios';
-import { randomString } from '../../../commons/utils/random-string';
-import { Site } from '../site';
+import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import classNames from "classnames";
+import { Toggle } from "../../../commons/components/forms/Toggle";
+import { CardModal } from "../../../commons/components/modals/CardModal";
+import { Button } from "../../../commons/components/Button";
+import { InputError } from "../../../commons/components/forms/InputError";
+import {
+  maxLength,
+  required,
+} from "../../../commons/components/forms/form-constants";
+import { axios } from "../../../providers/axios";
+import { randomString } from "../../../commons/utils/random-string";
+import { Site } from "../site";
+import { extractErrorMessage } from "../../../utils/extract-error-message";
 
 interface FormData {
   password: string;
 }
 
 export function SitePassword({
-  site, onChange, className,
+  site,
+  onChange,
+  className,
 }: {
   site: Site;
   onChange: (site: Site) => void;
@@ -32,10 +38,8 @@ export function SitePassword({
     setRandomSecret(randomString(16));
   }, [isOpen]);
 
-  const {
-    register, errors, handleSubmit,
-  } = useForm<FormData>({
-    mode: 'onChange',
+  const { register, errors, handleSubmit } = useForm<FormData>({
+    mode: "onChange",
   });
 
   const [loading, setLoading] = useState(false);
@@ -48,8 +52,8 @@ export function SitePassword({
         onChange(data);
         closeModal();
       })
-      .catch(err => {
-        toast.error(`Could not set site password: ${err}`);
+      .catch((err) => {
+        toast.error(`Could not set site password: ${extractErrorMessage(err)}`);
       })
       .finally(() => setLoading(false));
   };
@@ -59,8 +63,10 @@ export function SitePassword({
     axios
       .delete<Site>(`/api/v1/sites/${site._id}/password`)
       .then(({ data }) => onChange(data))
-      .catch(err => {
-        toast.error(`Could not remove site password: ${err}`);
+      .catch((err) => {
+        toast.error(
+          `Could not remove site password: ${extractErrorMessage(err)}`
+        );
       })
       .finally(() => setLoading(false));
   };
@@ -71,24 +77,26 @@ export function SitePassword({
         value={!!site.hasPassword}
         onChange={() => (site.hasPassword ? removePassword() : openModal())}
         loading={site.hasPassword && loading}
-        className={classNames(className, 'w-100 font-weight-bold')}
+        className={classNames(className, "w-100 font-weight-bold")}
       >
-        Password protection
-        {' '}
+        Password protection{" "}
         {site.hasPassword && (
           <>
-            {' '}
-            (user name is
-            {' '}
-            <code>user</code>
-            )
+            {" "}
+            (user name is <code>user</code>)
           </>
         )}
       </Toggle>
-      <CardModal isOpen={isOpen} closeModal={closeModal} title="Set site password">
+      <CardModal
+        isOpen={isOpen}
+        closeModal={closeModal}
+        title="Set site password"
+      >
         <form onSubmit={handleSubmit(setPassword)}>
           <div className="form-group">
-            <label htmlFor="password" className="form-label">Password</label>
+            <label htmlFor="password" className="form-label">
+              Password
+            </label>
             <input
               type="text"
               id="password"
@@ -102,7 +110,7 @@ export function SitePassword({
               autoComplete="off"
               defaultValue={randomSecret}
             />
-            <InputError error={errors} path="password"/>
+            <InputError error={errors} path="password" />
           </div>
           <div className="d-flex justify-content-end">
             <Button

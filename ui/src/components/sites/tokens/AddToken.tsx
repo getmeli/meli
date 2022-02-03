@@ -1,40 +1,50 @@
-import React from 'react';
-import { toast } from 'react-toastify';
-import { useForm } from 'react-hook-form';
-import { Button } from '../../../commons/components/Button';
-import { axios } from '../../../providers/axios';
-import { CardModal } from '../../../commons/components/modals/CardModal';
-import { Token } from './token';
-import { maxLength, required } from '../../../commons/components/forms/form-constants';
-import { InputError } from '../../../commons/components/forms/InputError';
-import styles from './AddToken.module.scss';
-import { useMountedState } from '../../../commons/hooks/use-mounted-state';
+import React from "react";
+import { toast } from "react-toastify";
+import { useForm } from "react-hook-form";
+import { Button } from "../../../commons/components/Button";
+import { axios } from "../../../providers/axios";
+import { CardModal } from "../../../commons/components/modals/CardModal";
+import { Token } from "./token";
+import {
+  maxLength,
+  required,
+} from "../../../commons/components/forms/form-constants";
+import { InputError } from "../../../commons/components/forms/InputError";
+import styles from "./AddToken.module.scss";
+import { useMountedState } from "../../../commons/hooks/use-mounted-state";
+import { extractErrorMessage } from "../../../utils/extract-error-message";
 
 function AddTokenModal({
-  closeModal, siteId, onAdded,
+  closeModal,
+  siteId,
+  onAdded,
 }: {
   closeModal;
   siteId: string;
   onAdded: (token: Token) => void;
 }) {
   const {
-    register, errors, handleSubmit, formState: { isDirty },
+    register,
+    errors,
+    handleSubmit,
+    formState: { isDirty },
   } = useForm({
-    mode: 'onChange',
+    mode: "onChange",
   });
   const [loading, setLoading] = useMountedState(false);
 
-  const onChange = token => axios
-    .post(`/api/v1/sites/${siteId}/tokens`, token)
-    .then(({ data }) => {
-      onAdded(data);
-    })
-    .then(closeModal)
-    .catch(err => {
-      toast.error(`Could not create token: ${err}`);
-    });
+  const onChange = (token) =>
+    axios
+      .post(`/api/v1/sites/${siteId}/tokens`, token)
+      .then(({ data }) => {
+        onAdded(data);
+      })
+      .then(closeModal)
+      .catch((err) => {
+        toast.error(`Could not create token: ${extractErrorMessage(err)}`);
+      });
 
-  const onSubmit = data => {
+  const onSubmit = (data) => {
     setLoading(true);
     onChange(data).finally(() => setLoading(false));
   };
@@ -55,7 +65,7 @@ function AddTokenModal({
           placeholder="Steve's token"
           autoComplete="off"
         />
-        <InputError error={errors} path="name"/>
+        <InputError error={errors} path="name" />
       </div>
       <div className="d-flex justify-content-end">
         <Button
@@ -72,7 +82,10 @@ function AddTokenModal({
 }
 
 export function AddToken({
-  children, className, siteId, onAdded,
+  children,
+  className,
+  siteId,
+  onAdded,
 }: {
   children;
   className?;
@@ -89,7 +102,11 @@ export function AddToken({
         {children}
       </div>
       <CardModal isOpen={isOpen} closeModal={closeModal} title="Create token">
-        <AddTokenModal closeModal={closeModal} siteId={siteId} onAdded={onAdded}/>
+        <AddTokenModal
+          closeModal={closeModal}
+          siteId={siteId}
+          onAdded={onAdded}
+        />
       </CardModal>
     </>
   );

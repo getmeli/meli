@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
-import classNames from 'classnames';
-import { Link, useRouteMatch } from 'react-router-dom';
-import styles from './HookList.module.scss';
-import { EmptyList } from '../../commons/components/EmptyList';
-import { axios } from '../../providers/axios';
-import { Loader } from '../../commons/components/Loader';
-import { AlertError } from '../../commons/components/AlertError';
-import { useMountedState } from '../../commons/hooks/use-mounted-state';
-import { useHookContext } from './HookProvider';
-import { Hook } from './hook';
-import { HookIcon } from '../icons/HookIcon';
+import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import classNames from "classnames";
+import { Link, useRouteMatch } from "react-router-dom";
+import styles from "./HookList.module.scss";
+import { EmptyList } from "../../commons/components/EmptyList";
+import { axios } from "../../providers/axios";
+import { Loader } from "../../commons/components/Loader";
+import { AlertError } from "../../commons/components/AlertError";
+import { useMountedState } from "../../commons/hooks/use-mounted-state";
+import { useHookContext } from "./HookProvider";
+import { Hook } from "./hook";
+import { HookIcon } from "../icons/HookIcon";
+import { extractErrorMessage } from "../../utils/extract-error-message";
 
 function sortHooks(a: Hook, b: Hook): number {
   return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
@@ -27,19 +28,19 @@ export function HookList() {
   useEffect(() => {
     setLoading(true);
     setError(undefined);
-    axios.get<Hook[]>(`/api/v1/${context}/hooks`)
+    axios
+      .get<Hook[]>(`/api/v1/${context}/hooks`)
       .then(({ data }) => data.sort(sortHooks))
       .then(setHooks)
       .catch(setError)
-      .catch(err => toast.error(`Could not list hooks: ${err}`))
+      .catch((err) =>
+        toast.error(`Could not list hooks: ${extractErrorMessage(err)}`)
+      )
       .finally(() => setLoading(false));
   }, [setLoading, context]);
 
   const emptyList = (
-    <EmptyList
-      icon={<HookIcon/>}
-      title="No hooks"
-    >
+    <EmptyList icon={<HookIcon />} title="No hooks">
       <p>There are no hooks yet</p>
       <Link to={`${url}/add`}>
         <button type="button" className="btn btn-primary">
@@ -50,9 +51,9 @@ export function HookList() {
   );
 
   return loading ? (
-    <Loader/>
+    <Loader />
   ) : error ? (
-    <AlertError error={error}/>
+    <AlertError error={error} />
   ) : (
     <>
       {hooks.length === 0 ? (
@@ -61,11 +62,14 @@ export function HookList() {
         <ul className="list-group">
           <Link
             to={`${url}/add`}
-            className={classNames('list-group-item list-group-item-action', styles.add)}
+            className={classNames(
+              "list-group-item list-group-item-action",
+              styles.add
+            )}
           >
             Add hook
           </Link>
-          {hooks.map(hook => (
+          {hooks.map((hook) => (
             <Link
               key={hook._id}
               to={`${url}/${hook._id}`}

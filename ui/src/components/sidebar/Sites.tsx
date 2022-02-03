@@ -1,30 +1,33 @@
-import React, { useEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import classNames from 'classnames';
-import { Loader } from '../../commons/components/Loader';
-import { AlertError } from '../../commons/components/AlertError';
-import { getProjectSites } from '../sites/get-project-sites';
-import { Site } from '../sites/site';
-import styles from './Sites.module.scss';
-import { Bubble } from '../../commons/components/Bubble';
-import { useMountedState } from '../../commons/hooks/use-mounted-state';
-import { EventType } from '../../websockets/event-type';
-import { useRoom } from '../../websockets/use-room';
+import React, { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
+import { toast } from "react-toastify";
+import classNames from "classnames";
+import { Loader } from "../../commons/components/Loader";
+import { AlertError } from "../../commons/components/AlertError";
+import { getProjectSites } from "../sites/get-project-sites";
+import { Site } from "../sites/site";
+import styles from "./Sites.module.scss";
+import { Bubble } from "../../commons/components/Bubble";
+import { useMountedState } from "../../commons/hooks/use-mounted-state";
+import { EventType } from "../../websockets/event-type";
+import { useRoom } from "../../websockets/use-room";
+import { extractErrorMessage } from "../../utils/extract-error-message";
 
 function sortSites(a: Site, b: Site) {
   return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
 }
 
-function ListItem({ site, onDeleted }: {
-  site: Site;
-  onDeleted: () => void;
-}) {
-  useRoom<{ site: Site }>('site', site._id, [EventType.site_deleted], ({ site: s }) => {
-    if (site._id === s._id) {
-      onDeleted();
+function ListItem({ site, onDeleted }: { site: Site; onDeleted: () => void }) {
+  useRoom<{ site: Site }>(
+    "site",
+    site._id,
+    [EventType.site_deleted],
+    ({ site: s }) => {
+      if (site._id === s._id) {
+        onDeleted();
+      }
     }
-  });
+  );
 
   return (
     <NavLink
@@ -33,7 +36,7 @@ function ListItem({ site, onDeleted }: {
       className={styles.site}
       activeClassName={styles.active}
     >
-      <Bubble color={site.color} src={site.logo}/>
+      <Bubble color={site.color} src={site.logo} />
       <span className="ml-2">{site.name}</span>
     </NavLink>
   );
@@ -44,52 +47,53 @@ export function Sites({ projectId, className }: { projectId; className? }) {
   const [error, setError] = useState();
   const [sites, setItems] = useState<Site[]>();
 
-  useRoom<{ site: Site }>('project', projectId, [EventType.site_added], ({ site }) => {
-    if (site.projectId === projectId) {
-      setItems([site, ...sites].sort(sortSites));
+  useRoom<{ site: Site }>(
+    "project",
+    projectId,
+    [EventType.site_added],
+    ({ site }) => {
+      if (site.projectId === projectId) {
+        setItems([site, ...sites].sort(sortSites));
+      }
     }
-  });
+  );
 
   useEffect(() => {
     setLoading(true);
     setError(undefined);
     getProjectSites(projectId)
-      .then(items => {
+      .then((items) => {
         setItems(items.sort(sortSites));
       })
       .catch(setError)
-      .catch(err => toast.error(`Could not list sites: ${err}`))
+      .catch((err) =>
+        toast.error(`Could not list sites: ${extractErrorMessage(err)}`)
+      )
       .finally(() => setLoading(false));
   }, [projectId, setLoading]);
 
   const onDelete = (siteId: string) => {
-    setItems(sites.filter(s => s._id !== siteId));
+    setItems(sites.filter((s) => s._id !== siteId));
   };
 
-  const emptyList = (
-    <div className="text-muted ml-4">
-      No sites to show
-    </div>
-  );
+  const emptyList = <div className="text-muted ml-4">No sites to show</div>;
 
   return loading ? (
-    <Loader/>
+    <Loader />
   ) : error ? (
-    <AlertError error={error}/>
+    <AlertError error={error} />
   ) : (
     <div className={classNames(className)}>
       <div>
-        {sites.length === 0 ? (
-          emptyList
-        ) : (
-          sites.map(site => (
-            <ListItem
-              site={site}
-              onDeleted={() => onDelete(site._id)}
-              key={site._id}
-            />
-          ))
-        )}
+        {sites.length === 0
+          ? emptyList
+          : sites.map((site) => (
+              <ListItem
+                site={site}
+                onDeleted={() => onDelete(site._id)}
+                key={site._id}
+              />
+            ))}
       </div>
     </div>
   );

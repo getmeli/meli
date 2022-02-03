@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
-import classNames from 'classnames';
-import { Link, useRouteMatch } from 'react-router-dom';
-import { EmptyList } from '../../../commons/components/EmptyList';
-import { Loader } from '../../../commons/components/Loader';
-import { AlertError } from '../../../commons/components/AlertError';
-import { ApiToken } from './api-token';
-import { axios } from '../../../providers/axios';
-import styles from './ApiTokenList.module.scss';
-import { TokenIcon } from '../../icons/TokenIcon';
-import { useMountedState } from '../../../commons/hooks/use-mounted-state';
-import { ApiTokenActivationPeriod } from './ApiTokenActivationPeriod';
+import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import classNames from "classnames";
+import { Link, useRouteMatch } from "react-router-dom";
+import { EmptyList } from "../../../commons/components/EmptyList";
+import { Loader } from "../../../commons/components/Loader";
+import { AlertError } from "../../../commons/components/AlertError";
+import { ApiToken } from "./api-token";
+import { axios } from "../../../providers/axios";
+import styles from "./ApiTokenList.module.scss";
+import { TokenIcon } from "../../icons/TokenIcon";
+import { useMountedState } from "../../../commons/hooks/use-mounted-state";
+import { ApiTokenActivationPeriod } from "./ApiTokenActivationPeriod";
+import { extractErrorMessage } from "../../../utils/extract-error-message";
 
 function sortTokens(a: ApiToken, b: ApiToken): number {
   return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
@@ -26,19 +27,19 @@ export function ApiTokenList() {
   useEffect(() => {
     setLoading(true);
     setError(undefined);
-    axios.get<ApiToken[]>(`/api/v1/api-tokens`)
+    axios
+      .get<ApiToken[]>(`/api/v1/api-tokens`)
       .then(({ data }) => data.sort(sortTokens))
       .then(setItems)
       .catch(setError)
-      .catch(err => toast.error(`Could not list tokens: ${err}`))
+      .catch((err) =>
+        toast.error(`Could not list tokens: ${extractErrorMessage(err)}`)
+      )
       .finally(() => setLoading(false));
   }, [setLoading]);
 
   const emptyList = (
-    <EmptyList
-      icon={<TokenIcon/>}
-      title="No tokens"
-    >
+    <EmptyList icon={<TokenIcon />} title="No tokens">
       <p>There are no tokens yet</p>
       <Link to={`${url}/add`}>
         <button type="button" className="btn btn-primary">
@@ -49,9 +50,9 @@ export function ApiTokenList() {
   );
 
   return loading ? (
-    <Loader/>
+    <Loader />
   ) : error ? (
-    <AlertError error={error}/>
+    <AlertError error={error} />
   ) : (
     <>
       {items.length === 0 ? (
@@ -60,11 +61,14 @@ export function ApiTokenList() {
         <ul className="list-group">
           <Link
             to={`${url}/add`}
-            className={classNames('list-group-item list-group-item-action', styles.add)}
+            className={classNames(
+              "list-group-item list-group-item-action",
+              styles.add
+            )}
           >
             Add token
           </Link>
-          {items.map(apiToken => (
+          {items.map((apiToken) => (
             <Link
               key={apiToken._id}
               to={`${url}/${apiToken._id}`}
@@ -75,7 +79,7 @@ export function ApiTokenList() {
               </div>
 
               <div className="d-flex align-items-center">
-                <ApiTokenActivationPeriod apiToken={apiToken}/>
+                <ApiTokenActivationPeriod apiToken={apiToken} />
               </div>
             </Link>
           ))}

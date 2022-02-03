@@ -1,24 +1,31 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import { EmptyList } from '../../../commons/components/EmptyList';
-import { LoadMore } from '../../../commons/components/LoadMore';
-import { AlertError } from '../../../commons/components/AlertError';
-import { getReleases, ReleaseSearchQuery } from './get-releases';
-import { Release } from './release';
-import { CodeSnippet } from '../../../commons/components/CodeSnippet';
-import { ReleaseIcon } from '../../icons/ReleaseIcon';
-import { CardModal } from '../../../commons/components/modals/CardModal';
-import { ReleaseView } from './ReleaseView';
-import { SearchInput } from './SearchInput';
-import { useMountedState } from '../../../commons/hooks/use-mounted-state';
-import { useBranch } from '../branches/BranchView';
-import { useRoom } from '../../../websockets/use-room';
-import { EventType } from '../../../websockets/event-type';
-import { Site } from '../site';
-import { useEnv } from '../../../providers/EnvProvider';
+import React, { useEffect, useRef, useState } from "react";
+import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+import { EmptyList } from "../../../commons/components/EmptyList";
+import { LoadMore } from "../../../commons/components/LoadMore";
+import { AlertError } from "../../../commons/components/AlertError";
+import { getReleases, ReleaseSearchQuery } from "./get-releases";
+import { Release } from "./release";
+import { CodeSnippet } from "../../../commons/components/CodeSnippet";
+import { ReleaseIcon } from "../../icons/ReleaseIcon";
+import { CardModal } from "../../../commons/components/modals/CardModal";
+import { ReleaseView } from "./ReleaseView";
+import { SearchInput } from "./SearchInput";
+import { useMountedState } from "../../../commons/hooks/use-mounted-state";
+import { useBranch } from "../branches/BranchView";
+import { useRoom } from "../../../websockets/use-room";
+import { EventType } from "../../../websockets/event-type";
+import { Site } from "../site";
+import { useEnv } from "../../../providers/EnvProvider";
+import { extractErrorMessage } from "../../../utils/extract-error-message";
 
-function UploadReleaseSnippet({ siteId, className }: { siteId: string; className? }) {
+function UploadReleaseSnippet({
+  siteId,
+  className,
+}: {
+  siteId: string;
+  className?;
+}) {
   const env = useEnv();
   const snippet = `npx @getmeli/cli upload \\
     --url ${env.MELI_URL} \\
@@ -26,7 +33,9 @@ function UploadReleaseSnippet({ siteId, className }: { siteId: string; className
     --token <token> \\
     <path>`;
   return (
-    <CodeSnippet language="shell" className={className}>{snippet}</CodeSnippet>
+    <CodeSnippet language="shell" className={className}>
+      {snippet}
+    </CodeSnippet>
   );
 }
 
@@ -40,7 +49,7 @@ function HowToUpload({ children }: { children: any }) {
       <button
         type="button"
         className="link"
-        onClick={e => {
+        onClick={(e) => {
           e.preventDefault();
           openModal();
         }}
@@ -63,25 +72,35 @@ export function Releases() {
   const itemsRef = useRef<Release[]>([]);
   const [canLoadMore, setCanLoadMore] = useState(false);
   const [searching, setSearching] = useState(false);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const searchQueryRef = useRef<ReleaseSearchQuery>({
-    search: '',
+    search: "",
     page: 0,
     size: 10,
     branch: branchContext?.branch?._id,
   });
-  const [searchQuery, setSearchQuery] = useState<ReleaseSearchQuery>(searchQueryRef.current);
+  const [searchQuery, setSearchQuery] = useState<ReleaseSearchQuery>(
+    searchQueryRef.current
+  );
 
-  useRoom<{ site: Site; release: Release }>('site', siteId, [EventType.site_release_created], ({ release }) => {
-    if (search || release.siteId !== siteId) {
-      return;
+  useRoom<{ site: Site; release: Release }>(
+    "site",
+    siteId,
+    [EventType.site_release_created],
+    ({ release }) => {
+      if (search || release.siteId !== siteId) {
+        return;
+      }
+      setItems([release, ...items]);
     }
-    setItems([release, ...items]);
-  });
+  );
 
   useEffect(() => {
     // prevents duplicate calls when search input is initialized
-    if (search === searchQueryRef.current.search || branchContext?.branch?._id === searchQueryRef.current.branch) {
+    if (
+      search === searchQueryRef.current.search ||
+      branchContext?.branch?._id === searchQueryRef.current.branch
+    ) {
       return;
     }
 
@@ -120,14 +139,16 @@ export function Releases() {
     setLoading(true);
 
     getReleases(siteId, searchQuery)
-      .then(data => {
-        itemsRef.current = searchQuery.search ? data.items : [...itemsRef.current, ...data.items];
+      .then((data) => {
+        itemsRef.current = searchQuery.search
+          ? data.items
+          : [...itemsRef.current, ...data.items];
         setItems(itemsRef.current);
         setCanLoadMore(itemsRef.current.length !== data.count);
       })
       .catch(setError)
-      .catch(err => {
-        toast.error(`Could not list releases: ${err}`);
+      .catch((err) => {
+        toast.error(`Could not list releases: ${extractErrorMessage(err)}`);
       })
       .finally(() => {
         setLoading(false);
@@ -142,15 +163,10 @@ export function Releases() {
     });
   };
 
-  const uploadSnippet = (
-    <UploadReleaseSnippet siteId={siteId}/>
-  );
+  const uploadSnippet = <UploadReleaseSnippet siteId={siteId} />;
 
   const emptyList = (
-    <EmptyList
-      icon={<ReleaseIcon/>}
-      title="No releases"
-    >
+    <EmptyList icon={<ReleaseIcon />} title="No releases">
       <p>There are no releases yet, use our CLI to upload one</p>
       {uploadSnippet}
     </EmptyList>
@@ -161,7 +177,7 @@ export function Releases() {
   };
 
   const onChange = (changed: Release) => {
-    setItems(items.map(item => (item._id === changed._id ? changed : item)));
+    setItems(items.map((item) => (item._id === changed._id ? changed : item)));
   };
 
   return (
@@ -173,9 +189,7 @@ export function Releases() {
           setSearch={setSearch}
           placeholder="Search releases"
         />
-        <HowToUpload>
-          {uploadSnippet}
-        </HowToUpload>
+        <HowToUpload>{uploadSnippet}</HowToUpload>
       </div>
       {items.length === 0 ? (
         searchQuery.search ? (
@@ -185,7 +199,7 @@ export function Releases() {
         )
       ) : (
         <ul className="list-group">
-          {items.map(release => (
+          {items.map((release) => (
             <ReleaseView
               key={release._id}
               siteId={siteId}
@@ -195,15 +209,9 @@ export function Releases() {
             />
           ))}
           {canLoadMore && (
-            <LoadMore
-              onClick={nextPage}
-              loading={loading}
-              disabled={loading}
-            />
+            <LoadMore onClick={nextPage} loading={loading} disabled={loading} />
           )}
-          {error && (
-            <AlertError error={error} className="mt-4"/>
-          )}
+          {error && <AlertError error={error} className="mt-4" />}
         </ul>
       )}
     </>

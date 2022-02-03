@@ -1,13 +1,21 @@
-import React from 'react';
-import { toast } from 'react-toastify';
-import { Button } from '../../../../commons/components/Button';
-import { axios } from '../../../../providers/axios';
-import { CardModal } from '../../../../commons/components/modals/CardModal';
-import { useMountedState } from '../../../../commons/hooks/use-mounted-state';
-import { Branch } from '../branch';
+import React from "react";
+import { toast } from "react-toastify";
+import { Button } from "../../../../commons/components/Button";
+import { axios } from "../../../../providers/axios";
+import { CardModal } from "../../../../commons/components/modals/CardModal";
+import { useMountedState } from "../../../../commons/hooks/use-mounted-state";
+import { Branch } from "../branch";
+import { extractErrorMessage } from "../../../../utils/extract-error-message";
 
 export function SetBranchRelease({
-  siteId, branchId, releaseId, className, children, onSet, branchName, releaseName,
+  siteId,
+  branchId,
+  releaseId,
+  className,
+  children,
+  onSet,
+  branchName,
+  releaseName,
 }: {
   siteId: string;
   branchId: string;
@@ -31,8 +39,10 @@ export function SetBranchRelease({
         setIsOpen(false);
         onSet();
       })
-      .catch(err => {
-        toast.error(`Could not set branch release: ${err}`);
+      .catch((err) => {
+        toast.error(
+          `Could not set branch release: ${extractErrorMessage(err)}`
+        );
       })
       .finally(() => setLoading(false));
   };
@@ -45,15 +55,8 @@ export function SetBranchRelease({
         closeModal={() => setIsOpen(false)}
       >
         <p>
-          Are you sure you want to rollback branch
-          {' '}
-          <strong>{branchName}</strong>
-          {' '}
-          to release
-          {' '}
-          <strong>{releaseName}</strong>
-          {' '}
-          ?
+          Are you sure you want to rollback branch <strong>{branchName}</strong>{" "}
+          to release <strong>{releaseName}</strong> ?
         </p>
         <div className="d-flex align-items-center justify-content-end">
           <button

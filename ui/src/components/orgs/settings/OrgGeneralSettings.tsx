@@ -1,15 +1,19 @@
-import { FormProvider, useForm } from 'react-hook-form';
-import React, { useEffect } from 'react';
-import { toast } from 'react-toastify';
-import styles from './OrgSettings.module.scss';
-import { Button } from '../../../commons/components/Button';
-import { OrgNameInput } from './OrgNameInput';
-import { axios } from '../../../providers/axios';
-import { InputError } from '../../../commons/components/forms/InputError';
-import { COLOR_PATTERN, required } from '../../../commons/components/forms/form-constants';
-import { useOrg } from '../OrgView';
-import { Org } from '../org';
-import { useMountedState } from '../../../commons/hooks/use-mounted-state';
+import { FormProvider, useForm } from "react-hook-form";
+import React, { useEffect } from "react";
+import { toast } from "react-toastify";
+import styles from "./OrgSettings.module.scss";
+import { Button } from "../../../commons/components/Button";
+import { OrgNameInput } from "./OrgNameInput";
+import { axios } from "../../../providers/axios";
+import { InputError } from "../../../commons/components/forms/InputError";
+import {
+  COLOR_PATTERN,
+  required,
+} from "../../../commons/components/forms/form-constants";
+import { useOrg } from "../OrgView";
+import { Org } from "../org";
+import { useMountedState } from "../../../commons/hooks/use-mounted-state";
+import { extractErrorMessage } from "../../../utils/extract-error-message";
 
 interface Settings {
   name: string;
@@ -20,10 +24,14 @@ export function OrgGeneralSettings() {
   const { org, setOrg } = useOrg();
 
   const methods = useForm<Settings>({
-    mode: 'onChange',
+    mode: "onChange",
   });
   const {
-    errors, register, reset, handleSubmit, formState: { isDirty },
+    errors,
+    register,
+    reset,
+    handleSubmit,
+    formState: { isDirty },
   } = methods;
 
   useEffect(() => {
@@ -40,26 +48,26 @@ export function OrgGeneralSettings() {
       .put<Org>(`/api/v1/orgs/${org._id}`, settings)
       .then(({ data }) => data)
       .then(setOrg)
-      .then(() => toast.success('Org saved'))
-      .catch(err => toast.error(`Could not update org: ${err}`))
+      .then(() => toast.success("Org saved"))
+      .catch((err) =>
+        toast.error(`Could not update org: ${extractErrorMessage(err)}`)
+      )
       .finally(() => setLoading(false));
   };
 
   return (
     <FormProvider {...methods}>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className={styles.form}
-      >
-
+      <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
         <div className="mt-4 card">
           <div className="card-header">
             <strong>General settings</strong>
           </div>
           <div className="card-body">
-            <OrgNameInput/>
+            <OrgNameInput />
             <div className="form-group">
-              <label htmlFor="color" className="form-label">Color</label>
+              <label htmlFor="color" className="form-label">
+                Color
+              </label>
               <input
                 type="color"
                 id="color"
@@ -72,7 +80,7 @@ export function OrgGeneralSettings() {
                 autoComplete="off"
                 defaultValue="#000000"
               />
-              <InputError error={errors} path="color"/>
+              <InputError error={errors} path="color" />
             </div>
           </div>
         </div>
@@ -97,7 +105,6 @@ export function OrgGeneralSettings() {
             Save
           </Button>
         </div>
-
       </form>
     </FormProvider>
   );

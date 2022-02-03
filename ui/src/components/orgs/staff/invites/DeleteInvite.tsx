@@ -1,13 +1,17 @@
-import React from 'react';
-import { toast } from 'react-toastify';
-import { Button } from '../../../../commons/components/Button';
-import { axios } from '../../../../providers/axios';
-import { CardModal } from '../../../../commons/components/modals/CardModal';
-import { useCurrentOrg } from '../../../../providers/OrgProvider';
-import { useMountedState } from '../../../../commons/hooks/use-mounted-state';
+import React from "react";
+import { toast } from "react-toastify";
+import { Button } from "../../../../commons/components/Button";
+import { axios } from "../../../../providers/axios";
+import { CardModal } from "../../../../commons/components/modals/CardModal";
+import { useCurrentOrg } from "../../../../providers/OrgProvider";
+import { useMountedState } from "../../../../commons/hooks/use-mounted-state";
+import { extractErrorMessage } from "../../../../utils/extract-error-message";
 
 export function DeleteInvite({
-  inviteId, className, children, onDelete,
+  inviteId,
+  className,
+  children,
+  onDelete,
 }: {
   inviteId: string;
   children: any;
@@ -26,8 +30,8 @@ export function DeleteInvite({
         setIsOpen(false);
         onDelete();
       })
-      .catch(err => {
-        toast.error(`Could not delete invite: ${err}`);
+      .catch((err) => {
+        toast.error(`Could not delete invite: ${extractErrorMessage(err)}`);
       })
       .finally(() => setLoading(false));
   };

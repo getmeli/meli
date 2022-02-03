@@ -1,15 +1,16 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { toast } from 'react-toastify';
-import { AlertError } from '../../../../commons/components/AlertError';
-import { LoadMore } from '../../../../commons/components/LoadMore';
-import { SearchInput } from '../../../sites/releases/SearchInput';
-import { useOrg } from '../../OrgView';
-import { getMembers, OrgMembersSearchQuery } from './get-members';
-import { useMountedState } from '../../../../commons/hooks/use-mounted-state';
-import { MemberView } from './MemberView';
-import { OrgMember } from './org-member';
-import { OrgMemberIcon } from '../../../icons/OrgMemberIcon';
-import { Loader } from '../../../../commons/components/Loader';
+import React, { useEffect, useRef, useState } from "react";
+import { toast } from "react-toastify";
+import { AlertError } from "../../../../commons/components/AlertError";
+import { LoadMore } from "../../../../commons/components/LoadMore";
+import { SearchInput } from "../../../sites/releases/SearchInput";
+import { useOrg } from "../../OrgView";
+import { getMembers, OrgMembersSearchQuery } from "./get-members";
+import { useMountedState } from "../../../../commons/hooks/use-mounted-state";
+import { MemberView } from "./MemberView";
+import { OrgMember } from "./org-member";
+import { OrgMemberIcon } from "../../../icons/OrgMemberIcon";
+import { Loader } from "../../../../commons/components/Loader";
+import { extractErrorMessage } from "../../../../utils/extract-error-message";
 
 export function Members() {
   const [loading, setLoading] = useMountedState(true);
@@ -20,12 +21,16 @@ export function Members() {
   const itemsRef = useRef<OrgMember[]>([]);
   const [canLoadMore, setCanLoadMore] = useState(false);
   const [searching, setSearching] = useState(false);
-  const previousSearch = useRef('');
-  const [search, setSearch] = useState('');
+  const previousSearch = useRef("");
+  const [search, setSearch] = useState("");
   const searchQueryRef = useRef({
-    search: '', page: 0, size: 10,
+    search: "",
+    page: 0,
+    size: 10,
   });
-  const [searchQuery, setSearchQuery] = useState<OrgMembersSearchQuery>(searchQueryRef.current);
+  const [searchQuery, setSearchQuery] = useState<OrgMembersSearchQuery>(
+    searchQueryRef.current
+  );
 
   useEffect(() => {
     // prevents duplicate calls when search input is initialized
@@ -69,13 +74,17 @@ export function Members() {
     setError(undefined);
 
     getMembers(org._id, searchQuery)
-      .then(data => {
-        itemsRef.current = searchQuery.search ? data.items : [...itemsRef.current, ...data.items];
+      .then((data) => {
+        itemsRef.current = searchQuery.search
+          ? data.items
+          : [...itemsRef.current, ...data.items];
         setItems(itemsRef.current);
         setCanLoadMore(itemsRef.current.length !== data.count);
       })
       .catch(setError)
-      .catch(err => toast.error(`Could not list members: ${err}`))
+      .catch((err) =>
+        toast.error(`Could not list members: ${extractErrorMessage(err)}`)
+      )
       .finally(() => {
         setSearching(false);
         setLoading(false);
@@ -94,7 +103,7 @@ export function Members() {
   };
 
   const onEdit = (member: OrgMember) => {
-    setItems(items.map(item => (item._id === member._id ? member : item)));
+    setItems(items.map((item) => (item._id === member._id ? member : item)));
   };
 
   return (
@@ -102,7 +111,7 @@ export function Members() {
       <div className="mt-4 card">
         <div className="card-header d-flex justify-content-between">
           <div>
-            <OrgMemberIcon className="mr-2"/>
+            <OrgMemberIcon className="mr-2" />
             <strong>Members</strong>
           </div>
           <div>
@@ -116,14 +125,14 @@ export function Members() {
         </div>
         <div className="card-body">
           {loading ? (
-            <Loader/>
+            <Loader />
           ) : error ? (
-            <AlertError error={error}/>
+            <AlertError error={error} />
           ) : items.length === 0 ? (
             <>No search results found</>
           ) : (
             <ul className="list-group">
-              {items.map(member => (
+              {items.map((member) => (
                 <MemberView
                   key={member._id}
                   member={member}
@@ -138,9 +147,7 @@ export function Members() {
                   disabled={loading}
                 />
               )}
-              {error && (
-                <AlertError error={error} className="mt-4"/>
-              )}
+              {error && <AlertError error={error} className="mt-4" />}
             </ul>
           )}
         </div>

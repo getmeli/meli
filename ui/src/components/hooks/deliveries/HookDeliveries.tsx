@@ -1,17 +1,18 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import { useHookContext } from '../HookProvider';
-import { PaginationData } from '../../../commons/components/Pagination';
-import { LoadMore } from '../../../commons/components/LoadMore';
-import { useMountedState } from '../../../commons/hooks/use-mounted-state';
-import { axios } from '../../../providers/axios';
-import { HookDeliveryView } from './HookDeliveryView';
-import { HookDelivery } from './hook-delivery';
-import { Loader } from '../../../commons/components/Loader';
-import { AlertError } from '../../../commons/components/AlertError';
-import { EmptyList } from '../../../commons/components/EmptyList';
-import { HookDeliveryIcon } from '../../icons/HookDeliveryIcon';
+import React, { useEffect, useRef, useState } from "react";
+import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useHookContext } from "../HookProvider";
+import { PaginationData } from "../../../commons/components/Pagination";
+import { LoadMore } from "../../../commons/components/LoadMore";
+import { useMountedState } from "../../../commons/hooks/use-mounted-state";
+import { axios } from "../../../providers/axios";
+import { HookDeliveryView } from "./HookDeliveryView";
+import { HookDelivery } from "./hook-delivery";
+import { Loader } from "../../../commons/components/Loader";
+import { AlertError } from "../../../commons/components/AlertError";
+import { EmptyList } from "../../../commons/components/EmptyList";
+import { HookDeliveryIcon } from "../../icons/HookDeliveryIcon";
+import { extractErrorMessage } from "../../../utils/extract-error-message";
 
 export function HookDeliveries() {
   const { context } = useHookContext();
@@ -21,7 +22,8 @@ export function HookDeliveries() {
   const [deliveries, setDeliveries] = useState<HookDelivery[]>();
   const itemsRef = useRef<HookDelivery[]>([]);
   const [pagination, setPagination] = useState<PaginationData>({
-    page: 0, size: 10,
+    page: 0,
+    size: 10,
   });
   const [hasMore, setHasMore] = useState(false);
 
@@ -38,7 +40,11 @@ export function HookDeliveries() {
         setHasMore(data.count > itemsRef.current.length);
       })
       .catch(setError)
-      .catch(err => toast.error(`Could not list hook deliveries: ${err}`))
+      .catch((err) =>
+        toast.error(
+          `Could not list hook deliveries: ${extractErrorMessage(err)}`
+        )
+      )
       .finally(() => setLoading(false));
   }, [pagination, hookId, setLoading, context]);
 
@@ -54,23 +60,19 @@ export function HookDeliveries() {
       {deliveries && (
         <div>
           {deliveries.length === 0 ? (
-            <EmptyList
-              icon={<HookDeliveryIcon/>}
-              title="No sites"
-            />
+            <EmptyList icon={<HookDeliveryIcon />} title="No sites" />
           ) : (
             <ul className="list-group">
-              {deliveries.map(hookDelivery => (
-                <HookDeliveryView delivery={hookDelivery} key={hookDelivery._id}/>
+              {deliveries.map((hookDelivery) => (
+                <HookDeliveryView
+                  delivery={hookDelivery}
+                  key={hookDelivery._id}
+                />
               ))}
             </ul>
           )}
-          {loading && (
-            <Loader/>
-          )}
-          {error && (
-            <AlertError error={error}/>
-          )}
+          {loading && <Loader />}
+          {error && <AlertError error={error} />}
           {hasMore && (
             <div className="d-flex justify-content-center mt-4">
               <LoadMore
