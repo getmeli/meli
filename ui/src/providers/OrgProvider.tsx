@@ -7,6 +7,7 @@ import { routerHistory } from './history';
 import { useAuth } from './AuthProvider';
 import { FullPageCentered } from '../commons/components/FullPageCentered';
 import { Loader } from '../commons/components/Loader';
+import { extractErrorMessage } from '../utils/extract-error-message';
 
 export interface CurrentOrg {
   org: Org;
@@ -72,7 +73,7 @@ export function OrgProvider(props) {
     if (user && orgId) {
       changeCurrentOrg(orgId)
         .catch(err => {
-          toast.error(`Could not get current org: ${err}`);
+          toast.error(`Could not get current org: ${extractErrorMessage(err)}`);
           signOutOrg();
         });
     } else {

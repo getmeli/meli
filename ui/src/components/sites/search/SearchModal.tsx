@@ -9,6 +9,7 @@ import { Loader } from '../../../commons/components/Loader';
 import { SiteCard } from '../SiteCard';
 import { CardModal } from '../../../commons/components/modals/CardModal';
 import { useSites } from '../use-sites';
+import { extractErrorMessage } from '../../../utils/extract-error-message';
 
 export function SearchModal({ isOpen, closeModal }: { isOpen: boolean; closeModal: () => void }) {
   const search$ = useRef(new BehaviorSubject(''));
@@ -37,7 +38,7 @@ export function SearchModal({ isOpen, closeModal }: { isOpen: boolean; closeModa
 
   useEffect(() => {
     if (error) {
-      toast.error(`Could not search sites: ${error}`);
+      toast.error(`Could not search sites: ${extractErrorMessage(error)}`);
     }
   }, [error]);
 

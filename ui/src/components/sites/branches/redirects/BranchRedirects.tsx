@@ -10,6 +10,7 @@ import { Button } from '../../../../commons/components/Button';
 import { BranchRedirectsFormData } from './branch-redirects-form-data';
 import { BranchRedirectForm } from './BranchRedirectForm';
 import { BranchRedirect, RedirectType } from '../branch-redirect';
+import { extractErrorMessage } from '../../../../utils/extract-error-message';
 
 function useBranchFiles(
   siteId: string,
@@ -56,7 +57,7 @@ function useSetFiles(
         toast.success('Saved branch redirects');
       })
       .catch(err => {
-        toast.error(`Could not save branch redirects: ${err}`);
+        toast.error(`Could not save branch redirects: ${extractErrorMessage(err)}`);
       })
       .finally(() => setLoading(false));
   };

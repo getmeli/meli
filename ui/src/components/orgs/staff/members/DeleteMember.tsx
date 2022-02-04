@@ -4,6 +4,7 @@ import { Button } from '../../../../commons/components/Button';
 import { axios } from '../../../../providers/axios';
 import { CardModal } from '../../../../commons/components/modals/CardModal';
 import { useMountedState } from '../../../../commons/hooks/use-mounted-state';
+import { extractErrorMessage } from '../../../../utils/extract-error-message';
 
 export function DeleteMember({
   memberId, className, children, onDelete,
@@ -25,7 +26,7 @@ export function DeleteMember({
         onDelete();
       })
       .catch(err => {
-        toast.error(`Could not delete member: ${err}`);
+        toast.error(`Could not delete member: ${extractErrorMessage(err)}`);
       })
       .finally(() => setLoading(false));
   };

@@ -12,6 +12,7 @@ import { Loader } from '../../../commons/components/Loader';
 import { AlertError } from '../../../commons/components/AlertError';
 import { EmptyList } from '../../../commons/components/EmptyList';
 import { HookDeliveryIcon } from '../../icons/HookDeliveryIcon';
+import { extractErrorMessage } from '../../../utils/extract-error-message';
 
 export function HookDeliveries() {
   const { context } = useHookContext();
@@ -38,7 +39,7 @@ export function HookDeliveries() {
         setHasMore(data.count > itemsRef.current.length);
       })
       .catch(setError)
-      .catch(err => toast.error(`Could not list hook deliveries: ${err}`))
+      .catch(err => toast.error(`Could not list hook deliveries: ${extractErrorMessage(err)}`))
       .finally(() => setLoading(false));
   }, [pagination, hookId, setLoading, context]);
 

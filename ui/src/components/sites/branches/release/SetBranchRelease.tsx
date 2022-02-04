@@ -5,6 +5,7 @@ import { axios } from '../../../../providers/axios';
 import { CardModal } from '../../../../commons/components/modals/CardModal';
 import { useMountedState } from '../../../../commons/hooks/use-mounted-state';
 import { Branch } from '../branch';
+import { extractErrorMessage } from '../../../../utils/extract-error-message';
 
 export function SetBranchRelease({
   siteId, branchId, releaseId, className, children, onSet, branchName, releaseName,
@@ -32,7 +33,7 @@ export function SetBranchRelease({
         onSet();
       })
       .catch(err => {
-        toast.error(`Could not set branch release: ${err}`);
+        toast.error(`Could not set branch release: ${extractErrorMessage(err)}`);
       })
       .finally(() => setLoading(false));
   };

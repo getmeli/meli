@@ -4,6 +4,7 @@ import { useMountedState } from '../../commons/hooks/use-mounted-state';
 import { axios } from '../../providers/axios';
 import { Button } from '../../commons/components/Button';
 import { useAuth } from '../../providers/AuthProvider';
+import { extractErrorMessage } from '../../utils/extract-error-message';
 
 function Disconnect() {
   const [loading, setLoading] = useMountedState(false);
@@ -17,7 +18,7 @@ function Disconnect() {
         signOut();
       })
       .catch(err => {
-        toast.error(`Could not delete invite: ${err}`);
+        toast.error(`Could not delete invite: ${extractErrorMessage(err)}`);
       })
       .finally(() => setLoading(false));
   };

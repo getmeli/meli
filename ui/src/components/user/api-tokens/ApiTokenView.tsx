@@ -20,6 +20,7 @@ import { routerHistory } from '../../../providers/history';
 import { ApiTokenActivationPeriod } from './ApiTokenActivationPeriod';
 import { CopyToClipboard } from '../../../commons/components/CopyToClipboard';
 import { routeUp } from '../../../commons/utils/route-up';
+import { extractErrorMessage } from '../../../utils/extract-error-message';
 
 export function ApiTokenView() {
   const { apiTokenId } = useParams<any>();
@@ -38,7 +39,7 @@ export function ApiTokenView() {
       .then(({ data }) => data)
       .then(setApiToken)
       .catch(setError)
-      .catch(err => toast.error(`Could not get api token: ${err}`))
+      .catch(err => toast.error(`Could not get api token: ${extractErrorMessage(err)}`))
       .finally(() => setLoading(false));
   }, [setLoading, apiTokenId]);
 
@@ -52,7 +53,7 @@ export function ApiTokenView() {
       })
       .then(({ data }) => setApiToken(data))
       .catch(err => {
-        toast.error(`Could not update api token: ${err}`);
+        toast.error(`Could not update api token: ${extractErrorMessage(err)}`);
       }),
     [apiTokenId],
   );

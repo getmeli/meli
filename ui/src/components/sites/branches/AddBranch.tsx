@@ -7,6 +7,7 @@ import { CardModal } from '../../../commons/components/modals/CardModal';
 import { Branch } from './branch';
 import { BranchNameInput } from './BranchNameInput';
 import { useMountedState } from '../../../commons/hooks/use-mounted-state';
+import { extractErrorMessage } from '../../../utils/extract-error-message';
 
 function ModalContent({
   siteId, releaseId, onAdded,
@@ -29,7 +30,7 @@ function ModalContent({
     .then(({ data }) => data)
     .then(onAdded)
     .catch(err => {
-      toast.error(`Could not create branch: ${err}`);
+      toast.error(`Could not create branch: ${extractErrorMessage(err)}`);
     });
 
   const onSubmit = data => {

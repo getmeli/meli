@@ -11,6 +11,7 @@ import { Bubble } from '../../commons/components/Bubble';
 import { useMountedState } from '../../commons/hooks/use-mounted-state';
 import { EventType } from '../../websockets/event-type';
 import { useRoom } from '../../websockets/use-room';
+import { extractErrorMessage } from '../../utils/extract-error-message';
 
 function sortSites(a: Site, b: Site) {
   return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
@@ -58,7 +59,7 @@ export function Sites({ projectId, className }: { projectId; className? }) {
         setItems(items.sort(sortSites));
       })
       .catch(setError)
-      .catch(err => toast.error(`Could not list sites: ${err}`))
+      .catch(err => toast.error(`Could not list sites: ${extractErrorMessage(err)}`))
       .finally(() => setLoading(false));
   }, [projectId, setLoading]);
 

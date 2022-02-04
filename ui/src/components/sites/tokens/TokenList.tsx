@@ -12,6 +12,7 @@ import { TokenView } from './TokenView';
 import styles from './TokenList.module.scss';
 import { TokenIcon } from '../../icons/TokenIcon';
 import { useMountedState } from '../../../commons/hooks/use-mounted-state';
+import { extractErrorMessage } from '../../../utils/extract-error-message';
 
 function sortTokens(a: Token, b: Token): number {
   return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
@@ -30,7 +31,7 @@ export function TokenList() {
       .then(({ data }) => data)
       .then(setItems)
       .catch(setError)
-      .catch(err => toast.error(`Could not list tokens: ${err}`))
+      .catch(err => toast.error(`Could not list tokens: ${extractErrorMessage(err)}`))
       .finally(() => setLoading(false));
   }, [siteId, setLoading]);
 

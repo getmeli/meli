@@ -11,6 +11,7 @@ import { Site } from './site';
 import { AddSite } from './AddSite';
 import { SiteIcon } from '../icons/SiteIcon';
 import { useMountedState } from '../../commons/hooks/use-mounted-state';
+import { extractErrorMessage } from '../../utils/extract-error-message';
 
 export function SiteList() {
   const { projectId } = useParams<any>();
@@ -28,7 +29,7 @@ export function SiteList() {
         setItems(itemsRef.current);
       })
       .catch(setError)
-      .catch(err => toast.error(`Could not list repos: ${err}`))
+      .catch(err => toast.error(`Could not list repos: ${extractErrorMessage(err)}`))
       .finally(() => setLoading(false));
   }, [projectId, setLoading]);
 

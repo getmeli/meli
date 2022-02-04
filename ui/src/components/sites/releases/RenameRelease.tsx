@@ -7,6 +7,7 @@ import { CardModal } from '../../../commons/components/modals/CardModal';
 import { Release } from './release';
 import { ReleaseNameInput } from './ReleaseNameInput';
 import { useMountedState } from '../../../commons/hooks/use-mounted-state';
+import { extractErrorMessage } from '../../../utils/extract-error-message';
 
 function ModalContent({ releaseId, onRenamed }: {
   releaseId: string;
@@ -23,7 +24,7 @@ function ModalContent({ releaseId, onRenamed }: {
     .then(({ data }) => data)
     .then(onRenamed)
     .catch(err => {
-      toast.error(`Could not rename release: ${err}`);
+      toast.error(`Could not rename release: ${extractErrorMessage(err)}`);
     });
 
   const onSubmit = data => {

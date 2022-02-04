@@ -9,6 +9,7 @@ import { ButtonIcon } from '../../commons/components/ButtonIcon';
 import { Bubble } from '../../commons/components/Bubble';
 import { axios } from '../../providers/axios';
 import styles from './Logo.module.scss';
+import { extractErrorMessage } from '../../utils/extract-error-message';
 
 interface Value {
   _id: string;
@@ -39,7 +40,7 @@ export function Logo<T extends Value>({ context, value, setValue, className }: {
         setValue(data);
       })
       .catch(err => {
-        toast.error(`Could not upload logo: ${err}`);
+        toast.error(`Could not upload logo: ${extractErrorMessage(err)}`);
       })
       .finally(() => setUploading(false));
   };
@@ -54,7 +55,7 @@ export function Logo<T extends Value>({ context, value, setValue, className }: {
         setValue(data);
       })
       .catch(err => {
-        toast.error(`Could not remove logo: ${err}`);
+        toast.error(`Could not remove logo: ${extractErrorMessage(err)}`);
       })
       .finally(() => setRemoving(false));
   };

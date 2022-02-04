@@ -7,6 +7,7 @@ import { axios } from '../../../providers/axios';
 import { Loader } from '../../../commons/components/Loader';
 import { AlertError } from '../../../commons/components/AlertError';
 import { Toggle } from '../../../commons/components/forms/Toggle';
+import { extractErrorMessage } from '../../../utils/extract-error-message';
 
 export function HookEvents() {
   const { context } = useHookContext();
@@ -23,7 +24,7 @@ export function HookEvents() {
       .then(({ data }) => data)
       .then(setEvents)
       .catch(setError)
-      .catch(err => toast.error(`Could not list hook events: ${err}`))
+      .catch(err => toast.error(`Could not list hook events: ${extractErrorMessage(err)}`))
       .finally(() => setLoading(false));
   }, [setLoading, context]);
 

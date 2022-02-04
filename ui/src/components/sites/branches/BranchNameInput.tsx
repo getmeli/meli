@@ -6,6 +6,7 @@ import { debounceTime } from '../../../utils/debounce-time';
 import { InputError } from '../../../commons/components/forms/InputError';
 import { axios } from '../../../providers/axios';
 import { useSite } from '../SiteView';
+import { extractErrorMessage } from '../../../utils/extract-error-message';
 
 async function validateName(siteId: string, name: string): Promise<string | undefined> {
   if (!name) {
@@ -17,7 +18,7 @@ async function validateName(siteId: string, name: string): Promise<string | unde
     })
     .then(({ data }) => data || undefined)
     .catch(err => {
-      toast.error(`Could not validate branch name: ${err}`);
+      toast.error(`Could not validate branch name: ${extractErrorMessage(err)}`);
       return undefined;
     });
 }

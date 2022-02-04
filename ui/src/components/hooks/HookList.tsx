@@ -11,6 +11,7 @@ import { useMountedState } from '../../commons/hooks/use-mounted-state';
 import { useHookContext } from './HookProvider';
 import { Hook } from './hook';
 import { HookIcon } from '../icons/HookIcon';
+import { extractErrorMessage } from '../../utils/extract-error-message';
 
 function sortHooks(a: Hook, b: Hook): number {
   return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
@@ -31,7 +32,7 @@ export function HookList() {
       .then(({ data }) => data.sort(sortHooks))
       .then(setHooks)
       .catch(setError)
-      .catch(err => toast.error(`Could not list hooks: ${err}`))
+      .catch(err => toast.error(`Could not list hooks: ${extractErrorMessage(err)}`))
       .finally(() => setLoading(false));
   }, [setLoading, context]);
 

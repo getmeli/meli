@@ -7,6 +7,7 @@ import { CardModal } from '../../../commons/components/modals/CardModal';
 import { Branch } from './branch';
 import { BranchNameInput } from './BranchNameInput';
 import { useMountedState } from '../../../commons/hooks/use-mounted-state';
+import { extractErrorMessage } from '../../../utils/extract-error-message';
 
 function ModalContent({
   siteId, branchId, onRenamed,
@@ -27,7 +28,7 @@ function ModalContent({
       .put<Branch>(`/api/v1/sites/${siteId}/branches/${branchId}/name`, formData)
       .then(({ data }) => onRenamed(data))
       .catch(err => {
-        toast.error(`Could not rename branch: ${err}`);
+        toast.error(`Could not rename branch: ${extractErrorMessage(err)}`);
       })
       .finally(() => setLoading(false));
   };

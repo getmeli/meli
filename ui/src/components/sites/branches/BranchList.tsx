@@ -12,6 +12,7 @@ import { AddBranch } from './AddBranch';
 import { Branch } from './branch';
 import { useMountedState } from '../../../commons/hooks/use-mounted-state';
 import { BranchListItemView } from './BranchListItem';
+import { extractErrorMessage } from '../../../utils/extract-error-message';
 
 function sortBranches(a: Branch, b: Branch): number {
   return new Date(b.name).getTime() - new Date(a.name).getTime();
@@ -29,7 +30,7 @@ export function BranchList() {
     axios.get<Branch[]>(`/api/v1/sites/${siteId}/branches`)
       .then(({ data }) => setItems(data))
       .catch(setError)
-      .catch(err => toast.error(`Could not list branches: ${err}`))
+      .catch(err => toast.error(`Could not list branches: ${extractErrorMessage(err)}`))
       .finally(() => setLoading(false));
   }, [siteId, setLoading]);
 

@@ -17,6 +17,7 @@ import { Toggle } from '../../../commons/components/forms/Toggle';
 import { DocsLink } from '../../../commons/components/DocsLink';
 import { DomainForm } from './DomainForm';
 import { Button } from '../../../commons/components/Button';
+import { extractErrorMessage } from '../../../utils/extract-error-message';
 
 interface Settings {
   name: string;
@@ -54,7 +55,7 @@ export function GeneralSettingsForm() {
       .then(({ data }) => data)
       .then(setSite)
       .then(() => toast.success('Site saved'))
-      .catch(err => toast.error(`Could not update site: ${err}`))
+      .catch(err => toast.error(`Could not update site: ${extractErrorMessage(err)}`))
       .finally(() => setLoading(false));
   };
 

@@ -5,6 +5,7 @@ import { routerHistory } from '../../providers/history';
 import { Button } from '../../commons/components/Button';
 import { CardModal } from '../../commons/components/modals/CardModal';
 import { useMountedState } from '../../commons/hooks/use-mounted-state';
+import { extractErrorMessage } from '../../utils/extract-error-message';
 
 export function DeleteSite({
   id, projectId, className, children,
@@ -26,7 +27,7 @@ export function DeleteSite({
         routerHistory.push(`/projects/${projectId}/sites`);
       })
       .catch(err => {
-        toast.error(`Could not delete site: ${err}`);
+        toast.error(`Could not delete site: ${extractErrorMessage(err)}`);
       })
       .finally(() => setLoading(false));
   };

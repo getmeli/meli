@@ -9,6 +9,7 @@ import { Button } from '../../commons/components/Button';
 import { CardModal } from '../../commons/components/modals/CardModal';
 import { useMountedState } from '../../commons/hooks/use-mounted-state';
 import { UserOrg } from '../auth/user-org';
+import { extractErrorMessage } from '../../utils/extract-error-message';
 
 interface Form {
   name: string;
@@ -35,7 +36,7 @@ function Modal({ closeModal, onAdded }: {
         closeModal();
       })
       .catch(err => {
-        toast.error(`Could not create org: ${err}`);
+        toast.error(`Could not create org: ${extractErrorMessage(err)}`);
       })
       .finally(() => setLoading(false));
   };

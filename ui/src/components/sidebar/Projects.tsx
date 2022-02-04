@@ -16,6 +16,7 @@ import { useCurrentOrg } from '../../providers/OrgProvider';
 import { useMountedState } from '../../commons/hooks/use-mounted-state';
 import { useRoom } from '../../websockets/use-room';
 import { EventType } from '../../websockets/event-type';
+import { extractErrorMessage } from '../../utils/extract-error-message';
 
 function sortProjects(a: Project, b: Project) {
   return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
@@ -75,7 +76,7 @@ export function Projects({ className }: { className? }) {
         setProjects(projectsRef.current.sort(sortProjects));
       })
       .catch(setError)
-      .catch(err => toast.error(`Could not list projects: ${err}`))
+      .catch(err => toast.error(`Could not list projects: ${extractErrorMessage(err)}`))
       .finally(() => setLoading(false));
   }, [currentOrg, setLoading]);
 

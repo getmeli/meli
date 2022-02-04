@@ -10,6 +10,7 @@ import { maxLength, required } from '../../../commons/components/forms/form-cons
 import { axios } from '../../../providers/axios';
 import { randomString } from '../../../commons/utils/random-string';
 import { Site } from '../site';
+import { extractErrorMessage } from '../../../utils/extract-error-message';
 
 interface FormData {
   password: string;
@@ -49,7 +50,7 @@ export function SitePassword({
         closeModal();
       })
       .catch(err => {
-        toast.error(`Could not set site password: ${err}`);
+        toast.error(`Could not set site password: ${extractErrorMessage(err)}`);
       })
       .finally(() => setLoading(false));
   };
@@ -60,7 +61,7 @@ export function SitePassword({
       .delete<Site>(`/api/v1/sites/${site._id}/password`)
       .then(({ data }) => onChange(data))
       .catch(err => {
-        toast.error(`Could not remove site password: ${err}`);
+        toast.error(`Could not remove site password: ${extractErrorMessage(err)}`);
       })
       .finally(() => setLoading(false));
   };

@@ -5,6 +5,7 @@ import { isSubdomain, maxLength, required } from '../../../commons/components/fo
 import { debounceTime } from '../../../utils/debounce-time';
 import { InputError } from '../../../commons/components/forms/InputError';
 import { axios } from '../../../providers/axios';
+import { extractErrorMessage } from '../../../utils/extract-error-message';
 
 async function validateName(name: string, previousName?: string): Promise<string | undefined> {
   if (!name) {
@@ -19,7 +20,7 @@ async function validateName(name: string, previousName?: string): Promise<string
     })
     .then(({ data }) => data || undefined)
     .catch(err => {
-      toast.error(`Could not validate site name: ${err}`);
+      toast.error(`Could not validate site name: ${extractErrorMessage(err)}`);
       return undefined;
     });
 }

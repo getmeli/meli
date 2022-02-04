@@ -16,6 +16,7 @@ import { Project } from './project';
 import { useCurrentOrg } from '../../providers/OrgProvider';
 import { useMountedState } from '../../commons/hooks/use-mounted-state';
 import { IsAdmin } from '../auth/IsAdmin';
+import { extractErrorMessage } from '../../utils/extract-error-message';
 
 function AddProjectModal({ closeModal, onAdded }: {
   closeModal;
@@ -40,7 +41,7 @@ function AddProjectModal({ closeModal, onAdded }: {
       closeModal();
     })
     .catch(err => {
-      toast.error(`Could not create project: ${err}`);
+      toast.error(`Could not create project: ${extractErrorMessage(err)}`);
     });
 
   const onSubmit = data => {

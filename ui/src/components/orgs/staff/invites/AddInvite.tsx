@@ -11,6 +11,7 @@ import { OrgMember } from '../members/org-member';
 import { useCurrentOrg } from '../../../../providers/OrgProvider';
 import { Toggle } from '../../../../commons/components/forms/Toggle';
 import { useMountedState } from '../../../../commons/hooks/use-mounted-state';
+import { extractErrorMessage } from '../../../../utils/extract-error-message';
 
 interface InviteRequest {
   email: string;
@@ -36,7 +37,7 @@ function AddMemberModal({ closeModal, onAdded }: {
     })
     .then(closeModal)
     .catch(err => {
-      toast.error(`Could not add invite: ${err}`);
+      toast.error(`Could not add invite: ${extractErrorMessage(err)}`);
     });
 
   const onSubmit = data => {
