@@ -10,6 +10,7 @@ import { InputError } from '../../../commons/components/forms/InputError';
 import { maxLength, required } from '../../../commons/components/forms/form-constants';
 import { axios } from '../../../providers/axios';
 import { randomString } from '../../../commons/utils/random-string';
+import { extractErrorMessage } from '../../../utils/extract-error-message';
 
 interface FormData {
   password: string;
@@ -50,7 +51,7 @@ export function BranchPassword({
         closeModal();
       })
       .catch(err => {
-        toast.error(`Could not set branch password: ${err}`);
+        toast.error(`Could not set branch password: ${extractErrorMessage(err)}`);
       })
       .finally(() => setLoading(false));
   };
@@ -61,7 +62,7 @@ export function BranchPassword({
       .delete<Branch>(`/api/v1/sites/${siteId}/branches/${branch._id}/password`)
       .then(({ data }) => onChange(data))
       .catch(err => {
-        toast.error(`Could not remove branch password: ${err}`);
+        toast.error(`Could not remove branch password: ${extractErrorMessage(err)}`);
       })
       .finally(() => setLoading(false));
   };

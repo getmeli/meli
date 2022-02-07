@@ -11,6 +11,7 @@ import { CardModal } from '../../commons/components/modals/CardModal';
 import { Site } from './site';
 import { useMountedState } from '../../commons/hooks/use-mounted-state';
 import { IsAdmin } from '../auth/IsAdmin';
+import { extractErrorMessage } from '../../utils/extract-error-message';
 
 function AddSiteModal({ projectId, closeModal }: { projectId; closeModal }) {
   const methods = useForm({
@@ -28,7 +29,7 @@ function AddSiteModal({ projectId, closeModal }: { projectId; closeModal }) {
       closeModal();
     })
     .catch(err => {
-      toast.error(`Could not create site: ${err}`);
+      toast.error(`Could not create site: ${extractErrorMessage(err)}`);
     });
 
   const onSubmit = data => {

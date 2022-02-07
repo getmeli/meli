@@ -6,6 +6,7 @@ import { Button } from '../../commons/components/Button';
 import { CardModal } from '../../commons/components/modals/CardModal';
 import { useMountedState } from '../../commons/hooks/use-mounted-state';
 import { IsAdmin } from '../auth/IsAdmin';
+import { extractErrorMessage } from '../../utils/extract-error-message';
 
 export function DeleteProject({
   id, className, children,
@@ -26,7 +27,7 @@ export function DeleteProject({
         routerHistory.push('/');
       })
       .catch(err => {
-        toast.error(`Could not delete project: ${err}`);
+        toast.error(`Could not delete project: ${extractErrorMessage(err)}`);
       })
       .finally(() => setLoading(false));
   };

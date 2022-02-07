@@ -6,6 +6,7 @@ import { Site, SiteDomain } from '../../site';
 import { useSite } from '../../SiteView';
 import { axios } from '../../../../providers/axios';
 import { useMountedState } from '../../../../commons/hooks/use-mounted-state';
+import { extractErrorMessage } from '../../../../utils/extract-error-message';
 
 interface Settings {
   name: string;
@@ -37,7 +38,7 @@ export function BranchGeneralSettings() {
       .then(({ data }) => data)
       .then(setSite)
       .then(() => toast.success('Site saved'))
-      .catch(err => toast.error(`Could not update site: ${err}`))
+      .catch(err => toast.error(`Could not update site: ${extractErrorMessage(err)}`))
       .finally(() => setLoading(false));
   };
 

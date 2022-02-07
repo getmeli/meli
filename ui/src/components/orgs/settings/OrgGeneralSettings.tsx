@@ -10,6 +10,7 @@ import { COLOR_PATTERN, required } from '../../../commons/components/forms/form-
 import { useOrg } from '../OrgView';
 import { Org } from '../org';
 import { useMountedState } from '../../../commons/hooks/use-mounted-state';
+import { extractErrorMessage } from '../../../utils/extract-error-message';
 
 interface Settings {
   name: string;
@@ -41,7 +42,7 @@ export function OrgGeneralSettings() {
       .then(({ data }) => data)
       .then(setOrg)
       .then(() => toast.success('Org saved'))
-      .catch(err => toast.error(`Could not update org: ${err}`))
+      .catch(err => toast.error(`Could not update org: ${extractErrorMessage(err)}`))
       .finally(() => setLoading(false));
   };
 

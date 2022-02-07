@@ -5,6 +5,7 @@ import { axios } from '../../providers/axios';
 import { CardModal } from '../../commons/components/modals/CardModal';
 import { useMountedState } from '../../commons/hooks/use-mounted-state';
 import { useHookContext } from './HookProvider';
+import { extractErrorMessage } from '../../utils/extract-error-message';
 
 export function DeleteHook({
   hookId, className, children, onDelete,
@@ -27,7 +28,7 @@ export function DeleteHook({
         onDelete();
       })
       .catch(err => {
-        toast.error(`Could not delete hook: ${err}`);
+        toast.error(`Could not delete hook: ${extractErrorMessage(err)}`);
       })
       .finally(() => setLoading(false));
   };

@@ -8,6 +8,7 @@ import { AlertError } from '../../../../commons/components/AlertError';
 import { Branch } from '../branch';
 import { FormList } from './FormList';
 import { Form, Release } from '../../releases/release';
+import { extractErrorMessage } from '../../../../utils/extract-error-message';
 
 function useBranchForms(
   siteId: string,
@@ -60,7 +61,7 @@ function useSetBranchForms(
         toast.success('Saved forms');
       })
       .catch(err => {
-        toast.error(`Could not save forms: ${err}`);
+        toast.error(`Could not save forms: ${extractErrorMessage(err)}`);
       })
       .finally(() => {
         setLoading(false);

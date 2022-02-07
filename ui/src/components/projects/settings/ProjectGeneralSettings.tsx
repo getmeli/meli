@@ -10,6 +10,7 @@ import { axios } from '../../../providers/axios';
 import { InputError } from '../../../commons/components/forms/InputError';
 import { COLOR_PATTERN, required } from '../../../commons/components/forms/form-constants';
 import { useMountedState } from '../../../commons/hooks/use-mounted-state';
+import { extractErrorMessage } from '../../../utils/extract-error-message';
 
 interface Settings {
   name: string;
@@ -42,7 +43,7 @@ export function ProjectGeneralSettings() {
       .then(({ data }) => data)
       .then(setProject)
       .then(() => toast.success('Project saved'))
-      .catch(err => toast.error(`Could not update project: ${err}`))
+      .catch(err => toast.error(`Could not update project: ${extractErrorMessage(err)}`))
       .finally(() => setLoading(false));
   };
 

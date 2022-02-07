@@ -4,6 +4,7 @@ import { axios } from '../../../providers/axios';
 import { ApiToken } from './api-token';
 import { ApiTokenForm, ApiTokenFormData } from './ApiTokenForm';
 import { routerHistory } from '../../../providers/history';
+import { extractErrorMessage } from '../../../utils/extract-error-message';
 
 export function AddApiToken() {
   const onChange = (data: ApiTokenFormData): Promise<void> => axios
@@ -17,7 +18,7 @@ export function AddApiToken() {
       routerHistory.push('/user/api-tokens');
     })
     .catch(err => {
-      toast.error(`Could not create api token: ${err}`);
+      toast.error(`Could not create api token: ${extractErrorMessage(err)}`);
     });
   return (
     <ApiTokenForm onChange={onChange}/>

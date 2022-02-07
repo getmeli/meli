@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { Button } from '../../commons/components/Button';
 import { axios } from '../../providers/axios';
 import { useMountedState } from '../../commons/hooks/use-mounted-state';
+import { extractErrorMessage } from '../../utils/extract-error-message';
 
 export function TestHook({
   config, className, disabled,
@@ -18,7 +19,7 @@ export function TestHook({
     axios
       .post(`/api/v1/sites/notifications/test`, config)
       .then(() => toast.success('It worked !'))
-      .catch(err => toast.error(`It didnt work: ${err}`))
+      .catch(err => toast.error(`It didnt work: ${extractErrorMessage(err)}`))
       .finally(() => setLoading(false));
   };
   return (

@@ -18,6 +18,7 @@ import { useMountedState } from '../../commons/hooks/use-mounted-state';
 import { useRoom } from '../../websockets/use-room';
 import { EventType } from '../../websockets/event-type';
 import { Org } from '../orgs/org';
+import { extractErrorMessage } from '../../utils/extract-error-message';
 
 export function ProjectList() {
   const { currentOrg } = useCurrentOrg();
@@ -43,7 +44,7 @@ export function ProjectList() {
         setItems(itemsRef.current);
       })
       .catch(setError)
-      .catch(err => toast.error(`Could not list repositories: ${err}`))
+      .catch(err => toast.error(`Could not list repositories: ${extractErrorMessage(err)}`))
       .finally(() => setLoading(false));
   }, [pagination, currentOrg, setLoading]);
 

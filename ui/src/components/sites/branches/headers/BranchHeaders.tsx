@@ -11,6 +11,7 @@ import { Branch } from '../branch';
 import { Header } from '../header';
 import { HeaderList } from '../../headers/HeaderList';
 import { useSiteHeaders } from '../../headers/use-site-headers';
+import { extractErrorMessage } from '../../../../utils/extract-error-message';
 
 function useBranchHeaders(
   siteId: string,
@@ -57,7 +58,7 @@ function useSetBranchHeaders(
         toast.success('Saved branch headers');
       })
       .catch(err => {
-        toast.error(`Could not save headers: ${err}`);
+        toast.error(`Could not save headers: ${extractErrorMessage(err)}`);
       })
       .finally(() => {
         setLoading(false);

@@ -10,6 +10,7 @@ import { useCurrentOrg } from '../../providers/OrgProvider';
 import { UserOrg } from './user-org';
 import { AddOrg } from '../orgs/AddOrg';
 import { useMountedState } from '../../commons/hooks/use-mounted-state';
+import { extractErrorMessage } from '../../utils/extract-error-message';
 
 function OrgItem({ item }: {
   item: UserOrg;
@@ -21,7 +22,7 @@ function OrgItem({ item }: {
     setLoading(true);
     changeCurrentOrg(item.org._id)
       .catch(err => {
-        toast.error(`Could not select org: ${err}`);
+        toast.error(`Could not select org: ${extractErrorMessage(err)}`);
       })
       .finally(() => {
         setLoading(true);

@@ -17,6 +17,7 @@ import { useRoom } from '../../../websockets/use-room';
 import { EventType } from '../../../websockets/event-type';
 import { Site } from '../site';
 import { useEnv } from '../../../providers/EnvProvider';
+import { extractErrorMessage } from '../../../utils/extract-error-message';
 
 function UploadReleaseSnippet({ siteId, className }: { siteId: string; className? }) {
   const env = useEnv();
@@ -127,7 +128,7 @@ export function Releases() {
       })
       .catch(setError)
       .catch(err => {
-        toast.error(`Could not list releases: ${err}`);
+        toast.error(`Could not list releases: ${extractErrorMessage(err)}`);
       })
       .finally(() => {
         setLoading(false);

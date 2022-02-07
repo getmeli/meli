@@ -13,6 +13,7 @@ import { useCurrentOrg } from '../../../../providers/OrgProvider';
 import { useMountedState } from '../../../../commons/hooks/use-mounted-state';
 import { IsAdmin } from '../../../auth/IsAdmin';
 import { ProjectMember } from '../project-member';
+import { extractErrorMessage } from '../../../../utils/extract-error-message';
 
 export function AddMember({
   projectId, className, children, onAdded,
@@ -45,7 +46,7 @@ export function AddMember({
       })
       .catch(setError)
       .catch(err => {
-        toast.error(`Could not search releases: ${err}`);
+        toast.error(`Could not search releases: ${extractErrorMessage(err)}`);
       })
       .finally(() => {
         setLoading(false);

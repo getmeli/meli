@@ -6,6 +6,7 @@ import { Loader } from '../../../../commons/components/Loader';
 import { OrgMember } from '../../../orgs/staff/members/org-member';
 import { useMountedState } from '../../../../commons/hooks/use-mounted-state';
 import { ProjectMember } from '../project-member';
+import { extractErrorMessage } from '../../../../utils/extract-error-message';
 
 export function ListItem({
   projectId, member, onAdded,
@@ -26,7 +27,7 @@ export function ListItem({
         onAdded(data);
       })
       .catch(err => {
-        toast.error(`Could not select branch: ${err}`);
+        toast.error(`Could not select branch: ${extractErrorMessage(err)}`);
       })
       .finally(() => setLoading(false));
   };

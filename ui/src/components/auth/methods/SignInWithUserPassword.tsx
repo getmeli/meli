@@ -8,6 +8,7 @@ import { useMountedState } from '../../../commons/hooks/use-mounted-state';
 import { axios } from '../../../providers/axios';
 import { useAuth } from '../../../providers/AuthProvider';
 import { Button } from '../../../commons/components/Button';
+import { extractErrorMessage } from '../../../utils/extract-error-message';
 
 interface FormData {
   user: string;
@@ -26,7 +27,7 @@ function useSignIn() {
         fetchUser();
       })
       .catch(err => {
-        toast.error(`Could not sign in: ${err}`);
+        toast.error(`Could not sign in: ${extractErrorMessage(err)}`);
       })
       .finally(() => setLoading(false));
   };

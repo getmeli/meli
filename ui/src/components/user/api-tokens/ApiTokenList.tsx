@@ -11,6 +11,7 @@ import styles from './ApiTokenList.module.scss';
 import { TokenIcon } from '../../icons/TokenIcon';
 import { useMountedState } from '../../../commons/hooks/use-mounted-state';
 import { ApiTokenActivationPeriod } from './ApiTokenActivationPeriod';
+import { extractErrorMessage } from '../../../utils/extract-error-message';
 
 function sortTokens(a: ApiToken, b: ApiToken): number {
   return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
@@ -30,7 +31,7 @@ export function ApiTokenList() {
       .then(({ data }) => data.sort(sortTokens))
       .then(setItems)
       .catch(setError)
-      .catch(err => toast.error(`Could not list tokens: ${err}`))
+      .catch(err => toast.error(`Could not list tokens: ${extractErrorMessage(err)}`))
       .finally(() => setLoading(false));
   }, [setLoading]);
 

@@ -3,6 +3,7 @@ import { toast } from 'react-toastify';
 import { axios } from './axios';
 import { Loader } from '../commons/components/Loader';
 import { FullPageCentered } from '../commons/components/FullPageCentered';
+import { extractErrorMessage } from '../utils/extract-error-message';
 
 export interface User {
   _id: string;
@@ -38,7 +39,7 @@ export function AuthProvider(props) {
         window.location.href = '/';
       })
       .catch(err => {
-        toast.error(`Could not sign out properly: ${err}`);
+        toast.error(`Could not sign out properly: ${extractErrorMessage(err)}`);
       });
   }, []);
 
@@ -48,7 +49,7 @@ export function AuthProvider(props) {
       .get(`/api/v1/user`)
       .then(({ data }) => setUser(data))
       .catch(err => {
-        toast.error(`Could not get user: ${err}`);
+        toast.error(`Could not get user: ${extractErrorMessage(err)}`);
         setUser(null);
       })
       .finally(() => {

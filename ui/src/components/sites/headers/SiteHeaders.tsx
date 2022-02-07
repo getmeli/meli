@@ -9,6 +9,7 @@ import { Loader } from '../../../commons/components/Loader';
 import { AlertError } from '../../../commons/components/AlertError';
 import { axios } from '../../../providers/axios';
 import { useSiteHeaders } from './use-site-headers';
+import { extractErrorMessage } from '../../../utils/extract-error-message';
 
 function useSetSiteHeaders(
   siteId: string,
@@ -27,7 +28,7 @@ function useSetSiteHeaders(
         toast.success('Saved branch headers');
       })
       .catch(err => {
-        toast.error(`Could not save headers: ${err}`);
+        toast.error(`Could not save headers: ${extractErrorMessage(err)}`);
       })
       .finally(() => {
         setLoading(false);

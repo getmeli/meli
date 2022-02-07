@@ -12,6 +12,7 @@ import { AddInvite } from './AddInvite';
 import { useCurrentOrg } from '../../../../providers/OrgProvider';
 import { useMountedState } from '../../../../commons/hooks/use-mounted-state';
 import { ButtonIcon } from '../../../../commons/components/ButtonIcon';
+import { extractErrorMessage } from '../../../../utils/extract-error-message';
 
 function sortInvites(a: Invite, b: Invite): number {
   return new Date(b.expiresAt).getTime() - new Date(a.expiresAt).getTime();
@@ -30,7 +31,7 @@ export function Invites() {
       .then(({ data }) => data)
       .then(setItems)
       .catch(setError)
-      .catch(err => toast.error(`Could not list invites: ${err}`))
+      .catch(err => toast.error(`Could not list invites: ${extractErrorMessage(err)}`))
       .finally(() => setLoading(false));
   }, [currentOrg, setLoading]);
 

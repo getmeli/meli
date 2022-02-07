@@ -4,6 +4,7 @@ import { Button } from '../../../commons/components/Button';
 import { axios } from '../../../providers/axios';
 import { CardModal } from '../../../commons/components/modals/CardModal';
 import { useMountedState } from '../../../commons/hooks/use-mounted-state';
+import { extractErrorMessage } from '../../../utils/extract-error-message';
 
 export function DeleteBranch({
   siteId, branchId, className, children, onDelete,
@@ -26,7 +27,7 @@ export function DeleteBranch({
         onDelete();
       })
       .catch(err => {
-        toast.error(`Could not delete branch: ${err}`);
+        toast.error(`Could not delete branch: ${extractErrorMessage(err)}`);
       })
       .finally(() => setLoading(false));
   };

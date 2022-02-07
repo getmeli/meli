@@ -21,6 +21,7 @@ import { routeUp } from '../../commons/utils/route-up';
 import { NavPills } from '../../commons/components/NavPills';
 import { HookDeliveries } from './deliveries/HookDeliveries';
 import { NotFound } from '../../commons/components/NotFound';
+import { extractErrorMessage } from '../../utils/extract-error-message';
 
 export function HookView() {
   const { hookId } = useParams<any>();
@@ -39,7 +40,7 @@ export function HookView() {
       .get<Hook>(`/api/v1/${context}/hooks/${hookId}`)
       .then(({ data }) => setHook(data))
       .catch(setError)
-      .catch(err => toast.error(`Could not get hook: ${err}`))
+      .catch(err => toast.error(`Could not get hook: ${extractErrorMessage(err)}`))
       .finally(() => setLoading(false));
   }, [setLoading, hookId, context]);
 

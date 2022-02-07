@@ -10,6 +10,7 @@ import { MemberView } from './MemberView';
 import { OrgMember } from './org-member';
 import { OrgMemberIcon } from '../../../icons/OrgMemberIcon';
 import { Loader } from '../../../../commons/components/Loader';
+import { extractErrorMessage } from '../../../../utils/extract-error-message';
 
 export function Members() {
   const [loading, setLoading] = useMountedState(true);
@@ -75,7 +76,7 @@ export function Members() {
         setCanLoadMore(itemsRef.current.length !== data.count);
       })
       .catch(setError)
-      .catch(err => toast.error(`Could not list members: ${err}`))
+      .catch(err => toast.error(`Could not list members: ${extractErrorMessage(err)}`))
       .finally(() => {
         setSearching(false);
         setLoading(false);

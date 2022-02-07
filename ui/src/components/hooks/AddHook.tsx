@@ -7,6 +7,7 @@ import { axios } from '../../providers/axios';
 import { HookForm } from './form/HookForm';
 import { useHookContext } from './HookProvider';
 import { routeUp } from '../../commons/utils/route-up';
+import { extractErrorMessage } from '../../utils/extract-error-message';
 
 export function AddHook() {
   const { context } = useHookContext();
@@ -18,7 +19,7 @@ export function AddHook() {
         routerHistory.push(routeUp(url));
       })
       .catch(err => {
-        toast.error(`Could not create hook: ${err}`);
+        toast.error(`Could not create hook: ${extractErrorMessage(err)}`);
       }),
     [context, url],
   );

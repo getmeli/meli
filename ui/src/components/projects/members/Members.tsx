@@ -12,6 +12,7 @@ import { MemberView } from './MemberView';
 import styles from './Members.module.scss';
 import { ProjectMemberIcon } from '../../icons/ProjectMemberIcon';
 import { useMountedState } from '../../../commons/hooks/use-mounted-state';
+import { extractErrorMessage } from '../../../utils/extract-error-message';
 
 function sortMembers(a: ProjectMember, b: ProjectMember): number {
   return a.name < b.name ? -1 : a.name > b.name ? 1 : 0;
@@ -30,7 +31,7 @@ export function Members() {
       .then(({ data }) => data)
       .then(setItems)
       .catch(setError)
-      .catch(err => toast.error(`Could not list members: ${err}`))
+      .catch(err => toast.error(`Could not list members: ${extractErrorMessage(err)}`))
       .finally(() => setLoading(false));
   }, [projectId, setLoading]);
 

@@ -9,6 +9,7 @@ import { maxLength, required } from '../../../commons/components/forms/form-cons
 import { InputError } from '../../../commons/components/forms/InputError';
 import styles from './AddToken.module.scss';
 import { useMountedState } from '../../../commons/hooks/use-mounted-state';
+import { extractErrorMessage } from '../../../utils/extract-error-message';
 
 function AddTokenModal({
   closeModal, siteId, onAdded,
@@ -31,7 +32,7 @@ function AddTokenModal({
     })
     .then(closeModal)
     .catch(err => {
-      toast.error(`Could not create token: ${err}`);
+      toast.error(`Could not create token: ${extractErrorMessage(err)}`);
     });
 
   const onSubmit = data => {

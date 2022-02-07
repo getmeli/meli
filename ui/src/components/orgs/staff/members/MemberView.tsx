@@ -15,6 +15,7 @@ import { Loader } from '../../../../commons/components/Loader';
 import { DropdownLink } from '../../../../commons/components/dropdown/DropdownLink';
 import { useMountedState } from '../../../../commons/hooks/use-mounted-state';
 import { IsOwner } from '../../../auth/IsOwner';
+import { extractErrorMessage } from '../../../../utils/extract-error-message';
 
 function AdminToggle({ member, setMember }: {
   member: OrgMember;
@@ -31,7 +32,7 @@ function AdminToggle({ member, setMember }: {
       .then(({ data }) => data)
       .then(setMember)
       .catch(err => {
-        toast.error(`Could not toggle admin: ${err}`);
+        toast.error(`Could not toggle admin: ${extractErrorMessage(err)}`);
       })
       .finally(() => setLoading(false));
   };

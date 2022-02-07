@@ -5,6 +5,7 @@ import { Button } from '../../commons/components/Button';
 import { axios } from '../../providers/axios';
 import { UserOrg } from '../auth/user-org';
 import { useMountedState } from '../../commons/hooks/use-mounted-state';
+import { extractErrorMessage } from '../../utils/extract-error-message';
 
 export function AcceptInvite({
   inviteId, className, onAccept, token, disabled,
@@ -26,7 +27,7 @@ export function AcceptInvite({
       .then(({ data }) => data)
       .then(onAccept)
       .catch(err => {
-        toast.error(`Could not delete invite: ${err}`);
+        toast.error(`Could not delete invite: ${extractErrorMessage(err)}`);
       })
       .finally(() => setLoading(false));
   };
