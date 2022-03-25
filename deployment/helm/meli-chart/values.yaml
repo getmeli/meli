@@ -1,0 +1,49 @@
+# Image related parameters
+image: getmeli/meli
+tag: beta
+pullPolicy: IfNotPresent
+
+# This is the meli user
+user: user
+
+# Mongo settings
+mongo:
+  enabled: true
+  user: mongouser
+  host: mongo
+  port: 27017
+  db: meli
+
+# Note, be aware of:
+# https://github.com/getmeli/meli/issues/250
+maxorgs: 1
+
+# Ingress settings
+ingress:
+  # Root domain name to use for sites
+  domain: meli.domain.io  # ChangeMe
+  certificateIssuer: your-issuer # ChangeMe
+  # A list of sites in your meli install.  You don't need to add these,
+  # but if you DO, then the ingress will be able to handle TLS for
+  # your BRANCH sites as well.
+  sites: []
+  tlsSecret: meli-tls-secret
+
+# Prefix associated with all PVCs
+pvcPrefix: meli
+
+# Resource related settings
+resources:
+  mongo:
+    cpu: 200m
+    memory: 256Mi
+  # These are storage limits for the various types of
+  # PVCs the chart creates.  It might be better to refactor this
+  # so all storage exists in a single PVC.  This seems kind
+  # of wasteful but it might also provide some degree of 
+  # firewalling too?
+  storage:
+    data: 1Gi
+    db: 1Gi
+    config: 1Gi
+    sites: 1Gi

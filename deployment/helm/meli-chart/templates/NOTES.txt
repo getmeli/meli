@@ -13,5 +13,16 @@ The Meli deployment will pick up any additional environment variables
 from the secret `deployment-env`.  This is where you should put any
 "secrets" like authentication client secrets, passwords, etc.  You are 
 also free to put any other less confidential information in there as well.
-But, at a minimum, it is where you should put authentication related 
+But, this is where you should put authentication related 
 configuration variables like `MELI_PASSWORD`, or `MELI_GITLAB_*`.
+
+At a minimum, you will be required to provide:
+
+- `MELI_PASSWORD`
+- `MELI_JWT_SECRET`
+- `MELI_MONGO_PASSWORD` (if MongoDB is enabled)
+- `MELI_ROOT_MONGO_PASSWORD` (ditto)
+
+See here for additional details:
+
+https://docs.meli.sh/configuration/environment-reference/
