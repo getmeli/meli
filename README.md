@@ -14,6 +14,8 @@
     </a>
 </p>
 
+> We are looking for maintainers ! Interested to take over ? Shoot us an email at info@charlie-bravo.be
+
 ![Meli demo screenshot](https://raw.githubusercontent.com/getmeli/meli-brand/latest/screens/meli-site-branch.png)
 
 ## Getting started
