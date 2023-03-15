@@ -10,7 +10,7 @@ Please note we have a code of conduct, please follow it in all your interactions
 1. Use the **next** branch as target
 1. Update/add tests if needed
 1. Update README.md if needed
-1. Update any documentation necessary (README.md, docs.meli.sh, ...)
+1. Update any documentation necessary (README.md, docs.meli.charlie-bravo.be, ...)
 1. Ensure CI is passing
 1. Make sure your commit is formatted using [conventional commit](https://www.conventionalcommits.org/en/v1.0.0/)
 1. If you are a maintainer, your PR must be merged in by another maintainer. If you are not a maintainer, ask one to merge your PR (mention them in your PR using `@...`).

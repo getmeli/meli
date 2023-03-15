@@ -6,7 +6,7 @@
 <h1 align="center">meli</h1>
 <p align="center">Open source platform for deploying static sites and frontend applications.</p>
 <p align="center">
-    <a href="https://docs.meli.sh">Docs</a> (proudly hosted on Meli !) - <a href="https://twitter.com/getmeli">Twitter</a>
+    <a href="https://docs.meli.charlie-bravo.be">Docs</a> (proudly hosted on Meli !) - <a href="https://twitter.com/getmeli">Twitter</a>
 </p>
 <p align="center">
     <a href="https://discord.gg/TFTaCUEdX6" target="_blank">
@@ -22,10 +22,10 @@
 
 Want to change the way you ship front-end, forever ? Let's get started !
 
-1. Head to our [installation instructions](https://docs.meli.sh/get-started/installation)
+1. Head to our [installation instructions](https://docs.meli.charlie-bravo.be/get-started/installation)
 1. After you have installed Meli and have successfully logged in:
     1. Create a site in your dashboard, say `my-site`
-    1. [Upload a release with the `@getmeli/meli` CLI](https://docs.meli.sh/get-started/upload-a-site-to-meli)
+    1. [Upload a release with the `@getmeli/meli` CLI](https://docs.meli.charlie-bravo.be/get-started/upload-a-site-to-meli)
     1. Setup `my-domain.com` to point to your Meli server at `my-site.mymeli.com`
 
 ## Features
@@ -33,19 +33,19 @@ Want to change the way you ship front-end, forever ? Let's get started !
 - Deploy unlimited static sites under a primary domain
 - Unlimited organizations, teams, users and sites
 - Seamless custom domains redirection
-- [Many ways to authenticate](https://docs.meli.sh/authentication)
-- [Automatic HTTPs certificate issuing with letsencrypt (or private ACME server)](https://docs.meli.sh/configuration/ssl)
-- [Deploy branches](https://docs.meli.sh/get-started/branches)
-- [API with per-endpoint scopes](https://docs.meli.sh/api/get-started)
-- Integrations ([Webhooks](https://docs.meli.sh/integrations/webhooks), [Slack](https://docs.meli.sh/integrations/slack)
-  , [Mattermost](https://docs.meli.sh/integrations/mattermost), [Email](https://docs.meli.sh/integrations/email))
-- Easily [deploy](https://docs.meli.sh/get-started/installation#installation)
-  and [upgrade](https://docs.meli.sh/get-started/upgrade-and-downgrade) with Docker Compose
-- [Password protected pages](https://docs.meli.sh/branches/password-protected-pages)
-- [Path overrides with in-memory files or reverse proxies](https://docs.meli.sh/branches/redirects#redirects)
-- [Single page application mode](https://docs.meli.sh/get-started/single-page-applications-spa)
+- [Many ways to authenticate](https://docs.meli.charlie-bravo.be/authentication)
+- [Automatic HTTPs certificate issuing with letsencrypt (or private ACME server)](https://docs.meli.charlie-bravo.be/configuration/ssl)
+- [Deploy branches](https://docs.meli.charlie-bravo.be/get-started/branches)
+- [API with per-endpoint scopes](https://docs.meli.charlie-bravo.be/api/get-started)
+- Integrations ([Webhooks](https://docs.meli.charlie-bravo.be/integrations/webhooks), [Slack](https://docs.meli.charlie-bravo.be/integrations/slack)
+  , [Mattermost](https://docs.meli.charlie-bravo.be/integrations/mattermost), [Email](https://docs.meli.charlie-bravo.be/integrations/email))
+- Easily [deploy](https://docs.meli.charlie-bravo.be/get-started/installation#installation)
+  and [upgrade](https://docs.meli.charlie-bravo.be/get-started/upgrade-and-downgrade) with Docker Compose
+- [Password protected pages](https://docs.meli.charlie-bravo.be/branches/password-protected-pages)
+- [Path overrides with in-memory files or reverse proxies](https://docs.meli.charlie-bravo.be/branches/redirects#redirects)
+- [Single page application mode](https://docs.meli.charlie-bravo.be/get-started/single-page-applications-spa)
 - Get deploy URL in pull requests and commit status
-- [Heavily customizable](https://docs.meli.sh/environment-reference/server)
+- [Heavily customizable](https://docs.meli.charlie-bravo.be/environment-reference/server)
 - [ ] Increase test coverage
 - [ ] API documentation
 - [ ] Documentation
