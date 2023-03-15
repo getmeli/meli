@@ -1,3 +1,4 @@
+import { inviteUrl } from './handlers/invites/add-invite';
 import { Invite } from './invite';
 
 export function serializeInvite(invite: Invite) {
@@ -5,6 +6,7 @@ export function serializeInvite(invite: Invite) {
     _id: invite._id,
     email: invite.email,
     expiresAt: invite.expiresAt,
+    url: inviteUrl(invite),
     memberOptions: invite.memberOptions,
   };
 }

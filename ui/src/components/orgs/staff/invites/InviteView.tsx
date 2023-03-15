@@ -1,12 +1,15 @@
-import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { Invite } from './invite';
-import { DeleteInvite } from './DeleteInvite';
-import { FromNow } from '../../../../commons/components/FromNow';
-import { ButtonIcon } from '../../../../commons/components/ButtonIcon';
+import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faLink, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { Invite } from "./invite";
+import { DeleteInvite } from "./DeleteInvite";
+import { FromNow } from "../../../../commons/components/FromNow";
+import { ButtonIcon } from "../../../../commons/components/ButtonIcon";
 
-export function InviteView({ invite, onDelete }: {
+export function InviteView({
+  invite,
+  onDelete,
+}: {
   invite: Invite;
   onDelete: () => void;
 }) {
@@ -15,6 +18,9 @@ export function InviteView({ invite, onDelete }: {
   return (
     <div className="list-group-item d-flex justify-content-between align-items-center">
       <div className="flex-grow-1 d-flex align-items-center">
+        <a href={invite.url}>
+          <FontAwesomeIcon icon={faLink} />
+        </a>{" "}
         <strong className="mr-3">{invite.email}</strong>
         {invite.memberOptions.admin && (
           <span className="badge badge-primary">admin</span>
@@ -23,14 +29,10 @@ export function InviteView({ invite, onDelete }: {
 
       <div className="d-flex align-items-center">
         {expired ? (
-          <div className="text-danger">
-            expired
-          </div>
+          <div className="text-danger">expired</div>
         ) : (
           <>
-            <div className="badge badge-warning mr-3">
-              pending invitation
-            </div>
+            <div className="badge badge-warning mr-3">pending invitation</div>
             <FromNow date={invite.expiresAt} label="Expires" />
           </>
         )}
