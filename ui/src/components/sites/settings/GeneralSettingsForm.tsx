@@ -112,7 +112,7 @@ export function GeneralSettingsForm() {
                   <Toggle value={value} onChange={onChange} className="w-100">
                     <div className="d-flex justify-content-between flex-grow-1">
                       <strong>Single page application (SPA) mode</strong>
-                      <DocsLink href="https://docs.meli.sh/get-started/single-page-applications-spa" className="ml-2"/>
+                      <DocsLink href="https://docs.meli.charlie-bravo.be/get-started/single-page-applications-spa" className="ml-2"/>
                     </div>
                   </Toggle>
                 )}
